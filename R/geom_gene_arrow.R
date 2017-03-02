@@ -1,31 +1,31 @@
-GeomGeneArrow <- ggproto("GeomGeneArrow", Geom,
-  required_aes = c("xmin", "xmax", "y"),
-  default_aes = aes(shape = 19, colour = "black"),
-  draw_key = draw_key_polygon,
-
-  draw_panel = function(
-    data,
-    panel_scales,
-    coord,
-    arrowhead_width,
-    arrowhead_height,
-    arrow_body_height
-  ) {
-
-    data <- coord$transform(data, panel_scales)
-
-    gt <- grid::gTree(
-      data = data,
-      cl = "genearrowtree",
-      arrowhead_width = arrowhead_width,
-      arrowhead_height = arrowhead_height,
-      arrow_body_height = arrow_body_height
-    )
-    gt$name <- grid::grobName(gt, "geom_gene_arrow")
-    gt
-  }
-)
-
+#' @title Draw a gene as an arrow.
+#' @export
+#'
+#' @description 
+#' Draws an arrow representing a gene with orientation. Only works for genes
+#' arranged horizontally, i.e. with the x-axis as molecule position and the
+#' y-axis as molecule.
+#'
+#' \code{geom_gene_arrow} understands the following aesthetics:
+#' \itemize{
+#' \item{xmin and xmax (start and end of the gene; will be used to determine
+#' gene orientation)}
+#' \item{y}
+#' \item{alpha}
+#' \item{colour}
+#' \item{fill}
+#' \item{linetype}
+#' }
+#'
+#' @param mapping,data,stat,identity,na.rm,show.legend,inherit.aes,... As
+#' standard for ggplot2. 
+#' @param arrowhead_width Unit object giving the width of the arrowhead.
+#' Defaults to 4 mm. If the gene is drawn smaller than this width, only the
+#' arrowhead will be drawn, compressed to the length of the gene.
+#' @param arrowhead_height Unit object giving the height of the arrowhead.
+#' Defaults to 4 mm.
+#' @param arrow_body_height Unit object giving the height of the body of the
+#' arrow. Defaults to 3 mm.
 geom_gene_arrow <- function(
   mapping = NULL,
   data = NULL,
@@ -51,6 +51,34 @@ geom_gene_arrow <- function(
     )
   )
 }
+
+GeomGeneArrow <- ggproto("GeomGeneArrow", Geom,
+  required_aes = c("xmin", "xmax", "y"),
+  default_aes = aes(alpha = 1, colour = "black", fill = "white", linetype = 1),
+  draw_key = draw_key_polygon,
+
+  draw_panel = function(
+    data,
+    panel_scales,
+    coord,
+    arrowhead_width,
+    arrowhead_height,
+    arrow_body_height
+  ) {
+
+    data <- coord$transform(data, panel_scales)
+
+    gt <- grid::gTree(
+      data = data,
+      cl = "genearrowtree",
+      arrowhead_width = arrowhead_width,
+      arrowhead_height = arrowhead_height,
+      arrow_body_height = arrow_body_height
+    )
+    gt$name <- grid::grobName(gt, "geom_gene_arrow")
+    gt
+  }
+)
 
 makeContent.genearrowtree <- function(x) {
 
@@ -102,7 +130,11 @@ makeContent.genearrowtree <- function(x) {
         gene$y + arrowhead_height,
         gene$y + arrow_body_height
       ),,
-      gp = gpar(col = gene$colour, fill = gene$fill)
+      gp = gpar(
+        fill = alpha(gene$fill, gene$alpha),
+        col = alpha(gene$colour, gene$alpha),
+        lty = gene$linetype
+      )
     )
 
     # Return the polygon grob
@@ -112,10 +144,3 @@ makeContent.genearrowtree <- function(x) {
   class(grobs) <- "gList"
   grid::setChildren(x, grobs)
 }
-
-ggplot(Genes, aes(xmin = Start, xmax = End, y = Track, fill = Fill, label = Label)) +
-  geom_gene_arrow(
-    arrowhead_height = unit(1, "inches"),
-    arrow_body_height = unit(11, "mm"),
-    arrowhead_width = unit(5, "cm")
-  )
