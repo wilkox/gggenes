@@ -3,11 +3,24 @@ GeomGeneArrow <- ggproto("GeomGeneArrow", Geom,
   default_aes = aes(shape = 19, colour = "black"),
   draw_key = draw_key_polygon,
 
-  draw_panel = function(data, panel_scales, coord) {
+  draw_panel = function(
+    data,
+    panel_scales,
+    coord,
+    arrowhead_width,
+    arrowhead_height,
+    arrow_body_height
+  ) {
 
     data <- coord$transform(data, panel_scales)
 
-    gt <- grid::gTree(data = data, cl = "genearrowtree")
+    gt <- grid::gTree(
+      data = data,
+      cl = "genearrowtree",
+      arrowhead_width = arrowhead_width,
+      arrowhead_height = arrowhead_height,
+      arrow_body_height = arrow_body_height
+    )
     gt$name <- grid::grobName(gt, "geom_gene_arrow")
     gt
   }
@@ -21,12 +34,21 @@ geom_gene_arrow <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE,
+  arrowhead_width = unit(4, "mm"),
+  arrowhead_height = unit(4, "mm"),
+  arrow_body_height = unit(3, "mm"),
   ...
 ) {
   layer(
     geom = GeomGeneArrow, mapping = mapping, data = data, stat = stat, 
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
+    params = list(
+      na.rm = na.rm,
+      arrowhead_width = arrowhead_width,
+      arrowhead_height = arrowhead_height,
+      arrow_body_height = arrow_body_height,
+      ...
+    )
   )
 }
 
@@ -44,7 +66,7 @@ makeContent.genearrowtree <- function(x) {
 
     # Arrowhead defaults to 4 mm, unless the gene is shorter in which case the
     # gene is 100% arrowhead
-    arrowhead_width <- as.numeric(convertWidth(unit(4, "mm"), "native"))
+    arrowhead_width <- as.numeric(convertWidth(x$arrowhead_width, "native"))
     gene_width <- abs(gene$xmax - gene$xmin)
     arrowhead_width <- ifelse(
       arrowhead_width > gene_width,
@@ -55,10 +77,10 @@ makeContent.genearrowtree <- function(x) {
     # Calculate x-position of flange
     flangex <- (-orientation * arrowhead_width) + gene$xmax
 
-    # Set arrow thickness; it's more convenient to divide these by two for
-    # calculating y positions on the polygon
-    arrow_body_thickness <- as.numeric(convertHeight(unit(3, "mm"), "native")) / 2
-    arrowhead_thickness <- as.numeric(convertHeight(unit(4, "mm"), "native")) / 2
+    # Set arrow and arrowhead heights; it's convenient to divide these by two
+    # for calculating y positions on the polygon
+    arrowhead_height <- as.numeric(convertHeight(x$arrowhead_height, "native")) / 2
+    arrow_body_height <- as.numeric(convertHeight(x$arrow_body_height, "native")) / 2
 
     # Create polygon grob
     pg <- polygonGrob(
@@ -72,13 +94,13 @@ makeContent.genearrowtree <- function(x) {
         flangex
       ),
       y = c(
-        gene$y + arrow_body_thickness,
-        gene$y - arrow_body_thickness,
-        gene$y - arrow_body_thickness,
-        gene$y - arrowhead_thickness,
+        gene$y + arrow_body_height,
+        gene$y - arrow_body_height,
+        gene$y - arrow_body_height,
+        gene$y - arrowhead_height,
         gene$y,
-        gene$y + arrowhead_thickness,
-        gene$y + arrow_body_thickness
+        gene$y + arrowhead_height,
+        gene$y + arrow_body_height
       ),,
       gp = gpar(col = gene$colour, fill = gene$fill)
     )
@@ -92,4 +114,8 @@ makeContent.genearrowtree <- function(x) {
 }
 
 ggplot(Genes, aes(xmin = Start, xmax = End, y = Track, fill = Fill, label = Label)) +
-  geom_gene_arrow()
+  geom_gene_arrow(
+    arrowhead_height = unit(1, "inches"),
+    arrow_body_height = unit(11, "mm"),
+    arrowhead_width = unit(5, "cm")
+  )
