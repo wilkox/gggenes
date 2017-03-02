@@ -94,7 +94,7 @@ makeContent.genearrowtree <- function(x) {
 
     # Arrowhead defaults to 4 mm, unless the gene is shorter in which case the
     # gene is 100% arrowhead
-    arrowhead_width <- as.numeric(convertWidth(x$arrowhead_width, "native"))
+    arrowhead_width <- as.numeric(grid::convertWidth(x$arrowhead_width, "native"))
     gene_width <- abs(gene$xmax - gene$xmin)
     arrowhead_width <- ifelse(
       arrowhead_width > gene_width,
@@ -107,11 +107,11 @@ makeContent.genearrowtree <- function(x) {
 
     # Set arrow and arrowhead heights; it's convenient to divide these by two
     # for calculating y positions on the polygon
-    arrowhead_height <- as.numeric(convertHeight(x$arrowhead_height, "native")) / 2
-    arrow_body_height <- as.numeric(convertHeight(x$arrow_body_height, "native")) / 2
+    arrowhead_height <- as.numeric(grid::convertHeight(x$arrowhead_height, "native")) / 2
+    arrow_body_height <- as.numeric(grid::convertHeight(x$arrow_body_height, "native")) / 2
 
     # Create polygon grob
-    pg <- polygonGrob(
+    pg <- grid::polygonGrob(
       x = c(
         gene$xmin,
         gene$xmin,
@@ -130,7 +130,7 @@ makeContent.genearrowtree <- function(x) {
         gene$y + arrowhead_height,
         gene$y + arrow_body_height
       ),,
-      gp = gpar(
+      gp = grid::gpar(
         fill = alpha(gene$fill, gene$alpha),
         col = alpha(gene$colour, gene$alpha),
         lty = gene$linetype
