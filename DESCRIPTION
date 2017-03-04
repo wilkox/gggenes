@@ -4,7 +4,8 @@ Version: 0.1
 Authors@R: person("David", "Wilkins", email = "david@wilkox.org", role = c("aut", "cre"))
 Depends:
     R (>= 3.3.2),
-    ggplot2 (>= 2.2.1)
+    ggplot2 (>= 2.2.1),
+    dplyr(>= 0.5.0)
 Imports:
     grid
 License: GPL-2
