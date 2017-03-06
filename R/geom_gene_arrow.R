@@ -52,6 +52,9 @@ geom_gene_arrow <- function(
   )
 }
 
+#' @rdname geom_gene_arrow
+#' @export
+#' @noRd
 GeomGeneArrow <- ggproto("GeomGeneArrow", Geom,
   required_aes = c("xmin", "xmax", "y"),
   default_aes = aes(alpha = 1, colour = "black", fill = "white", linetype = 1),
@@ -80,6 +83,9 @@ GeomGeneArrow <- ggproto("GeomGeneArrow", Geom,
   }
 )
 
+#' @rdname geom_gene_arrow
+#' @export
+#' @noRd
 makeContent.genearrowtree <- function(x) {
 
   data <- x$data
