@@ -62,6 +62,7 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
     mutate(true_max = max(xmin, xmax)) %>%
     ungroup() %>%
     select(
+      id,
       y,
       range_min,
       range_max,
@@ -75,10 +76,13 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
     mutate(range = range_max - start_dummy) %>%
     mutate(end_dummy = range_max + (max(range) - range)) %>%
     # Clean up
-    select(y, start_dummy, end_dummy)
+    select(y, start_dummy, end_dummy, id)
 
-  # Restore y variable to dummies, for faceting
+  # Restore aesthetic names to dummies
   names(dummies)[names(dummies) == "y"] <- mapping$y %>% as.character
+  names(dummies)[names(dummies) == "start_dummy"] <- mapping$xmin %>% as.character
+  names(dummies)[names(dummies) == "end_dummy"] <- mapping$xmax %>% as.character
+  names(dummies)[names(dummies) == "id"] <- mapping$id %>% as.character
 
   # Return dummies
   dummies
