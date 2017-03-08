@@ -3,5 +3,5 @@
 export(GeomGeneArrow)
 export(geom_gene_arrow)
 export(makeContent.genearrowtree)
-export(prepare_alignment_dummies)
+export(make_alignment_dummies)
 export(theme_genes)

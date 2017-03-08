@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_gene_arrow.R
 \name{geom_gene_arrow}
 \alias{geom_gene_arrow}
-\title{Draw a gene as an arrow.}
+\title{Draw an arrow to represent a gene.}
 \usage{
 geom_gene_arrow(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -27,16 +27,18 @@ arrow. Defaults to 3 mm.}
 Draws an arrow representing a gene with orientation. Only works for genes
 arranged horizontally, i.e. with the x-axis as molecule position and the
 y-axis as molecule.
+}
+\section{Aesthetics}{
 
-\code{geom_gene_arrow} understands the following aesthetics:
+
 \itemize{
-\item{xmin and xmax (start and end of the gene; will be used to determine
-gene orientation)}
-\item{y}
-\item{alpha}
-\item{colour}
-\item{fill}
-\item{linetype}
+  \item xmin and xmax (start and end of the gene; will be used to determine
+        gene orientation)
+  \item y
+  \item alpha
+  \item colour
+  \item fill
+  \item linetype
 }
 }
 

@@ -3,26 +3,27 @@
 #'
 #' @description
 #'
-#' Given a gene to align on, \code{prepare_alignment_dummies} will produce a
-#' data frame of dummies that can be added to a gene map with \code{geom_blank}.
-#' These dummies will visually align the start (or end) of the target gene
-#' across molecules, and will also ensure that the x-axis range is uniform
-#' across all molecules.
+#' This function helps you to visually align genes across facets.
 #'
-#' @param data Data frame. Probably the same data frame passed to
-#' \code{ggplot2}, \code{geom_gene_arrow} etc.
-#' @param mapping Mapping created with \code{aes}. Must contain the following
+#' Given target gene, \code{make_alignment_dummies} will produce a data frame of
+#' dummies that can be added to a gene map with \code{geom_blank}. These dummies
+#' will visually align the start (or end) of the target gene across molecules,
+#' and will also ensure that the x-axis range is uniform across all molecules.
+#'
+#' @param data Data frame of genes. This is almost certainly the same data that
+#' will later be passed to \code{ggplot}.
+#' @param mapping Mapping, created with \code{aes}. Must contain the following
 #' aesthetics: xmin, xmax, y, and id. ‘id’ is the column containing gene ids, of
-#' which the ‘align.on’ gene must be one.
-#' @param align.on Name of gene to align on. Must be present in ‘data’, in the
-#' column mapped to ‘id’.
-#' @param align.side Align to either the ‘left’ (default) or ‘right’ side of the
+#' which the ‘on’ gene must be one.
+#' @param on Name of gene to align on. This gene must be present in ‘data’, in
+#' the column mapped to ‘id’.
+#' @param side Align to either the ‘left’ (default) or ‘right’ side of the
 #' target gene.
 #'
 #' @examples
 #'
-#' dummies <- prepare_alignment_dummies(gene_data, aes(xmin = start, xmax = end,
-#' y = contig, id = gene_id), align.on = "nifB")
+#' dummies <- make_alignment_dummies(gene_data, aes(xmin = start, xmax = end,
+#' y = contig, id = gene_id), on = "nifB")
 #'
 #' ggplot(gene_data, aes(xmin = start, xmax = end, y = contig)) +
 #'   geom_gene_arrow() +
@@ -30,7 +31,7 @@
 #'   contig), inherit.aes = F) +
 #'   facet_wrap(~ Contig, scales = "free", ncol = 1) +
 #'   theme_genes()
-prepare_alignment_dummies <- function(data, mapping, align.on, align.side = "left") {
+make_alignment_dummies <- function(data, mapping, on, side = "left") {
 
   # Check mapping
   required_aesthetics <- c("xmin", "xmax", "y", "id")
@@ -53,9 +54,9 @@ prepare_alignment_dummies <- function(data, mapping, align.on, align.side = "lef
       range_max = max(c(xmin, xmax))
     ) %>%
     ungroup() %>%
-    # Get alignment edge of target gene (start if align.side is left, end if
+    # Get alignment edge of target gene (start if side is left, end if
     # right)
-    filter(id == align.on) %>%
+    filter(id == on) %>%
     rowwise() %>%
     mutate(true_min = min(xmin, xmax)) %>%
     mutate(true_max = max(xmin, xmax)) %>%
@@ -64,7 +65,7 @@ prepare_alignment_dummies <- function(data, mapping, align.on, align.side = "lef
       y,
       range_min,
       range_max,
-      target_edge = ifelse(align.side == "left", true_min, true_max)
+      target_edge = ifelse(side == "left", true_min, true_max)
     ) %>%
     # Calculate target offset from start of operon
     mutate(target_offset = target_edge - range_min) %>%

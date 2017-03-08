@@ -1,4 +1,4 @@
-#' @title Draw a gene as an arrow.
+#' @title Draw an arrow to represent a gene.
 #' @export
 #'
 #' @description 
@@ -6,15 +6,16 @@
 #' arranged horizontally, i.e. with the x-axis as molecule position and the
 #' y-axis as molecule.
 #'
-#' \code{geom_gene_arrow} understands the following aesthetics:
+#' @section Aesthetics:
+#'
 #' \itemize{
-#' \item{xmin and xmax (start and end of the gene; will be used to determine
-#' gene orientation)}
-#' \item{y}
-#' \item{alpha}
-#' \item{colour}
-#' \item{fill}
-#' \item{linetype}
+#'   \item xmin and xmax (start and end of the gene; will be used to determine
+#'         gene orientation)
+#'   \item y
+#'   \item alpha
+#'   \item colour
+#'   \item fill
+#'   \item linetype
 #' }
 #'
 #' @param mapping,data,stat,identity,na.rm,show.legend,inherit.aes,... As
