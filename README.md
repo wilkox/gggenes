@@ -17,4 +17,4 @@ ggplot(gggenes_example_genes, aes(xmin = start, xmax = end, y = molecule, fill =
   theme_genes()
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)
+![](README-gggenes_example-1.png)

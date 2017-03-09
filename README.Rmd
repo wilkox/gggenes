@@ -4,11 +4,19 @@ output:
     html_preview: false
 ---
 
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
 gggenes is a (quite small) set of tools for drawing gene layout maps with
 ggplot2. `make_alignment_dummies`, `geom_gene_arrow` and `theme_genes` are
 demonstrated below.
 
-```{r fig.width = 8, fig.height = 8}
+```{r gggenes_example, fig.width = 8, fig.height = 8}
 library(gggenes)
 
 dummies <- make_alignment_dummies(
