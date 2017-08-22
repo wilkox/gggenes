@@ -66,7 +66,7 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
       y,
       range_min,
       range_max,
-      target_edge = ifelse(side == "left", true_min, true_max)
+      target_edge = ifelse(side == "left", "true_min", "true_max")
     ) %>%
     # Calculate target offset from start of operon
     mutate(target_offset = target_edge - range_min) %>%

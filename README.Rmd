@@ -1,7 +1,7 @@
 ---
 output: 
   rmarkdown::github_document:
-    html_preview: false
+    html_preview: true
 ---
 
 ```{r, echo = FALSE}

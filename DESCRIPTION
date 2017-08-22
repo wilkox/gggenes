@@ -1,6 +1,6 @@
 Package: gggenes
 Title: Draw gene maps in ggplot2
-Version: 0.1
+Version: 0.1.9001
 Authors@R: person("David", "Wilkins", email = "david@wilkox.org", role = c("aut", "cre"))
 Depends:
     R (>= 3.3.2),
