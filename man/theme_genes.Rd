@@ -14,4 +14,3 @@ This theme removes strip text (the text that labels facets when you use
 drawing of molecules on different x-scales by setting the y aesthetic to the
 molecule, then faceting with `facet_grid( ~ molecule, scales = "free")`.
 }
-

@@ -40,4 +40,3 @@ ggplot(gene_data, aes(xmin = start, xmax = end, y = contig)) +
   facet_wrap(~ Contig, scales = "free", ncol = 1) +
   theme_genes()
 }
-
