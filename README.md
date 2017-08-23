@@ -17,4 +17,4 @@ ggplot(gggenes_example_genes, aes(xmin = start, xmax = end, y = molecule, fill =
   theme_genes()
 ```
 
-![](README-gggenes_example-1.png)
+![](man/figures/README-gggenes_example-1.png)
