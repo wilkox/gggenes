@@ -35,12 +35,12 @@ geom_gene_arrow <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE,
-  arrowhead_width = unit(4, "mm"),
-  arrowhead_height = unit(4, "mm"),
-  arrow_body_height = unit(3, "mm"),
+  arrowhead_width = grid::unit(4, "mm"),
+  arrowhead_height = grid::unit(4, "mm"),
+  arrow_body_height = grid::unit(3, "mm"),
   ...
 ) {
-  layer(
+  ggplot2::layer(
     geom = GeomGeneArrow, mapping = mapping, data = data, stat = stat,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(
@@ -138,8 +138,8 @@ makeContent.genearrowtree <- function(x) {
         gene$y + arrow_body_height
       ),,
       gp = grid::gpar(
-        fill = alpha(gene$fill, gene$alpha),
-        col = alpha(gene$colour, gene$alpha),
+        fill = ggplot2::alpha(gene$fill, gene$alpha),
+        col = ggplot2::alpha(gene$colour, gene$alpha),
         lty = gene$linetype
       )
     )

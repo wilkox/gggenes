@@ -1,5 +1,6 @@
 #' @title Prepare dummies to align genes across faceted molecules
 #' @export
+#' @import dplyr
 #'
 #' @description
 #'
@@ -48,35 +49,35 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   # Prepare dummies
   dummies <- data %>%
     # Get range of molecule
-    dplyr::group_by(y) %>%
-    dplyr::mutate(
-      range_min = min(c(xmin, xmax)),
-      range_max = max(c(xmin, xmax))
+    dplyr::group_by_("y") %>%
+    dplyr::mutate_(
+      "range_min" = min(c("xmin", "xmax")),
+      "range_max" = max(c("xmin", "xmax"))
     ) %>%
     dplyr::ungroup() %>%
     # Get alignment edge of target gene (start if side is left, end if
     # right)
     dplyr::filter(id == on) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(true_min = min(xmin, xmax)) %>%
-    dplyr::mutate(true_max = max(xmin, xmax)) %>%
+    dplyr::mutate_("true_min" = min("xmin", "xmax")) %>%
+    dplyr::mutate_("true_max" = max("xmin", "xmax")) %>%
     dplyr::ungroup() %>%
-    dplyr::select(
-      id,
-      y,
-      range_min,
-      range_max,
-      target_edge = ifelse(side == "left", "true_min", "true_max")
+    dplyr::select_(
+      "id",
+      "y",
+      "range_min",
+      "range_max",
+      "target_edge" = ifelse(side == "left", "true_min", "true_max")
     ) %>%
     # Calculate target offset from start of operon
-    dplyr::mutate(target_offset = target_edge - range_min) %>%
+    dplyr::mutate_("target_offset" = quote(target_edge - range_min)) %>%
     # Position start dummy
-    dplyr::mutate(start_dummy = range_min - (max(target_offset) - target_offset)) %>%
+    dplyr::mutate_("start_dummy" = quote(range_min - (max(target_offset) - target_offset))) %>%
     # Position end dummy
-    dplyr::mutate(range = range_max - start_dummy) %>%
-    dplyr::mutate(end_dummy = range_max + (max(range) - range)) %>%
+    dplyr::mutate_("range" = quote(range_max - start_dummy)) %>%
+    dplyr::mutate_("end_dummy" = quote(range_max + (max(range) - range))) %>%
     # Clean up
-    dplyr::select(y, start_dummy, end_dummy, id)
+    dplyr::select_("y", "start_dummy", "end_dummy", "id")
 
   # Restore aesthetic names to dummies
   names(dummies)[names(dummies) == "y"] <- mapping$y %>% as.character

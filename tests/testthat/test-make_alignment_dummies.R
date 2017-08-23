@@ -19,7 +19,6 @@ test_that("make_alignment_dummies works without errors", {
         aes(xmin = start_dummy, xmax = end_dummy, y = Track),
         inherit.aes = F
       ) +
-      facet_wrap(~ molecule, scales = "free", ncol = 1) +
-      theme_genes()
+      facet_wrap(~ molecule, scales = "free", ncol = 1)
   }, NA)
 })
