@@ -2,6 +2,7 @@ context("make_alignment_dummies")
 
 test_that("make_alignment_dummies works without errors", {
   expect_error( {
+    library(ggplot2)
     dummies <- make_alignment_dummies(
       gggenes_example_genes,
       aes(xmin = start, xmax = end, y = molecule, id = gene),

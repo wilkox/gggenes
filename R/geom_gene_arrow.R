@@ -41,7 +41,7 @@ geom_gene_arrow <- function(
   ...
 ) {
   layer(
-    geom = GeomGeneArrow, mapping = mapping, data = data, stat = stat, 
+    geom = GeomGeneArrow, mapping = mapping, data = data, stat = stat,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
@@ -56,10 +56,10 @@ geom_gene_arrow <- function(
 #' @rdname geom_gene_arrow
 #' @export
 #' @noRd
-GeomGeneArrow <- ggproto("GeomGeneArrow", Geom,
+GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
   required_aes = c("xmin", "xmax", "y"),
-  default_aes = aes(alpha = 1, colour = "black", fill = "white", linetype = 1),
-  draw_key = draw_key_polygon,
+  default_aes = ggplot2::aes(alpha = 1, colour = "black", fill = "white", linetype = 1),
+  draw_key = ggplot2::draw_key_polygon,
 
   draw_panel = function(
     data,

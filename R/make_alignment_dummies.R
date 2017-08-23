@@ -48,20 +48,20 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   # Prepare dummies
   dummies <- data %>%
     # Get range of molecule
-    group_by(y) %>%
-    mutate(
+    dplyr::group_by(y) %>%
+    dplyr::mutate(
       range_min = min(c(xmin, xmax)),
       range_max = max(c(xmin, xmax))
     ) %>%
-    ungroup() %>%
+    dplyr::ungroup() %>%
     # Get alignment edge of target gene (start if side is left, end if
     # right)
-    filter(id == on) %>%
-    rowwise() %>%
-    mutate(true_min = min(xmin, xmax)) %>%
-    mutate(true_max = max(xmin, xmax)) %>%
-    ungroup() %>%
-    select(
+    dplyr::filter(id == on) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(true_min = min(xmin, xmax)) %>%
+    dplyr::mutate(true_max = max(xmin, xmax)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(
       id,
       y,
       range_min,
@@ -69,14 +69,14 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
       target_edge = ifelse(side == "left", "true_min", "true_max")
     ) %>%
     # Calculate target offset from start of operon
-    mutate(target_offset = target_edge - range_min) %>%
+    dplyr::mutate(target_offset = target_edge - range_min) %>%
     # Position start dummy
-    mutate(start_dummy = range_min - (max(target_offset) - target_offset)) %>%
+    dplyr::mutate(start_dummy = range_min - (max(target_offset) - target_offset)) %>%
     # Position end dummy
-    mutate(range = range_max - start_dummy) %>%
-    mutate(end_dummy = range_max + (max(range) - range)) %>%
+    dplyr::mutate(range = range_max - start_dummy) %>%
+    dplyr::mutate(end_dummy = range_max + (max(range) - range)) %>%
     # Clean up
-    select(y, start_dummy, end_dummy, id)
+    dplyr::select(y, start_dummy, end_dummy, id)
 
   # Restore aesthetic names to dummies
   names(dummies)[names(dummies) == "y"] <- mapping$y %>% as.character
