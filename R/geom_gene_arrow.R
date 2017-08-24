@@ -25,6 +25,7 @@
 #'   \item colour
 #'   \item fill
 #'   \item linetype
+#'   \item size
 #' }
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
@@ -77,9 +78,25 @@ geom_gene_arrow <- function(
 #' @noRd
 GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
   required_aes = c("xmin", "xmax", "y"),
-  default_aes = ggplot2::aes(alpha = 1, colour = "black", fill = "white", linetype = 1),
-  draw_key = ggplot2::draw_key_polygon,
-
+  default_aes = ggplot2::aes(
+    alpha = 1,
+    colour = "black",
+    fill = "white",
+    linetype = 1,
+    size = 0.3
+  ),
+  draw_key = function(data, params, size) {
+    grid::rectGrob(
+      width = grid::unit(1, "npc") - grid::unit(1, "mm"),
+      height = grid::unit(1, "npc") - grid::unit(1, "mm"),
+      gp = grid::gpar(
+        col = data$colour,
+        fill = ggplot2::alpha(data$fill, data$alpha),
+        lty = data$linetype,
+        lwd = data$size * ggplot2::.pt
+      )
+    )
+  },
   draw_panel = function(
     data,
     panel_scales,
@@ -154,11 +171,12 @@ makeContent.genearrowtree <- function(x) {
         gene$y,
         gene$y + arrowhead_height,
         gene$y + arrow_body_height
-      ),,
+      ),
       gp = grid::gpar(
         fill = ggplot2::alpha(gene$fill, gene$alpha),
         col = ggplot2::alpha(gene$colour, gene$alpha),
-        lty = gene$linetype
+        lty = gene$linetype,
+        lwd = gene$size * ggplot2::.pt
       )
     )
 
