@@ -27,7 +27,6 @@
 #'   ggplot2::geom_blank(data = dummies) +
 #'   ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1)
 #' @export
-#' @import dplyr
 make_alignment_dummies <- function(data, mapping, on, side = "left") {
 
   # Check mapping
@@ -39,47 +38,42 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   }
 
   # Map data
-  data <- data[unlist(mapping) %>% as.character]
+  data <- data[as.character(unlist(mapping))]
   names(data) <- names(mapping)
 
-  # Prepare dummies
-  dummies <- data %>%
-    # Get range of molecule
-    dplyr::group_by_("y") %>%
-    dplyr::mutate_(
-      "range_min" = min(c("xmin", "xmax")),
-      "range_max" = max(c("xmin", "xmax"))
-    ) %>%
-    dplyr::ungroup() %>%
-    # Get alignment edge of target gene (start if side is left, end if
-    # right)
-    dplyr::filter(id == on) %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate_("true_min" = min("xmin", "xmax")) %>%
-    dplyr::mutate_("true_max" = max("xmin", "xmax")) %>%
-    dplyr::ungroup() %>%
-    dplyr::select_(
-      "id",
-      "y",
-      "range_min",
-      "range_max",
-      "target_edge" = ifelse(side == "left", "true_min", "true_max")
-    ) %>%
-    # Calculate target offset from start of operon
-    dplyr::mutate_("target_offset" = quote(target_edge - range_min)) %>%
-    # Position start dummy
-    dplyr::mutate_("start_dummy" = quote(range_min - (max(target_offset) - target_offset))) %>%
-    # Position end dummy
-    dplyr::mutate_("range" = quote(range_max - start_dummy)) %>%
-    dplyr::mutate_("end_dummy" = quote(range_max + (max(range) - range))) %>%
-    # Clean up
-    dplyr::select_("y", "start_dummy", "end_dummy", "id")
+  # Get range of each molecule
+  dummies <- split(data, data$y)
+  dummies <- lapply(dummies, function(m) { cbind(m, range_min = min(c(m$xmin, m$xmax))) })
+  dummies <- lapply(dummies, function(m) { cbind(m, range_max = max(c(m$xmin, m$xmax))) })
+  dummies <- do.call("rbind", dummies)
+
+  # Get alignment edge of target gene (start if side is left, end if right)
+  dummies <- dummies[dummies$id == on, ]
+  dummies$true_min <- ifelse(dummies$xmin < dummies$xmax, dummies$xmin, dummies$xmax)
+  dummies$true_max <- ifelse(dummies$xmin > dummies$xmax, dummies$xmin, dummies$xmax)
+  dummies <- dummies[, c("id", "y", "range_min", "range_max",
+                         ifelse(side == "left", "true_min", "true_max"))]
+  names(dummies)[5] <- "target_edge"
+
+  # Calculate target offset from start of operon
+  dummies$target_offset <- dummies$target_edge - dummies$range_min
+
+  # Position start dummy
+  dummies$start_dummy <- dummies$range_min - (max(dummies$target_offset) -
+                                              dummies$target_offset)
+
+  # Position end dummy
+  dummies$range <- dummies$range_max - dummies$start_dummy
+  dummies$end_dummy <- dummies$range_max + (max(dummies$range) - dummies$range)
+
+  # Clean up
+  dummies <- dummies[, c("y", "start_dummy", "end_dummy", "id")]
 
   # Restore aesthetic names to dummies
-  names(dummies)[names(dummies) == "y"] <- mapping$y %>% as.character
-  names(dummies)[names(dummies) == "start_dummy"] <- mapping$xmin %>% as.character
-  names(dummies)[names(dummies) == "end_dummy"] <- mapping$xmax %>% as.character
-  names(dummies)[names(dummies) == "id"] <- mapping$id %>% as.character
+  names(dummies)[names(dummies) == "y"] <- as.character(mapping$y)
+  names(dummies)[names(dummies) == "start_dummy"] <- as.character(mapping$xmin)
+  names(dummies)[names(dummies) == "end_dummy"] <- as.character(mapping$xmax)
+  names(dummies)[names(dummies) == "id"] <- as.character(mapping$id)
 
   # Return dummies
   dummies

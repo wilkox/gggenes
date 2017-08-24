@@ -57,8 +57,8 @@ See `make_alignment_dummies` for a method to align genes between molecules.
 
 \examples{
 
-ggplot2::ggplot(contigs, ggplot2::aes(xmin = start, xmax = end,
-                                      y = contig)) +
+ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
+                                            y = molecule, fill = gene)) +
 geom_gene_arrow() +
 ggplot2::facet_wrap(~ molecule, scales = "free")
 

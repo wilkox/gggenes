@@ -2,41 +2,39 @@
 % Please edit documentation in R/make_alignment_dummies.R
 \name{make_alignment_dummies}
 \alias{make_alignment_dummies}
-\title{Prepare dummies to align genes across faceted molecules}
+\title{Prepare dummy data to visually align a single gene across faceted molecules}
 \usage{
 make_alignment_dummies(data, mapping, on, side = "left")
 }
 \arguments{
-\item{data}{Data frame of genes. This is almost certainly the same data that
-will later be passed to \code{ggplot}.}
+\item{data}{Data frame of genes. This is almost certainly the same data frame
+that will later be passed to `ggplot2::ggplot`.}
 
-\item{mapping}{Mapping, created with \code{aes}. Must contain the following
-aesthetics: xmin, xmax, y, and id. ‘id’ is the column containing gene ids, of
-which the ‘on’ gene must be one.}
+\item{mapping}{Aesthetic mapping, created with `ggplot2::aes`. Must contain
+the following aesthetics: `xmin`, `xmax`, `y`, and `id` (a unique identifier
+for each gene).}
 
-\item{on}{Name of gene to align on. This gene must be present in ‘data’, in
-the column mapped to ‘id’.}
+\item{on}{Name of gene to be visually aligned across facets. This gene must
+be present in 'data', in the column mapped to the `id` aesthetic.}
 
-\item{side}{Align to either the ‘left’ (default) or ‘right’ side of the
-target gene.}
+\item{side}{Should the visual alignment be of the `left` (default) or `right`
+side of the gene?}
 }
 \description{
-This function helps you to visually align genes across facets.
-
-Given target gene, \code{make_alignment_dummies} will produce a data frame of
-dummies that can be added to a gene map with \code{geom_blank}. These dummies
-will visually align the start (or end) of the target gene across molecules,
-and will also ensure that the x-axis range is uniform across all molecules.
+`make_alignment_dummies` helps you to visually align genes across molecules
+that have been faceted with a free x scale. The output of this function is a
+data frame of dummy genes. If these dummy genes are added to a 'ggplot2' plot
+with `geom_blank`, they will extend the x axis range in such a way that the
+start or end of a selected gene is visually aligned across the facets.
 }
 \examples{
 
-dummies <- make_alignment_dummies(gene_data, aes(xmin = start, xmax = end,
-y = contig, id = gene_id), on = "nifB")
+dummies <- make_alignment_dummies(example_genes, ggplot2::aes(xmin = start,
+  xmax = end, y = molecule, id = gene), on = "genB")
 
-ggplot(gene_data, aes(xmin = start, xmax = end, y = contig)) +
+ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
+    y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  geom_blank(data = dummies, aes(xmin = dummy_start, xmax = dummy_end, y =
-  contig), inherit.aes = F) +
-  facet_wrap(~ Contig, scales = "free", ncol = 1) +
-  theme_genes()
+  ggplot2::geom_blank(data = dummies) +
+  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1)
 }

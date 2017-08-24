@@ -9,8 +9,7 @@ Depends:
     R (>= 3.3.2)
 Imports:
     grid (>= 3.4.1),
-    ggplot2 (>= 2.2.1),
-    dplyr(>= 0.5.0)
+    ggplot2 (>= 2.2.1)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

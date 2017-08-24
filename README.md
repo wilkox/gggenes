@@ -2,8 +2,8 @@
 gggenes is a (quite small) set of tools for drawing gene layout maps with ggplot2. `make_alignment_dummies`, `geom_gene_arrow` and `theme_genes` are demonstrated below.
 
 ``` r
-library(ggplot2)
-library(gggenes)
+# library(ggplot2)
+# library(gggenes)
 
 dummies <- make_alignment_dummies(
   example_genes,
