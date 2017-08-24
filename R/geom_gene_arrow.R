@@ -1,32 +1,52 @@
-#' @title Draw an arrow to represent a gene.
-#' @export
+#' A 'ggplot2' geom to draw genes as arrows
 #'
-#' @description 
-#' Draws an arrow representing a gene with orientation. Only works for genes
-#' arranged horizontally, i.e. with the x-axis as molecule position and the
-#' y-axis as molecule.
+#' `geom_gene_arrow` draws genes as arrows, allowing gene maps to be drawn.
+#'
+#' This geom draws genes arranged along a horizontal 'string' representing the
+#' molecule. The start and end positions of the gene are expressed with the
+#' `xmin` and `xmax` aesthetics, while the molecule can be specified with the
+#' `y` aesthetic.
+#'
+#' Unless the plot is faceted with a free x scale, all the molecules will share
+#' a common x-axis. This means that if the genes are in very different numerical
+#' positions, they might appear very small and squished together. To get around
+#' this, either facet the plot with `scales = "free_x"`, or normalise the gene
+#' positions if their exact positions are not important.
+#'
+#' See `make_alignment_dummies` for a method to align genes between molecules.
 #'
 #' @section Aesthetics:
 #'
 #' \itemize{
-#'   \item xmin and xmax (start and end of the gene; will be used to determine
+#'   \item xmin,xmax (start and end of the gene; will be used to determine
 #'         gene orientation)
-#'   \item y
+#'   \item y (molecule)
 #'   \item alpha
 #'   \item colour
 #'   \item fill
 #'   \item linetype
 #' }
 #'
-#' @param mapping,data,stat,identity,na.rm,show.legend,inherit.aes,... As
-#' standard for ggplot2. 
-#' @param arrowhead_width Unit object giving the width of the arrowhead.
+#' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
+#' standard for ggplot2.
+#' @param arrowhead_width grid::unit object giving the width of the arrowhead.
 #' Defaults to 4 mm. If the gene is drawn smaller than this width, only the
 #' arrowhead will be drawn, compressed to the length of the gene.
-#' @param arrowhead_height Unit object giving the height of the arrowhead.
+#' @param arrowhead_height grid::unit object giving the height of the arrowhead.
 #' Defaults to 4 mm.
-#' @param arrow_body_height Unit object giving the height of the body of the
-#' arrow. Defaults to 3 mm.
+#' @param arrow_body_height grid::unit object giving the height of the body of
+#' the arrow. Defaults to 3 mm.
+#'
+#' @examples
+#'
+#' ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
+#'                                             y = molecule, fill = gene)) +
+#' geom_gene_arrow() +
+#' ggplot2::facet_wrap(~ molecule, scales = "free")
+#'
+#' @seealso theme_genes, make_alignment_dummies
+#'
+#' @export
 geom_gene_arrow <- function(
   mapping = NULL,
   data = NULL,
@@ -53,8 +73,7 @@ geom_gene_arrow <- function(
   )
 }
 
-#' @rdname geom_gene_arrow
-#' @export
+#' GeomGeneArrow
 #' @noRd
 GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
   required_aes = c("xmin", "xmax", "y"),
@@ -84,9 +103,8 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
   }
 )
 
-#' @rdname geom_gene_arrow
+#' @importFrom grid makeContent
 #' @export
-#' @noRd
 makeContent.genearrowtree <- function(x) {
 
   data <- x$data

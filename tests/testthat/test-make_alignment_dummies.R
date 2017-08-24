@@ -4,13 +4,13 @@ test_that("make_alignment_dummies works without errors", {
   expect_error( {
     library(ggplot2)
     dummies <- make_alignment_dummies(
-      gggenes_example_genes,
+      example_genes,
       aes(xmin = start, xmax = end, y = molecule, id = gene),
       on = "genE",
       side = "right"
     )
     ggplot(
-      gggenes_example_genes,
+      example_genes,
       aes(xmin = start, xmax = end, y = molecule, fill = gene)
     ) +
       geom_gene_arrow() +

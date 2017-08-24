@@ -26,15 +26,16 @@ body {
 <body>
 
 <p>gggenes is a (quite small) set of tools for drawing gene layout maps with ggplot2. <code>make_alignment_dummies</code>, <code>geom_gene_arrow</code> and <code>theme_genes</code> are demonstrated below.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gggenes)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(gggenes)
 
 dummies &lt;-<span class="st"> </span><span class="kw">make_alignment_dummies</span>(
-  gggenes_example_genes,
+  example_genes,
   <span class="kw">aes</span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">id =</span> gene),
   <span class="dt">on =</span> <span class="st">&quot;genE&quot;</span>
 )
 
-<span class="kw">ggplot</span>(gggenes_example_genes, <span class="kw">aes</span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span>
+<span class="kw">ggplot</span>(example_genes, <span class="kw">aes</span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_gene_arrow</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>molecule, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_blank</span>(<span class="dt">data =</span> dummies) <span class="op">+</span>

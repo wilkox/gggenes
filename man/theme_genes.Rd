@@ -2,15 +2,20 @@
 % Please edit documentation in R/theme_genes.R
 \name{theme_genes}
 \alias{theme_genes}
-\title{Theme for gene maps.}
+\title{A 'ggplot2' theme for drawing gene maps}
 \usage{
-theme_genes(...)
+theme_genes()
 }
 \description{
-A ggplot2 theme optimised for drawing gene maps.
-
+This theme removes extraneous plot elements for drawing an
+'arrows-on-a-string' style gene map in 'ggplot2'.
+}
+\details{
 This theme removes strip text (the text that labels facets when you use
-\code{facet_wrap} or \code{facet_grid}). This is to allow for easy
-drawing of molecules on different x-scales by setting the y aesthetic to the
-molecule, then faceting with `facet_grid( ~ molecule, scales = "free")`.
+`facet_wrap` or `facet_grid`). This makes it easier to draw molecules on
+different x scales by setting the y aesthetic to the molecule, then faceting
+with `facet_grid( ~ molecule, scales = "free")`.
+}
+\seealso{
+geom_gene_arrows
 }

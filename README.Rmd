@@ -17,15 +17,16 @@ ggplot2. `make_alignment_dummies`, `geom_gene_arrow` and `theme_genes` are
 demonstrated below.
 
 ```{r gggenes_example, fig.width = 8, fig.height = 8}
+library(ggplot2)
 library(gggenes)
 
 dummies <- make_alignment_dummies(
-  gggenes_example_genes,
+  example_genes,
   aes(xmin = start, xmax = end, y = molecule, id = gene),
   on = "genE"
 )
 
-ggplot(gggenes_example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
   facet_wrap( ~ molecule, ncol = 1, scales = "free") +
   geom_blank(data = dummies) +

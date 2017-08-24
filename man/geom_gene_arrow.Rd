@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_gene_arrow.R
 \name{geom_gene_arrow}
 \alias{geom_gene_arrow}
-\title{Draw an arrow to represent a gene.}
+\title{A 'ggplot2' geom to draw genes as arrows}
 \usage{
 geom_gene_arrow(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -11,31 +11,43 @@ geom_gene_arrow(mapping = NULL, data = NULL, stat = "identity",
   "mm"), ...)
 }
 \arguments{
-\item{mapping, data, stat, identity, na.rm, show.legend, inherit.aes, ...}{As
+\item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2.}
 
-\item{arrowhead_width}{Unit object giving the width of the arrowhead.
+\item{arrowhead_width}{grid::unit object giving the width of the arrowhead.
 Defaults to 4 mm. If the gene is drawn smaller than this width, only the
 arrowhead will be drawn, compressed to the length of the gene.}
 
-\item{arrowhead_height}{Unit object giving the height of the arrowhead.
+\item{arrowhead_height}{grid::unit object giving the height of the arrowhead.
 Defaults to 4 mm.}
 
-\item{arrow_body_height}{Unit object giving the height of the body of the
-arrow. Defaults to 3 mm.}
+\item{arrow_body_height}{grid::unit object giving the height of the body of
+the arrow. Defaults to 3 mm.}
 }
 \description{
-Draws an arrow representing a gene with orientation. Only works for genes
-arranged horizontally, i.e. with the x-axis as molecule position and the
-y-axis as molecule.
+`geom_gene_arrow` draws genes as arrows, allowing gene maps to be drawn.
+}
+\details{
+This geom draws genes arranged along a horizontal 'string' representing the
+molecule. The start and end positions of the gene are expressed with the
+`xmin` and `xmax` aesthetics, while the molecule can be specified with the
+`y` aesthetic.
+
+Unless the plot is faceted with a free x scale, all the molecules will share
+a common x-axis. This means that if the genes are in very different numerical
+positions, they might appear very small and squished together. To get around
+this, either facet the plot with `scales = "free_x"`, or normalise the gene
+positions if their exact positions are not important.
+
+See `make_alignment_dummies` for a method to align genes between molecules.
 }
 \section{Aesthetics}{
 
 
 \itemize{
-  \item xmin and xmax (start and end of the gene; will be used to determine
+  \item xmin,xmax (start and end of the gene; will be used to determine
         gene orientation)
-  \item y
+  \item y (molecule)
   \item alpha
   \item colour
   \item fill
@@ -43,3 +55,14 @@ y-axis as molecule.
 }
 }
 
+\examples{
+
+ggplot2::ggplot(contigs, ggplot2::aes(xmin = start, xmax = end,
+                                      y = contig)) +
+geom_gene_arrow() +
+ggplot2::facet_wrap(~ molecule, scales = "free")
+
+}
+\seealso{
+theme_genes, make_alignment_dummies
+}
