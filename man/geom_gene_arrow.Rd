@@ -52,6 +52,7 @@ See `make_alignment_dummies` for a method to align genes between molecules.
   \item colour
   \item fill
   \item linetype
+  \item size
 }
 }
 

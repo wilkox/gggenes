@@ -10,6 +10,14 @@
 #'
 #' @seealso geom_gene_arrows
 #'
+#' @examples
+#'
+#' ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
+#'                                             y = molecule, fill = gene)) +
+#' geom_gene_arrow() +
+#' ggplot2::facet_wrap(~ molecule, scales = "free") +
+#' theme_genes()
+#'
 #' @export
 theme_genes <- function() {
   ggplot2::theme_grey() + ggplot2::theme(

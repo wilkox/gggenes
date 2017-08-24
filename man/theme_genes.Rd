@@ -16,6 +16,15 @@ This theme removes strip text (the text that labels facets when you use
 different x scales by setting the y aesthetic to the molecule, then faceting
 with `facet_grid( ~ molecule, scales = "free")`.
 }
+\examples{
+
+ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
+                                            y = molecule, fill = gene)) +
+geom_gene_arrow() +
+ggplot2::facet_wrap(~ molecule, scales = "free") +
+theme_genes()
+
+}
 \seealso{
 geom_gene_arrows
 }
