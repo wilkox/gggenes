@@ -1,5 +1,5 @@
 Package: gggenes
-Title: Draw Gene Maps in 'ggplot2'
+Title: Draw Gene Arrow Maps in 'ggplot2'
 Version: 0.2.0
 Authors@R: person("David", "Wilkins", email = "david@wilkox.org",
                   role = c("aut", "cre"))

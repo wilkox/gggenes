@@ -13,6 +13,9 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-"
 )
 ```
+[![Travis-CI Build Status](https://travis-ci.org/wilkox/gggenes.svg?branch=master)](https://travis-ci.org/wilkox/gggenes)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
+
 **'gggenes' is a (quite small) set of tools for drawing gene arrow maps with
 'ggplot2.'**
 
@@ -63,11 +66,11 @@ ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
 
 ## `make_alignment_dummies`
 
-Often you might want to a certain gene to be vertically aligned across the
-faceted molecules. A helper function `make_alignment_dummies` is provided that
-generates a set of 'dummy' genes such that, if the dummies are added to the plot
-with `geom_blank`, they will extend the range of each facet to visually align
-the selected gene across facets.
+Often you might want a certain gene to be vertically aligned across the faceted
+molecules. A helper function `make_alignment_dummies` is provided that generates
+a set of 'dummy' genes such that, if the dummies are added to the plot with
+`geom_blank`, they will extend the range of each facet to visually align the
+selected gene across facets.
 
 ```{r make_alignment_dummies}
 dummies <- make_alignment_dummies(
