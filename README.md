@@ -1,4 +1,6 @@
 
+[![Travis-CI Build Status](https://travis-ci.org/wilkox/gggenes.svg?branch=master)](https://travis-ci.org/wilkox/gggenes) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
+
 **'gggenes' is a (quite small) set of tools for drawing gene layout maps with 'ggplot2.'**
 
 `geom_gene_arrow`
