@@ -25,7 +25,12 @@ body {
 
 <body>
 
-<p><strong>'gggenes' is a (quite small) set of tools for drawing gene layout maps with 'ggplot2.'</strong></p>
+<p><strong>'gggenes' is a (quite small) set of tools for drawing gene arrow maps with 'ggplot2.'</strong></p>
+<h2 id="installation">Installation</h2>
+<p>Install the release version of 'gggenes' from CRAN:</p>
+<p><code>install.packages(&quot;gggenes&quot;)</code></p>
+<p>If you want the development version, install it from GitHub:</p>
+<p><code>devtools::install_github(&quot;wilkox/gggenes&quot;)</code></p>
 <h2 id="geom_gene_arrow"><code>geom_gene_arrow</code></h2>
 <p><code>geom_gene_arrow</code> is a 'ggplot2' geom that represents genes with arrows. The start and end positions of the genes within their molecule(s) are mapped to the <code>xmin</code> and <code>xmax</code> aesthetics respectively. The <code>y</code> aesthetic must be mapped to the molecule(s). If you are drawing more than one molecule, and the numerical positions of the genes are not similar across molecules, you almost certainly want to facet the plot with <code>scales = &quot;free&quot;</code> to avoid drawing ridiculously large molecules with ridiculously tiny genes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)

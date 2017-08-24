@@ -1,5 +1,16 @@
 
-**'gggenes' is a (quite small) set of tools for drawing gene layout maps with 'ggplot2.'**
+**'gggenes' is a (quite small) set of tools for drawing gene arrow maps with 'ggplot2.'**
+
+Installation
+------------
+
+Install the release version of 'gggenes' from CRAN:
+
+`install.packages("gggenes")`
+
+If you want the development version, install it from GitHub:
+
+`devtools::install_github("wilkox/gggenes")`
 
 `geom_gene_arrow`
 -----------------

@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-'gggenes' is a (quite small) set of tools for drawing gene layout maps with
+'gggenes' is a (quite small) set of tools for drawing gene arrow maps with
 'ggplot2.'
 
 ## `geom_gene_arrow`
