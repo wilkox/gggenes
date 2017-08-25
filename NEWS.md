@@ -1,3 +1,9 @@
+# v0.2.0.9001
+
+## Bug fixes
+
+- Remove README.html so GitHub renders README correctly
+
 # v0.2.0
 
 ## Major changes
