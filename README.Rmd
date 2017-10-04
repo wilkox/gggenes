@@ -87,3 +87,23 @@ ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
   ggplot2::scale_fill_brewer(palette = "Set3") +
   theme_genes()
 ```
+
+## `geom_gene_label`
+
+To label individual genes, set the `label` aesthetic and use `geom_gene_label`.
+`geom_gene_label` uses the ['ggfittext'](https://github.com/wilkox/ggfittext)
+package to fit the label text inside the gene arrows; see the 'ggfittext'
+documentation for more details on how it resizes and reflows text to make it
+fit.
+
+```{r labelled_genes}
+ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
+                                            molecule, fill = gene, label = gene)) +
+  geom_gene_arrow(arrowhead_height = unit(3, "mm"), arrowhead_width = unit(1, "mm")) +
+  geom_gene_label(align = "left") +
+  ggplot2::geom_blank(data = dummies) +
+  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  ggplot2::scale_fill_brewer(palette = "Set3") +
+  theme_genes()
+```
+

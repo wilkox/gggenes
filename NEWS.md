@@ -1,3 +1,9 @@
+# v0.2.0.9002
+
+## Major changes
+
+- Add `geom_gene_label` (#3, thanks @adomingues)
+
 # v0.2.0.9001
 
 ## Bug fixes

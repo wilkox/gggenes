@@ -2,6 +2,9 @@
 
 S3method(makeContent,genearrowtree)
 export(geom_gene_arrow)
+export(geom_gene_label)
 export(make_alignment_dummies)
 export(theme_genes)
+import(ggfittext)
+import(grid)
 importFrom(grid,makeContent)
