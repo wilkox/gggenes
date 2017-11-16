@@ -1,3 +1,14 @@
+# v0.2.0.9003
+
+## Major changes
+
+- Add `forward` aesthetic to `geom_gene_arrow` (#3 and #5, thanks @adomingues
+  and @jasonserviss)
+
+## Minor changes
+
+- Edit docs and README
+
 # v0.2.0.9002
 
 ## Major changes

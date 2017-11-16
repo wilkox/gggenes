@@ -2,3 +2,4 @@
 ^README\.html$
 ^cran-comments\.md$
 ^\.travis\.yml$
+^README-.*\.png$

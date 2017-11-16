@@ -2,16 +2,19 @@
 #'
 #' `geom_gene_arrow` draws genes as arrows, allowing gene maps to be drawn.
 #'
-#' This geom draws genes arranged along a horizontal 'string' representing the
-#' molecule. The start and end positions of the gene are expressed with the
+#' This geom draws genes as arrows along a horizontal line representing the
+#' molecule. The start and end locations of the gene are expressed with the
 #' `xmin` and `xmax` aesthetics, while the molecule can be specified with the
-#' `y` aesthetic.
+#' `y` aesthetic. Optionally, an additional `forward` aesthetic can be used to
+#' reverse the orientation of some or all genes from that implied by `xmin` and
+#' `xmax`.
 #'
 #' Unless the plot is faceted with a free x scale, all the molecules will share
-#' a common x-axis. This means that if the genes are in very different numerical
-#' positions, they might appear very small and squished together. To get around
-#' this, either facet the plot with `scales = "free_x"`, or normalise the gene
-#' positions if their exact positions are not important.
+#' a common x axis. This means that if the locations are very different across
+#' different molecules, the genes might appear very small and squished together
+#' with a lot of unnecessary empty space. To get around this, either facet the
+#' plot with `scales = "free_x"`, or normalise the gene locations if their
+#' exact locations are not important.
 #'
 #' See `make_alignment_dummies` for a method to align genes between molecules.
 #'
@@ -21,6 +24,9 @@
 #'   \item xmin,xmax (start and end of the gene; will be used to determine
 #'         gene orientation)
 #'   \item y (molecule)
+#'   \item forward (if any value that is not TRUE, or coercible to TRUE, the
+#'   gene arrow will be drawn in the opposite direction to that determined by
+#'   `xmin` and `xmax`)
 #'   \item alpha
 #'   \item colour
 #'   \item fill
@@ -45,7 +51,7 @@
 #' geom_gene_arrow() +
 #' ggplot2::facet_wrap(~ molecule, scales = "free")
 #'
-#' @seealso theme_genes, make_alignment_dummies
+#' @seealso theme_genes, make_alignment_dummies, geom_gene_label
 #'
 #' @export
 geom_gene_arrow <- function(
@@ -79,6 +85,7 @@ geom_gene_arrow <- function(
 GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
   required_aes = c("xmin", "xmax", "y"),
   default_aes = ggplot2::aes(
+    forward = TRUE,
     alpha = 1,
     colour = "black",
     fill = "white",
@@ -108,6 +115,8 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
 
     data <- coord$transform(data, panel_scales)
 
+    # 
+
     gt <- grid::gTree(
       data = data,
       cl = "genearrowtree",
@@ -131,6 +140,11 @@ makeContent.genearrowtree <- function(x) {
 
     gene <- data[i, ]
 
+    # Reverse non-forward genes
+    if (gene$forward != TRUE) {
+      gene[, c("xmin", "xmax")] <- gene[, c("xmax", "xmin")]
+    }
+
     # Determine orientation
     orientation <- ifelse(gene$xmax > gene$xmin, 1, -1)
 
@@ -144,11 +158,11 @@ makeContent.genearrowtree <- function(x) {
       arrowhead_width
     )
 
-    # Calculate x-position of flange
+    # Calculate x coordinate of flange
     flangex <- (-orientation * arrowhead_width) + gene$xmax
 
     # Set arrow and arrowhead heights; it's convenient to divide these by two
-    # for calculating y positions on the polygon
+    # for calculating y coordinates on the polygon
     arrowhead_height <- as.numeric(grid::convertHeight(x$arrowhead_height, "native")) / 2
     arrow_body_height <- as.numeric(grid::convertHeight(x$arrow_body_height, "native")) / 2
 

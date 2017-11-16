@@ -10,6 +10,7 @@
   \item{start}{the start position of the gene}
   \item{end}{the end position of the gene}
   \item{gene}{the name of the gene}
+  \item{strand}{the strand of the gene}
 }}
 \usage{
 example_genes
