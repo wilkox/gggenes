@@ -39,7 +39,7 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   }
 
   # Map data
-  data <- data[as.character(unlist(mapping))]
+  data <- data[substring(as.character(mapping), 2)]
   names(data) <- names(mapping)
 
   # Get range of each molecule
@@ -71,10 +71,10 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   dummies <- dummies[, c("y", "start_dummy", "end_dummy", "id")]
 
   # Restore aesthetic names to dummies
-  names(dummies)[names(dummies) == "y"] <- as.character(mapping$y)
-  names(dummies)[names(dummies) == "start_dummy"] <- as.character(mapping$xmin)
-  names(dummies)[names(dummies) == "end_dummy"] <- as.character(mapping$xmax)
-  names(dummies)[names(dummies) == "id"] <- as.character(mapping$id)
+  names(dummies)[names(dummies) == "y"] <- as.character(mapping$y)[2]
+  names(dummies)[names(dummies) == "start_dummy"] <- as.character(mapping$xmin)[2]
+  names(dummies)[names(dummies) == "end_dummy"] <- as.character(mapping$xmax)[2]
+  names(dummies)[names(dummies) == "id"] <- as.character(mapping$id)[2]
 
   # Return dummies
   dummies

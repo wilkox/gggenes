@@ -1,3 +1,9 @@
+# v0.2.0.9004
+
+## Major changes
+
+- Support switch to tidy evaluation in `aes()` in anticipation of ggplot2 v2.3.0
+
 # v0.2.0.9003
 
 ## Major changes
