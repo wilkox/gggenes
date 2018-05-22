@@ -1,6 +1,6 @@
 Package: gggenes
 Title: Draw Gene Arrow Maps in 'ggplot2'
-Version: 0.2.0.9004
+Version: 0.2.0.9005
 Authors@R: person("David", "Wilkins", email = "david@wilkox.org",
                   role = c("aut", "cre"))
 Description: Provides a 'ggplot2' geom and helper functions for drawing gene
@@ -10,7 +10,8 @@ Depends:
 Imports:
     grid (>= 3.4.1),
     ggplot2 (>= 2.2.1),
-    ggfittext (>= 0.4.3)
+    ggfittext (>= 0.4.3),
+    rlang (>= 0.2.0)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

@@ -1,3 +1,9 @@
+# v0.2.0.9005
+
+## Minor changes
+
+- Add support for both pre- and post- ggplot2 v2.3.0 versions of `aes()`
+
 # v0.2.0.9004
 
 ## Major changes
