@@ -1,3 +1,9 @@
+# v0.2.0.9006
+
+## Minor changes
+
+- Change R version dependency to fix 'patchlevel' error on CMD check
+
 # v0.2.0.9005
 
 ## Minor changes
