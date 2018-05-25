@@ -83,7 +83,7 @@ ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
 
 ![](man/figures/README-make_alignment_dummies-1.png)<!-- -->
 
-## Labelling genes with `geom_gene_label` (development version only)
+## Labelling genes with `geom_gene_label`
 
 To label individual genes, provide a `label` aesthetic and use
 `geom_gene_label`. `geom_gene_label` uses the
@@ -105,7 +105,7 @@ ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
 
 ![](man/figures/README-labelled_genes-1.png)<!-- -->
 
-## Reversing some genes with the optional `forward` aesthetic (development version only)
+## Reversing some genes with the optional `forward` aesthetic
 
 Sometimes you might want to reverse the direction of some genes from
 that implied by `xmin` and `xmax`. For example, you might want to draw

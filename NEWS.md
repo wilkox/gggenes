@@ -1,39 +1,17 @@
-# v0.2.0.9006
+# v0.3.0
+
+## Major changes
+
+- `geom_gene_arrow()` now supports `forward` aesthetic (#3 and #5, thanks
+- `geom_gene_label` added (#3, thanks @adomingues)
+  @adomingues and @jasonserviss)
+- Compatible with ggplot2 v2.3.0
 
 ## Minor changes
 
 - Change R version dependency to fix 'patchlevel' error on CMD check
-
-# v0.2.0.9005
-
-## Minor changes
-
 - Add support for both pre- and post- ggplot2 v2.3.0 versions of `aes()`
-
-# v0.2.0.9004
-
-## Major changes
-
-- Support switch to tidy evaluation in `aes()` in anticipation of ggplot2 v2.3.0
-
-# v0.2.0.9003
-
-## Major changes
-
-- Add `forward` aesthetic to `geom_gene_arrow` (#3 and #5, thanks @adomingues
-  and @jasonserviss)
-
-## Minor changes
-
 - Edit docs and README
-
-# v0.2.0.9002
-
-## Major changes
-
-- Add `geom_gene_label` (#3, thanks @adomingues)
-
-# v0.2.0.9001
 
 ## Bug fixes
 
