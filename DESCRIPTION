@@ -6,9 +6,9 @@ Authors@R: person("David", "Wilkins", email = "david@wilkox.org",
 Description: Provides a 'ggplot2' geom and helper functions for drawing gene
   arrow maps.
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.3.0)
 Imports:
-    grid (>= 3.1.0),
+    grid (>= 3.3.0),
     ggplot2 (>= 2.2.1),
     ggfittext (>= 0.4.3),
     rlang (>= 0.2.0)
