@@ -39,9 +39,9 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   }
 
   # Map data
-  # NOTE - this is_quosure testing is for the ggplot2 2.3.0 transition. Once
-  # >2.3.0 is required, the non-quosure version can be removed.
-  if (rlang::is_quosure(mapping)) {
+  # NOTE - version testing is for the ggplot2 2.3.0 transition. Once >2.3.0 is
+  # required, this can be removed
+  if (packageVersion("ggplot2") >= "2.2.1.9000") {
     data <- data[substring(as.character(mapping), 2)]
   } else {
     data <- data[as.character(unlist(mapping))]
@@ -76,10 +76,10 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   # Clean up
   dummies <- dummies[, c("y", "start_dummy", "end_dummy", "id")]
 
-  # Restore aesthetic names to dummies
-  # NOTE - this is_quosure testing is for the ggplot2 2.3.0 transition. Once
-  # >2.3.0 is required, the non-quosure version can be removed.
-  if (rlang::is_quosure(mapping)) {
+  # Map data
+  # NOTE - version testing is for the ggplot2 2.3.0 transition. Once >2.3.0 is
+  # required, this can be removed
+  if (packageVersion("ggplot2") >= "2.2.1.9000") {
     names(dummies)[names(dummies) == "y"] <- as.character(mapping$y)[2]
     names(dummies)[names(dummies) == "start_dummy"] <- as.character(mapping$xmin)[2]
     names(dummies)[names(dummies) == "end_dummy"] <- as.character(mapping$xmax)[2]

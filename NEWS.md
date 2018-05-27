@@ -1,3 +1,9 @@
+# v0.3.0.9001
+
+## Bug fixes
+
+- Now *actually* compatible with ggplot2 v2.3.0
+
 # v0.3.0
 
 ## Major changes
