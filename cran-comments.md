@@ -1,3 +1,5 @@
+Apologies for the second submission in less than a month, this update is necessary to ensure compatibility with the upcoming release of 'ggplot2' 2.3.0 on June 25th.
+
 # Test environments
 
 * local macOS install, R 3.5.0
