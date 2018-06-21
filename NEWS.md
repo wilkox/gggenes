@@ -1,3 +1,9 @@
+# v0.3.1.9001
+
+# Bug fixes
+
+- Hopefully, finally fix compatibility with tidyeval changes in ggplot2 v2.3.0
+
 # v0.3.1
 
 ## Bug fixes
