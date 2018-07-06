@@ -131,10 +131,6 @@ GeomGeneLabel <- ggplot2::ggproto(
       stop("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
     }
 
-    # Convert height to mm and Set as an aesthetic (required for ggfittext)
-    height <- as.numeric(grid::convertHeight(height, "mm"))
-    data$height <- rep(height, nrow(data))
-
     # Use ggfittext's fittexttree to draw text
     gt <- grid::gTree(
       data = data,
@@ -144,7 +140,8 @@ GeomGeneLabel <- ggplot2::ggproto(
       min.size = min.size,
       grow = grow,
       reflow = reflow,
-      cl = "fittexttree"
+      cl = "fittexttree",
+      height = height
     )
     gt$name <- grid::grobName(gt, "geom_gene_label")
     gt
