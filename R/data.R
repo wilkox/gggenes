@@ -10,4 +10,12 @@
 #'   \item{gene}{the name of the gene}
 #'   \item{strand}{the strand of the gene}
 #' }
+#' example_subgenes (237 rows) also contains:
+#' \describe{
+#'   \item{from}{the start position of the subgene segment}
+#'   \item{strand}{the end position of the subgene segment}
+#' }
 "example_genes"
+
+#' @rdname example_genes
+"example_subgenes"
