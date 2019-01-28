@@ -130,20 +130,19 @@ by using the subgene_arrow geom.
 This works similarly to `geom_gene_arrow`, but in addition to `xmin` and `xmax`
 (which determines the gene boundary), we need the aesthetics `xsubmin` and
 `xsubmax`, which will produce pretty arrowheads as long as `xmin>=xsubmin` and
-`xmax>=xsubmax` for all subgenes.
+`xmax>=xsubmax` for all subgenes (subgenes that break gene boundaries will
+be skipped with a warning).
 
 The suggested usage is to use geom_gene_arrow with no fill, and then add a
 subgene layer over this. This example uses randomly drawn segments:
 
 ```{r subgenes}
-example_subgenes$direction <- ifelse(example_subgenes$strand == "forward", 1, -1)
 ggplot2::ggplot(example_genes,
-                ggplot2::aes(xmin = start, xmax = end, y = molecule,
-                             forward = direction)) +
+                ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
   ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  geom_gene_arrow(fill='white') +
-  geom_subgene_arrow(data=example_subgenes,
+  geom_gene_arrow(fill = "white") +
+  geom_subgene_arrow(data = example_subgenes,
     ggplot2::aes(xmin = start, xmax = end, y = molecule, fill = gene,
-                 forward = direction, xsubmin=from, xsubmax=to), color='black', alpha=.7) +
+                 xsubmin = from, xsubmax = to), color="black", alpha=.7) +
   theme_genes()
 ```

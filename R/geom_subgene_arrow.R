@@ -1,4 +1,4 @@
-#' A 'ggplot2' geom to overlay subgene segments on arrows
+# geom to overlay subgene segments on arrows
 #'
 #' `geom_subgene_arrow` draws subgenes segments as arrow fragments, allowing segments of arrows to overlay gene maps drawings
 #'
@@ -45,8 +45,8 @@
 #' ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
 #'                                             y = molecule)) +
 #' geom_gene_arrow() +
-#' geom_subgene_arrow(data=example_subgenes,
-#'       ggplot2::aes(xmin = start, xmax = end, xsubmin=from, xsubmax=to,
+#' geom_subgene_arrow(data = example_subgenes,
+#'       ggplot2::aes(xmin = start, xmax = end, xsubmin = from, xsubmax = to,
 #'                    y = molecule, fill = gene)) +
 #' ggplot2::facet_wrap(~ molecule, scales = "free")
 #'
@@ -112,13 +112,16 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
     arrow_body_height
   ) {
 
+    orig_data <- data
+    ## save original data
     data <- coord$transform(data, panel_scales)
     ## force rescale of sub characteristics
-    tmp <- setNames(data[,c('xsubmin','xsubmax')], c('xmin', 'xmax'))
-    data[,c('xsubmin','xsubmax')] <- coord$transform(tmp, panel_scales)
+    tmp <- setNames(data[,c("xsubmin", "xsubmax")], c("xmin", "xmax"))
+    data[,c("xsubmin", "xsubmax")] <- coord$transform(tmp, panel_scales)
 
     gt <- grid::gTree(
       data = data,
+      orig_data = orig_data,
       cl = "subgenearrowtree",
       arrowhead_width = arrowhead_width,
       arrowhead_height = arrowhead_height,
@@ -149,6 +152,17 @@ makeContent.subgenearrowtree <- function(x) {
     orientbool  <- subgene$xmax > subgene$xmin
     f <- ifelse(orientbool, force, `!`)
     orientation <- ifelse(orientbool, 1, -1)
+
+    # check if subgene is consistent w/ gene boundaries
+    upper <- ifelse(orientbool, x$orig_data$xmin[i], x$orig_data$xmax[i])
+    lower <- ifelse(orientbool, x$orig_data$xmax[i], x$orig_data$xmin[i])
+    if (any(x$orig_data[i,c("xsubmin", "xsubmax")] < upper) ||
+        any(x$orig_data[i,c("xsubmin", "xsubmax")] > lower) ||
+        orientbool != (subgene$xsubmax > subgene$xsubmin)
+      ) {
+        return(NULL)
+    }
+
 
     # Arrowhead defaults to 4 mm, unless the subgene is shorter in which case the
     # subgene is 100% arrowhead
@@ -235,7 +249,7 @@ makeContent.subgenearrowtree <- function(x) {
     }
     else {
       ## will we ever get here?
-      stop('Condition not met')
+      stop("Condition not met")
     }
     # Create polygon grob
     pg <- grid::polygonGrob(
@@ -252,7 +266,16 @@ makeContent.subgenearrowtree <- function(x) {
     # Return the polygon grob
     pg
   })
+  skip <- sapply(grobs, is.null)
+  if (any(skip)) {
+    subgenes <- x$orig_data[skip,, drop = FALSE]
+    message <- "Subgene %d (%d..%d) breaks boundaries of gene (%d..%d), skipping"
+    message <- sprintf(message, which(skip),
+                                subgenes$xsubmin, subgenes$xsubmax,
+                                subgenes$xmin,    subgenes$xmax)
+    warning(paste(message, collaspe = "\n"), call. = FALSE)
+  }
 
   class(grobs) <- "gList"
-  grid::setChildren(x, grobs)
+  grid::setChildren(x, grobs[!skip])
 }
