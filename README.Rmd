@@ -133,20 +133,19 @@ ggplot2::ggplot(subset(example_genes, molecule == "Genome1"),
   theme_genes()
 ```
 
-
 ## Viewing subgene segments
 
 We can highlight subgene segments, such as protein domains or local alignments,
-by using the subgene_arrow geom.
+using `geom_subgene_arrow`.
 
 This works similarly to `geom_gene_arrow`, but in addition to `xmin` and `xmax`
-(which determines the gene boundary), we need the aesthetics `xsubmin` and
-`xsubmax`, which will produce pretty arrowheads as long as `xmin>=xsubmin` and
-`xmax>=xsubmax` for all subgenes (subgenes that break gene boundaries will
-be skipped with a warning).
+(which determine the gene boundaries), we need the aesthetics `xsubmin` and
+`xsubmax` to determine the subgene boundaries. `geom_gene_arrow` will produce
+pretty arrowheads, as long as `xmin >= xsubmin` and `xmax >= xsubmax` for all
+subgenes (subgenes that break gene boundaries will be skipped with a warning).
 
-The suggested usage is to use geom_gene_arrow with no fill, and then add a
-subgene layer over this. This example uses randomly drawn segments:
+The suggested usage is to use `geom_gene_arrow` with no fill, and then add a
+subgene layer over this:
 
 ```{r subgenes}
 ggplot2::ggplot(example_genes,
