@@ -124,11 +124,39 @@ on the reverse strand from that implied by `xmin` and
 
 ``` r
 example_genes$direction <- ifelse(example_genes$strand == "forward", 1, -1)
-ggplot2::ggplot(subset(example_genes, molecule == "Genome1"), 
-                ggplot2::aes(xmin = start, xmax = end, y = strand, fill = gene, 
+ggplot2::ggplot(subset(example_genes, molecule == "Genome1"),
+                ggplot2::aes(xmin = start, xmax = end, y = strand, fill = gene,
                              forward = direction)) +
   geom_gene_arrow() +
   theme_genes()
 ```
 
 ![](man/figures/README-reversing_direction-1.png)<!-- -->
+
+## Viewing subgene segments
+
+We can highlight subgene segments, such as protein domains or local
+alignments, by using the subgene\_arrow geom.
+
+This works similarly to `geom_gene_arrow`, but in addition to `xmin` and
+`xmax` (which determines the gene boundary), we need the aesthetics
+`xsubmin` and `xsubmax`, which will produce pretty arrowheads as long as
+`xmin>=xsubmin` and `xmax>=xsubmax` for all subgenes (subgenes that
+break gene boundaries will be skipped with a warning).
+
+The suggested usage is to use geom\_gene\_arrow with no fill, and then
+add a subgene layer over this. This example uses randomly drawn
+segments:
+
+``` r
+ggplot2::ggplot(example_genes,
+                ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
+  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  geom_gene_arrow(fill = "white") +
+  geom_subgene_arrow(data = example_subgenes,
+    ggplot2::aes(xmin = start, xmax = end, y = molecule, fill = gene,
+                 xsubmin = from, xsubmax = to), color="black", alpha=.7) +
+  theme_genes()
+```
+
+![](man/figures/README-subgenes-1.png)<!-- -->

@@ -7,8 +7,9 @@
 geom_gene_label(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = FALSE,
   inherit.aes = TRUE, padding.x = grid::unit(1, "mm"),
-  padding.y = grid::unit(0.1, "lines"), align = "centre", min.size = 4,
-  grow = F, reflow = F, height = grid::unit(3, "mm"), ...)
+  padding.y = grid::unit(0.1, "lines"), align = "centre",
+  min.size = 4, grow = F, reflow = F, height = grid::unit(3, "mm"),
+  ...)
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{Standard

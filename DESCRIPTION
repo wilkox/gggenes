@@ -1,8 +1,10 @@
 Package: gggenes
 Title: Draw Gene Arrow Maps in 'ggplot2'
-Version: 0.3.1.9001
-Authors@R: person("David", "Wilkins", email = "david@wilkox.org",
-                  role = c("aut", "cre"))
+Version: 0.3.2
+Authors@R: c(person("David", "Wilkins", email = "david@wilkox.org",
+                  role = c("aut", "cre")),
+             person("Zachary", "Kurtz", email = "zdkurtz@gmail.com",
+                  role = c("ctb")))
 Description: Provides a 'ggplot2' geom and helper functions for drawing gene
   arrow maps.
 Depends:
@@ -14,7 +16,7 @@ Imports:
     rlang (>= 0.2.0)
 License: GPL-2
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 URL: https://github.com/wilkox/gggenes
 BugReports: https://github.com/wilkox/gggenes/issues
 Suggests: testthat,
