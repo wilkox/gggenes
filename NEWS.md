@@ -1,3 +1,9 @@
+# v0.3.2.9001
+
+# Major changes
+
+- Add new `geom_subgroup_arrow` (contributed by @zdk123)
+
 # v0.3.1.9001
 
 # Bug fixes
