@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_subgene_arrow.R
 \name{geom_subgene_arrow}
 \alias{geom_subgene_arrow}
-\title{A 'ggplot2' geom to overlay subgene segments on arrows}
+\title{`geom_subgene_arrow` draws subgenes segments as arrow fragments, allowing segments of arrows to overlay gene maps drawings}
 \usage{
 geom_subgene_arrow(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -25,9 +25,6 @@ Defaults to 4 mm.}
 the arrow. Defaults to 3 mm.}
 }
 \description{
-`geom_subgene_arrow` draws subgenes segments as arrow fragments, allowing segments of arrows to overlay gene maps drawings
-}
-\details{
 This geom draws gene segments as arrows along a horizontal line representing
 the molecule. The start and end locations of the gene are expressed with the
 `xmin` and `xmax` aesthetics, while the molecule can be specified with the
@@ -62,8 +59,8 @@ could be used in \code{\link{geom_gene_arrow}} (`forward`,
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule)) +
 geom_gene_arrow() +
-geom_subgene_arrow(data=example_subgenes,
-      ggplot2::aes(xmin = start, xmax = end, xsubmin=from, xsubmax=to,
+geom_subgene_arrow(data = example_subgenes,
+      ggplot2::aes(xmin = start, xmax = end, xsubmin = from, xsubmax = to,
                    y = molecule, fill = gene)) +
 ggplot2::facet_wrap(~ molecule, scales = "free")
 

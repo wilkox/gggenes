@@ -137,6 +137,7 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
 makeContent.subgenearrowtree <- function(x) {
 
   data <- x$data
+
   # Prepare grob for each subgenearrowtree
   grobs <- lapply(1:nrow(data), function(i) {
 
@@ -149,11 +150,11 @@ makeContent.subgenearrowtree <- function(x) {
     }
 
     # Determine orientation
-    orientbool  <- subgene$xmax > subgene$xmin
+    orientbool <- subgene$xmax > subgene$xmin
     f <- ifelse(orientbool, force, `!`)
     orientation <- ifelse(orientbool, 1, -1)
 
-    # check if subgene is consistent w/ gene boundaries
+    # Check if subgene is consistent with gene boundaries
     upper <- ifelse(orientbool, x$orig_data$xmin[i], x$orig_data$xmax[i])
     lower <- ifelse(orientbool, x$orig_data$xmax[i], x$orig_data$xmin[i])
     if (any(x$orig_data[i,c("xsubmin", "xsubmax")] < upper) ||
@@ -162,7 +163,6 @@ makeContent.subgenearrowtree <- function(x) {
       ) {
         return(NULL)
     }
-
 
     # Arrowhead defaults to 4 mm, unless the subgene is shorter in which case the
     # subgene is 100% arrowhead
@@ -195,11 +195,10 @@ makeContent.subgenearrowtree <- function(x) {
         subgene$y - arrow_body_height,
         subgene$y + arrow_body_height
       )
-    }
 
-    else if (f(subgene$xsubmin <= flangex)) {
-        ## need an 8 point polygon
-      ## need to calculate y at subgene end given a hypothetical gene arrow
+    # If a subgene boundary is within the arrowhead, an 8 point polygon is
+    # needed
+    } else if (f(subgene$xsubmin <= flangex)) {
       arrowhead_end_height <- arrowhead_height /
             (subgene$xmax -flangex) * (subgene$xmax -subgene$xsubmax)*orientation
 
@@ -225,15 +224,16 @@ makeContent.subgenearrowtree <- function(x) {
       )
       if (!orientbool)
         y[c(5,6)] <- y[c(6,5)]
-    }
-    else if (f(subgene$xsubmin > flangex)) {
+
+    # If both subgene boundaries are outside the arrowhead, the subgene can be
+    # drawn as a 4-point polygon (rectangle)
+    } else if (f(subgene$xsubmin > flangex)) {
       arrowhead_start_height <- arrowhead_height * (subgene$xmax-subgene$xsubmin) /
                                   (subgene$xmax -flangex)*orientation
 
       arrowhead_end_height <- arrowhead_height / (subgene$xmax -flangex) *
                                   (subgene$xmax -subgene$xsubmax)*orientation
 
-      ## 4 point polygon
       x <- c(
         subgene$xsubmin,
         subgene$xsubmin,
