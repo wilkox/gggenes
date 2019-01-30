@@ -1,8 +1,18 @@
+# v0.3.2.9002
+
+# Major changes
+
+- Add new `geom_subgene_label`
+
+# Bug fixes
+
+- Misc. small bug fixes and typo corrections
+
 # v0.3.2.9001
 
 # Major changes
 
-- Add new `geom_subgroup_arrow` (contributed by @zdk123)
+- Add new `geom_subgene_arrow` (contributed by @zdk123)
 
 # v0.3.1.9001
 

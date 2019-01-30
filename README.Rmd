@@ -1,8 +1,8 @@
 ---
 output:
   github_document:
-    html_preview: true
     toc: true
+    html_preview: true
     fig_width: 8
     fig_height: 8
 ---
@@ -45,7 +45,7 @@ ridiculously large molecules with ridiculously tiny genes.
 library(ggplot2)
 library(gggenes)
 
-gplot2::ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   scale_fill_brewer(palette = "Set3")
@@ -160,11 +160,11 @@ To label subgenes, we can use `geom_subgene_label`, which works similarly to
 `geom_gene_label` with the major difference that it requires `xsubmin` and
 `xsubmax` aesthetics (not `xmin` and `xmax`).
 
-```{r subgene labels}
+```{r subgene labels, fig.height = 2}
 ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
        aes(xmin = start, xmax = end, y = strand)
   ) +
-  # geom_gene_arrow() +
+  geom_gene_arrow() +
   geom_gene_label(aes(label = gene)) +
   geom_subgene_arrow(
     data = subset(example_subgenes, molecule == "Genome4" & gene == "genA"),
@@ -173,8 +173,6 @@ ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
   geom_subgene_label(
     data = subset(example_subgenes, molecule == "Genome4" & gene == "genA"),
     aes(xsubmin = from, xsubmax = to, label = subgene),
-		min.size = 0,
-		grow = TRUE,
-		colour = "black"
+    min.size = 0
   )
 ```

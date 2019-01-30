@@ -125,24 +125,44 @@ ggplot(
 ## Viewing subgene segments
 
 We can highlight subgene segments, such as protein domains or local alignments,
-by using the subgene_arrow geom.
+using `geom_subgene_arrow`.
 
 This works similarly to `geom_gene_arrow`, but in addition to `xmin` and `xmax`
-(which determines the gene boundary), we need the aesthetics `xsubmin` and
-`xsubmax`, which will produce pretty arrowheads as long as `xmin>=xsubmin` and
-`xmax>=xsubmax` for all subgenes (subgenes that break gene boundaries will
-be skipped with a warning).
+(which determine the gene boundaries), we need the aesthetics `xsubmin` and
+`xsubmax` to determine the subgene boundaries. `geom_gene_arrow` will produce
+pretty arrowheads, as long as `xmin >= xsubmin` and `xmax >= xsubmax` for all
+subgenes (subgenes that break gene boundaries will be skipped with a warning).
 
-The suggested usage is to use geom_gene_arrow with no fill, and then add a
-subgene layer over this. This example uses randomly drawn segments:
+The suggested usage is to use `geom_gene_arrow` with no fill, and then add a
+subgene layer over this:
 
 ```{r subgenes}
-ggplot2::ggplot(example_genes,
-                ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
-  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
   geom_gene_arrow(fill = "white") +
   geom_subgene_arrow(data = example_subgenes,
-    ggplot2::aes(xmin = start, xmax = end, y = molecule, fill = gene,
-                 xsubmin = from, xsubmax = to), color="black", alpha=.7) +
+    aes(xmin = start, xmax = end, y = molecule, fill = gene,
+        xsubmin = from, xsubmax = to), color="black", alpha=.7) +
   theme_genes()
+```
+
+To label subgenes, we can use `geom_subgene_label`, which works similarly to
+`geom_gene_label` with the major difference that it requires `xsubmin` and
+`xsubmax` aesthetics (not `xmin` and `xmax`).
+
+```{r subgene labels, fig.height = 2}
+ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
+       aes(xmin = start, xmax = end, y = strand)
+  ) +
+  geom_gene_arrow() +
+  geom_gene_label(aes(label = gene)) +
+  geom_subgene_arrow(
+    data = subset(example_subgenes, molecule == "Genome4" & gene == "genA"),
+    aes(xsubmin = from, xsubmax = to, fill = subgene)
+  ) +
+  geom_subgene_label(
+    data = subset(example_subgenes, molecule == "Genome4" & gene == "genA"),
+    aes(xsubmin = from, xsubmax = to, label = subgene),
+    min.size = 0
+  )
 ```

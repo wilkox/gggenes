@@ -113,6 +113,12 @@ GeomSubgeneLabel <- ggplot2::ggproto(
     subgroup = NA
   ) {
 
+    # Convert aesthetic names
+    data$xmin <- data$xsubmin
+    data$xmax <- data$xsubmax
+    data$xsubmin <- NULL
+    data$xsubmax <- NULL
+
     # Transform data to panel scales
     data <- coord$transform(data, panel_scales)
 
@@ -120,12 +126,6 @@ GeomSubgeneLabel <- ggplot2::ggproto(
     if (! align %in% c("left", "centre", "center", "middle", "right")) {
       stop("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
     }
-
-    # Set `xmin` and `xmax` to `xsubmin` and `xsubmax`
-		data$xmin <- data$xsubmin
-		data$xmax <- data$xsubmax
-		data$xsubmin <- NULL
-		data$xsubmax <- NULL
 
     # Use ggfittext's fittexttree to draw the text
     gt <- grid::gTree(

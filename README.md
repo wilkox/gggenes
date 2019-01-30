@@ -32,11 +32,10 @@ molecules with ridiculously tiny genes.
 library(ggplot2)
 library(gggenes)
 
-ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
-                                            molecule, fill = gene)) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  ggplot2::scale_fill_brewer(palette = "Set3")
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  scale_fill_brewer(palette = "Set3")
 ```
 
 ![](man/figures/README-geom_gene_arrow-1.png)<!-- -->
@@ -48,11 +47,10 @@ Because the resulting plot can look cluttered, a ‘ggplot2’ theme
 defaults.
 
 ``` r
-ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
-                                            molecule, fill = gene)) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  ggplot2::scale_fill_brewer(palette = "Set3") +
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  scale_fill_brewer(palette = "Set3") +
   theme_genes()
 ```
 
@@ -68,16 +66,15 @@ of each facet to visually align the selected gene across facets.
 ``` r
 dummies <- make_alignment_dummies(
   example_genes,
-  ggplot2::aes(xmin = start, xmax = end, y = molecule, id = gene),
+  aes(xmin = start, xmax = end, y = molecule, id = gene),
   on = "genE"
 )
 
-ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
-                                            molecule, fill = gene)) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  ggplot2::geom_blank(data = dummies) +
-  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  ggplot2::scale_fill_brewer(palette = "Set3") +
+  geom_blank(data = dummies) +
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  scale_fill_brewer(palette = "Set3") +
   theme_genes()
 ```
 
@@ -89,17 +86,18 @@ To label individual genes, provide a `label` aesthetic and use
 `geom_gene_label`. `geom_gene_label` uses the
 [‘ggfittext’](https://github.com/wilkox/ggfittext) package to fit
 the label text inside the gene arrows; see the ‘ggfittext’ documentation
-for more details on how it resizes and reflows text to make it
-fit.
+for more details on how it resizes and reflows text to make it fit.
 
 ``` r
-ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end, y =
-                                            molecule, fill = gene, label = gene)) +
+ggplot(
+    example_genes,
+    aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)
+  ) +
   geom_gene_arrow(arrowhead_height = unit(3, "mm"), arrowhead_width = unit(1, "mm")) +
   geom_gene_label(align = "left") +
-  ggplot2::geom_blank(data = dummies) +
-  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
-  ggplot2::scale_fill_brewer(palette = "Set3") +
+  geom_blank(data = dummies) +
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  scale_fill_brewer(palette = "Set3") +
   theme_genes()
 ```
 
@@ -124,9 +122,9 @@ on the reverse strand from that implied by `xmin` and
 
 ``` r
 example_genes$direction <- ifelse(example_genes$strand == "forward", 1, -1)
-ggplot2::ggplot(subset(example_genes, molecule == "Genome1"),
-                ggplot2::aes(xmin = start, xmax = end, y = strand, fill = gene,
-                             forward = direction)) +
+ggplot(subset(example_genes, molecule == "Genome1"),
+                aes(xmin = start, xmax = end, y = strand, fill = gene,
+                    forward = direction)) +
   geom_gene_arrow() +
   theme_genes()
 ```
@@ -149,14 +147,36 @@ The suggested usage is to use `geom_gene_arrow` with no fill, and then
 add a subgene layer over this:
 
 ``` r
-ggplot2::ggplot(example_genes,
-                ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
-  ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
   geom_gene_arrow(fill = "white") +
   geom_subgene_arrow(data = example_subgenes,
-    ggplot2::aes(xmin = start, xmax = end, y = molecule, fill = gene,
-                 xsubmin = from, xsubmax = to), color="black", alpha=.7) +
+    aes(xmin = start, xmax = end, y = molecule, fill = gene,
+        xsubmin = from, xsubmax = to), color="black", alpha=.7) +
   theme_genes()
 ```
 
 ![](man/figures/README-subgenes-1.png)<!-- -->
+
+To label subgenes, we can use `geom_subgene_label`, which works
+similarly to `geom_gene_label` with the major difference that it
+requires `xsubmin` and `xsubmax` aesthetics (not `xmin` and `xmax`).
+
+``` r
+ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
+       aes(xmin = start, xmax = end, y = strand)
+  ) +
+  geom_gene_arrow() +
+  geom_gene_label(aes(label = gene)) +
+  geom_subgene_arrow(
+    data = subset(example_subgenes, molecule == "Genome4" & gene == "genA"),
+    aes(xsubmin = from, xsubmax = to, fill = subgene)
+  ) +
+  geom_subgene_label(
+    data = subset(example_subgenes, molecule == "Genome4" & gene == "genA"),
+    aes(xsubmin = from, xsubmax = to, label = subgene),
+    min.size = 0
+  )
+```
+
+![](man/figures/README-subgene%20labels-1.png)<!-- -->
