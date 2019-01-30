@@ -3,7 +3,7 @@
 #' `geom_gene_label` can be used to add a text label to genes drawn with
 #' `geom_gene_arrow`.
 #'
-#' `geom_gene_label` uses the 'ggfittext' package to fit text to tiles. All text
+#' `geom_gene_label` uses the 'ggfittext' package to fit text to genes. All text
 #' drawing options available in `ggfittext::geom_fit_text` (growing, reflowing,
 #' etc.) are also available here. For full details on how these options work,
 #' see the documentation for `ggfittext::geom_fit_text`.
@@ -116,8 +116,8 @@ GeomGeneLabel <- ggplot2::ggproto(
     padding.x = grid::unit(1, "mm"),
     padding.y = grid::unit(1, "mm"),
     min.size = 4,
-    grow = F,
-    reflow = F,
+    grow = FALSE,
+    reflow = FALSE,
     align = "centre",
     height = grid::unit(3, "mm"),
     subgroup = NA
