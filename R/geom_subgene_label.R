@@ -39,6 +39,7 @@
 #'   \item fontface
 #'   \item angle
 #' }
+#' @export
 geom_subgene_label <- function(
   mapping = NULL,
   data = NULL,
@@ -120,12 +121,14 @@ GeomSubgeneLabel <- ggplot2::ggproto(
       stop("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
     }
 
-    # Rename `xsubmin` and `xsubmax`, for compatibility with fittexttree
-    names(data)[names(data) == "xsubmin"] <- "xmin"
-    names(data)[names(data) == "xsubmax"] <- "xmax"
+    # Set `xmin` and `xmax` to `xsubmin` and `xsubmax`
+		data$xmin <- data$xsubmin
+		data$xmax <- data$xsubmax
+		data$xsubmin <- NULL
+		data$xsubmax <- NULL
 
     # Use ggfittext's fittexttree to draw the text
-    gt <- grid:gTree(
+    gt <- grid::gTree(
       data = data,
       padding.x = padding.x,
       padding.y = padding.y,
