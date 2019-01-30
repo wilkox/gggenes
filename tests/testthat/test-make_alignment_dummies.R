@@ -1,7 +1,7 @@
 context("make_alignment_dummies")
 
 test_that("make_alignment_dummies works without errors", {
-  expect_error( {
+  expect_silent( {
     library(ggplot2)
     dummies <- make_alignment_dummies(
       example_genes,
@@ -9,7 +9,7 @@ test_that("make_alignment_dummies works without errors", {
       on = "genE",
       side = "right"
     )
-    ggplot(
+    p <- ggplot(
       example_genes,
       aes(xmin = start, xmax = end, y = molecule, fill = gene)
     ) +
@@ -20,5 +20,6 @@ test_that("make_alignment_dummies works without errors", {
         inherit.aes = F
       ) +
       facet_wrap(~ molecule, scales = "free", ncol = 1)
-  }, NA)
-})
+    print(p)
+  } )
+} )

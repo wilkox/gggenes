@@ -1,9 +1,9 @@
 context("geom_subgene_label")
 
 test_that("a simple geom_subgene_label plot is drawn without errors", {
-  expect_error( {
+  expect_silent( {
     library(ggplot2)
-    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
+    p <- ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
       geom_gene_arrow() +
       geom_subgene_arrow(
         data = example_subgenes,
@@ -20,5 +20,6 @@ test_that("a simple geom_subgene_label plot is drawn without errors", {
         aes(y = molecule, xsubmin = from, xsubmax = to, label = subgene)
       ) +
       facet_wrap(~ molecule, scales = "free", ncol = 1)
-  }, NA)
-})
+    print(p)
+  } )
+} )
