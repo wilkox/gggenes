@@ -1,3 +1,11 @@
+# v0.3.2.9003
+
+# Bug fixes
+
+- Replace `expect_error` with the more reliable `expect_silent` in tests
+- Fix bugs in several tests
+- Add visual testing with vdiffr
+
 # v0.3.2.9002
 
 # Major changes
