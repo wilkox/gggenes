@@ -16,10 +16,11 @@ test_that("make_alignment_dummies works without errors", {
       geom_gene_arrow() +
       geom_blank(
         data = dummies,
-        aes(xmin = start_dummy, xmax = end_dummy, y = Track),
+        aes(xmin = start, xmax = end, y = molecule),
         inherit.aes = F
       ) +
-      facet_wrap(~ molecule, scales = "free", ncol = 1)
+      facet_wrap(~ molecule, scales = "free", ncol = 1) +
+      theme_genes()
     print(p)
   } )
 } )
