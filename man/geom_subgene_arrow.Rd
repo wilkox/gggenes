@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_subgene_arrow.R
 \name{geom_subgene_arrow}
 \alias{geom_subgene_arrow}
-\title{`geom_subgene_arrow` draws subgenes segments as arrow fragments, allowing segments of arrows to overlay gene maps drawings}
+\title{A 'ggplot2' geom to draw subgene segments of gene arrows}
 \usage{
 geom_subgene_arrow(mapping = NULL, data = NULL, stat = "identity",
   position = "identity", na.rm = FALSE, show.legend = NA,
@@ -25,15 +25,19 @@ Defaults to 4 mm.}
 the arrow. Defaults to 3 mm.}
 }
 \description{
-This geom draws gene segments as arrows along a horizontal line representing
-the molecule. The start and end locations of the gene are expressed with the
-`xmin` and `xmax` aesthetics, while the molecule can be specified with the
-`y` aesthetic. The `xsubmin` and `xsubmax` aesthetics must also be supplied,
-representing the subgene segments that should be drawn. The subgene segments
-will be drawn w.r.t. the arrowhead of the underlying genes, so `xmin` and
-`xmax` must also be given, as should other aesthetics and arguments that
-could be used in \code{\link{geom_gene_arrow}} (`forward`,
-`arrowhead_width`, etc).
+`geom_subgene_arrow` draws subgenes segments within gene arrows drawn with
+`geom_gene_arrow`.
+}
+\details{
+The start and end locations of the subgene are given with the `xsubmin` and
+`xsubmax` aesthetics. `geom_subgene_arrow` requires some information about
+the 'parent' gene, provided with the same aesthetics used for
+`geom_gene_arrow`: start and end locations of the 'parent' gene with the
+`xmin` and `xmax` aesthetics, the molecule with the `y` aesthetic, and
+optionally the direction with the `forward` aesthetic. If the geometry of
+the parent gene has been changed with `arrowhead_width`, `arrowhead_height`
+or `arrow_body_height`, identical parameters should be given to
+`geom_subgene_arrow`.
 }
 \section{Aesthetics}{
 
@@ -44,8 +48,8 @@ could be used in \code{\link{geom_gene_arrow}} (`forward`,
   \item xsubmin,xsubmax (start and end of subgene segment). Should be consistent with `xmin`/`xmax`.
   \item y (molecule)
   \item forward (if any value that is not TRUE, or coercible to TRUE, the
-  gene arrow will be drawn in the opposite direction to that determined by
-  `xmin` and `xmax`)
+        gene arrow will be drawn in the opposite direction to that determined by
+        `xmin` and `xmax`)
   \item alpha
   \item colour
   \item fill
@@ -66,5 +70,7 @@ ggplot2::facet_wrap(~ molecule, scales = "free")
 
 }
 \seealso{
+geom_gene_arrow, geom_subgene_label
+
 theme_genes, make_alignment_dummies, geom_gene_arrow, geom_gene_label
 }

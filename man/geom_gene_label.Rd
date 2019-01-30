@@ -40,7 +40,7 @@ Defaults to 3 mm, which is the default height of gene arrows drawn with
 `geom_gene_arrow`.
 }
 \details{
-`geom_gene_label` uses the 'ggfittext' package to fit text to tiles. All text
+`geom_gene_label` uses the 'ggfittext' package to fit text to genes. All text
 drawing options available in `ggfittext::geom_fit_text` (growing, reflowing,
 etc.) are also available here. For full details on how these options work,
 see the documentation for `ggfittext::geom_fit_text`.
