@@ -160,7 +160,7 @@ To label subgenes, we can use `geom_subgene_label`, which works similarly to
 `geom_gene_label` with the major difference that it requires `xsubmin` and
 `xsubmax` aesthetics (not `xmin` and `xmax`).
 
-```{r subgene labels, fig.height = 2}
+```{r subgene_labels, fig.height = 2}
 ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
        aes(xmin = start, xmax = end, y = strand)
   ) +

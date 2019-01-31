@@ -179,4 +179,4 @@ ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
   )
 ```
 
-![](man/figures/README-subgene%20labels-1.png)<!-- -->
+![](man/figures/README-subgene_labels-1.png)<!-- -->
