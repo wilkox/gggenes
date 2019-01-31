@@ -46,7 +46,7 @@ test_that("plots look the way they should", {
       theme_genes()
   } )
 
-  vdiffr::expect_doppelganger("Plot with gene directions controlled by forward aesthetic", {
+  vdiffr::expect_doppelganger("Plot using forward aesthetic", {
     example_genes$direction <- ifelse(example_genes$strand == "forward", 1, -1)
     ggplot(subset(example_genes, molecule == "Genome1"),
                     aes(xmin = start, xmax = end, y = strand, fill = gene,
