@@ -1,3 +1,10 @@
+# v0.3.2.9004
+
+# Bug fixes
+
+- Fix failing visual tests
+- Fix space in figure file name
+
 # v0.3.2.9003
 
 # Bug fixes
