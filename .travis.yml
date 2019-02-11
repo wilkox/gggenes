@@ -5,7 +5,7 @@ sudo: false
 cache: packages
 
 r_github_packages:
-- tidyverse/ggplot2
+- r-lib/vdiffr
 
 r:
 - 3.3
