@@ -1,7 +1,21 @@
 
+  - [Installing ‘gggenes’](#installing-gggenes)
+  - [Drawing gene arrows with
+    `geom_gene_arrow`](#drawing-gene-arrows-with-geom_gene_arrow)
+  - [Beautifying the plot with
+    `theme_genes`](#beautifying-the-plot-with-theme_genes)
+  - [Aligning genes across facets with
+    `make_alignment_dummies`](#aligning-genes-across-facets-with-make_alignment_dummies)
+  - [Labelling genes with
+    `geom_gene_label`](#labelling-genes-with-geom_gene_label)
+  - [Reversing some genes with the optional `forward`
+    aesthetic](#reversing-some-genes-with-the-optional-forward-aesthetic)
+  - [Viewing subgene segments](#viewing-subgene-segments)
+
 [![Travis-CI Build
 Status](https://travis-ci.org/wilkox/gggenes.svg?branch=master)](https://travis-ci.org/wilkox/gggenes)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 **‘gggenes’ is a (quite small) set of tools for drawing gene arrow maps
 with ‘ggplot2.’**
