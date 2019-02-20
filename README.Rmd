@@ -1,7 +1,6 @@
 ---
 output:
   github_document:
-    toc: true
     html_preview: true
     fig_width: 8
     fig_height: 8
@@ -21,7 +20,8 @@ knitr::opts_chunk$set(
 
 # gggenes
 
-gggenes (quite small) set of tools for drawing gene arrow maps with ggplot2.
+gggenes is a [ggplot2](https://ggplot2.tidyverse.org) extension for drawing
+gene arrow maps.
 
 ## Installing gggenes
 
