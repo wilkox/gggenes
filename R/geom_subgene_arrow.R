@@ -1,46 +1,45 @@
 #' A 'ggplot2' geom to draw subgene segments of gene arrows
 #'
-#' `geom_subgene_arrow` draws subgenes segments within gene arrows drawn with
-#' `geom_gene_arrow`.
+#' `geom_subgene_arrow()` draws subgenes segments within gene arrows drawn with
+#' `geom_gene_arrow()`.
 #'
 #' The start and end locations of the subgene are given with the `xsubmin` and
-#' `xsubmax` aesthetics. `geom_subgene_arrow` requires some information about
+#' `xsubmax` aesthetics. `geom_subgene_arrow()` requires some information about
 #' the 'parent' gene, provided with the same aesthetics used for
-#' `geom_gene_arrow`: start and end locations of the 'parent' gene with the
+#' `geom_gene_arrow()`: start and end locations of the 'parent' gene with the
 #' `xmin` and `xmax` aesthetics, the molecule with the `y` aesthetic, and
 #' optionally the direction with the `forward` aesthetic. If the geometry of
 #' the parent gene has been changed with `arrowhead_width`, `arrowhead_height`
 #' or `arrow_body_height`, identical parameters should be given to
-#' `geom_subgene_arrow`.
+#' `geom_subgene_arrow()`.
 #'
 #' @section Aesthetics:
 #'
-#' \itemize{
-#'   \item xmin,xmax (start and end of the gene; will be used to determine
-#'         gene orientation)
-#'   \item xsubmin,xsubmax (start and end of subgene segment). Should be consistent with `xmin`/`xmax`.
-#'   \item y (molecule)
-#'   \item forward (if any value that is not TRUE, or coercible to TRUE, the
-#'         gene arrow will be drawn in the opposite direction to that determined by
-#'         `xmin` and `xmax`)
-#'   \item alpha
-#'   \item colour
-#'   \item fill
-#'   \item linetype
-#'   \item size
-#' }
+#' -  xmin,xmax (start and end of the gene; will be used to determine gene
+#' orientation)
+#' -  xsubmin,xsubmax (start and end of subgene segment). Should be consistent
+#' with `xmin`/`xmax`
+#' -  y (molecule)
+#' -  forward (if any value that is not TRUE, or coercible to TRUE, the gene
+#' arrow will be drawn in the opposite direction to that determined by `xmin`
+#' and `xmax`)
+#' -  alpha
+#' -  colour
+#' -  fill
+#' -  linetype
+#' -  size
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
-#' standard for ggplot2.
-#' @param arrowhead_width grid::unit object giving the width of the arrowhead.
-#' Defaults to 4 mm. If the gene is drawn smaller than this width, only the
-#' arrowhead will be drawn, compressed to the length of the gene.
-#' @param arrowhead_height grid::unit object giving the height of the arrowhead.
-#' Defaults to 4 mm.
-#' @param arrow_body_height grid::unit object giving the height of the body of
-#' the arrow. Defaults to 3 mm.
+#' standard for 'ggplot2'.
+#' @param arrowhead_width `grid::unit()` object giving the width of the
+#' arrowhead.  Defaults to 4 mm. If the gene is drawn smaller than this width,
+#' only the arrowhead will be drawn, compressed to the length of the gene.
+#' @param arrowhead_height `grid::unit()` object giving the height of the
+#' arrowhead.  Defaults to 4 mm.
+#' @param arrow_body_height `grid::unit()` object giving the height of the body
+#' of the arrow. Defaults to 3 mm.
 #'
-#' @seealso geom_gene_arrow, geom_subgene_label
+#' @seealso [geom_gene_arrow()], [geom_subgene_label()]
 #'
 #' @examples
 #'
@@ -51,8 +50,6 @@
 #'       ggplot2::aes(xmin = start, xmax = end, xsubmin = from, xsubmax = to,
 #'                    y = molecule, fill = gene)) +
 #' ggplot2::facet_wrap(~ molecule, scales = "free")
-#'
-#' @seealso theme_genes, make_alignment_dummies, geom_gene_arrow, geom_gene_label
 #'
 #' @export
 geom_subgene_arrow <- function(

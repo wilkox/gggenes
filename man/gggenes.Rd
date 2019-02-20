@@ -7,7 +7,7 @@
 \title{'gggenes': provides a 'ggplot2' geom and helper functions for drawing gene
 arrow maps.}
 \description{
-This package provides a 'ggplot2' geom, `geom_gene_arrow` a theme,
-`theme_genes`, and a helper function for visually aligning genes,
-`make_alignment_dummies`.
+This package provides a 'ggplot2' geom, \code{geom_gene_arrow} a theme,
+\code{theme_genes}, and a helper function for visually aligning genes,
+\code{make_alignment_dummies}.
 }

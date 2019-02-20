@@ -1,28 +1,31 @@
 
-  - [Installing ‘gggenes’](#installing-gggenes)
-  - [Drawing gene arrows with
-    `geom_gene_arrow`](#drawing-gene-arrows-with-geom_gene_arrow)
-  - [Beautifying the plot with
-    `theme_genes`](#beautifying-the-plot-with-theme_genes)
-  - [Aligning genes across facets with
-    `make_alignment_dummies`](#aligning-genes-across-facets-with-make_alignment_dummies)
-  - [Labelling genes with
-    `geom_gene_label`](#labelling-genes-with-geom_gene_label)
-  - [Reversing some genes with the optional `forward`
-    aesthetic](#reversing-some-genes-with-the-optional-forward-aesthetic)
-  - [Viewing subgene segments](#viewing-subgene-segments)
+  - [gggenes](#gggenes)
+      - [Installing gggenes](#installing-gggenes)
+      - [Drawing gene arrows with
+        `geom_gene_arrow()`](#drawing-gene-arrows-with-geom_gene_arrow)
+      - [Beautifying the plot with
+        `theme_genes`](#beautifying-the-plot-with-theme_genes)
+      - [Aligning genes across facets with
+        `make_alignment_dummies()`](#aligning-genes-across-facets-with-make_alignment_dummies)
+      - [Labelling genes with
+        `geom_gene_label()`](#labelling-genes-with-geom_gene_label)
+      - [Reversing some genes with the optional `forward`
+        aesthetic](#reversing-some-genes-with-the-optional-forward-aesthetic)
+      - [Viewing subgene segments](#viewing-subgene-segments)
 
 [![Travis-CI Build
 Status](https://travis-ci.org/wilkox/gggenes.svg?branch=master)](https://travis-ci.org/wilkox/gggenes)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
-**‘gggenes’ is a (quite small) set of tools for drawing gene arrow maps
-with ‘ggplot2.’**
+# gggenes
 
-## Installing ‘gggenes’
+gggenes (quite small) set of tools for drawing gene arrow maps with
+ggplot2.
 
-Install the stable version of ‘gggenes’ from CRAN:
+## Installing gggenes
+
+Install the stable version of gggenes from CRAN:
 
 `install.packages("gggenes")`
 
@@ -30,9 +33,9 @@ If you want the development version, install it from GitHub:
 
 `devtools::install_github("wilkox/gggenes")`
 
-## Drawing gene arrows with `geom_gene_arrow`
+## Drawing gene arrows with `geom_gene_arrow()`
 
-`geom_gene_arrow` is a ‘ggplot2’ geom that represents genes with arrows.
+`geom_gene_arrow()` is a ggplot2 geom that represents genes with arrows.
 The start and end locations of the genes within their molecule(s) are
 mapped to the `xmin` and `xmax` aesthetics respectively. These start and
 end locations are used to determine the directions in which the arrows
@@ -56,7 +59,7 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) 
 
 ## Beautifying the plot with `theme_genes`
 
-Because the resulting plot can look cluttered, a ‘ggplot2’ theme
+Because the resulting plot can look cluttered, a ggplot2 theme
 `theme_genes` is provided with some sensible
 defaults.
 
@@ -70,12 +73,12 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) 
 
 ![](man/figures/README-theme_genes-1.png)<!-- -->
 
-## Aligning genes across facets with `make_alignment_dummies`
+## Aligning genes across facets with `make_alignment_dummies()`
 
 Often you will want a certain gene to be vertically aligned across the
-faceted molecules. `make_alignment_dummies` generates a set of ‘dummy’
-genes that if added to the plot with `geom_blank` will extend the range
-of each facet to visually align the selected gene across facets.
+faceted molecules. `make_alignment_dummies()` generates a set of dummy
+genes that if added to the plot with `geom_blank()` will extend the
+range of each facet to visually align the selected gene across facets.
 
 ``` r
 dummies <- make_alignment_dummies(
@@ -94,13 +97,13 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) 
 
 ![](man/figures/README-make_alignment_dummies-1.png)<!-- -->
 
-## Labelling genes with `geom_gene_label`
+## Labelling genes with `geom_gene_label()`
 
 To label individual genes, provide a `label` aesthetic and use
-`geom_gene_label`. `geom_gene_label` uses the
-[‘ggfittext’](https://github.com/wilkox/ggfittext) package to fit
-the label text inside the gene arrows; see the ‘ggfittext’ documentation
-for more details on how it resizes and reflows text to make it fit.
+`geom_gene_label()`. `geom_gene_label()` uses the
+[ggfittext](https://github.com/wilkox/ggfittext) package to fit the
+label text inside the gene arrows; see the ggfittext documentation for
+more details on how it resizes and reflows text to make it fit.
 
 ``` r
 ggplot(
@@ -148,16 +151,16 @@ ggplot(subset(example_genes, molecule == "Genome1"),
 ## Viewing subgene segments
 
 We can highlight subgene segments, such as protein domains or local
-alignments, using `geom_subgene_arrow`.
+alignments, using `geom_subgene_arrow()`.
 
-This works similarly to `geom_gene_arrow`, but in addition to `xmin` and
-`xmax` (which determine the gene boundaries), we need the aesthetics
+This works similarly to `geom_gene_arrow()`, but in addition to `xmin`
+and `xmax` (which determine the gene boundaries), we need the aesthetics
 `xsubmin` and `xsubmax` to determine the subgene boundaries.
-`geom_gene_arrow` will produce pretty arrowheads, as long as `xmin >=
+`geom_gene_arrow()` will produce pretty arrowheads, as long as `xmin >=
 xsubmin` and `xmax >= xsubmax` for all subgenes (subgenes that break
 gene boundaries will be skipped with a warning).
 
-The suggested usage is to use `geom_gene_arrow` with no fill, and then
+The suggested usage is to use `geom_gene_arrow()` with no fill, and then
 add a subgene layer over this:
 
 ``` r
@@ -172,8 +175,8 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
 
 ![](man/figures/README-subgenes-1.png)<!-- -->
 
-To label subgenes, we can use `geom_subgene_label`, which works
-similarly to `geom_gene_label` with the major difference that it
+To label subgenes, we can use `geom_subgene_label()`, which works
+similarly to `geom_gene_label()` with the major difference that it
 requires `xsubmin` and `xsubmax` aesthetics (not `xmin` and `xmax`).
 
 ``` r

@@ -1,19 +1,19 @@
 #' A 'ggplot2' geom to add text labels to gene arrows
 #'
-#' `geom_gene_label` can be used to add a text label to genes drawn with
-#' `geom_gene_arrow`.
+#' `geom_gene_label()` can be used to add a text label to genes drawn with
+#' `geom_gene_arrow()`.
 #'
-#' `geom_gene_label` uses the 'ggfittext' package to fit text to genes. All text
-#' drawing options available in `ggfittext::geom_fit_text` (growing, reflowing,
-#' etc.) are also available here. For full details on how these options work,
-#' see the documentation for `ggfittext::geom_fit_text`.
+#' `geom_gene_label()` uses the 'ggfittext' package to fit text to genes. All
+#' text drawing options available in `ggfittext::geom_fit_text()` (growing,
+#' reflowing, etc.) are also available here. For full details on how these
+#' options work, see the documentation for `ggfittext::geom_fit_text()`.
 #'
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 #'
-#' @param padding.x,padding.y `grid::unit` object, giving horizontal or vertical
+#' @param padding.x,padding.y `grid::unit()` object, giving horizontal or vertical
 #' padding around the text. Defaults to 1 mm and 0.1 lines respectively.
 #' @param align Where inside the gene to place the text label. Default is
-#' `centre`; other options are `left` and `right`.
+#' 'centre'; other options are 'left' and 'right'.
 #' @param min.size Minimum font size, in points. If provided, text that would
 #' need to be shrunk below this size to fit inside the gene arrow will not be
 #' drawn. Defaults to 4 pt.
@@ -21,26 +21,24 @@
 #' arrow.
 #' @param reflow If `TRUE`, text will be reflowed (wrapped) to better fit the
 #' arrow.
-#' @param height grid::unit object giving the maximum height of the text.
+#' @param height `grid::unit()` object giving the maximum height of the text.
 #' Defaults to 3 mm, which is the default height of gene arrows drawn with
-#' `geom_gene_arrow`.
+#' `geom_gene_arrow()`.
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... Standard
-#' geom arguments as for `ggplot2::geom_text`.
+#' geom arguments as for `ggplot2::geom_text()`.
 #'
 #' @seealso geom_gene_arrow
 #'
 #' @section Aesthetics:
 #'
-#' \itemize{
-#'   \item xmin,xmax (start and end of the gene; required)
-#'   \item y (molecule; required)
-#'   \item colour
-#'   \item size
-#'   \item alpha
-#'   \item family
-#'   \item fontface
-#'   \item angle
-#' }
+#' - xmin,xmax (start and end of the gene; required)
+#' - y (molecule; required)
+#' - colour
+#' - size
+#' - alpha
+#' - family
+#' - fontface
+#' - angle
 #'
 #' @examples
 #'

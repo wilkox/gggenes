@@ -12,49 +12,49 @@ geom_subgene_arrow(mapping = NULL, data = NULL, stat = "identity",
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
-standard for ggplot2.}
+standard for 'ggplot2'.}
 
-\item{arrowhead_width}{grid::unit object giving the width of the arrowhead.
-Defaults to 4 mm. If the gene is drawn smaller than this width, only the
-arrowhead will be drawn, compressed to the length of the gene.}
+\item{arrowhead_width}{\code{grid::unit()} object giving the width of the
+arrowhead.  Defaults to 4 mm. If the gene is drawn smaller than this width,
+only the arrowhead will be drawn, compressed to the length of the gene.}
 
-\item{arrowhead_height}{grid::unit object giving the height of the arrowhead.
-Defaults to 4 mm.}
+\item{arrowhead_height}{\code{grid::unit()} object giving the height of the
+arrowhead.  Defaults to 4 mm.}
 
-\item{arrow_body_height}{grid::unit object giving the height of the body of
-the arrow. Defaults to 3 mm.}
+\item{arrow_body_height}{\code{grid::unit()} object giving the height of the body
+of the arrow. Defaults to 3 mm.}
 }
 \description{
-`geom_subgene_arrow` draws subgenes segments within gene arrows drawn with
-`geom_gene_arrow`.
+\code{geom_subgene_arrow()} draws subgenes segments within gene arrows drawn with
+\code{geom_gene_arrow()}.
 }
 \details{
-The start and end locations of the subgene are given with the `xsubmin` and
-`xsubmax` aesthetics. `geom_subgene_arrow` requires some information about
+The start and end locations of the subgene are given with the \code{xsubmin} and
+\code{xsubmax} aesthetics. \code{geom_subgene_arrow()} requires some information about
 the 'parent' gene, provided with the same aesthetics used for
-`geom_gene_arrow`: start and end locations of the 'parent' gene with the
-`xmin` and `xmax` aesthetics, the molecule with the `y` aesthetic, and
-optionally the direction with the `forward` aesthetic. If the geometry of
-the parent gene has been changed with `arrowhead_width`, `arrowhead_height`
-or `arrow_body_height`, identical parameters should be given to
-`geom_subgene_arrow`.
+\code{geom_gene_arrow()}: start and end locations of the 'parent' gene with the
+\code{xmin} and \code{xmax} aesthetics, the molecule with the \code{y} aesthetic, and
+optionally the direction with the \code{forward} aesthetic. If the geometry of
+the parent gene has been changed with \code{arrowhead_width}, \code{arrowhead_height}
+or \code{arrow_body_height}, identical parameters should be given to
+\code{geom_subgene_arrow()}.
 }
 \section{Aesthetics}{
 
-
 \itemize{
-  \item xmin,xmax (start and end of the gene; will be used to determine
-        gene orientation)
-  \item xsubmin,xsubmax (start and end of subgene segment). Should be consistent with `xmin`/`xmax`.
-  \item y (molecule)
-  \item forward (if any value that is not TRUE, or coercible to TRUE, the
-        gene arrow will be drawn in the opposite direction to that determined by
-        `xmin` and `xmax`)
-  \item alpha
-  \item colour
-  \item fill
-  \item linetype
-  \item size
+\item xmin,xmax (start and end of the gene; will be used to determine gene
+orientation)
+\item xsubmin,xsubmax (start and end of subgene segment). Should be consistent
+with \code{xmin}/\code{xmax}
+\item y (molecule)
+\item forward (if any value that is not TRUE, or coercible to TRUE, the gene
+arrow will be drawn in the opposite direction to that determined by \code{xmin}
+and \code{xmax})
+\item alpha
+\item colour
+\item fill
+\item linetype
+\item size
 }
 }
 
@@ -70,7 +70,5 @@ ggplot2::facet_wrap(~ molecule, scales = "free")
 
 }
 \seealso{
-geom_gene_arrow, geom_subgene_label
-
-theme_genes, make_alignment_dummies, geom_gene_arrow, geom_gene_label
+\code{\link[=geom_gene_arrow]{geom_gene_arrow()}}, \code{\link[=geom_subgene_label]{geom_subgene_label()}}
 }

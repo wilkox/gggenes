@@ -12,9 +12,9 @@ This theme removes extraneous plot elements for drawing an
 }
 \details{
 This theme removes strip text (the text that labels facets when you use
-`facet_wrap` or `facet_grid`). This makes it easier to draw molecules on
-different x scales by setting the y aesthetic to the molecule, then faceting
-with `facet_grid( ~ molecule, scales = "free")`.
+\code{ggplot2::facet_wrap()} or \code{ggplot::facet_grid()}). This makes it easier to
+draw molecules on different x scales by setting the y aesthetic to the
+molecule, then faceting with \code{facet_grid( ~ molecule, scales = "free")}.
 }
 \examples{
 
@@ -26,5 +26,5 @@ theme_genes()
 
 }
 \seealso{
-geom_gene_arrows
+\code{\link[=geom_gene_arrow]{geom_gene_arrow()}}
 }

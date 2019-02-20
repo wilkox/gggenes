@@ -8,24 +8,25 @@ make_alignment_dummies(data, mapping, on, side = "left")
 }
 \arguments{
 \item{data}{Data frame of genes. This is almost certainly the same data frame
-that will later be passed to `ggplot2::ggplot`.}
+that will later be passed to \code{ggplot2::ggplot()}.}
 
-\item{mapping}{Aesthetic mapping, created with `ggplot2::aes`. Must contain
-the following aesthetics: `xmin`, `xmax`, `y`, and `id` (a unique identifier
-for each gene).}
+\item{mapping}{Aesthetic mapping, created with \code{ggplot2::aes()}. Must
+contain the following aesthetics: \code{xmin}, \code{xmax}, \code{y}, and \code{id} (a unique
+identifier for each gene).}
 
 \item{on}{Name of gene to be visually aligned across facets. This gene must
-be present in 'data', in the column mapped to the `id` aesthetic.}
+be present in 'data', in the column mapped to the \code{id} aesthetic.}
 
-\item{side}{Should the visual alignment be of the `left` (default) or `right`
-side of the gene?}
+\item{side}{Should the visual alignment be of the 'left' (default) or
+'right' side of the gene?}
 }
 \description{
-`make_alignment_dummies` helps you to visually align genes across molecules
-that have been faceted with a free x scale. The output of this function is a
-data frame of dummy genes. If these dummy genes are added to a 'ggplot2' plot
-with `geom_blank`, they will extend the x axis range in such a way that the
-start or end of a selected gene is visually aligned across the facets.
+\code{make_alignment_dummies()} helps you to visually align genes across
+molecules that have been faceted with a free x scale. The output of this
+function is a data frame of dummy genes. If these dummy genes are added to a
+'ggplot2' plot with \code{ggplot::geom_blank()}, they will extend the x axis
+range in such a way that the start or end of a selected gene is visually
+aligned across the facets.
 }
 \examples{
 

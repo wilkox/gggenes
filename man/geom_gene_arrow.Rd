@@ -14,51 +14,50 @@ geom_gene_arrow(mapping = NULL, data = NULL, stat = "identity",
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2.}
 
-\item{arrowhead_width}{grid::unit object giving the width of the arrowhead.
-Defaults to 4 mm. If the gene is drawn smaller than this width, only the
-arrowhead will be drawn, compressed to the length of the gene.}
+\item{arrowhead_width}{\code{grid::unit()} object giving the width of the
+arrowhead.  Defaults to 4 mm. If the gene is drawn smaller than this width,
+only the arrowhead will be drawn, compressed to the length of the gene.}
 
-\item{arrowhead_height}{grid::unit object giving the height of the arrowhead.
-Defaults to 4 mm.}
+\item{arrowhead_height}{\code{grid::unit()} object giving the height of the
+arrowhead.  Defaults to 4 mm.}
 
-\item{arrow_body_height}{grid::unit object giving the height of the body of
-the arrow. Defaults to 3 mm.}
+\item{arrow_body_height}{\code{grid::unit()} object giving the height of the body
+of the arrow. Defaults to 3 mm.}
 }
 \description{
-`geom_gene_arrow` draws genes as arrows, allowing gene maps to be drawn.
+\code{geom_gene_arrow()} draws genes as arrows, allowing gene maps to be drawn.
 }
 \details{
 This geom draws genes as arrows along a horizontal line representing the
 molecule. The start and end locations of the gene are expressed with the
-`xmin` and `xmax` aesthetics, while the molecule can be specified with the
-`y` aesthetic. Optionally, an additional `forward` aesthetic can be used to
-reverse the orientation of some or all genes from that implied by `xmin` and
-`xmax`.
+\code{xmin} and \code{xmax} aesthetics, while the molecule can be specified with the
+\code{y} aesthetic. Optionally, an additional \code{forward} aesthetic can be used to
+reverse the orientation of some or all genes from that implied by \code{xmin} and
+\code{xmax}.
 
 Unless the plot is faceted with a free x scale, all the molecules will share
 a common x axis. This means that if the locations are very different across
 different molecules, the genes might appear very small and squished together
 with a lot of unnecessary empty space. To get around this, either facet the
-plot with `scales = "free_x"`, or normalise the gene locations if their
+plot with \code{scales = "free_x"}, or normalise the gene locations if their
 exact locations are not important.
 
-See `make_alignment_dummies` for a method to align genes between molecules.
+See \code{make_alignment_dummies()} for a method to align genes between molecules.
 }
 \section{Aesthetics}{
 
-
 \itemize{
-  \item xmin,xmax (start and end of the gene; will be used to determine
-        gene orientation)
-  \item y (molecule)
-  \item forward (if any value that is not TRUE, or coercible to TRUE, the
-  gene arrow will be drawn in the opposite direction to that determined by
-  `xmin` and `xmax`)
-  \item alpha
-  \item colour
-  \item fill
-  \item linetype
-  \item size
+\item xmin,xmax (start and end of the gene; will be used to determine gene
+orientation)
+\item y (molecule)
+\item forward (if any value that is not TRUE, or coercible to TRUE, the gene
+arrow will be drawn in the opposite direction to that determined by \code{xmin}
+and \code{xmax})
+\item alpha
+\item colour
+\item fill
+\item linetype
+\item size
 }
 }
 
@@ -71,5 +70,5 @@ ggplot2::facet_wrap(~ molecule, scales = "free")
 
 }
 \seealso{
-theme_genes, make_alignment_dummies, geom_gene_label
+\code{\link[=theme_genes]{theme_genes()}}, \code{\link[=make_alignment_dummies]{make_alignment_dummies()}}, \code{\link[=geom_gene_label]{geom_gene_label()}}
 }

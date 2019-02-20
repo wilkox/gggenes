@@ -1,3 +1,5 @@
+^docs$
+^_pkgdown\.yml$
 ^README\.Rmd$
 ^README\.html$
 ^cran-comments\.md$

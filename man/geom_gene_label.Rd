@@ -13,52 +13,51 @@ geom_gene_label(mapping = NULL, data = NULL, stat = "identity",
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{Standard
-geom arguments as for `ggplot2::geom_text`.}
+geom arguments as for \code{ggplot2::geom_text()}.}
 
-\item{padding.x, padding.y}{`grid::unit` object, giving horizontal or vertical
+\item{padding.x, padding.y}{\code{grid::unit()} object, giving horizontal or vertical
 padding around the text. Defaults to 1 mm and 0.1 lines respectively.}
 
 \item{align}{Where inside the gene to place the text label. Default is
-`centre`; other options are `left` and `right`.}
+'centre'; other options are 'left' and 'right'.}
 
 \item{min.size}{Minimum font size, in points. If provided, text that would
 need to be shrunk below this size to fit inside the gene arrow will not be
 drawn. Defaults to 4 pt.}
 
-\item{grow}{If `TRUE`, text will be grown as well as shrunk to fill the
+\item{grow}{If \code{TRUE}, text will be grown as well as shrunk to fill the
 arrow.}
 
-\item{reflow}{If `TRUE`, text will be reflowed (wrapped) to better fit the
+\item{reflow}{If \code{TRUE}, text will be reflowed (wrapped) to better fit the
 arrow.}
 
-\item{height}{grid::unit object giving the maximum height of the text.
+\item{height}{\code{grid::unit()} object giving the maximum height of the text.
 Defaults to 3 mm, which is the default height of gene arrows drawn with
-`geom_gene_arrow`.}
+\code{geom_gene_arrow()}.}
 }
 \description{
-`geom_gene_label` can be used to add a text label to genes drawn with
-`geom_gene_arrow`.
+\code{geom_gene_label()} can be used to add a text label to genes drawn with
+\code{geom_gene_arrow()}.
 }
 \details{
-`geom_gene_label` uses the 'ggfittext' package to fit text to genes. All text
-drawing options available in `ggfittext::geom_fit_text` (growing, reflowing,
-etc.) are also available here. For full details on how these options work,
-see the documentation for `ggfittext::geom_fit_text`.
+\code{geom_gene_label()} uses the 'ggfittext' package to fit text to genes. All
+text drawing options available in \code{ggfittext::geom_fit_text()} (growing,
+reflowing, etc.) are also available here. For full details on how these
+options work, see the documentation for \code{ggfittext::geom_fit_text()}.
 
 Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 }
 \section{Aesthetics}{
 
-
 \itemize{
-  \item xmin,xmax (start and end of the gene; required)
-  \item y (molecule; required)
-  \item colour
-  \item size
-  \item alpha
-  \item family
-  \item fontface
-  \item angle
+\item xmin,xmax (start and end of the gene; required)
+\item y (molecule; required)
+\item colour
+\item size
+\item alpha
+\item family
+\item fontface
+\item angle
 }
 }
 

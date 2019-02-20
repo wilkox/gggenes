@@ -1,19 +1,20 @@
 #' A 'ggplot2' geom to add text labels to subgenes
 #'
-#' `geom_subgene_label` can be used to add a text label to subgenes drawn with
-#' `geom_subgene_arrow`.
+#' `geom_subgene_label()` can be used to add a text label to subgenes drawn
+#' with `geom_subgene_arrow()`.
 #'
-#' `geom_subgene_label` uses the 'ggfittext' package to fit text to genes. All
-#' text drawing options availale in `ggfittext::geom_fit_text` (growing,
+#' `geom_subgene_label()` uses the 'ggfittext' package to fit text to genes.
+#' All text drawing options available in `ggfittext::geom_fit_text()` (growing,
 #' reflowing, etc.) are also available here. For full details on how these
-#' options work, see the documentation for `ggfittext::geom_fit_text`.
+#' options work, see the documentation for `ggfittext::geom_fit_text()`.
 #'
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics.)
 #'
-#' @param padding.x,padding.y `grid::unit` object, giving horizontal or vertical
-#' padding around the text. Defaults to 1 mm and 0.1 lines respectively.
+#' @param padding.x,padding.y `grid::unit()` object, giving horizontal or
+#' vertical padding around the text. Defaults to 1 mm and 0.1 lines
+#' respectively.
 #' @param align Where inside the subgene to place the text label. Default is
-#' `centre`; other options are `left` and `right`.
+#' 'centre'; other options are 'left' and 'right'.
 #' @param min.size Minimum font size, in points. If provided, text that would
 #' need to be shrunk below this size to fit inside the subgene will not be
 #' drawn. Defaults to 4 pt.
@@ -21,24 +22,23 @@
 #' subgene.
 #' @param reflow If `TRUE`, text will be reflowed (wrapped) to better fit the
 #' subgene.
-#' @param height grid::unit object giving the maximum height of the text.
+#' @param height `grid::unit()` object giving the maximum height of the text.
 #' Defaults to 3 mm, which is the default height of gene arrows (and therefore
-#' of subgenes) drawn with `geom_gene_arrow`.
+#' of subgenes) drawn with `geom_gene_arrow()`.
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... Standard
-#' geom arguments as for `ggplot2::geom_text`.
+#' geom arguments as for `ggplot2::geom_text()`.
 #' 
 #' @section Aesthetics:
 #'
-#' \itemize{
-#'   \item xsubmin,xsubmax (start and end of the subgene; required)
-#'   \item y (molecule; required)
-#'   \item colour
-#'   \item size
-#'   \item alpha
-#'   \item family
-#'   \item fontface
-#'   \item angle
-#' }
+#' -  xsubmin,xsubmax (start and end of the subgene; required)
+#' -  y (molecule; required)
+#' -  colour
+#' -  size
+#' -  alpha
+#' -  family
+#' -  fontface
+#' -  angle
+#'
 #' @export
 geom_subgene_label <- function(
   mapping = NULL,

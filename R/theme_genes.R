@@ -4,11 +4,11 @@
 #' 'arrows-on-a-string' style gene map in 'ggplot2'.
 #'
 #' This theme removes strip text (the text that labels facets when you use
-#' `facet_wrap` or `facet_grid`). This makes it easier to draw molecules on
-#' different x scales by setting the y aesthetic to the molecule, then faceting
-#' with `facet_grid( ~ molecule, scales = "free")`.
+#' `ggplot2::facet_wrap()` or `ggplot::facet_grid()`). This makes it easier to
+#' draw molecules on different x scales by setting the y aesthetic to the
+#' molecule, then faceting with `facet_grid( ~ molecule, scales = "free")`.
 #'
-#' @seealso geom_gene_arrows
+#' @seealso [geom_gene_arrow()]
 #'
 #' @examples
 #'

@@ -1,0 +1,6 @@
+pandoc: '2.6'
+pkgdown: 1.3.0
+pkgdown_sha: ~
+articles:
+  introduction-to-gggenes: introduction-to-gggenes.html
+
