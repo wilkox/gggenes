@@ -4,11 +4,9 @@ language: r
 sudo: false
 cache: packages
 
-r_packages:
-- ggplot2
-
 r_github_packages:
 - r-lib/vdiffr
+- ggplot2
 
 r:
 - 3.3
