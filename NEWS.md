@@ -1,47 +1,53 @@
-# v0.3.2.9004
+# ggfittext 0.4.2.9005
 
-# Bug fixes
+## Major changes
+
+- Support new version of ggfittext (0.8.0)
+
+# ggfittext 0.3.2.9004
+
+## Bug fixes
 
 - Fix failing visual tests
 - Fix space in figure file name
 
-# v0.3.2.9003
+# ggfittext 0.3.2.9003
 
-# Bug fixes
+## Bug fixes
 
 - Replace `expect_error` with the more reliable `expect_silent` in tests
 - Fix bugs in several tests
 - Add visual testing with vdiffr
 
-# v0.3.2.9002
+# ggfittext 0.3.2.9002
 
-# Major changes
+3# Major changes
 
 - Add new `geom_subgene_label`
 
-# Bug fixes
+## Bug fixes
 
 - Misc. small bug fixes and typo corrections
 
-# v0.3.2.9001
+# ggfittext 0.3.2.9001
 
-# Major changes
+## Major changes
 
 - Add new `geom_subgene_arrow` (contributed by @zdk123)
 
-# v0.3.1.9001
+# ggfittext 0.3.1.9001
 
-# Bug fixes
+## Bug fixes
 
 - Hopefully, finally fix compatibility with tidyeval changes in ggplot2 v2.3.0
 
-# v0.3.1
+# ggfittext 0.3.1
 
 ## Bug fixes
 
 - Now *actually* compatible with ggplot2 v2.3.0
 
-# v0.3.0
+# ggfittext 0.3.0
 
 ## Major changes
 
@@ -60,7 +66,7 @@
 
 - Remove README.html so GitHub renders README correctly
 
-# v0.2.0
+# ggfittext 0.2.0
 
 ## Major changes
 

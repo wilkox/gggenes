@@ -139,7 +139,8 @@ GeomGeneLabel <- ggplot2::ggproto(
       grow = grow,
       reflow = reflow,
       cl = "fittexttree",
-      height = height
+      height = height,
+      fullheight = TRUE
     )
     gt$name <- grid::grobName(gt, "geom_gene_label")
     gt

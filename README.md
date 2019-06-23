@@ -46,8 +46,7 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) 
 ## Beautifying the plot with `theme_genes`
 
 Because the resulting plot can look cluttered, a ggplot2 theme
-`theme_genes` is provided with some sensible
-defaults.
+`theme_genes` is provided with some sensible defaults.
 
 ``` r
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
@@ -120,8 +119,7 @@ i.e. that implied by `xmin` and `xmax`. If `forward` is FALSE, or any
 value that coerces to FALSE such as -1, the gene will be drawn in the
 reverse of this implied direction. In the following example, the
 `forward` aesthetic has been used to reverse the direction of all genes
-on the reverse strand from that implied by `xmin` and
-`xmax`.
+on the reverse strand from that implied by `xmin` and `xmax`.
 
 ``` r
 example_genes$direction <- ifelse(example_genes$strand == "forward", 1, -1)
