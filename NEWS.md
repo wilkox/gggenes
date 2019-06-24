@@ -51,4 +51,4 @@
 
 ## Bug fixes
 
-- Fix drawing of `geom_gene_arrow()` keq
+- Fix drawing of `geom_gene_arrow()`
