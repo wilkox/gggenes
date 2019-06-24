@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gggenes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -93,12 +93,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/wilkox/gggenes">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -112,15 +107,113 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/wilkox/gggenes/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      
     </div>
 
+    <div id="ggfittext-040" class="section level1">
+<h1 class="page-header">
+<a href="#ggfittext-040" class="anchor"></a>ggfittext 0.4.0<small> Unreleased </small>
+</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Add new <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> (contributed by <a href='https://github.com/zdk123'>@zdk123</a>)</li>
+<li>Add new <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code>
+</li>
+<li>Support new version of ggfittext (0.8.0)</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fix failing visual tests</li>
+<li>Fix space in figure file name</li>
+<li>Replace <code>expect_error</code> with the more reliable <code>expect_silent</code> in tests</li>
+<li>Fix bugs in several tests</li>
+<li>Add visual testing with vdiffr</li>
+<li>Misc. small bug fixes and typo corrections</li>
+<li>Fix compatibility with tidyeval changes in ggplot2 v2.3.0</li>
+</ul>
+</div>
+</div>
+    <div id="ggfittext-031" class="section level1">
+<h1 class="page-header">
+<a href="#ggfittext-031" class="anchor"></a>ggfittext 0.3.1<small> 2018-06-16 </small>
+</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Now <em>actually</em> compatible with ggplot2 v2.3.0</li>
+</ul>
+</div>
+</div>
+    <div id="ggfittext-030" class="section level1">
+<h1 class="page-header">
+<a href="#ggfittext-030" class="anchor"></a>ggfittext 0.3.0<small> 2018-05-26 </small>
+</h1>
+<div id="major-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<ul>
+<li>
+<code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> now supports <code>forward</code> aesthetic (#3 and #5, thanks <a href='https://github.com/adomingues'>@adomingues</a> and <a href='https://github.com/jasonserviss'>@jasonserviss</a>)</li>
+<li>
+<code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> added (#3, thanks <a href='https://github.com/adomingues'>@adomingues</a>)</li>
+<li>Compatible with ggplot2 v2.3.0</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Change R version dependency to fix ‘patchlevel’ error on CMD check</li>
+<li>Add support for both pre- and post- ggplot2 v2.3.0 versions of <code>aes()</code>
+</li>
+<li>Edit docs and README</li>
+</ul>
+</div>
+<div id="bug-fixes-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Remove README.html so GitHub renders README correctly</li>
+</ul>
+</div>
+</div>
+    <div id="ggfittext-020" class="section level1">
+<h1 class="page-header">
+<a href="#ggfittext-020" class="anchor"></a>ggfittext 0.2.0<small> 2017-08-24 </small>
+</h1>
+<div id="major-changes-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<ul>
+<li>Remove ‘dplyr’ dependency</li>
+<li>Update documentation</li>
+<li>Add vignette</li>
+</ul>
+</div>
+<div id="bug-fixes-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fix drawing of <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> key</li>
+</ul>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#ggfittext-040">0.4.0</a></li>
+        <li><a href="#ggfittext-031">0.3.1</a></li>
+        <li><a href="#ggfittext-030">0.3.0</a></li>
+        <li><a href="#ggfittext-020">0.2.0</a></li>
       </ul>
     </div>
   </div>

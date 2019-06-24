@@ -17,7 +17,7 @@ Imports:
 License: GPL-2
 LazyData: true
 RoxygenNote: 6.1.1
-URL: https://github.com/wilkox/gggenes
+URL: https://wilkox.org/gggenes
 BugReports: https://github.com/wilkox/gggenes/issues
 Suggests: testthat,
     knitr,

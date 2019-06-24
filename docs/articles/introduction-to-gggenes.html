@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gggenes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -61,14 +61,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/wilkox/gggenes">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -83,9 +76,9 @@
       <h1>Introduction to ‘gggenes’</h1>
                         <h4 class="author">David Wilkins</h4>
             
-            <h4 class="date">2019-02-20</h4>
+            <h4 class="date">2019-06-24</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/wilkox/gggenes/blob/master/vignettes/introduction-to-gggenes.Rmd"><code>vignettes/introduction-to-gggenes.Rmd</code></a></small>
+      
       <div class="hidden name"><code>introduction-to-gggenes.Rmd</code></div>
 
     </div>
@@ -98,12 +91,12 @@
 <a href="#drawing-gene-arrows-with-geom_gene_arrow" class="anchor"></a>Drawing gene arrows with <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code>
 </h2>
 <p><code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> is a ‘ggplot2’ geom that represents genes with arrows. The start and end locations of the genes within their molecule(s) are mapped to the <code>xmin</code> and <code>xmax</code> aesthetics respectively. These start and end locations are used to determine the directions in which the arrows point. The <code>y</code> aesthetic must be mapped to the molecule(s). If you are drawing more than one molecule, and the numerical locations of the genes are not similar across molecules, you almost certainly want to facet the plot with <code>scales = "free"</code> to avoid drawing ridiculously large molecules with ridiculously tiny genes.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gggenes)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gggenes)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>)</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/geom_gene_arrow-1.png" width="576"></p>
 </div>
 <div id="beautifying-the-plot-with-theme_genes" class="section level2">
@@ -111,11 +104,11 @@
 <a href="#beautifying-the-plot-with-theme_genes" class="anchor"></a>Beautifying the plot with <code><a href="../reference/theme_genes.html">theme_genes()</a></code>
 </h2>
 <p>Because the resulting plot can look cluttered, a ‘ggplot2’ theme <code><a href="../reference/theme_genes.html">theme_genes()</a></code> is provided with some sensible defaults.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>) <span class="op">+</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/theme_genes-1.png" width="576"></p>
 </div>
 <div id="aligning-genes-across-facets-with-make_alignment_dummies" class="section level2">
@@ -123,18 +116,18 @@
 <a href="#aligning-genes-across-facets-with-make_alignment_dummies" class="anchor"></a>Aligning genes across facets with <code><a href="../reference/make_alignment_dummies.html">make_alignment_dummies()</a></code>
 </h2>
 <p>Often you will want a certain gene to be vertically aligned across the faceted molecules. <code><a href="../reference/make_alignment_dummies.html">make_alignment_dummies()</a></code> generates a set of ‘dummy’ genes that if added to the plot with <code><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html">ggplot2::geom_blank()</a></code> will extend the range of each facet to visually align the selected gene across facets.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">dummies &lt;-<span class="st"> </span><span class="kw"><a href="../reference/make_alignment_dummies.html">make_alignment_dummies</a></span>(</a>
-<a class="sourceLine" id="cb3-2" title="2">  example_genes,</a>
-<a class="sourceLine" id="cb3-3" title="3">  <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">id =</span> gene),</a>
-<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">on =</span> <span class="st">"genE"</span></a>
-<a class="sourceLine" id="cb3-5" title="5">)</a>
-<a class="sourceLine" id="cb3-6" title="6"></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html">geom_blank</a></span>(<span class="dt">data =</span> dummies) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>dummies &lt;-<span class="st"> </span><span class="kw"><a href="../reference/make_alignment_dummies.html">make_alignment_dummies</a></span>(</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  example_genes,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">id =</span> gene),</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">on =</span> <span class="st">"genE"</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene)) <span class="op">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html">geom_blank</a></span>(<span class="dt">data =</span> dummies) <span class="op">+</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>) <span class="op">+</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/make_alignment_dummies-1.png" width="576"></p>
 </div>
 <div id="labelling-genes-with-geom_gene_label" class="section level2">
@@ -142,14 +135,14 @@
 <a href="#labelling-genes-with-geom_gene_label" class="anchor"></a>Labelling genes with <code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code>
 </h2>
 <p>To label individual genes, provide a <code>label</code> aesthetic and use <code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code>. <code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> uses the <a href="https://github.com/wilkox/ggfittext">‘ggfittext’</a> package to fit the label text inside the gene arrows; see the ‘ggfittext’ documentation for more details on how it resizes and reflows text to make it fit.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span></a>
-<a class="sourceLine" id="cb4-2" title="2">                                            molecule, <span class="dt">fill =</span> gene, <span class="dt">label =</span> gene)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>(<span class="dt">arrowhead_height =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="dv">3</span>, <span class="st">"mm"</span>), <span class="dt">arrowhead_width =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="dv">1</span>, <span class="st">"mm"</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_label.html">geom_gene_label</a></span>(<span class="dt">align =</span> <span class="st">"left"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html">geom_blank</a></span>(<span class="dt">data =</span> dummies) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>                                            molecule, <span class="dt">fill =</span> gene, <span class="dt">label =</span> gene)) <span class="op">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>(<span class="dt">arrowhead_height =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="dv">3</span>, <span class="st">"mm"</span>), <span class="dt">arrowhead_width =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="dv">1</span>, <span class="st">"mm"</span>)) <span class="op">+</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_label.html">geom_gene_label</a></span>(<span class="dt">align =</span> <span class="st">"left"</span>) <span class="op">+</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html">geom_blank</a></span>(<span class="dt">data =</span> dummies) <span class="op">+</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set3"</span>) <span class="op">+</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/labelled_genes-1.png" width="576"></p>
 </div>
 <div id="reversing-some-genes-with-the-optional-forward-aesthetic" class="section level2">
@@ -157,13 +150,13 @@
 <a href="#reversing-some-genes-with-the-optional-forward-aesthetic" class="anchor"></a>Reversing some genes with the optional <code>forward</code> aesthetic</h2>
 <p>Sometimes you might want to reverse the direction of some genes from that implied by <code>xmin</code> and <code>xmax</code>. For example, you might want to draw both a forward and reverse strand within each facet, and reverse the direction of all the genes on the reverse strand. The optional <code>forward</code> aesthetic is intended for this sort of situation.</p>
 <p>If <code>forward</code> is TRUE (the default), or any value that coerces to TRUE such as 1, the gene will be drawn pointing in the normal direction, i.e. that implied by <code>xmin</code> and <code>xmax</code>. If <code>forward</code> is FALSE, or any value that coerces to FALSE such as -1, the gene will be drawn in the reverse of this implied direction. In the following example, the <code>forward</code> aesthetic has been used to reverse the direction of all genes on the reverse strand from that implied by <code>xmin</code> and <code>xmax</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">example_genes<span class="op">$</span>direction &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(example_genes<span class="op">$</span>strand <span class="op">==</span><span class="st"> "forward"</span>, <span class="dv">1</span>, <span class="dv">-1</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_genes, molecule <span class="op">==</span><span class="st"> "Genome1"</span>),</a>
-<a class="sourceLine" id="cb5-4" title="4">  <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> strand, <span class="dt">fill =</span> gene, <span class="dt">forward =</span> direction)</a>
-<a class="sourceLine" id="cb5-5" title="5">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>example_genes<span class="op">$</span>direction &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(example_genes<span class="op">$</span>strand <span class="op">==</span><span class="st"> "forward"</span>, <span class="dv">1</span>, <span class="dv">-1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_genes, molecule <span class="op">==</span><span class="st"> "Genome1"</span>),</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> strand, <span class="dt">fill =</span> gene, <span class="dt">forward =</span> direction)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  ) <span class="op">+</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/reversing_direction-1.png" width="576"></p>
 </div>
 <div id="viewing-subgene-segments" class="section level2">
@@ -172,29 +165,29 @@
 <p>We can highlight subgene segments, such as protein domains or local alignments, using <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code>.</p>
 <p>This works similarly to <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code>, but in addition to <code>xmin</code> and <code>xmax</code> (which determine the gene boundaries), we need the aesthetics <code>xsubmin</code> and <code>xsubmax</code> to determine the subgene boundaries. <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> will produce pretty arrowheads, as long as <code>xmin &gt;= xsubmin</code> and <code>xmax &gt;= xsubmax</code> for all subgenes (subgenes that break gene boundaries will be skipped with a warning).</p>
 <p>The suggested usage is to use <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> with no fill, and then add a subgene layer over this:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>(<span class="dt">fill =</span> <span class="st">"white"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow</a></span>(<span class="dt">data =</span> example_subgenes,</a>
-<a class="sourceLine" id="cb6-5" title="5">    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene,</a>
-<a class="sourceLine" id="cb6-6" title="6">        <span class="dt">xsubmin =</span> from, <span class="dt">xsubmax =</span> to), <span class="dt">color=</span><span class="st">"black"</span>, <span class="dt">alpha=</span>.<span class="dv">7</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(example_genes, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule)) <span class="op">+</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>molecule, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>(<span class="dt">fill =</span> <span class="st">"white"</span>) <span class="op">+</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow</a></span>(<span class="dt">data =</span> example_subgenes,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> molecule, <span class="dt">fill =</span> gene,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        <span class="dt">xsubmin =</span> from, <span class="dt">xsubmax =</span> to), <span class="dt">color=</span><span class="st">"black"</span>, <span class="dt">alpha=</span>.<span class="dv">7</span>) <span class="op">+</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="st">  </span><span class="kw"><a href="../reference/theme_genes.html">theme_genes</a></span>()</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/subgenes-1.png" width="576"></p>
 <p>To label subgenes, we can use <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code>, which works similarly to <code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> with the major difference that it requires <code>xsubmin</code> and <code>xsubmax</code> aesthetics (not <code>xmin</code> and <code>xmax</code>).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_genes, molecule <span class="op">==</span><span class="st"> "Genome4"</span> <span class="op">&amp;</span><span class="st"> </span>gene <span class="op">==</span><span class="st"> "genA"</span>),</a>
-<a class="sourceLine" id="cb7-2" title="2">       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> strand)</a>
-<a class="sourceLine" id="cb7-3" title="3">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_label.html">geom_gene_label</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">label =</span> gene)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow</a></span>(</a>
-<a class="sourceLine" id="cb7-7" title="7">    <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_subgenes, molecule <span class="op">==</span><span class="st"> "Genome4"</span> <span class="op">&amp;</span><span class="st"> </span>gene <span class="op">==</span><span class="st"> "genA"</span>),</a>
-<a class="sourceLine" id="cb7-8" title="8">    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xsubmin =</span> from, <span class="dt">xsubmax =</span> to, <span class="dt">fill =</span> subgene)</a>
-<a class="sourceLine" id="cb7-9" title="9">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw"><a href="../reference/geom_subgene_label.html">geom_subgene_label</a></span>(</a>
-<a class="sourceLine" id="cb7-11" title="11">    <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_subgenes, molecule <span class="op">==</span><span class="st"> "Genome4"</span> <span class="op">&amp;</span><span class="st"> </span>gene <span class="op">==</span><span class="st"> "genA"</span>),</a>
-<a class="sourceLine" id="cb7-12" title="12">    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xsubmin =</span> from, <span class="dt">xsubmax =</span> to, <span class="dt">label =</span> subgene),</a>
-<a class="sourceLine" id="cb7-13" title="13">    <span class="dt">min.size =</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb7-14" title="14">  )</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_genes, molecule <span class="op">==</span><span class="st"> "Genome4"</span> <span class="op">&amp;</span><span class="st"> </span>gene <span class="op">==</span><span class="st"> "genA"</span>),</span>
+<span id="cb7-2"><a href="#cb7-2"></a>       <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">y =</span> strand)</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  ) <span class="op">+</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span>() <span class="op">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_gene_label.html">geom_gene_label</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">label =</span> gene)) <span class="op">+</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow</a></span>(</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_subgenes, molecule <span class="op">==</span><span class="st"> "Genome4"</span> <span class="op">&amp;</span><span class="st"> </span>gene <span class="op">==</span><span class="st"> "genA"</span>),</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xsubmin =</span> from, <span class="dt">xsubmax =</span> to, <span class="dt">fill =</span> subgene)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  ) <span class="op">+</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="st">  </span><span class="kw"><a href="../reference/geom_subgene_label.html">geom_subgene_label</a></span>(</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/subset">subset</a></span>(example_subgenes, molecule <span class="op">==</span><span class="st"> "Genome4"</span> <span class="op">&amp;</span><span class="st"> </span>gene <span class="op">==</span><span class="st"> "genA"</span>),</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">xsubmin =</span> from, <span class="dt">xsubmax =</span> to, <span class="dt">label =</span> subgene),</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    <span class="dt">min.size =</span> <span class="dv">0</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  )</span></code></pre></div>
 <p><img src="introduction-to-gggenes_files/figure-html/subgene%20labels-1.png" width="576"></p>
 </div>
   </div>

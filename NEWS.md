@@ -2,8 +2,8 @@
 
 ## Major changes
 
-- Add new `geom_subgene_arrow` (contributed by @zdk123)
-- Add new `geom_subgene_label`
+- Add new `geom_subgene_arrow()` (contributed by @zdk123)
+- Add new `geom_subgene_label()`
 - Support new version of ggfittext (0.8.0)
 
 ## Bug fixes
@@ -27,8 +27,8 @@
 ## Major changes
 
 - `geom_gene_arrow()` now supports `forward` aesthetic (#3 and #5, thanks
-- `geom_gene_label` added (#3, thanks @adomingues)
   @adomingues and @jasonserviss)
+- `geom_gene_label()` added (#3, thanks @adomingues)
 - Compatible with ggplot2 v2.3.0
 
 ## Minor changes
@@ -51,4 +51,4 @@
 
 ## Bug fixes
 
-- Fix drawing of `geom_gene_arrow` key
+- Fix drawing of `geom_gene_arrow()` keq
