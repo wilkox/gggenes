@@ -19,10 +19,13 @@ LazyData: true
 RoxygenNote: 6.1.1
 URL: https://wilkox.org/gggenes
 BugReports: https://github.com/wilkox/gggenes/issues
-Suggests: testthat,
+Suggests: 
+    testthat,
     knitr,
     rmarkdown,
-    vdiffr
+    vdiffr,
+    spelling
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
+Language: en-US
