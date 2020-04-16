@@ -4,11 +4,19 @@
 \alias{geom_subgene_arrow}
 \title{A 'ggplot2' geom to draw subgene segments of gene arrows}
 \usage{
-geom_subgene_arrow(mapping = NULL, data = NULL, stat = "identity",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, arrowhead_width = grid::unit(4, "mm"),
+geom_subgene_arrow(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  arrowhead_width = grid::unit(4, "mm"),
   arrowhead_height = grid::unit(4, "mm"),
-  arrow_body_height = grid::unit(3, "mm"), ...)
+  arrow_body_height = grid::unit(3, "mm"),
+  ...
+)
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As

@@ -3,7 +3,6 @@
 \docType{package}
 \name{gggenes}
 \alias{gggenes}
-\alias{gggenes-package}
 \title{'gggenes': provides a 'ggplot2' geom and helper functions for drawing gene
 arrow maps.}
 \description{
