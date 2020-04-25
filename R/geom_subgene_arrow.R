@@ -154,14 +154,9 @@ makeContent.subgenearrowtree <- function(x) {
     orientation <- ifelse(orientbool, 1, -1)
 
     # Check if subgene is consistent with gene boundaries
-    upper <- ifelse(orientbool, x$orig_data$xmin[i], x$orig_data$xmax[i])
-    lower <- ifelse(orientbool, x$orig_data$xmax[i], x$orig_data$xmin[i])
-    if (any(x$orig_data[i,c("xsubmin", "xsubmax")] < upper) ||
-        any(x$orig_data[i,c("xsubmin", "xsubmax")] > lower) ||
-        orientbool != (subgene$xsubmax > subgene$xsubmin)
-      ) {
-        return(NULL)
-    }
+    between <- function(i, a, b) { i >= min(c(a, b)) & i <= max(c(a, b)) }
+    if (! between(subgene$xsubmin, subgene$xmin, subgene$xmax)) { return(NULL) }
+    if (! between(subgene$xsubmax, subgene$xmin, subgene$xmax)) { return(NULL) }
 
     # Arrowhead defaults to 4 mm, unless the subgene is shorter in which case the
     # subgene is 100% arrowhead
