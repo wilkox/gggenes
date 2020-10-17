@@ -1,15 +1,16 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
+language: R
 sudo: false
 cache: packages
 
-r_github_packages:
-- r-lib/vdiffr
-- tidyverse/ggplot2
-
 r:
-- 3.3
 - oldrel
 - release
 - devel
+
+r_packages:
+- ggplot2
+
+after_success:
+  - Rscript -e 'covr::codecov()'
