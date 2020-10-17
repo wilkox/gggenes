@@ -5,13 +5,15 @@
 \alias{example_genes}
 \alias{example_subgenes}
 \title{A set of example genes.}
-\format{A data frame with 118 rows and four variables:
+\format{
+A data frame with 118 rows and four variables:
 \describe{
 \item{molecule}{the genome}
 \item{gene}{the name of the gene}
 \item{start}{the start position of the gene}
 \item{end}{the end position of the gene}
 \item{strand}{the strand of the gene}
+\item{orientation}{the orientation of the gene}
 }
 
 example_subgenes (237 rows) also contains:
@@ -19,7 +21,10 @@ example_subgenes (237 rows) also contains:
 \item{subgeme}{the name of the subgene}
 \item{from}{the start position of the subgene segment}
 \item{strand}{the end position of the subgene segment}
-}}
+}
+
+An object of class \code{data.frame} with 143 rows and 8 columns.
+}
 \usage{
 example_genes
 

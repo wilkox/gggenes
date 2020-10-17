@@ -1,5 +1,10 @@
 # gggenes (development version)
 
+## Minor changes
+
+- More useful example for the `forward` aesthetic in the README and
+  `example_genes` (thanks @rickbeeloo)
+
 ## Bug fixes
 
 - Fix bug in checking position of subgenes relative to the parent gene (#21,

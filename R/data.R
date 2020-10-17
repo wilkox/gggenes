@@ -9,6 +9,7 @@
 #'   \item{start}{the start position of the gene}
 #'   \item{end}{the end position of the gene}
 #'   \item{strand}{the strand of the gene}
+#'   \item{orientation}{the orientation of the gene}
 #' }
 #' 
 #' example_subgenes (237 rows) also contains:
