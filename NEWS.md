@@ -9,6 +9,8 @@
 
 - Fix bug in checking position of subgenes relative to the parent gene (#21,
   thanks @mchiapello)
+- Add 'orientation' column to `example_subgenes` and correct some errors in the
+  documentation for both example data frames
 
 # gggenes 0.4.0
 

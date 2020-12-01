@@ -2,7 +2,7 @@
 #'
 #' Genes for example purposes only.
 #'
-#' @format A data frame with 118 rows and four variables:
+#' @format A data frame with 72 rows and six variables:
 #' \describe{
 #'   \item{molecule}{the genome}
 #'   \item{gene}{the name of the gene}
@@ -12,11 +12,11 @@
 #'   \item{orientation}{the orientation of the gene}
 #' }
 #' 
-#' example_subgenes (237 rows) also contains:
+#' example_subgenes (143 rows) also contains:
 #' \describe{
-#'   \item{subgeme}{the name of the subgene}
+#'   \item{subgene}{the name of the subgene}
 #'   \item{from}{the start position of the subgene segment}
-#'   \item{strand}{the end position of the subgene segment}
+#'   \item{to}{the end position of the subgene segment}
 #' }
 "example_genes"
 
