@@ -3,14 +3,14 @@ library(ggplot2)
 
 test_that("plots look the way they should", {
 
-  vdiffr::expect_doppelganger("Basic plot", {
+  expect_doppelganger("Basic plot", {
     ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
       geom_gene_arrow() +
       facet_wrap(~ molecule, scales = "free", ncol = 1) +
       scale_fill_brewer(palette = "Set3")
   } )
 
-  vdiffr::expect_doppelganger("Plot with theme_genes", {
+  expect_doppelganger("Plot with theme_genes", {
     ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
       geom_gene_arrow() +
       facet_wrap(~ molecule, scales = "free", ncol = 1) +
@@ -18,7 +18,7 @@ test_that("plots look the way they should", {
       theme_genes()
   } )
 
-  vdiffr::expect_doppelganger("Plot with make_alignment_dummies", {
+  expect_doppelganger("Plot with make_alignment_dummies", {
     dummies <- make_alignment_dummies(
       example_genes,
       aes(xmin = start, xmax = end, y = molecule, id = gene),
@@ -33,7 +33,7 @@ test_that("plots look the way they should", {
       theme_genes()
   } )
 
-  vdiffr::expect_doppelganger("Plot with geom_gene_label", {
+  expect_doppelganger("Plot with geom_gene_label", {
     ggplot(
         example_genes,
         aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)
@@ -46,7 +46,7 @@ test_that("plots look the way they should", {
       theme_genes()
   } )
 
-  vdiffr::expect_doppelganger("Plot using forward aesthetic", {
+  expect_doppelganger("Plot using forward aesthetic", {
     example_genes$direction <- ifelse(example_genes$strand == "forward", 1, -1)
     ggplot(subset(example_genes, molecule == "Genome1"),
                     aes(xmin = start, xmax = end, y = strand, fill = gene,
@@ -55,7 +55,7 @@ test_that("plots look the way they should", {
       theme_genes()
   } )
 
-  vdiffr::expect_doppelganger("Plot with subgenes", {
+  expect_doppelganger("Plot with subgenes", {
     ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
       facet_wrap(~ molecule, scales = "free", ncol = 1) +
       geom_gene_arrow(fill = "white") +
@@ -65,7 +65,7 @@ test_that("plots look the way they should", {
       theme_genes()
   } )
 
-  vdiffr::expect_doppelganger("Plot with labelled subgenes", {
+  expect_doppelganger("Plot with labelled subgenes", {
     ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
            aes(xmin = start, xmax = end, y = strand)
       ) +

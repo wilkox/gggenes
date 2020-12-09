@@ -11,6 +11,7 @@
   thanks @mchiapello)
 - Add 'orientation' column to `example_subgenes` and correct some errors in the
   documentation for both example data frames
+- Make vdiffr tests conditional
 
 # gggenes 0.4.0
 
