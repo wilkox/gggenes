@@ -4,4 +4,4 @@
 .*.swp
 inst/doc
 README.html
-revdep
+revdep/*
