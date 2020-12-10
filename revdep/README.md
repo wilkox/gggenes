@@ -2,21 +2,23 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.6.0 (2019-04-26) |
-|os       |macOS High Sierra 10.13.6    |
-|system   |x86_64, darwin17.7.0         |
+|version  |R version 4.0.3 (2020-10-10) |
+|os       |macOS Big Sur 10.16          |
+|system   |x86_64, darwin19.6.0         |
 |ui       |unknown                      |
 |language |(EN)                         |
 |collate  |en_AU.UTF-8                  |
 |ctype    |en_AU.UTF-8                  |
 |tz       |Australia/Sydney             |
-|date     |2019-06-24                   |
+|date     |2020-12-10                   |
 
 # Dependencies
 
-|package |old   |new   |Δ  |
-|:-------|:-----|:-----|:--|
-|gggenes |0.3.2 |0.4.0 |*  |
+|package  |old   |new   |Δ  |
+|:--------|:-----|:-----|:--|
+|gggenes  |0.4.0 |0.4.1 |*  |
+|jsonlite |NA    |1.7.2 |*  |
+|ps       |NA    |1.5.0 |*  |
 
 # Revdeps
 
