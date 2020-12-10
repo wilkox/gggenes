@@ -1,6 +1,6 @@
 Package: gggenes
 Title: Draw Gene Arrow Maps in 'ggplot2'
-Version: 0.4.0.9003
+Version: 0.4.1
 Authors@R: c(person("David", "Wilkins", email = "david@wilkox.org",
                   role = c("aut", "cre")),
              person("Zachary", "Kurtz", email = "zdkurtz@gmail.com",
@@ -17,8 +17,8 @@ Imports:
 License: GPL-2
 LazyData: true
 RoxygenNote: 7.1.1
-URL: https://wilkox.org/gggenes
-BugReports: https://github.com/wilkox/gggenes/issues
+URL: https://wilkox.org/gggenes/
+BugReports: https://github.com/wilkox/gggenes/issues/
 Suggests: 
     testthat,
     knitr,
