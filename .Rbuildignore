@@ -6,3 +6,5 @@
 ^\.travis\.yml$
 ^README-.*\.png$
 ^revdep$
+^doc$
+^Meta$

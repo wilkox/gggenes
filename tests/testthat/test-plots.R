@@ -1,6 +1,18 @@
 context("visual tests of plots")
 library(ggplot2)
 
+test_that("plots with features look the way they should", {
+  expect_doppelganger("Basic plot with features", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_feature(data = example_features, aes(x = position, y = molecule, 
+                                                forward = forward)) +
+      geom_gene_arrow() +
+      facet_wrap(~ molecule, scales = "free", ncol = 1) +
+      scale_fill_brewer(palette = "Set3") +
+      theme_genes()
+  } )
+})
+
 test_that("plots look the way they should", {
 
   expect_doppelganger("Basic plot", {

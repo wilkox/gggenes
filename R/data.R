@@ -22,3 +22,17 @@
 
 #' @rdname example_genes
 "example_subgenes"
+
+#' A set of example genetic features.
+#'
+#' Genetic features for example purposes only.
+#'
+#' @format A data frame with eight rows and five variables:
+#' \describe{
+#'   \item{molecule}{the genome}
+#'   \item{name}{the name of the feature}
+#'   \item{type}{the type of the feature}
+#'   \item{position}{the position of the feature}
+#'   \item{forward}{is the feature oriented, and if so in the forward direction?}
+#' }
+"example_features"

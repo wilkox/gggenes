@@ -113,8 +113,6 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
 
     data <- coord$transform(data, panel_scales)
 
-    # 
-
     gt <- grid::gTree(
       data = data,
       cl = "genearrowtree",
