@@ -21,10 +21,13 @@
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2.
-#' @param label_height `grid::unit()` object giving the distance of the label
-#' above or below the molecule line. Can be set as a negative value for
-#' features drawn below the line. Defaults to 4.5 mm, to align labels with the
-#' default dimensions of `geom_feature()`.
+#' @param feature_height `grid::unit()` object giving the height of the feature
+#' being label, and hence the distance of the label above or below the molecule
+#' line. Can be set as a negative value for features drawn below the line.
+#' Defaults to 4 mm, to align labels with the default height of
+#' `geom_feature()`.
+#' @param label_height `grid::unit()` object giving the height of the label
+#' text. Defaults to 3 mm.
 #'
 #' @examples
 #'
@@ -49,7 +52,8 @@ geom_feature_label <- function(
   na.rm = FALSE,
   show.legend = FALSE,
   inherit.aes = FALSE,
-  label_height = unit(4.5, "mm"),
+  feature_height = unit(4, "mm"),
+  label_height = unit(3, "mm"),
   ...
 ) {
   ggplot2::layer(
@@ -62,6 +66,7 @@ geom_feature_label <- function(
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
+      feature_height = feature_height,
       label_height = label_height,
       ...
     )
@@ -78,7 +83,7 @@ GeomFeatureLabel <- ggplot2::ggproto(
   required_aes = c("x", "y", "label"),
   default_aes = ggplot2::aes(
     colour = "black",
-    size = 8,
+    size = 10,
     alpha = 1,
     family = "",
     fontface = 1,
@@ -89,7 +94,7 @@ GeomFeatureLabel <- ggplot2::ggproto(
   ),
   draw_key = ggplot2::draw_key_text,
 
-  draw_panel = function(data, panel_scales, coord, label_height) {
+  draw_panel = function(data, panel_scales, coord, feature_height, label_height) {
 
     # Transform data to panel scales
     data <- coord$transform(data, panel_scales)
@@ -97,6 +102,7 @@ GeomFeatureLabel <- ggplot2::ggproto(
     gt <- grid::gTree(
       data = data,
       cl = "featurelabeltree",
+      feature_height = feature_height,
       label_height = label_height
     )
     gt$name <- grid::grobName(gt, "geom_feature_label")
@@ -109,6 +115,7 @@ GeomFeatureLabel <- ggplot2::ggproto(
 makeContent.featurelabeltree <- function(x) {
 
     data <- x$data
+    feature_height <- x$feature_height
     label_height <- x$label_height
 
     # Prepare grob for each label
@@ -119,63 +126,67 @@ makeContent.featurelabeltree <- function(x) {
       print(label)
 
       # Determine if the feature to be labelled is oriented, and set
-      # appropriate vjust and hjust
+      # appropriate bounding box and place
 
       # For non-oriented features:
       if (is.na(label$forward) | ! is.logical(label$forward)) {
 
-        hjust <- 0.5
+        label$xmin <- label$x - 0.5
+        label$xmax <- label$x + 0.5 
 
         y_sign <- ifelse(
-          grid::convertHeight(label_height, "native", TRUE) >= 0,
+          grid::convertHeight(feature_height, "native", TRUE) >= 0,
           1,
           -1
         ) 
-        label$y <- label$y + 
+        inside <- label$y + grid::convertHeight(feature_height, "native", TRUE)
+        outside <- inside + 
           (y_sign * grid::convertHeight(label_height, "native", TRUE))
-        vjust <- ifelse(y_sign == 1, 0, 1)
+        label$ymin <- max(min(c(inside, outside)), 0)
+        label$ymax <- min(max(c(inside, outside)), 1)
+        align <- ifelse(y_sign == 1, "bottom", "top")
       
       # For oriented features
       } else {
 
-        feature_sign <- ifelse(label$forward, 1, -1)
-        if (feature_sign == 1) {
-          hjust = 0
+        x_sign <- ifelse(label$forward, 1, -1)
+        if (x_sign == 1) {
+          label$xmin <- label$x
+          label$xmax <- 1
+          align <- "left"
         } else {
-          hjust = 1
+          label$xmin <- 0
+          label$xmax <- label$x
+          align <- "right"
         }
 
         y_sign <- ifelse(
-          grid::convertHeight(label_height, "native", TRUE) >= 0,
+          grid::convertHeight(feature_height, "native", TRUE) >= 0,
           1,
           -1
         ) 
-        label$y <- label$y + 
+        inside <- label$y + grid::convertHeight(feature_height, "native", TRUE)
+        outside <- inside + 
           (y_sign * grid::convertHeight(label_height, "native", TRUE))
-        vjust <- ifelse(y_sign == 1, 0, 1)
+        label$ymin <- max(min(c(inside, outside)), 0)
+        label$ymax <- min(max(c(inside, outside)), 1)
       }
 
-      # Generate trext grob
-      gt <- grid::textGrob(
-        label = label$label,
-        x = grid::unit(label$x, "npc"),
-        y = grid::unit(label$y, "npc"),
-        vjust = vjust,
-        hjust = hjust,
-        gp = gpar(
-          col = label$colour,
-          fontsize = label$size,
-          alpha = label$alpha,
-          fontfamily = label$family,
-          fontface = label$fontface,
-          fill = label$fill,
-          lineheight = label$lineheight
-        )
+      # Use ggfittext's fittexttree to draw text
+      gt <- grid::gTree(
+        data = label,
+        padding.x = grid::unit(0, "mm"),
+        padding.y = grid::unit(0, "mm"),
+        place = align,
+        min.size = 0,
+        grow = FALSE,
+        reflow = FALSE,
+        cl = "fittexttree",
+        fullheight = TRUE
       )
       gt$name <- grid::grobName(gt, "geom_feature_label")
       gt
   } )
-
   class(grobs) <- "gList"
   grid::setChildren(x, grobs)
 }
