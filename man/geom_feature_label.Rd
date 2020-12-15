@@ -12,21 +12,27 @@ geom_feature_label(
   na.rm = FALSE,
   show.legend = FALSE,
   inherit.aes = FALSE,
-  label_height = unit(4, "mm"),
+  feature_height = unit(4, "mm"),
+  label_height = unit(3, "mm"),
   ...
 )
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
-standard for ggplot2.}
+standard for ggplot2. inherit.aes is set to FALSE by default, as features
+are not likely to share any plot aesthetics other than y.}
+
+\item{feature_height}{\code{grid::unit()} object giving the height of the feature
+being labelled, and hence the distance of the label above or below the
+molecule line. Can be set as a negative value for features drawn below the
+line. Defaults to 4 mm, to align labels with the default height of
+\code{geom_feature()}.}
 
 \item{label_height}{\code{grid::unit()} object giving the height of the label
-above the molecule line. Can be set as a negative value to draw features
-below the line. Defaults to 4 mm, to align labels with the default height of
-\code{geom_feature()}.}
+text. Defaults to 3 mm.}
 }
 \description{
-\code{geom_feature_label()} can be used to add text labels to features drawn with
+\code{geom_feature_label()} adds text labels to features drawn with
 \code{geom_feature}().
 }
 \details{

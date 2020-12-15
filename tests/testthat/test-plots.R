@@ -11,6 +11,17 @@ test_that("plots with features look the way they should", {
       scale_fill_brewer(palette = "Set3") +
       theme_genes()
   } )
+
+  expect_doppelganger("Basic plot with labelled features", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_feature(data = example_features, aes(x = position, y = molecule, forward = forward, linetype = type, colour = type)) +
+      geom_feature_label(data = example_features, aes(x = position, y = molecule, label = name, forward = forward)) +
+      geom_gene_arrow() +
+      geom_blank(data = example_dummies) +
+      facet_wrap(~ molecule, scales = "free", ncol = 1) +
+      scale_fill_brewer(palette = "Set3") +
+      theme_genes()
+  } )
 })
 
 test_that("plots look the way they should", {

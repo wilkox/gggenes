@@ -20,6 +20,20 @@
 #' }
 "example_genes"
 
+#' A set of example dummy alignment genes.
+#'
+#' Dummy genes, similar to those generated with `make_alignment_dummies()`, for
+#' example purposes only.
+#'
+#' @format A data frame with eight rows and three variables:
+#' \describe{
+#'   \item{molecule}{the genome}
+#'   \item{start}{the start position of the dummy}
+#'   \item{end}{the end position of the dummy}
+#'   \item{gene}{the name of the dummy gene}
+#' }
+"example_dummies"
+
 #' @rdname example_genes
 "example_subgenes"
 
@@ -27,7 +41,7 @@
 #'
 #' Genetic features for example purposes only.
 #'
-#' @format A data frame with eight rows and five variables:
+#' @format A data frame with 23 rows and five variables:
 #' \describe{
 #'   \item{molecule}{the genome}
 #'   \item{name}{the name of the feature}

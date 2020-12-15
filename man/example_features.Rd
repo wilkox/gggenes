@@ -5,7 +5,7 @@
 \alias{example_features}
 \title{A set of example genetic features.}
 \format{
-A data frame with eight rows and five variables:
+A data frame with 23 rows and five variables:
 \describe{
 \item{molecule}{the genome}
 \item{name}{the name of the feature}

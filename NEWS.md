@@ -1,3 +1,9 @@
+# gggenes 0.4.1.9001
+
+## Major changes
+
+- Add new experimental `geom_feature()` and `geom_feature_label()`
+
 # gggenes 0.4.1
 
 ## Minor changes

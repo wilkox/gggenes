@@ -6,16 +6,12 @@
 #'
 #' Features are drawn as vertical lines extending from the horizontal line
 #' representing the molecule. The position of the feature is expressed with the
-#' `x` aesthetic. Optionally, an additional `forward` aesthetic can be used to
-#' specific an orientation for the feature (e.g. the direction of
-#' transcription), in which case an angled arrowhead will be automatically
-#' added to indicate the direction. The `forward` aesthetic assumes the x-axis
-#' is oriented in the normal direction, i.e. increasing from left to right; if
-#' it is not, the values in `forward` will need to be inverted.
-#'
-#' See `geom_gene_arrow()` or the introductory vignette
-#' `vignette("introduction-to-gggenes")` for a more general introduction on
-#' drawing genetic maps with this package.
+#' `x` aesthetic. Optionally, the `forward` aesthetic can be used to specific
+#' an orientation for the feature (e.g. the direction of transcription), in
+#' which case an angled arrowhead will be added. The `forward` aesthetic
+#' assumes that the x-axis is oriented in the normal direction, i.e. increasing
+#' from left to right; if it is not, the values in `forward` will need to be
+#' inverted manually.
 #'
 #' @section Aesthetics:
 #'
@@ -29,7 +25,8 @@
 #' - size
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
-#' standard for ggplot2.
+#' standard for ggplot2. inherit.aes is set to FALSE by default, as features
+#' are not likely to share any plot aesthetics other than y.
 #' @param feature_height `grid::unit()` object giving the height of a feature
 #' above the molecule line. Can be set as a negative value to draw features
 #' below the line. Defaults to 3 mm.
@@ -49,7 +46,7 @@
 #'                                                      forward = forward)) +
 #'   ggplot2::facet_wrap(~ molecule, scales = "free")
 #'
-#' @seealso [geom_gene_arrow()]
+#' @seealso [geom_feature_label()]
 #'
 #' @export
 geom_feature <- function(
@@ -94,6 +91,7 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     linetype = 1,
     size = 1
   ),
+  draw_key = ggplot2::draw_key_abline,
   draw_panel = function(
     data,
     panel_scales,
@@ -159,8 +157,12 @@ makeContent.featuretree <- function(x) {
       x = xs,
       y = ys,
       arrow = arrow,
-      gp = grid::gpar(colour = feature$colour, fill = feature$colour, lty = feature$linetype, 
-                      lwd = feature$size)
+      gp = grid::gpar(
+        col = feature$colour,
+        fill = feature$colour,
+        lty = feature$linetype,
+        lwd = feature$size
+      )
     )
 
     # Return the grob

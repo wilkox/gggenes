@@ -1,6 +1,6 @@
 #' A 'ggplot2' geom to add text labels to point genetic features
 #'
-#' `geom_feature_label()` can be used to add text labels to features drawn with
+#' `geom_feature_label()` adds text labels to features drawn with
 #' `geom_feature`().
 #' 
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
@@ -20,11 +20,12 @@
 #' - angle
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
-#' standard for ggplot2.
+#' standard for ggplot2. inherit.aes is set to FALSE by default, as features
+#' are not likely to share any plot aesthetics other than y.
 #' @param feature_height `grid::unit()` object giving the height of the feature
-#' being label, and hence the distance of the label above or below the molecule
-#' line. Can be set as a negative value for features drawn below the line.
-#' Defaults to 4 mm, to align labels with the default height of
+#' being labelled, and hence the distance of the label above or below the
+#' molecule line. Can be set as a negative value for features drawn below the
+#' line. Defaults to 4 mm, to align labels with the default height of
 #' `geom_feature()`.
 #' @param label_height `grid::unit()` object giving the height of the label
 #' text. Defaults to 3 mm.
@@ -122,8 +123,6 @@ makeContent.featurelabeltree <- function(x) {
     grobs <- lapply(1:nrow(data), function(i) {
 
       label <- data[i, ]
-      message("here is label")
-      print(label)
 
       # Determine if the feature to be labelled is oriented, and set
       # appropriate bounding box and place

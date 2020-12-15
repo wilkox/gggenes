@@ -12,23 +12,24 @@ geom_feature(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
-  feature_height = unit(4, "mm"),
-  feature_width = unit(4, "mm"),
+  feature_height = unit(3, "mm"),
+  feature_width = unit(3, "mm"),
   arrowhead_width = unit(2, "mm"),
   ...
 )
 }
 \arguments{
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
-standard for ggplot2.}
+standard for ggplot2. inherit.aes is set to FALSE by default, as features
+are not likely to share any plot aesthetics other than y.}
 
 \item{feature_height}{\code{grid::unit()} object giving the height of a feature
 above the molecule line. Can be set as a negative value to draw features
-below the line. Defaults to 4 mm.}
+below the line. Defaults to 3 mm.}
 
 \item{feature_width}{\code{grid::unit()} object giving the width of a feature
 (distance from the elbow to the tip of the arrow). Only relevant for
-oriented features. Defaults to 4 mm.}
+oriented features. Defaults to 3 mm.}
 
 \item{arrowhead_width}{\code{grid::unit()} object giving the width of the
 arrowhead indicating the direction of an oriented feature. Only relevant for
@@ -42,16 +43,12 @@ transcription start sites.
 \details{
 Features are drawn as vertical lines extending from the horizontal line
 representing the molecule. The position of the feature is expressed with the
-\code{x} aesthetic. Optionally, an additional \code{forward} aesthetic can be used to
-specific an orientation for the feature (e.g. the direction of
-transcription), in which case an angled arrowhead will be automatically
-added to indicate the direction. The \code{forward} aesthetic assumes the x-axis
-is oriented in the normal direction, i.e. increasing from left to right; if
-it is not, the values in \code{forward} will need to be inverted.
-
-See \code{geom_gene_arrow()} or the introductory vignette
-\code{vignette("introduction-to-gggenes")} for a more general introduction on
-drawing genetic maps with this package.
+\code{x} aesthetic. Optionally, the \code{forward} aesthetic can be used to specific
+an orientation for the feature (e.g. the direction of transcription), in
+which case an angled arrowhead will be added. The \code{forward} aesthetic
+assumes that the x-axis is oriented in the normal direction, i.e. increasing
+from left to right; if it is not, the values in \code{forward} will need to be
+inverted manually.
 }
 \section{Aesthetics}{
 
@@ -78,5 +75,5 @@ ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
 
 }
 \seealso{
-\code{\link[=geom_gene_arrow]{geom_gene_arrow()}}
+\code{\link[=geom_feature_label]{geom_feature_label()}}
 }
