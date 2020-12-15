@@ -32,10 +32,10 @@
 #' standard for ggplot2.
 #' @param feature_height `grid::unit()` object giving the height of a feature
 #' above the molecule line. Can be set as a negative value to draw features
-#' below the line. Defaults to 4 mm.
+#' below the line. Defaults to 3 mm.
 #' @param feature_width `grid::unit()` object giving the width of a feature
 #' (distance from the elbow to the tip of the arrow). Only relevant for
-#' oriented features. Defaults to 4 mm.
+#' oriented features. Defaults to 3 mm.
 #' @param arrowhead_width `grid::unit()` object giving the width of the
 #' arrowhead indicating the direction of an oriented feature. Only relevant for
 #' oriented features. Defaults to 2 mm.
@@ -60,8 +60,8 @@ geom_feature <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
-  feature_height = unit(4, "mm"),
-  feature_width = unit(4, "mm"),
+  feature_height = unit(3, "mm"),
+  feature_width = unit(3, "mm"),
   arrowhead_width = unit(2, "mm"),
   ...
 ) {
@@ -122,16 +122,14 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
 makeContent.featuretree <- function(x) {
 
   data <- x$data
+  feature_height <- x$feature_height
+  feature_width <- x$feature_width
+  arrowhead_width <- x$arrowhead_width
 
   # Prepare grob for each feature
   grobs <- lapply(1:nrow(data), function(i) {
 
     feature <- data[i, ]
-
-    # Default parameters
-    feature_height <- unit(4, "mm")
-    feature_width <- unit(4, "mm")
-    arrowhead_width <- unit(2, "mm")
 
     # Determine whether this is a feature with orientation or not (i.e. whether
     # or not to draw an elbow and arrowhead), and generate appropriate values

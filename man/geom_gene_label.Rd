@@ -63,6 +63,7 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 \itemize{
 \item xmin,xmax (start and end of the gene; required)
 \item y (molecule; required)
+\item label (the label text; required)
 \item colour
 \item size
 \item alpha

@@ -33,6 +33,7 @@
 #'
 #' - xmin,xmax (start and end of the gene; required)
 #' - y (molecule; required)
+#' - label (the label text; required)
 #' - colour
 #' - size
 #' - alpha
