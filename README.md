@@ -33,6 +33,8 @@ molecules with ridiculously tiny genes.
 
 ``` r
 library(ggplot2)
+#> Need help getting started? Try the R Graphics Cookbok:
+#> https://r-graphics.org
 library(gggenes)
 
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
@@ -189,7 +191,7 @@ direction (`TRUE` meaning oriented towards the right of the x-axis and
 `FALSE` meaning towards the left).
 
 ``` r
-ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
   geom_feature(
     data = example_features,
     aes(x = position, y = molecule, forward = forward)
@@ -199,6 +201,7 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) 
     aes(x = position, y = molecule, label = name, forward = forward)
   ) +
   geom_gene_arrow() +
+  geom_gene_label() +
   geom_blank(data = example_dummies) +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   scale_fill_brewer(palette = "Set3") +

@@ -84,7 +84,7 @@ GeomFeatureLabel <- ggplot2::ggproto(
   required_aes = c("x", "y", "label"),
   default_aes = ggplot2::aes(
     colour = "black",
-    size = 10,
+    size = 8,
     alpha = 1,
     family = "",
     fontface = 1,
@@ -143,7 +143,7 @@ makeContent.featurelabeltree <- function(x) {
           (y_sign * grid::convertHeight(label_height, "native", TRUE))
         label$ymin <- max(min(c(inside, outside)), 0)
         label$ymax <- min(max(c(inside, outside)), 1)
-        align <- ifelse(y_sign == 1, "bottom", "top")
+        align <- "centre"
       
       # For oriented features
       } else {
