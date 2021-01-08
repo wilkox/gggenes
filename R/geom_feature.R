@@ -17,8 +17,9 @@
 #'
 #' - x (required; position of the feature)
 #' - y (required; molecule)
-#' - forward (optional; if TRUE, the feature will be drawn with an arrowhead
-#' pointing right, if FALSE, pointing left)
+#' - forward (optional; if TRUE, or a value coercible to TRUE, the feature will
+#' be drawn with an arrowhead pointing right, if FALSE, pointing left, if NA,
+#' the feature will be drawn as a vertical line)
 #' - alpha
 #' - colour
 #' - linetype
@@ -91,7 +92,20 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     linetype = 1,
     size = 1
   ),
+
   draw_key = ggplot2::draw_key_abline,
+
+  setup_data = function(data, params) {
+
+    # The 'forward' aesthetic, if provided, should be logical or coerced to
+    # logical
+    if (!is.null(data$forward)) {
+      data$forward <- as.logical(data$forward)
+    }
+
+    data
+  },
+
   draw_panel = function(
     data,
     panel_scales,

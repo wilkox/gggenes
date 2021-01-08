@@ -95,6 +95,17 @@ GeomFeatureLabel <- ggplot2::ggproto(
   ),
   draw_key = ggplot2::draw_key_text,
 
+  setup_data = function(data, params) {
+
+    # The 'forward' aesthetic, if provided, should be logical or coerced to
+    # logical
+    if (!is.null(data$forward)) {
+      data$forward <- as.logical(data$forward)
+    }
+
+    data
+  },
+
   draw_panel = function(data, panel_scales, coord, feature_height, label_height) {
 
     # Transform data to panel scales

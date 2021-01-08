@@ -1,6 +1,6 @@
 Package: gggenes
 Title: Draw Gene Arrow Maps in 'ggplot2'
-Version: 0.4.1.9001
+Version: 0.4.1.9002
 Authors@R: c(person("David", "Wilkins", email = "david@wilkox.org",
                   role = c("aut", "cre")),
              person("Zachary", "Kurtz", email = "zdkurtz@gmail.com",

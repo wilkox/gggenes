@@ -55,8 +55,9 @@ inverted manually.
 \itemize{
 \item x (required; position of the feature)
 \item y (required; molecule)
-\item forward (optional; if TRUE, the feature will be drawn with an arrowhead
-pointing right, if FALSE, pointing left)
+\item forward (optional; if TRUE, or a value coercible to TRUE, the feature will
+be drawn with an arrowhead pointing right, if FALSE, pointing left, if NA,
+the feature will be drawn as a vertical line)
 \item alpha
 \item colour
 \item linetype

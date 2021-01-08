@@ -22,6 +22,20 @@ test_that("plots with features look the way they should", {
       scale_fill_brewer(palette = "Set3") +
       theme_genes()
   } )
+
+  expect_doppelganger("Plot with features and non-logical 'forward'", {
+
+    ef2 <- example_features
+    ef2$forward <- as.numeric(example_features$forward)
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_feature(data = ef2, aes(x = position, y = molecule, forward = forward)) +
+      geom_feature_label(data = ef2, aes(x = position, y = molecule, label = name, 
+                                         forward = forward)) +
+      geom_gene_arrow() +
+      facet_wrap(~ molecule, scales = "free", ncol = 1) +
+      scale_fill_brewer(palette = "Set3") +
+      theme_genes()
+  } )
 })
 
 test_that("plots look the way they should", {
