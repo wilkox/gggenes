@@ -99,7 +99,7 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
 
     # The 'forward' aesthetic, if provided, should be logical or coerced to
     # logical
-    if (!is.null(data$forward)) {
+    if (! is.null(data$forward)) {
       data$forward <- as.logical(data$forward)
     }
 

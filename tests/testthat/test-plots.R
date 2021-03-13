@@ -84,7 +84,7 @@ test_that("plots look the way they should", {
   } )
 
   expect_doppelganger("Plot using forward aesthetic", {
-    example_genes$direction <- ifelse(example_genes$strand == "forward", 1, -1)
+    example_genes$direction <- ifelse(example_genes$strand == "forward", 1, 0)
     ggplot(subset(example_genes, molecule == "Genome1"),
                     aes(xmin = start, xmax = end, y = strand, fill = gene,
                         forward = direction)) +

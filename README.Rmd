@@ -120,7 +120,7 @@ variables.
 If `forward` is TRUE (the default), or any value that coerces to TRUE such as
 1, the gene will be drawn pointing in the implied direction, i.e. from `xmin`
 to `xmax`. If `forward` is FALSE, or any value that coerces to FALSE such as
--1, the gene will be drawn in the reverse of this implied direction:
+0, the gene will be drawn in the reverse of this implied direction:
 
 ```{r reversing_direction}
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, 

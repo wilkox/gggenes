@@ -20,9 +20,8 @@
 #' -  xsubmin,xsubmax (start and end of subgene segment). Should be consistent
 #' with `xmin`/`xmax`
 #' -  y (molecule)
-#' -  forward (if any value that is not TRUE, or coercible to TRUE, the gene
-#' arrow will be drawn in the opposite direction to that determined by `xmin`
-#' and `xmax`)
+#' -  forward (if FALSE, or coercible to FALSE, the gene arrow will be drawn in
+#' the opposite direction to that determined by `xmin` and `xmax`)
 #' -  alpha
 #' -  colour
 #' -  fill
@@ -143,7 +142,7 @@ makeContent.subgenearrowtree <- function(x) {
     subgene <- data[i, ]
 
     # Reverse non-forward subgenes
-    if (subgene$forward != TRUE) {
+    if (! as.logical(subgene$forward)) {
       subgene[, c("xmin", "xmax")] <- subgene[, c("xmax", "xmin")]
       subgene[, c("xsubmin", "xsubmax")] <- subgene[, c("xsubmax", "xsubmin")]
     }

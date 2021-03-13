@@ -137,7 +137,7 @@ makeContent.genearrowtree <- function(x) {
     gene <- data[i, ]
 
     # Reverse non-forward genes
-    if (gene$forward != TRUE) {
+    if (! as.logical(gene$forward)) {
       gene[, c("xmin", "xmax")] <- gene[, c("xmax", "xmin")]
     }
 

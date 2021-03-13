@@ -1,8 +1,14 @@
-# gggenes 0.4.1.9002
+# gggenes (development version)
 
 ## Major changes
 
 - Add new `geom_feature()` and `geom_feature_label()`
+
+## Minor changes
+
+- Explicit coercion of the `forward` value to logical, more useful values for
+  the forward aesthetic in example data, and fix an error in README and
+  introductory vignette (-1 does not coerce to FALSE...)
 
 # gggenes 0.4.1
 
