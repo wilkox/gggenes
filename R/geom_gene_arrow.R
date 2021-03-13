@@ -132,7 +132,7 @@ makeContent.genearrowtree <- function(x) {
   data <- x$data
 
   # Prepare grob for each gene
-  grobs <- lapply(1:nrow(data), function(i) {
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
 
     gene <- data[i, ]
 

@@ -43,7 +43,7 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   # NOTE - version testing is for the ggplot2 2.3.0 transition. Once >2.3.0 is
   # required, this can be removed
   if (utils::packageVersion("ggplot2") >= "2.2.1.9000") {
-    data <- data[sapply(mapping, rlang::quo_name)]
+    data <- data[vapply(mapping, rlang::quo_name, character(1))]
   } else {
     data <- data[as.character(unlist(mapping))]
   }

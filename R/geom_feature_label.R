@@ -131,7 +131,7 @@ makeContent.featurelabeltree <- function(x) {
     label_height <- x$label_height
 
     # Prepare grob for each label
-    grobs <- lapply(1:nrow(data), function(i) {
+    grobs <- lapply(seq_len(nrow(data)), function(i) {
 
       label <- data[i, ]
 

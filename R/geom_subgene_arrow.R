@@ -137,7 +137,7 @@ makeContent.subgenearrowtree <- function(x) {
   data <- x$data
 
   # Prepare grob for each subgenearrowtree
-  grobs <- lapply(1:nrow(data), function(i) {
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
 
     subgene <- data[i, ]
 
@@ -259,7 +259,7 @@ makeContent.subgenearrowtree <- function(x) {
     # Return the polygon grob
     pg
   })
-  skip <- sapply(grobs, is.null)
+  skip <- vapply(grobs, is.null, logical(1))
   if (any(skip)) {
     subgenes <- x$orig_data[skip,, drop = FALSE]
     message <- "Subgene %d (%d..%d) breaks boundaries of gene (%d..%d), skipping"

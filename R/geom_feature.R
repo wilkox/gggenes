@@ -139,7 +139,7 @@ makeContent.featuretree <- function(x) {
   arrowhead_width <- x$arrowhead_width
 
   # Prepare grob for each feature
-  grobs <- lapply(1:nrow(data), function(i) {
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
 
     feature <- data[i, ]
 
