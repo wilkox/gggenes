@@ -202,3 +202,8 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
   scale_fill_brewer(palette = "Set3") +
   theme_genes()
 ```
+
+## Related packages
+
+- [gggenomes](https://thackl.github.io/gggenomes/) for visualising comparative genomics
+- [plasmapR](https://github.com/BradyAJohnston/plasmapR) for quickly drawing plasmid maps from GenBank files

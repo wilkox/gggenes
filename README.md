@@ -33,8 +33,6 @@ molecules with ridiculously tiny genes.
 
 ``` r
 library(ggplot2)
-#> Need help getting started? Try the R Graphics Cookbok:
-#> https://r-graphics.org
 library(gggenes)
 
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
@@ -117,7 +115,7 @@ are encoded as separate variables.
 If `forward` is TRUE (the default), or any value that coerces to TRUE
 such as 1, the gene will be drawn pointing in the implied direction,
 i.e. from `xmin` to `xmax`. If `forward` is FALSE, or any value that
-coerces to FALSE such as -1, the gene will be drawn in the reverse of
+coerces to FALSE such as 0, the gene will be drawn in the reverse of
 this implied direction:
 
 ``` r
@@ -209,3 +207,10 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
 ```
 
 ![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
+
+## Related packages
+
+-   [gggenomes](https://thackl.github.io/gggenomes/) for visualising
+    comparative genomics
+-   [plasmapR](https://github.com/BradyAJohnston/plasmapR) for quickly
+    drawing plasmid maps from GenBank files
