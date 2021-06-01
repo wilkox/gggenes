@@ -108,12 +108,15 @@ GeomFeatureLabel <- ggplot2::ggproto(
 
   draw_panel = function(data, panel_scales, coord, feature_height, label_height) {
 
+    # Detect flipped coordinates
+    coord_flip <- inherits(coord, "CoordFlip")
+
     # Transform data to panel scales
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = "featurelabeltree",
+      cl = ifelse(coord_flip, "flipfeaturelabeltree", "featurelabeltree"),
       feature_height = feature_height,
       label_height = label_height
     )
@@ -182,6 +185,53 @@ makeContent.featurelabeltree <- function(x) {
         label$ymax <- min(max(c(inside, outside)), 1)
       }
 
+      # Use ggfittext's fittexttree to draw text
+      gt <- grid::gTree(
+        data = label,
+        padding.x = grid::unit(0, "mm"),
+        padding.y = grid::unit(0, "mm"),
+        place = align,
+        min.size = 0,
+        grow = FALSE,
+        reflow = FALSE,
+        cl = "fittexttree",
+        fullheight = TRUE
+      )
+      gt$name <- grid::grobName(gt, "geom_feature_label")
+      gt
+  } )
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+
+#' @importFrom grid makeContent
+#' @export
+makeContent.flipfeaturelabeltree <- function(x) {
+
+    data <- x$data
+    feature_height <- x$feature_height
+    label_height <- x$label_height
+
+    # Prepare grob for each label
+    grobs <- lapply(seq_len(nrow(data)), function(i) {
+
+      label <- data[i, ]
+
+      label$ymin <- label$y - 0.5
+      label$ymax <- label$y + 0.5 
+
+      x_sign <- ifelse(
+        grid::convertWidth(feature_height, "native", TRUE) >= 0,
+        1,
+        -1
+      ) 
+      inside <- label$x + grid::convertWidth(feature_height, "native", TRUE)
+      outside <- inside + 
+        (x_sign * grid::convertWidth(label_height, "native", TRUE))
+      label$xmin <- max(min(c(inside, outside)), 0)
+      label$xmax <- min(max(c(inside, outside)), 1)
+      align <- "centre"
+      
       # Use ggfittext's fittexttree to draw text
       gt <- grid::gTree(
         data = label,

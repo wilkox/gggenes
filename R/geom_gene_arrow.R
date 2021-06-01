@@ -111,11 +111,14 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     arrow_body_height
   ) {
 
+    # Detect flipped coordinates
+    coord_flip <- inherits(coord, "CoordFlip")
+
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = "genearrowtree",
+      cl = ifelse(coord_flip, "flipgenearrowtree", "genearrowtree"),
       arrowhead_width = arrowhead_width,
       arrowhead_height = arrowhead_height,
       arrow_body_height = arrow_body_height
@@ -181,6 +184,79 @@ makeContent.genearrowtree <- function(x) {
         gene$y,
         gene$y + arrowhead_height,
         gene$y + arrow_body_height
+      ),
+      gp = grid::gpar(
+        fill = ggplot2::alpha(gene$fill, gene$alpha),
+        col = ggplot2::alpha(gene$colour, gene$alpha),
+        lty = gene$linetype,
+        lwd = gene$size * ggplot2::.pt
+      )
+    )
+
+    # Return the polygon grob
+    pg
+  })
+
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+
+#' @importFrom grid makeContent
+#' @export
+makeContent.flipgenearrowtree <- function(x) {
+
+  data <- x$data
+
+  # Prepare grob for each gene
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+
+    gene <- data[i, ]
+
+    # Reverse non-forward genes
+    if (! as.logical(gene$forward)) {
+      gene[, c("ymin", "ymax")] <- gene[, c("ymax", "ymin")]
+    }
+
+    # Determine orientation
+    orientation <- ifelse(gene$ymax > gene$ymin, 1, -1)
+
+    # Arrowhead defaults to 4 mm, unless the gene is shorter in which case the
+    # gene is 100% arrowhead
+    arrowhead_width <- as.numeric(grid::convertHeight(x$arrowhead_width, "native"))
+    gene_width <- abs(gene$ymax - gene$ymin)
+    arrowhead_width <- ifelse(
+      arrowhead_width > gene_width,
+      gene_width,
+      arrowhead_width
+    )
+
+    # Calculate y coordinate of flange
+    flangey <- (-orientation * arrowhead_width) + gene$ymax
+
+    # Set arrow and arrowhead heights; it's convenient to divide these by two
+    # for calculating x coordinates on the polygon
+    arrowhead_height <- as.numeric(grid::convertWidth(x$arrowhead_height, "native")) / 2
+    arrow_body_height <- as.numeric(grid::convertWidth(x$arrow_body_height, "native")) / 2
+
+    # Create polygon grob
+    pg <- grid::polygonGrob(
+      y = c(
+        gene$ymin,
+        gene$ymin,
+        flangey,
+        flangey,
+        gene$ymax,
+        flangey,
+        flangey
+      ),
+      x = c(
+        gene$x + arrow_body_height,
+        gene$x - arrow_body_height,
+        gene$x - arrow_body_height,
+        gene$x - arrowhead_height,
+        gene$x,
+        gene$x + arrowhead_height,
+        gene$x + arrow_body_height
       ),
       gp = grid::gpar(
         fill = ggplot2::alpha(gene$fill, gene$alpha),

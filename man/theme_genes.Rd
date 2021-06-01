@@ -2,13 +2,17 @@
 % Please edit documentation in R/theme_genes.R
 \name{theme_genes}
 \alias{theme_genes}
+\alias{theme_genes_flipped}
 \title{A 'ggplot2' theme for drawing gene maps}
 \usage{
 theme_genes()
+
+theme_genes_flipped()
 }
 \description{
 This theme removes extraneous plot elements for drawing an
-'arrows-on-a-string' style gene map in 'ggplot2'.
+'arrows-on-a-string' style gene map in 'ggplot2'.\code{theme_genes_flipped()} is
+like \code{theme_genes()}, but for flipped coordinates.
 }
 \details{
 This theme removes strip text (the text that labels facets when you use

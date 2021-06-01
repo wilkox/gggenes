@@ -120,3 +120,49 @@ test_that("plots look the way they should", {
   } )
 
 } )
+
+test_that("plots in flipped coordinates look correct", {
+
+  expect_doppelganger("Plot in flipped coordinates", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
+      geom_feature(
+        data = example_features,
+        aes(x = position, y = molecule, forward = forward)
+      ) +
+      geom_feature_label(
+        data = example_features,
+        aes(x = position, y = molecule, label = name, forward = forward)
+      ) +
+      geom_gene_arrow() +
+      geom_gene_label(min.size = 0) +
+      geom_blank(data = example_dummies) +
+      facet_wrap(~ molecule, scales = "free", nrow = 1) +
+      scale_fill_brewer(palette = "Set3") +
+      theme_genes_flipped() +
+      coord_flip()
+
+  } )
+
+  expect_doppelganger("Subgene plot in flipped coords", {
+    es <- example_subgenes
+    es$subgene <- substr(
+      es$subgene,
+      nchar(es$subgene),
+      nchar(es$subgene)
+    )
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
+      geom_gene_arrow() +
+      facet_wrap(~ molecule, scales = "free", nrow = 1) +
+      geom_subgene_arrow(
+        data = es,
+        aes(xsubmin = from, xsubmax = to, fill = subgene)
+      ) +
+      geom_subgene_label(
+        data = es,
+        aes(xsubmin = from, xsubmax = to, label = subgene),
+        min.size = 0
+      ) +
+      coord_flip() + theme_genes_flipped()
+  } )
+
+} )

@@ -115,11 +115,14 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     arrowhead_width
   ) {
 
+    # Detect flipped coordinates
+    coord_flip <- inherits(coord, "CoordFlip")
+
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = "featuretree",
+      cl = ifelse(coord_flip, "flipfeaturetree", "featuretree"),
       feature_height = feature_height,
       feature_width = feature_width,
       arrowhead_width = arrowhead_width
@@ -170,6 +173,64 @@ makeContent.featuretree <- function(x) {
     pg <- grid::polylineGrob(
       x = xs,
       y = ys,
+      arrow = arrow,
+      gp = grid::gpar(
+        col = feature$colour,
+        fill = feature$colour,
+        lty = feature$linetype,
+        lwd = feature$size
+      )
+    )
+
+    # Return the grob
+    pg
+  })
+
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+
+#' @importFrom grid makeContent
+#' @export
+makeContent.flipfeaturetree <- function(x) {
+
+  data <- x$data
+  feature_height <- x$feature_height
+  feature_width <- x$feature_width
+  arrowhead_width <- x$arrowhead_width
+
+  # Prepare grob for each feature
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+
+    feature <- data[i, ]
+
+    # Determine whether this is a feature with orientation or not (i.e. whether
+    # or not to draw an elbow and arrowhead), and generate appropriate values
+    # for x-coordinates, y-coordinates and arrowhead
+
+    # For non-oriented features:
+    if (is.na(feature$forward) | ! is.logical(feature$forward)) {
+
+      end_x <- feature$x + grid::convertWidth(feature_height, "native", TRUE)
+      ys <- c(feature$y, feature$y)
+      xs <- c(feature$x, end_x)
+      arrow <- NULL
+
+    # For oriented features:
+    } else {
+
+      arrow_sign <- ifelse(feature$forward, 1, -1)
+      elbow_x <- feature$x + grid::convertWidth(feature_height, "native", TRUE)
+      end_y <- feature$y + (grid::convertHeight(feature_width, "native", TRUE) * arrow_sign)
+      ys <- c(feature$y, feature$y, end_y)
+      xs <- c(feature$x, elbow_x, elbow_x)
+      arrow <- grid::arrow(angle = 20, length = arrowhead_width, type = "closed")
+    }
+    
+    # Generate polyline grob for the feature
+    pg <- grid::polylineGrob(
+      y = ys,
+      x = xs,
       arrow = arrow,
       gp = grid::gpar(
         col = feature$colour,

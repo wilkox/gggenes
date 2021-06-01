@@ -3,6 +3,7 @@
 ## Major changes
 
 - Add new `geom_feature()` and `geom_feature_label()`
+- Add support for flipped coordinates with `coord_flip()` (#38)
 
 ## Minor changes
 
