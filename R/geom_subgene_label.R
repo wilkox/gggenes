@@ -73,6 +73,7 @@ geom_subgene_label <- function(
       min.size = min.size,
       grow = grow,
       reflow = reflow,
+      height = height,
       ...
     )
   )

@@ -55,9 +55,8 @@ orientation)
 \item xsubmin,xsubmax (start and end of subgene segment). Should be consistent
 with \code{xmin}/\code{xmax}
 \item y (molecule)
-\item forward (if any value that is not TRUE, or coercible to TRUE, the gene
-arrow will be drawn in the opposite direction to that determined by \code{xmin}
-and \code{xmax})
+\item forward (if FALSE, or coercible to FALSE, the gene arrow will be drawn in
+the opposite direction to that determined by \code{xmin} and \code{xmax})
 \item alpha
 \item colour
 \item fill

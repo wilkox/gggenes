@@ -10,6 +10,10 @@
   the forward aesthetic in example data, and fix an error in README and
   introductory vignette (-1 does not coerce to FALSE...)
 
+## Bug fixes
+
+- Fix bug where `height` argument to `geom_gene_label()` and `geom_subgene_label()` were being ignored (#40, thanks @jvanbelzen)
+
 # gggenes 0.4.1
 
 ## Minor changes
