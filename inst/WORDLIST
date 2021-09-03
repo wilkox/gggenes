@@ -1,4 +1,5 @@
 CMD
+GenBank
 Labelling
 README
 aes
@@ -9,12 +10,15 @@ dplyr
 fontface
 geoms
 ggfittext
+gggenomes
 ggplot
 labelled
 lifecycle
 linetype
 normalise
 patchlevel
+plasmapR
+plasmid
 pre
 reflowed
 reflowing
@@ -23,6 +27,7 @@ subgene
 subgenes
 tidyeval
 vdiffr
+visualising
 xmax
 xmin
 xsubmax
