@@ -8,3 +8,4 @@
 ^revdep$
 ^doc$
 ^Meta$
+^\.github$

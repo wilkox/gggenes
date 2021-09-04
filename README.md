@@ -1,7 +1,6 @@
 
-[![Travis-CI Build
-Status](https://travis-ci.org/wilkox/gggenes.svg?branch=master)](https://travis-ci.org/wilkox/gggenes)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
+[![R-CMD-check](https://github.com/wilkox/gggenes/workflows/R-CMD-check/badge.svg)](https://github.com/wilkox/gggenes/actions)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 # gggenes
