@@ -10,6 +10,8 @@
 - Explicit coercion of the `forward` value to logical, more useful values for
   the forward aesthetic in example data, and fix an error in README and
   introductory vignette (-1 does not coerce to FALSE...)
+- Improve handling of NA `id` values in `make_alignment_dummies()` (#51, thanks
+  @NanamiKubota)
 
 ## Bug fixes
 
