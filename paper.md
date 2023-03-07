@@ -26,7 +26,7 @@ Life on Earth uses molecules called nucleic acids, most importantly DNA and RNA,
 
 # Statement of need
 
-Biologists have been drawing maps to locate genes within a larger molecule since long before the discovery of DNA, with Alfred H. Sturtevant drawing the first chromosome maps based on gene linkage (the propensity for genes to be inherited together into the next generation) in 1913 [@Smith:2013]. With the advent of molecular biology and the widespread use of sequencing as a research and clinical tool, this evolved into drawing maps that precisely locate genes and other features of interest within a larger genetic sequence. The publication in 1976 of the first ever completely sequenced genome, for the bacteriophage MS2 virus, had as its first figure a map of the three genes encoded by the MS2 genome [@Fiers:1976] (although due to an unfortunate error this historically signficant figure was inadvertantly swapped with another when the manuscript went to print [@Nature_1976]). A recent review of the phenomenon of overlapping genes illustrates the diversity and robustness of such maps in illustrating both common and esoteric genomic features and arrangements, including their use in 'synteny plots' which are widely used to compare genomic regions [@Wright2022].
+Biologists have been drawing maps to locate genes within a larger molecule since long before the discovery of DNA, with Alfred H. Sturtevant drawing the first chromosome maps based on gene linkage (the propensity for genes to be inherited together into the next generation) in 1913 [@Smith:2013]. With the advent of molecular biology and the widespread use of sequencing as a research and clinical tool, this evolved into drawing maps that precisely locate genes and other features of interest within a larger genetic sequence. The publication in 1976 of the first ever completely sequenced genome, for the bacteriophage MS2, had as its first figure a map of the three genes encoded by the MS2 genome [@Fiers:1976] (although due to an unfortunate error this historically signficant figure was swapped with another when the manuscript went to print [@Nature_1976]). A recent review of the phenomenon of overlapping genes illustrates the flexibility of such maps in illustrating both common and esoteric genomic features and arrangements, including their use in 'synteny plots' which are a standard way of comparing genomic regions [@Wright2022].
 
 The *R* programming language [@R:2022], and particularly the *tidyverse* group of R packages, are widely used in the life sciences for manipulating, modelling and visualising data including genetic sequence data. *ggplot2* [@Wickham:2016], a data visualisation package within the *tidyverse*, provides users with a set of 'geoms', which are R functions that draw geometrical forms commonly used in data visualisation such as points (for scatter plots), lines (for line plots) and columns (for bar plots). The design of *ggplot2* allows it to be easily extended with additional geoms and other plot components, and a large ecosystem of *ggplot2* extensions enables users to draw a range of common and domain-specific visualisations (see https://exts.ggplot2.tidyverse.org).
 
@@ -41,14 +41,11 @@ The standard syntax for a *gggenes* plot is as follows (\autoref{fig:example}):
 ```r
 ggplot(genes, aes(xmin = start, xmax = end, y = molecule, 
                   fill = gene, label = gene)) +
-  geom_feature(
-    data = features,
-    aes(x = position, y = molecule, forward = forward)
-  ) +
-  geom_feature_label(
-    data = features,
-    aes(x = position, y = molecule, label = name, forward = forward)
-  ) +
+  geom_feature(data = features, 
+               aes(x = position, y = molecule, forward = forward)) +
+  geom_feature_label(data = features, 
+                     aes(x = position, y = molecule, 
+                         label = name, forward = forward)) +
   geom_gene_arrow() +
   geom_gene_label() +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
