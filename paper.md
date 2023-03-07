@@ -15,7 +15,7 @@ affiliations:
  - name: Independent Researcher, Australia
    index: 1
  - name: ZK's affiliation
-   index:2
+   index: 2
 date: 28 February 2023
 bibliography: paper.bib
 ---
