@@ -1,4 +1,4 @@
-# gggenes (development version)
+# gggenes 0.5.0
 
 ## Major changes
 

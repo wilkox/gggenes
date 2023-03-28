@@ -13,10 +13,11 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-"
 )
 ```
-
+<!-- badges: start -->
 [![R-CMD-check](https://github.com/wilkox/gggenes/workflows/R-CMD-check/badge.svg)](https://github.com/wilkox/gggenes/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+<!-- badges: end -->
 
 # gggenes
 

@@ -1,7 +1,11 @@
 
+<!-- badges: start -->
+
 [![R-CMD-check](https://github.com/wilkox/gggenes/workflows/R-CMD-check/badge.svg)](https://github.com/wilkox/gggenes/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gggenes)](https://cran.r-project.org/package=gggenes)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+<!-- badges: end -->
 
 # gggenes
 
@@ -178,14 +182,14 @@ ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
 
 ![](man/figures/README-subgene_labels-1.png)<!-- -->
 
-## Experimental feature: drawing point genetic features
+## Drawing point genetic features
 
 We can draw point genetic features, such as restriction sites or
 transcription start sites, with `geom_feature()`, and label them with
 `geom_feature_label()`. Both of these geoms take an optional `forward`
-aesthetic to indicated whether a feature is oriented and, if so, in what
-direction (`TRUE` meaning oriented towards the right of the x-axis and
-`FALSE` meaning towards the left).
+aesthetic to indicate whether a feature is oriented and, if so, in what
+direction (`TRUE` meaning oriented towards the right and `FALSE` meaning
+towards the left).
 
 ``` r
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
@@ -207,9 +211,16 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
 
 ![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
 
+## Other genetic features
+
+Do you have an idea, suggestion or request for another type of feature
+for gggenes to draw? [Open a new
+issue](https://github.com/wilkox/gggenes/issues/new) and it will be
+considered.
+
 ## Related packages
 
--   [gggenomes](https://thackl.github.io/gggenomes/) for visualising
-    comparative genomics
--   [plasmapR](https://github.com/BradyAJohnston/plasmapR) for quickly
-    drawing plasmid maps from GenBank files
+- [gggenomes](https://thackl.github.io/gggenomes/) for visualising
+  comparative genomics
+- [plasmapR](https://github.com/BradyAJohnston/plasmapR) for quickly
+  drawing plasmid maps from GenBank files
