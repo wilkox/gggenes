@@ -12,6 +12,8 @@
   introductory vignette (-1 does not coerce to FALSE...)
 - Improve handling of NA `id` values in `make_alignment_dummies()` (#51, thanks
   @NanamiKubota)
+- Update `element_line` to use `linewidth` rather than `size` (`size`
+  deprecated as of ggplot2 3.4.0)
 
 ## Bug fixes
 

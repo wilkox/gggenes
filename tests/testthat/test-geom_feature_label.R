@@ -2,7 +2,7 @@ context("geom_feature_label")
 
 test_that("a simple plot with labelled features is drawn without errors", {
 
-  expect_silent( {
+  expect_no_error( {
     library(ggplot2)
     p <- ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
       geom_feature(data = example_features, aes(x = position, y = molecule, forward = forward, linetype = type, colour = type)) +

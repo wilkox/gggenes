@@ -1,7 +1,7 @@
 context("geom_subgene_label")
 
 test_that("a simple geom_subgene_label plot is drawn without errors", {
-  expect_silent( {
+  expect_no_error( {
     library(ggplot2)
     p <- ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
       geom_gene_arrow() +

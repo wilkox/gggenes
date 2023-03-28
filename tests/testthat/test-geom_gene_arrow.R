@@ -1,7 +1,7 @@
 context("geom_gene_arrow")
 
 test_that("a simple geom_gene_arrow plot is drawn without errors", { 
-  expect_silent( {
+  expect_no_error( {
     library(ggplot2)
     example_genes$direction <- example_genes$strand == "forward"
     p <- ggplot(

@@ -1,7 +1,7 @@
 context("theme_genes")
 
 test_that("a simple geom_gene_arrow plot with theme_genes is drawn without errors", { 
-  expect_silent( {
+  expect_no_error( {
     library(ggplot2)
     p <- ggplot(
       example_genes,

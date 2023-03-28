@@ -1,7 +1,7 @@
 context("geom_subgene_arrow")
 
 test_that("a simple geom_subgene_arrow plot is drawn without errors", {
-  expect_silent( {
+  expect_no_error( {
     library(ggplot2)
     p <- ggplot(
       example_genes,
@@ -25,7 +25,7 @@ test_that("a simple geom_subgene_arrow plot is drawn without errors", {
     print(p)
   } )
 
-  expect_doppelganger("Basic plot with subgenes", {
+  expect_doppelganger(title = "Basic plot with subgenes", fig = {
     ggplot(
       example_genes,
       aes(xmin = start, xmax = end, y = molecule, forward = orientation)

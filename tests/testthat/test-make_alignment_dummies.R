@@ -1,7 +1,7 @@
 context("make_alignment_dummies")
 
 test_that("make_alignment_dummies works without errors", {
-  expect_silent( {
+  expect_no_error( {
     library(ggplot2)
     dummies <- make_alignment_dummies(
       example_genes,
