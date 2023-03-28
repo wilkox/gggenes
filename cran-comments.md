@@ -1,13 +1,17 @@
-# Test environments
-
-* local macOS install, R 4.0.3
-* ubuntu 16.04.6 (on travis-ci), R-devel, 4.0.2, 3.6.3
-* win-builder (with `devtools::check_win_release()`)
-
 # R CMD check results
 
-There were no ERRORs, WARNINGs or NOTEs.
+0 errors | 0 warnings | 0 notes
+
+# Test environments
+
+- local macOS install, R 4.2.3
+- ubuntu 22.04.2 (using GitHub Actions), 4.2.3
+- winbuilder R 4.3.0 alpha (with `devtools::check_win_release()`)
 
 # Downstream dependencies
 
-There are no downstream dependencies of this package on CRAN.
+We checked 3 reverse dependencies (1 from CRAN + 2 from Bioconductor),
+comparing R CMD check results across CRAN and dev versions of this package.
+
+- We saw 0 new problems
+- We failed to check 0 packages
