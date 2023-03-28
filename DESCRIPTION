@@ -16,7 +16,7 @@ Imports:
     rlang (>= 0.2.0)
 License: GPL-2
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 URL: https://wilkox.org/gggenes/
 BugReports: https://github.com/wilkox/gggenes/issues/
 Suggests: 
