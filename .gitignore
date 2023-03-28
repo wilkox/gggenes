@@ -8,3 +8,5 @@ revdep/*
 revdep
 doc
 Meta
+/doc/
+/Meta/

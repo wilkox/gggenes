@@ -19,8 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-'gggenes' is a (quite small) set of tools for drawing gene arrow maps with
-'ggplot2.'
+'gggenes' is ggplot2 extension for drawing gene arrow maps.
 
 ## Drawing gene arrows with `geom_gene_arrow()`
 
@@ -162,13 +161,13 @@ ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
   )
 ```
 
-## Experimental feature: drawing point genetic features
+## Drawing point genetic features
 
 We can draw point genetic features, such as restriction sites or transcription
 start sites, with `geom_feature()`, and label them with `geom_feature_label()`.
-Both of these geoms take an optional `forward` aesthetic to indicated whether a
+Both of these geoms take an optional `forward` aesthetic to indicate whether a
 feature is oriented and, if so, in what direction (`TRUE` meaning oriented
-towards the right of the x-axis and `FALSE` meaning towards the left).
+towards the right and `FALSE` meaning towards the left).
 
 ```{r}
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
