@@ -14,7 +14,7 @@ authors:
 affiliations:
  - name: Independent Researcher, Australia
    index: 1
- - name: ZK's affiliation
+ - name: Lodo Therapeutics, New York, NY, USA   
    index: 2
 date: 28 February 2023
 bibliography: paper.bib
