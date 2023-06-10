@@ -46,7 +46,8 @@ ggplot(genes, aes(xmin = start, xmax = end, y = molecule,
   geom_feature_label(data = features, 
                      aes(x = position, y = molecule, 
                          label = name, forward = forward)) +
-  geom_gene_arrow(arrowhead_height = unit(3, "mm"), arrowhead_width = unit(1, "mm")) +
+  geom_gene_arrow(arrowhead_height = unit(3, "mm"), 
+                  arrowhead_width = unit(1, "mm")) +
   geom_gene_label() +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   theme_genes()
