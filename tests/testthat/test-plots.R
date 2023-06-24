@@ -1,6 +1,47 @@
 context("visual tests of plots")
 library(ggplot2)
 
+test_that("plots with terminators look the way they should", {
+
+  expect_doppelganger("Basic plot with terminators", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_gene_arrow() +
+      geom_terminator(data = example_terminators, ggplot2::aes(x = position, y = molecule)) +
+      ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
+      theme_genes()
+  } )
+
+  expect_doppelganger("Flipped plot with terminators", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_gene_arrow() +
+      geom_terminator(data = example_terminators, ggplot2::aes(x = position, y = molecule)) +
+      ggplot2::facet_wrap(~ molecule, scales = "free", nrow = 1) +
+      theme_genes() +
+      coord_flip()
+  } )
+
+  expect_doppelganger("Basic plot with labelled terminators", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_gene_arrow() +
+      geom_terminator(data = example_terminators, ggplot2::aes(x = position, y = molecule)) +
+      geom_terminator_label(data = example_terminators, 
+                            ggplot2::aes(x = position, y = molecule, label = name)) +
+      ggplot2::facet_wrap(~ molecule, scales = "free", ncol = 1) +
+      theme_genes()
+  } )
+
+  expect_doppelganger("Flipped plot with labelled terminators", {
+    ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
+      geom_gene_arrow() +
+      geom_terminator(data = example_terminators, ggplot2::aes(x = position, y = molecule)) +
+      geom_terminator_label(data = example_terminators, 
+                            ggplot2::aes(x = position, y = molecule, label = name)) +
+      ggplot2::facet_wrap(~ molecule, scales = "free", nrow = 1) +
+      theme_genes() +
+      coord_flip()
+  } )
+} )
+
 test_that("plots with features look the way they should", {
   expect_doppelganger("Basic plot with features", {
     ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +

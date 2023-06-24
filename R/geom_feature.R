@@ -47,7 +47,7 @@
 #'                                                      forward = forward)) +
 #'   ggplot2::facet_wrap(~ molecule, scales = "free")
 #'
-#' @seealso [geom_feature_label()]
+#' @seealso [geom_feature_label()], [geom_terminator()]
 #'
 #' @export
 geom_feature <- function(

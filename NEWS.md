@@ -1,3 +1,9 @@
+# gggenes 0.5.0.9001
+
+## Major changes
+
+- Add new `geom_terminator()` and `geom_terminator_label()`
+
 # gggenes 0.5.0
 
 ## Major changes

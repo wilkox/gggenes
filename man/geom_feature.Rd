@@ -76,5 +76,5 @@ ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
 
 }
 \seealso{
-\code{\link[=geom_feature_label]{geom_feature_label()}}
+\code{\link[=geom_feature_label]{geom_feature_label()}}, \code{\link[=geom_terminator]{geom_terminator()}}
 }

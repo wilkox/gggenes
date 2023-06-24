@@ -211,6 +211,32 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
 
 ![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
 
+We can draw and label transcription terminators with `geom_terminator()`
+and `geom_terminator_label()`.
+
+``` r
+ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
+  geom_feature(
+    data = example_features,
+    aes(x = position, y = molecule, forward = forward)
+  ) +
+  geom_feature_label(
+    data = example_features,
+    aes(x = position, y = molecule, label = name, forward = forward)
+  ) +
+  geom_terminator(data = example_terminators, aes(x = position, y = molecule)) +
+  geom_terminator_label(data = example_terminators, 
+                        aes(x = position, y = molecule, label = name)) +
+  geom_gene_arrow() +
+  geom_gene_label() +
+  geom_blank(data = example_dummies) +
+  facet_wrap(~ molecule, scales = "free", ncol = 1) +
+  scale_fill_brewer(palette = "Set3") +
+  theme_genes()
+```
+
+![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
+
 ## Other genetic features
 
 Do you have an idea, suggestion or request for another type of feature

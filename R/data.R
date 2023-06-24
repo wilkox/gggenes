@@ -50,3 +50,15 @@
 #'   \item{forward}{is the feature oriented, and if so in the forward direction?}
 #' }
 "example_features"
+
+#' A set of example terminators.
+#'
+#' Terminators for example purposes only.
+#'
+#' @format A data frame with two rows and three variables:
+#' \describe{
+#'   \item{molecule}{the genome}
+#'   \item{name}{the name of the terminator}
+#'   \item{position}{the position of the terminator}
+#' }
+"example_terminators"
