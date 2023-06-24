@@ -84,6 +84,7 @@
 <polygon points='234.67,94.88 226.16,94.88 226.16,58.17 224.74,58.17 230.41,46.83 236.08,58.17 234.67,58.17 ' style='stroke-width: 0.64; fill: #00B4F0;' />
 <polyline points='230.41,46.53 238.92,46.53 ' style='stroke-width: 0.75;' />
 <polyline points='238.92,42.27 238.92,50.78 ' style='stroke-width: 0.75;' />
+<text x='246.00' y='47.63' text-anchor='middle' style='font-size: 3.26px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>T-800</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -152,6 +153,7 @@
 <polygon points='479.43,96.33 470.92,96.33 470.92,57.86 469.51,57.86 475.18,46.53 480.84,57.86 479.43,57.86 ' style='stroke-width: 0.64; fill: #00B4F0;' />
 <polyline points='475.18,46.53 483.68,46.53 ' style='stroke-width: 0.75;' />
 <polyline points='483.68,42.27 483.68,50.78 ' style='stroke-width: 0.75;' />
+<text x='490.77' y='47.44' text-anchor='middle' style='font-size: 2.68px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>T-1000</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -373,6 +375,6 @@
 <text x='687.52' y='355.12' style='font-size: 8.80px; font-family: sans;' textLength='21.52px' lengthAdjust='spacingAndGlyphs'>protD</text>
 <text x='687.52' y='372.40' style='font-size: 8.80px; font-family: sans;' textLength='21.04px' lengthAdjust='spacingAndGlyphs'>protE</text>
 <text x='687.52' y='389.68' style='font-size: 8.80px; font-family: sans;' textLength='20.54px' lengthAdjust='spacingAndGlyphs'>protF</text>
-<text x='47.48' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='165.08px' lengthAdjust='spacingAndGlyphs'>Flipped plot with terminators</text>
+<text x='47.48' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='214.24px' lengthAdjust='spacingAndGlyphs'>Flipped plot with labelled terminators</text>
 </g>
 </svg>

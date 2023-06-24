@@ -126,6 +126,7 @@ makeContent.terminatortree <- function(x) {
     pg <- grid::polylineGrob(
       x = xs,
       y = ys,
+      id = c(1, 1, 2, 2),
       gp = grid::gpar(
         col = terminator$colour,
         fill = terminator$colour,
@@ -164,6 +165,7 @@ makeContent.flipterminatortree <- function(x) {
     pg <- grid::polylineGrob(
       x = xs,
       y = ys,
+      id = c(1, 1, 2, 2),
       gp = grid::gpar(
         col = terminator$colour,
         fill = terminator$colour,
