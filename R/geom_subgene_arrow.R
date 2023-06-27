@@ -110,25 +110,27 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
     arrow_body_height
   ) {
 
-    # Detect flipped coordinates
-    coord_flip <- inherits(coord, "CoordFlip")
+    # Detect coordinate system
+    coord_system <- get_coord_system(coord)
 
     orig_data <- data
     ## save original data
     data <- coord$transform(data, panel_scales)
     ## force rescale of sub characteristics
-    if (coord_flip) {
+    if (coord_system == "flip") {
       tmp <- setNames(data[,c("ysubmin", "ysubmax")], c("xmin", "xmax"))
       data[,c("ysubmin", "ysubmax")] <- coord$transform(tmp, panel_scales)
-    } else {
+    } else if (coord_system == "cartesian") {
       tmp <- setNames(data[,c("xsubmin", "xsubmax")], c("xmin", "xmax"))
       data[,c("xsubmin", "xsubmax")] <- coord$transform(tmp, panel_scales)
+    } else {
+      stop("Don't know how to draw in this coordinate system", call. = FALSE)
     }
 
     gt <- grid::gTree(
       data = data,
       orig_data = orig_data,
-      cl = ifelse(coord_flip, "flipsubgenearrowtree", "subgenearrowtree"),
+      cl = paste0(coord_system, "subgenearrowtree"),
       arrowhead_width = arrowhead_width,
       arrowhead_height = arrowhead_height,
       arrow_body_height = arrow_body_height
@@ -140,7 +142,7 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.subgenearrowtree <- function(x) {
+makeContent.cartesiansubgenearrowtree <- function(x) {
 
   data <- x$data
 

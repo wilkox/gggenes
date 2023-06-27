@@ -88,14 +88,14 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
     terminator_width
   ) {
 
-    # Detect flipped coordinates
-    coord_flip <- inherits(coord, "CoordFlip")
+    # Detect coordinate system
+    coord_system <- get_coord_system(coord)
 
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = ifelse(coord_flip, "flipterminatortree", "terminatortree"),
+      cl = paste0(coord_system, "terminatortree"),
       terminator_height = terminator_height,
       terminator_width = terminator_width
     )
@@ -106,7 +106,7 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.terminatortree <- function(x) {
+makeContent.cartesianterminatortree <- function(x) {
 
   data <- x$data
   terminator_height <- x$terminator_height

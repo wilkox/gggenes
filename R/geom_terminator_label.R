@@ -98,15 +98,15 @@ GeomTerminatorLabel <- ggplot2::ggproto(
 
   draw_panel = function(data, panel_scales, coord, terminator_height, label_height) {
 
-    # Detect flipped coordinates
-    coord_flip <- inherits(coord, "CoordFlip")
+    # Detect coordinate system
+    coord_system <- get_coord_system(coord)
 
     # Transform data to panel scales
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = ifelse(coord_flip, "flipterminatorlabeltree", "terminatorlabeltree"),
+      cl = paste0(coord_system, "terminatorlabeltree"),
       terminator_height = terminator_height,
       label_height = label_height
     )
@@ -117,7 +117,7 @@ GeomTerminatorLabel <- ggplot2::ggproto(
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.terminatorlabeltree <- function(x) {
+makeContent.cartesianterminatorlabeltree <- function(x) {
 
     data <- x$data
     terminator_height <- x$terminator_height

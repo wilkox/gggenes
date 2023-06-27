@@ -115,14 +115,14 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     arrowhead_width
   ) {
 
-    # Detect flipped coordinates
-    coord_flip <- inherits(coord, "CoordFlip")
+    # Detect coordinate system
+    coord_system <- get_coord_system(coord)
 
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = ifelse(coord_flip, "flipfeaturetree", "featuretree"),
+      cl = paste0(coord_system, "featuretree"),
       feature_height = feature_height,
       feature_width = feature_width,
       arrowhead_width = arrowhead_width
@@ -134,7 +134,7 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.featuretree <- function(x) {
+makeContent.cartesianfeaturetree <- function(x) {
 
   data <- x$data
   feature_height <- x$feature_height

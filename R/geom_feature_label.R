@@ -108,15 +108,15 @@ GeomFeatureLabel <- ggplot2::ggproto(
 
   draw_panel = function(data, panel_scales, coord, feature_height, label_height) {
 
-    # Detect flipped coordinates
-    coord_flip <- inherits(coord, "CoordFlip")
+    # Detect coordinate system
+    coord_system <- get_coord_system(coord)
 
     # Transform data to panel scales
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = ifelse(coord_flip, "flipfeaturelabeltree", "featurelabeltree"),
+      cl = paste0(coord_system, "featurelabeltree"),
       feature_height = feature_height,
       label_height = label_height
     )
@@ -127,7 +127,7 @@ GeomFeatureLabel <- ggplot2::ggproto(
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.featurelabeltree <- function(x) {
+makeContent.cartesianfeaturelabeltree <- function(x) {
 
     data <- x$data
     feature_height <- x$feature_height

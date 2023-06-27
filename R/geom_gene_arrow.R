@@ -111,14 +111,14 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     arrow_body_height
   ) {
 
-    # Detect flipped coordinates
-    coord_flip <- inherits(coord, "CoordFlip")
+    # Detect coordinate system
+    coord_system <- get_coord_system(coord)
 
     data <- coord$transform(data, panel_scales)
 
     gt <- grid::gTree(
       data = data,
-      cl = ifelse(coord_flip, "flipgenearrowtree", "genearrowtree"),
+      cl = paste0(coord_system, "genearrowtree"),
       arrowhead_width = arrowhead_width,
       arrowhead_height = arrowhead_height,
       arrow_body_height = arrow_body_height
@@ -130,7 +130,7 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.genearrowtree <- function(x) {
+makeContent.cartesiangenearrowtree <- function(x) {
 
   data <- x$data
 
