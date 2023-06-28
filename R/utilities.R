@@ -1,4 +1,5 @@
 #' Report coordinate system of a Coord ggproto object
+#' @noRd
 get_coord_system <- function(coord) {
     if ("CoordPolar" %in% class(coord)) {
       return("polar")
