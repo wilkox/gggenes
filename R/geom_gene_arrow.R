@@ -127,10 +127,13 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
       # Correct for the situation where x values at both the minimum and
       # maximum of the x scale will be set to theta = 0
       for (i in seq.int(nrow(data))) {
-        if (data$theta_xmin[i] == 0 & data$xmin[i] > data$xmax[i]) { data$theta_xmin[i] <- 2 * pi }
-        if (data$theta_xmax[i] == 0 & data$xmax[i] > data$xmin[i]) { data$theta_xmax[i] <- 2 * pi }
+        if (data$theta_xmin[i] == 0 & data$xmin[i] > data$xmax[i]) {
+          data$theta_xmin[i] <- 2 * pi
+        }
+        if (data$theta_xmax[i] == 0 & data$xmax[i] > data$xmin[i]) {
+          data$theta_xmax[i] <- 2 * pi
+        }
       }
-
     } else {
       data <- coord$transform(data, panel_scales)
     }
@@ -303,8 +306,6 @@ makeContent.polargenearrowtree <- function(x) {
   grobs <- lapply(seq_len(nrow(data)), function(i) {
 
     gene <- data[i, ]
-    message("gene:")
-    print(gene)
 
     # Reverse non-forward genes
     if (! as.logical(gene$forward)) {
