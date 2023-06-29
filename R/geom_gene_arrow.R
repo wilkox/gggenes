@@ -340,6 +340,12 @@ makeContent.polargenearrowtree <- function(x) {
 
       j <- ifelse(i == length(rs), 1, i + 1)
 
+      # If the line is vertical, no need to segment it
+      if (thetas[i] == thetas[j]) {
+        segmented_rs <- c(segmented_rs, rs[i], rs[j])
+        segmented_thetas <- c(segmented_thetas, thetas[i], thetas[j])
+      }
+
       # Get the length of the line
       len <- sqrt((abs(rs[i] - rs[j]) ^ 2) + (abs(thetas[i] - thetas[j]) ^ 2))
       
