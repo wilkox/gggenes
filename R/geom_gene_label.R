@@ -123,37 +123,9 @@ GeomGeneLabel <- ggplot2::ggproto(
     subgroup = NA
   ) {
 
-    # Detect coordinate system and transform coordinates. Note that
-    # makeContent.fittexttreepolar expects to receive theta values in the 'xmin'
-    # and 'xmax' columns
+    # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
-    if (coord_system == "polar") {
-      data$x <- data$xmin
-      theta_xmin <- coord$transform(data, panel_scales)$theta
-      data$x <- data$xmax
-      theta_xmax <- coord$transform(data, panel_scales)$theta
-      data$x <- 1
-      data <- coord$transform(data, panel_scales)
-      data$xmin <- theta_xmin
-      data$xmax <- theta_xmax
-      data$x <- NULL
-
-      # Correct for the situation where x values at both the minimum and
-      # maximum of the x scale will be set to theta = 0
-      for (i in seq.int(nrow(data))) {
-        if (data$xmin[i] == 0 & data$xmin[i] > data$xmax[i]) {
-          data$xmin[i] <- 2 * pi
-        }
-        if (data$xmax[i] == 0 & data$xmax[i] > data$xmin[i]) {
-          data$xmax[i] <- 2 * pi
-        }
-      }
-    } else if (coord_system == "flip") {
-      data$angle <- data$angle + 90
-      data <- coord$transform(data, panel_scales)
-    } else if (coord_system == "cartesian") {
-      data <- coord$transform(data, panel_scales)
-    }
+    data <- transform_to_grid(data, coord_system, panel_scales, coord)
 
     # Check value of 'align'
     if (! align %in% c("left", "centre", "center", "middle", "right")) {

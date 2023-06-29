@@ -111,32 +111,10 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     arrow_body_height
   ) {
 
-    # Detect coordinate system and transform values
+    # Detect coordinate system and transform values. xmin/xmax will now be
+    # expressed in theta
     coord_system <- get_coord_system(coord)
-    if (coord_system == "polar") {
-      data$x <- data$xmin
-      theta_xmin <- coord$transform(data, panel_scales)$theta
-      data$x <- data$xmax
-      theta_xmax <- coord$transform(data, panel_scales)$theta
-      data$x <- 1
-      data <- coord$transform(data, panel_scales)
-      data$theta_xmin <- theta_xmin
-      data$theta_xmax <- theta_xmax
-      data$x <- NULL
-
-      # Correct for the situation where x values at both the minimum and
-      # maximum of the x scale will be set to theta = 0
-      for (i in seq.int(nrow(data))) {
-        if (data$theta_xmin[i] == 0 & data$xmin[i] > data$xmax[i]) {
-          data$theta_xmin[i] <- 2 * pi
-        }
-        if (data$theta_xmax[i] == 0 & data$xmax[i] > data$xmin[i]) {
-          data$theta_xmax[i] <- 2 * pi
-        }
-      }
-    } else {
-      data <- coord$transform(data, panel_scales)
-    }
+    data <- transform_to_grid(data, coord_system, panel_scales, coord)
 
     gt <- grid::gTree(
       data = data,
@@ -319,7 +297,7 @@ makeContent.polargenearrowtree <- function(x) {
     # gene is 100% arrowhead
     arrowhead_width_native <- as.numeric(grid::convertWidth(x$arrowhead_width, "native"))
     arrowhead_width_rad <- arrowhead_width_native / gene$r
-    gene_width_rad <- abs(gene$theta_xmax - gene$theta_xmin)
+    gene_width_rad <- abs(gene$xmax - gene$xmin)
     arrowhead_width_rad <- ifelse(
       arrowhead_width_rad > gene_width_rad,
       gene_width_rad,
@@ -327,7 +305,7 @@ makeContent.polargenearrowtree <- function(x) {
     )
 
     # Calculate theta coordinate of flange
-    flangetheta <- (-orientation * arrowhead_width_rad) + gene$theta_xmax
+    flangetheta <- (-orientation * arrowhead_width_rad) + gene$xmax
 
     # Set arrow and arrowhead heights; it's convenient to divide these by two
     # for calculating y coordinates on the polygon
@@ -346,13 +324,13 @@ makeContent.polargenearrowtree <- function(x) {
       gene$r - arrow_body_height_native
     )
     thetas <- c(
-      gene$theta_xmin,
+      gene$xmin,
       flangetheta,
       flangetheta,
-      gene$theta_xmax,
+      gene$xmax,
       flangetheta,
       flangetheta,
-      gene$theta_xmin
+      gene$xmin
     )
 
     # Segment each edge of the polygon
