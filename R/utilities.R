@@ -64,7 +64,6 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
     }
 
   } else if (coord_system == "flip") {
-    if ("angle" %in% names(data)) { data$angle <- data$angle + 90 }
     data <- coord$transform(data, panel_scales)
 
   } else if (coord_system == "cartesian") {

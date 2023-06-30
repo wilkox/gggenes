@@ -108,11 +108,9 @@ GeomFeatureLabel <- ggplot2::ggproto(
 
   draw_panel = function(data, panel_scales, coord, feature_height, label_height) {
 
-    # Detect coordinate system
+    # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
-
-    # Transform data to panel scales
-    data <- coord$transform(data, panel_scales)
+    data <- data_to_grid(data, coord_system, panel_scales, coord)
 
     gt <- grid::gTree(
       data = data,
@@ -128,6 +126,132 @@ GeomFeatureLabel <- ggplot2::ggproto(
 #' @importFrom grid makeContent
 #' @export
 makeContent.cartesianfeaturelabeltree <- function(x) {
+
+  data <- x$data
+  feature_height <- x$feature_height
+  label_height <- x$label_height
+
+  # Prepare grob for each label
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+
+    label <- data[i, ]
+
+    # Determine if the feature to be labelled is oriented, and set
+    # appropriate bounding box and place
+
+    # For non-oriented features:
+    if (is.na(label$forward) | ! is.logical(label$forward)) {
+
+      label$xmin <- label$x - 0.5
+      label$xmax <- label$x + 0.5 
+
+      y_sign <- ifelse(
+        grid::convertHeight(feature_height, "native", TRUE) >= 0,
+        1,
+        -1
+      ) 
+      inside <- label$y + grid::convertHeight(feature_height, "native", TRUE)
+      outside <- inside + 
+        (y_sign * grid::convertHeight(label_height, "native", TRUE))
+      label$ymin <- max(min(c(inside, outside)), 0)
+      label$ymax <- min(max(c(inside, outside)), 1)
+      align <- "centre"
+    
+    # For oriented features
+    } else {
+
+      x_sign <- ifelse(label$forward, 1, -1)
+      if (x_sign == 1) {
+        label$xmin <- label$x
+        label$xmax <- 1
+        align <- "left"
+      } else {
+        label$xmin <- 0
+        label$xmax <- label$x
+        align <- "right"
+      }
+
+      y_sign <- ifelse(
+        grid::convertHeight(feature_height, "native", TRUE) >= 0,
+        1,
+        -1
+      ) 
+      inside <- label$y + grid::convertHeight(feature_height, "native", TRUE)
+      outside <- inside + 
+        (y_sign * grid::convertHeight(label_height, "native", TRUE))
+      label$ymin <- max(min(c(inside, outside)), 0)
+      label$ymax <- min(max(c(inside, outside)), 1)
+    }
+
+    # Use ggfittext's fittexttree to draw text
+    gt <- grid::gTree(
+      data = label,
+      padding.x = grid::unit(0, "mm"),
+      padding.y = grid::unit(0, "mm"),
+      place = align,
+      min.size = 0,
+      grow = FALSE,
+      reflow = FALSE,
+      cl = "fittexttree",
+      fullheight = TRUE
+    )
+    gt$name <- grid::grobName(gt, "geom_feature_label")
+    gt
+  } )
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+
+#' @importFrom grid makeContent
+#' @export
+makeContent.flipfeaturelabeltree <- function(x) {
+
+  data <- x$data
+  feature_height <- x$feature_height
+  label_height <- x$label_height
+
+  # Prepare grob for each label
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+
+    label <- data[i, ]
+
+    label$ymin <- label$y - 0.5
+    label$ymax <- label$y + 0.5 
+
+    x_sign <- ifelse(
+      grid::convertWidth(feature_height, "native", TRUE) >= 0,
+      1,
+      -1
+    ) 
+    inside <- label$x + grid::convertWidth(feature_height, "native", TRUE)
+    outside <- inside + 
+      (x_sign * grid::convertWidth(label_height, "native", TRUE))
+    label$xmin <- max(min(c(inside, outside)), 0)
+    label$xmax <- min(max(c(inside, outside)), 1)
+    align <- "centre"
+    
+    # Use ggfittext's fittexttree to draw text
+    gt <- grid::gTree(
+      data = label,
+      padding.x = grid::unit(0, "mm"),
+      padding.y = grid::unit(0, "mm"),
+      place = align,
+      min.size = 0,
+      grow = FALSE,
+      reflow = FALSE,
+      cl = "fittexttree",
+      fullheight = TRUE
+    )
+    gt$name <- grid::grobName(gt, "geom_feature_label")
+    gt
+  } )
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+
+#' @importFrom grid makeContent
+#' @export
+makeContent.polarfeaturelabeltree <- function(x) {
 
     data <- x$data
     feature_height <- x$feature_height
@@ -185,53 +309,6 @@ makeContent.cartesianfeaturelabeltree <- function(x) {
         label$ymax <- min(max(c(inside, outside)), 1)
       }
 
-      # Use ggfittext's fittexttree to draw text
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttree",
-        fullheight = TRUE
-      )
-      gt$name <- grid::grobName(gt, "geom_feature_label")
-      gt
-  } )
-  class(grobs) <- "gList"
-  grid::setChildren(x, grobs)
-}
-
-#' @importFrom grid makeContent
-#' @export
-makeContent.flipfeaturelabeltree <- function(x) {
-
-    data <- x$data
-    feature_height <- x$feature_height
-    label_height <- x$label_height
-
-    # Prepare grob for each label
-    grobs <- lapply(seq_len(nrow(data)), function(i) {
-
-      label <- data[i, ]
-
-      label$ymin <- label$y - 0.5
-      label$ymax <- label$y + 0.5 
-
-      x_sign <- ifelse(
-        grid::convertWidth(feature_height, "native", TRUE) >= 0,
-        1,
-        -1
-      ) 
-      inside <- label$x + grid::convertWidth(feature_height, "native", TRUE)
-      outside <- inside + 
-        (x_sign * grid::convertWidth(label_height, "native", TRUE))
-      label$xmin <- max(min(c(inside, outside)), 0)
-      label$xmax <- min(max(c(inside, outside)), 1)
-      align <- "centre"
-      
       # Use ggfittext's fittexttree to draw text
       gt <- grid::gTree(
         data = label,

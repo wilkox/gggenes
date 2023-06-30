@@ -128,12 +128,19 @@ GeomGeneLabel <- ggplot2::ggproto(
     data <- data_to_grid(data, coord_system, panel_scales, coord)
 
     # Check value of 'align'
-    if (! align %in% c("left", "centre", "center", "middle", "right")) {
+    if (! align %in% c(
+      "left",
+      "centre",
+      "center",
+      "middle",
+      "right"
+    )) {
       stop("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
     }
 
     # Use ggfittext's fittexttree to draw text
     if (coord_system == "flip") {
+      data$angle <- data$angle + 90
       gt <- grid::gTree(
         data = data,
         padding.x = padding.x,
