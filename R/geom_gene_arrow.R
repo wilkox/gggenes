@@ -111,10 +111,9 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     arrow_body_height
   ) {
 
-    # Detect coordinate system and transform values. xmin/xmax will now be
-    # expressed in theta
+    # Detect coordinate system and transform values
     coord_system <- get_coord_system(coord)
-    data <- transform_to_grid(data, coord_system, panel_scales, coord)
+    data <- data_to_grid(data, coord_system, panel_scales, coord)
 
     gt <- grid::gTree(
       data = data,
@@ -305,65 +304,43 @@ makeContent.polargenearrowtree <- function(x) {
     )
 
     # Calculate theta coordinate of flange
-    flangetheta <- (-orientation * arrowhead_width_rad) + gene$xmax
+    flange_theta <- (-orientation * arrowhead_width_rad) + gene$xmax
 
     # Set arrow and arrowhead heights; it's convenient to divide these by two
     # for calculating y coordinates on the polygon
-    arrowhead_height_native <- as.numeric(grid::convertHeight(x$arrowhead_height, "native")) / 2
-    arrow_body_height_native <- as.numeric(grid::convertHeight(x$arrow_body_height, "native")) / 2
+    arrowhead_height_r <- as.numeric(grid::convertHeight(x$arrowhead_height, "native")) / 2
+    arrow_body_height_r <- as.numeric(grid::convertHeight(x$arrow_body_height, "native")) / 2
 
-    # Define coordinates of the gene arrow, starting from the top left corner and proceeding
-    # clockwise
+    # Define coordinates of the gene arrow, starting from the top left corner
+    # and proceeding clockwise
     rs <- c(
-      gene$r + arrow_body_height_native,
-      gene$r + arrow_body_height_native,
-      gene$r + arrowhead_height_native,
+      gene$r + arrow_body_height_r,
+      gene$r + arrow_body_height_r,
+      gene$r + arrowhead_height_r,
       gene$r,
-      gene$r - arrowhead_height_native,
-      gene$r - arrow_body_height_native,
-      gene$r - arrow_body_height_native
+      gene$r - arrowhead_height_r,
+      gene$r - arrow_body_height_r,
+      gene$r - arrow_body_height_r
     )
     thetas <- c(
       gene$xmin,
-      flangetheta,
-      flangetheta,
+      flange_theta,
+      flange_theta,
       gene$xmax,
-      flangetheta,
-      flangetheta,
+      flange_theta,
+      flange_theta,
       gene$xmin
     )
 
-    # Segment each edge of the polygon
-    segmented_rs <- double()
-    segmented_thetas <- double()
-    for (i in seq.int(length(rs))) {
+    # Segment the polygon
+    segmented <- segment_polargon(rs, thetas)
 
-      j <- ifelse(i == length(rs), 1, i + 1)
-
-      # If the line is vertical, no need to segment it
-      if (thetas[i] == thetas[j]) {
-        segmented_rs <- c(segmented_rs, rs[i], rs[j])
-        segmented_thetas <- c(segmented_thetas, thetas[i], thetas[j])
-      }
-
-      # Get the length of the line
-      len <- sqrt((abs(rs[i] - rs[j]) ^ 2) + (abs(thetas[i] - thetas[j]) ^ 2))
-      
-      # Determine how many segments to break the line into
-      n_segs <- round(len * 100)
-
-      # Define the coordinates for each segment
-      segmented_rs <- c(segmented_rs, seq(rs[i], rs[j], len = n_segs + 1))
-      segmented_thetas <- c(segmented_thetas, seq(thetas[i], thetas[j], len = n_segs + 1))
-    }
-
-    # Transform r and theta into Cartesian grid coordinates
-    xs <- 0.5 + (segmented_rs * sin(segmented_thetas))
-    ys <- 0.5 + (segmented_rs * cos(segmented_thetas))
+    # Transform polar into Cartesian grid coordinates
+    cartesian <- polar_to_grid(segmented$rs, segmented$thetas)
 
     pg <- grid::polygonGrob(
-      x = xs,
-      y = ys,
+      x = cartesian$xs,
+      y = cartesian$ys,
       gp = grid::gpar(
         fill = ggplot2::alpha(gene$fill, gene$alpha),
         col = ggplot2::alpha(gene$colour, gene$alpha),

@@ -125,7 +125,7 @@ GeomGeneLabel <- ggplot2::ggproto(
 
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
-    data <- transform_to_grid(data, coord_system, panel_scales, coord)
+    data <- data_to_grid(data, coord_system, panel_scales, coord)
 
     # Check value of 'align'
     if (! align %in% c("left", "centre", "center", "middle", "right")) {

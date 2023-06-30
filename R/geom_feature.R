@@ -115,10 +115,9 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     arrowhead_width
   ) {
 
-    # Detect coordinate system
+    # Detect coordinate system and transform values
     coord_system <- get_coord_system(coord)
-
-    data <- coord$transform(data, panel_scales)
+    data <- data_to_grid(data, coord_system, panel_scales, coord)
 
     gt <- grid::gTree(
       data = data,
@@ -231,6 +230,71 @@ makeContent.flipfeaturetree <- function(x) {
     pg <- grid::polylineGrob(
       y = ys,
       x = xs,
+      arrow = arrow,
+      gp = grid::gpar(
+        col = feature$colour,
+        fill = feature$colour,
+        lty = feature$linetype,
+        lwd = feature$size
+      )
+    )
+
+    # Return the grob
+    pg
+  })
+
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+
+#' @importFrom grid makeContent
+#' @export
+makeContent.polarfeaturetree <- function(x) {
+
+  data <- x$data
+  feature_height_r <- as.numeric(grid::convertHeight(x$feature_height, "native", TRUE))
+
+  # Prepare grob for each feature
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+
+    feature <- data[i, ]
+
+    feature_width_theta <- as.numeric(grid::convertWidth(x$feature_width, "native")) /
+      feature$r
+
+    # Determine whether this is a feature with orientation or not (i.e. whether
+    # or not to draw an elbow and arrowhead), and generate appropriate values
+    # for x-coordinates, y-coordinates and arrowhead
+
+    # For non-oriented features:
+    if (is.na(feature$forward) | ! is.logical(feature$forward)) {
+
+      end_r <- feature$r + feature_height_r
+      thetas <- c(feature$theta, feature$theta)
+      rs <- c(feature$r, end_r)
+      arrow <- NULL
+
+    # For oriented features:
+    } else {
+
+      arrow_sign <- ifelse(feature$forward, 1, -1)
+      elbow_r <- feature$r + feature_height_r
+      end_theta <- feature$theta + (feature_width_theta * arrow_sign)
+      thetas <- c(feature$theta, feature$theta, end_theta)
+      rs <- c(feature$r, elbow_r, elbow_r)
+      arrow <- grid::arrow(angle = 20, length = x$arrowhead_width, type = "closed")
+    }
+
+    # Segment the polyline
+    segmented <- segment_polarline(rs, thetas)
+
+    # Transform polar into Cartesian grid coordinates
+    cartesian <- polar_to_grid(segmented$rs, segmented$thetas)
+    
+    # Generate polyline grob for the feature
+    pg <- grid::polylineGrob(
+      x = cartesian$xs,
+      y = cartesian$ys,
       arrow = arrow,
       gp = grid::gpar(
         col = feature$colour,
