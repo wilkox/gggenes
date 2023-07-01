@@ -90,14 +90,14 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
 
     # Detect coordinate system
     coord_system <- get_coord_system(coord)
-
-    data <- coord$transform(data, panel_scales)
+    data <- data_to_grid(data, coord_system, panel_scales, coord)
 
     gt <- grid::gTree(
       data = data,
-      cl = paste0(coord_system, "terminatortree"),
+      cl = "terminatortree",
       terminator_height = terminator_height,
-      terminator_width = terminator_width
+      terminator_width = terminator_width,
+      coord_system = coord_system
     )
     gt$name <- grid::grobName(gt, "geom_terminator")
     gt
@@ -106,66 +106,49 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.cartesianterminatortree <- function(x) {
+makeContent.terminatortree <- function(x) {
 
   data <- x$data
-  terminator_height <- x$terminator_height
-  terminator_width <- x$terminator_width
 
   # Prepare grob for each terminator
   grobs <- lapply(seq_len(nrow(data)), function(i) {
 
     terminator <- data[i, ]
 
-    demispan <- grid::convertWidth(terminator_width, "native", TRUE) / 2
-    xs <- c(terminator$x, terminator$x, terminator$x - demispan, terminator$x + demispan)
-    canopy <- terminator$y + grid::convertHeight(terminator_height, "native", TRUE)
-    ys <- c(terminator$y, canopy, canopy, canopy)
-
-    # Generate polyline grob for the terminator
-    pg <- grid::polylineGrob(
-      x = xs,
-      y = ys,
-      id = c(1, 1, 2, 2),
-      gp = grid::gpar(
-        col = terminator$colour,
-        fill = terminator$colour,
-        lty = terminator$linetype,
-        lwd = terminator$size
-      )
+    # Set up geometry
+    r <- ifelse(x$coord_system == "polar", terminator$away, NA)
+    terminator_alongness <- unit_to_alaw(x$terminator_width, "along", x$coord_system, r)
+    terminator_awayness <- unit_to_alaw(x$terminator_height, "away", x$coord_system, r)
+    alongs <- c(
+      terminator$along,
+      terminator$along,
+      terminator$along - (terminator_alongness / 2),
+      terminator$along + (terminator_alongness/ 2)
     )
+    aways <- c(
+      terminator$away,
+      terminator$away + terminator_awayness,
+      terminator$away + terminator_awayness,
+      terminator$away + terminator_awayness
+    )
+    ids <- c(1, 1, 2, 2)
 
-    # Return the grob
-    pg
-  })
+    # If in polar coordinates, segment the polyline
+    if (x$coord_system == "polar") {
+      segmented <- segment_polarline(alongs, aways, ids)
+      alongs <- segmented$thetas
+      aways <- segmented$rs
+      ids <- segmented$ids
+    }
 
-  class(grobs) <- "gList"
-  grid::setChildren(x, grobs)
-}
-
-#' @importFrom grid makeContent
-#' @export
-makeContent.flipterminatortree <- function(x) {
-
-  data <- x$data
-  terminator_height <- x$terminator_height
-  terminator_width <- x$terminator_width
-
-  # Prepare grob for each terminator
-  grobs <- lapply(seq_len(nrow(data)), function(i) {
-
-    terminator <- data[i, ]
-
-    canopy <- terminator$x + grid::convertWidth(terminator_height, "native", TRUE)
-    xs <- c(terminator$x, canopy, canopy, canopy)
-    demispan <- grid::convertHeight(terminator_width, "native", TRUE) / 2
-    ys <- c(terminator$y, terminator$y, terminator$y + demispan, terminator$y - demispan)
+    # Convert polyline into Cartesian coordinates within the grid viewport
+    coords <- alaw_to_grid(alongs, aways, x$coord_system, r)
 
     # Generate polyline grob for the terminator
     pg <- grid::polylineGrob(
-      x = xs,
-      y = ys,
-      id = c(1, 1, 2, 2),
+      x = coords$x,
+      y = coords$y,
+      id = ids,
       gp = grid::gpar(
         col = terminator$colour,
         fill = terminator$colour,

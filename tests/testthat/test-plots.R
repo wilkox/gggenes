@@ -30,7 +30,7 @@ test_that("plots with terminators look the way they should", {
       theme_genes()
   } )
 
-  expect_doppelganger("Flipped plot with labelled terminators", {
+  expect_doppelganger("Flipped plot with terminators", {
     ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
       geom_gene_arrow() +
       geom_terminator(data = example_terminators, ggplot2::aes(x = position, y = molecule)) +

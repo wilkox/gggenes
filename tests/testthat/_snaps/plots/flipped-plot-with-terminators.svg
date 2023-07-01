@@ -83,7 +83,7 @@
 <polygon points='234.67,122.23 226.16,122.23 226.16,107.88 224.74,107.88 230.41,96.54 236.08,107.88 234.67,107.88 ' style='stroke-width: 0.64; fill: #00BFC4;' />
 <polygon points='234.67,94.88 226.16,94.88 226.16,58.17 224.74,58.17 230.41,46.83 236.08,58.17 234.67,58.17 ' style='stroke-width: 0.64; fill: #00B4F0;' />
 <polyline points='230.41,46.53 238.92,46.53 ' style='stroke-width: 0.75;' />
-<polyline points='238.92,42.27 238.92,50.78 ' style='stroke-width: 0.75;' />
+<polyline points='238.92,50.78 238.92,42.27 ' style='stroke-width: 0.75;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -151,7 +151,7 @@
 <polygon points='479.43,124.07 470.92,124.07 470.92,109.63 469.51,109.63 475.18,98.30 480.84,109.63 479.43,109.63 ' style='stroke-width: 0.64; fill: #00BFC4;' />
 <polygon points='479.43,96.33 470.92,96.33 470.92,57.86 469.51,57.86 475.18,46.53 480.84,57.86 479.43,57.86 ' style='stroke-width: 0.64; fill: #00B4F0;' />
 <polyline points='475.18,46.53 483.68,46.53 ' style='stroke-width: 0.75;' />
-<polyline points='483.68,42.27 483.68,50.78 ' style='stroke-width: 0.75;' />
+<polyline points='483.68,50.78 483.68,42.27 ' style='stroke-width: 0.75;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>

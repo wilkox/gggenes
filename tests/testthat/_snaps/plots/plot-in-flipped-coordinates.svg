@@ -69,7 +69,7 @@
 <polygon points='153.60,307.11 155.54,312.44 157.48,307.11 ' style='stroke-width: 0.75; fill: #000000;' />
 <text x='162.63' y='353.71' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs0</text>
 <text x='162.63' y='274.72' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs1</text>
-<text x='162.63' y='305.66' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori1</text>
+<text x='162.63' y='307.44' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori1</text>
 <polygon points='151.29,521.37 142.78,521.37 142.78,446.56 141.37,446.56 147.04,435.22 152.71,446.56 151.29,446.56 ' style='stroke-width: 0.64; fill: #8DD3C7;' />
 <polygon points='151.29,435.35 142.78,435.35 142.78,409.63 141.37,409.63 147.04,398.29 152.71,409.63 151.29,409.63 ' style='stroke-width: 0.64; fill: #FFFFB3;' />
 <polygon points='151.29,389.04 142.78,389.04 142.78,380.89 141.37,380.89 147.04,369.56 152.71,380.89 151.29,380.89 ' style='stroke-width: 0.64; fill: #BEBADA;' />
@@ -102,8 +102,8 @@
 <polyline points='227.97,369.03 236.47,369.03 236.47,360.53 ' style='stroke-width: 0.75;' />
 <polygon points='238.41,365.86 236.47,360.53 234.53,365.86 ' style='stroke-width: 0.75; fill: #000000;' />
 <text x='243.56' y='306.27' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs9</text>
-<text x='243.56' y='428.59' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss2</text>
-<text x='243.56' y='370.77' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori2</text>
+<text x='243.56' y='430.21' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss2</text>
+<text x='243.56' y='368.99' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori2</text>
 <polygon points='232.22,513.08 223.72,513.08 223.72,438.27 222.30,438.27 227.97,426.93 233.64,438.27 232.22,438.27 ' style='stroke-width: 0.64; fill: #8DD3C7;' />
 <polygon points='232.22,427.06 223.72,427.06 223.72,401.34 222.30,401.34 227.97,390.00 233.64,401.34 232.22,401.34 ' style='stroke-width: 0.64; fill: #FFFFB3;' />
 <polygon points='232.22,389.30 223.72,389.30 223.72,381.15 222.30,381.15 227.97,369.82 233.64,381.15 232.22,381.15 ' style='stroke-width: 0.64; fill: #BEBADA;' />
@@ -133,7 +133,7 @@
 <polyline points='308.90,304.50 317.40,304.50 317.40,313.00 ' style='stroke-width: 0.75;' />
 <polygon points='315.46,307.67 317.40,313.00 319.34,307.67 ' style='stroke-width: 0.75; fill: #000000;' />
 <polyline points='308.90,427.02 317.40,427.02 ' style='stroke-width: 0.75;' />
-<text x='324.49' y='306.07' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss1</text>
+<text x='324.49' y='307.69' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss1</text>
 <text x='324.49' y='429.09' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs3</text>
 <polygon points='313.15,510.04 304.65,510.04 304.65,438.49 303.23,438.49 308.90,427.15 314.57,438.49 313.15,438.49 ' style='stroke-width: 0.64; fill: #8DD3C7;' />
 <polygon points='313.15,426.63 304.65,426.63 304.65,400.64 303.23,400.64 308.90,389.30 314.57,400.64 313.15,400.64 ' style='stroke-width: 0.64; fill: #FFFFB3;' />
@@ -163,7 +163,7 @@
 <polygon points='402.24,348.93 400.30,343.60 398.36,348.93 ' style='stroke-width: 0.75; fill: #000000;' />
 <text x='407.39' y='235.79' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs4</text>
 <text x='407.39' y='175.96' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss5</text>
-<text x='407.39' y='353.84' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori6</text>
+<text x='407.39' y='352.06' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori6</text>
 <polygon points='396.05,509.44 387.54,509.44 387.54,437.36 386.13,437.36 391.79,426.02 397.46,437.36 396.05,437.36 ' style='stroke-width: 0.64; fill: #8DD3C7;' />
 <polygon points='396.05,426.02 387.54,426.02 387.54,399.12 386.13,399.12 391.79,387.78 397.46,399.12 396.05,399.12 ' style='stroke-width: 0.64; fill: #FFFFB3;' />
 <polygon points='396.05,387.31 387.54,387.31 387.54,378.38 386.13,378.38 391.79,367.04 397.46,378.38 396.05,378.38 ' style='stroke-width: 0.64; fill: #BEBADA;' />
@@ -199,9 +199,9 @@
 <polyline points='469.80,430.06 478.30,430.06 ' style='stroke-width: 0.75;' />
 <polyline points='469.80,391.52 478.30,391.52 478.30,400.02 ' style='stroke-width: 0.75;' />
 <polygon points='476.36,394.69 478.30,400.02 480.24,394.69 ' style='stroke-width: 0.75; fill: #000000;' />
-<text x='485.39' y='353.23' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori8</text>
+<text x='485.39' y='355.01' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori8</text>
 <text x='485.39' y='431.63' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss6</text>
-<text x='485.39' y='393.25' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori9</text>
+<text x='485.39' y='395.03' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori9</text>
 <polygon points='474.05,514.30 465.54,514.30 465.54,441.44 464.13,441.44 469.80,430.10 475.46,441.44 474.05,441.44 ' style='stroke-width: 0.64; fill: #8DD3C7;' />
 <polygon points='474.05,429.80 465.54,429.80 465.54,403.29 464.13,403.29 469.80,391.95 475.46,403.29 474.05,403.29 ' style='stroke-width: 0.64; fill: #FFFFB3;' />
 <polygon points='474.05,390.43 465.54,390.43 465.54,378.77 464.13,378.77 469.80,367.43 475.46,378.77 474.05,378.77 ' style='stroke-width: 0.64; fill: #BEBADA;' />
@@ -234,7 +234,7 @@
 <polygon points='557.29,291.05 559.23,296.38 561.17,291.05 ' style='stroke-width: 0.75; fill: #000000;' />
 <text x='566.32' y='352.97' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori9</text>
 <text x='566.32' y='189.96' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs1</text>
-<text x='566.32' y='289.45' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss1</text>
+<text x='566.32' y='291.07' text-anchor='middle' style='font-size: 4.63px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>tss1</text>
 <polygon points='554.98,406.23 546.47,406.23 546.47,400.29 545.06,400.29 550.73,388.96 556.40,400.29 554.98,400.29 ' style='stroke-width: 0.64; fill: #FFFFB3;' />
 <polygon points='554.98,388.61 546.47,388.61 546.47,379.42 545.06,379.42 550.73,368.08 556.40,379.42 554.98,379.42 ' style='stroke-width: 0.64; fill: #BEBADA;' />
 <polygon points='554.98,367.60 546.47,367.60 546.47,362.58 545.06,362.58 550.73,351.24 556.40,362.58 554.98,362.58 ' style='stroke-width: 0.64; fill: #FB8072;' />
@@ -271,7 +271,7 @@
 <polygon points='637.21,300.89 635.27,295.56 633.33,300.89 ' style='stroke-width: 0.75; fill: #000000;' />
 <polyline points='626.76,367.91 635.27,367.91 ' style='stroke-width: 0.75;' />
 <polyline points='626.76,152.34 635.27,152.34 ' style='stroke-width: 0.75;' />
-<text x='642.35' y='305.79' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori2</text>
+<text x='642.35' y='304.02' text-anchor='middle' style='font-size: 5.10px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>ori2</text>
 <text x='642.35' y='369.98' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs5</text>
 <text x='642.35' y='154.41' text-anchor='middle' style='font-size: 6.12px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>rs4</text>
 <polygon points='631.02,406.49 622.51,406.49 622.51,400.29 621.09,400.29 626.76,388.96 632.43,400.29 631.02,400.29 ' style='stroke-width: 0.64; fill: #FFFFB3;' />

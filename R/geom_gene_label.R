@@ -109,6 +109,17 @@ GeomGeneLabel <- ggplot2::ggproto(
   ),
   draw_key = ggplot2::draw_key_text,
 
+  setup_data = function(data, params) {
+
+    # The 'forward' aesthetic, if provided, should be logical or coerced to
+    # logical
+    if (!is.null(data$forward)) {
+      data$forward <- as.logical(data$forward)
+    }
+
+    data
+  },
+
   draw_panel = function(
     data,
     panel_scales,
@@ -123,9 +134,23 @@ GeomGeneLabel <- ggplot2::ggproto(
     subgroup = NA
   ) {
 
-    # Detect coordinate system and transform coordinates
+    # Detect coordinate system and transform coordinates. The ggfittext
+    # makeContent methods expect a different set of aesthetic names.
     coord_system <- get_coord_system(coord)
     data <- data_to_grid(data, coord_system, panel_scales, coord)
+    if (coord_system == "cartesian") {
+      if ("along_min" %in% names(data)) { data$xmin <- data$along_min }
+      if ("along_max" %in% names(data)) { data$xmax <- data$along_max }
+      if ("away" %in% names(data)) { data$y <- data$away }
+    } else if (coord_system == "flip") {
+      if ("along_min" %in% names(data)) { data$ymin <- data$along_min }
+      if ("along_max" %in% names(data)) { data$ymax <- data$along_max }
+      if ("away" %in% names(data)) { data$x <- data$away }
+    } else if (coord_system == "polar") {
+      if ("along_min" %in% names(data)) { data$xmin <- data$along_min }
+      if ("along_max" %in% names(data)) { data$xmax <- data$along_max }
+      if ("away" %in% names(data)) { data$r <- data$away }
+    }
 
     # Check value of 'align'
     if (! align %in% c(
