@@ -1,8 +1,9 @@
-# gggenes 0.5.0.9001
+# gggenes development version
 
 ## Major changes
 
 - Add new `geom_terminator()` and `geom_terminator_label()`
+- Add support for polar coordinates
 
 # gggenes 0.5.0
 
