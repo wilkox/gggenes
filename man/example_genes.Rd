@@ -3,7 +3,9 @@
 \docType{data}
 \name{example_genes}
 \alias{example_genes}
+\alias{example_genes_polar}
 \alias{example_subgenes}
+\alias{example_subgenes_polar}
 \title{A set of example genes.}
 \format{
 A data frame with 72 rows and six variables:
@@ -23,12 +25,20 @@ example_subgenes (143 rows) also contains:
 \item{to}{the end position of the subgene segment}
 }
 
+An object of class \code{data.frame} with 18 rows and 6 columns.
+
 An object of class \code{data.frame} with 143 rows and 9 columns.
+
+An object of class \code{data.frame} with 40 rows and 9 columns.
 }
 \usage{
 example_genes
 
+example_genes_polar
+
 example_subgenes
+
+example_subgenes_polar
 }
 \description{
 Genes for example purposes only.

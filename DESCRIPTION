@@ -19,7 +19,7 @@ RoxygenNote: 7.2.3
 URL: https://wilkox.org/gggenes/
 BugReports: https://github.com/wilkox/gggenes/issues/
 Suggests: 
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     vdiffr,
@@ -28,3 +28,4 @@ VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Language: en-US
+Config/testthat/edition: 3

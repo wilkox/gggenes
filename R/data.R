@@ -20,6 +20,9 @@
 #' }
 "example_genes"
 
+#' @rdname example_genes
+"example_genes_polar"
+
 #' A set of example dummy alignment genes.
 #'
 #' Dummy genes, similar to those generated with `make_alignment_dummies()`, for
@@ -37,6 +40,9 @@
 #' @rdname example_genes
 "example_subgenes"
 
+#' @rdname example_genes
+"example_subgenes_polar"
+
 #' A set of example genetic features.
 #'
 #' Genetic features for example purposes only.
@@ -51,6 +57,9 @@
 #' }
 "example_features"
 
+#' @rdname example_features
+"example_features_polar"
+
 #' A set of example terminators.
 #'
 #' Terminators for example purposes only.
@@ -62,3 +71,6 @@
 #'   \item{position}{the position of the terminator}
 #' }
 "example_terminators"
+
+#' @rdname example_terminators
+"example_terminators_polar"

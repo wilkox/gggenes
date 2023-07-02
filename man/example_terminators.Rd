@@ -3,6 +3,7 @@
 \docType{data}
 \name{example_terminators}
 \alias{example_terminators}
+\alias{example_terminators_polar}
 \title{A set of example terminators.}
 \format{
 A data frame with two rows and three variables:
@@ -11,9 +12,13 @@ A data frame with two rows and three variables:
 \item{name}{the name of the terminator}
 \item{position}{the position of the terminator}
 }
+
+An object of class \code{data.frame} with 2 rows and 3 columns.
 }
 \usage{
 example_terminators
+
+example_terminators_polar
 }
 \description{
 Terminators for example purposes only.

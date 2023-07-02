@@ -1,26 +1,22 @@
-context("make_alignment_dummies")
+library(ggplot2)
 
-test_that("make_alignment_dummies works without errors", {
-  expect_no_error( {
-    library(ggplot2)
-    dummies <- make_alignment_dummies(
-      example_genes,
-      aes(xmin = start, xmax = end, y = molecule, id = gene),
-      on = "genE",
-      side = "right"
+test_that("plot aligned on genE with make_alignment_dummies()", {
+  dummies <- make_alignment_dummies(
+    example_genes,
+    aes(xmin = start, xmax = end, y = molecule, id = gene),
+    on = "genE",
+    side = "right"
+  )
+  p <- base_cartesian() + 
+    geom_gene_arrow() +
+    geom_blank(
+      data = dummies,
+      aes(xmin = start, xmax = end, y = molecule),
+      inherit.aes = F
     )
-    p <- ggplot(
-      example_genes,
-      aes(xmin = start, xmax = end, y = molecule, fill = gene)
-    ) +
-      geom_gene_arrow() +
-      geom_blank(
-        data = dummies,
-        aes(xmin = start, xmax = end, y = molecule),
-        inherit.aes = F
-      ) +
-      facet_wrap(~ molecule, scales = "free", ncol = 1) +
-      theme_genes()
-    print(p)
-  } )
+  expect_no_error( { print(p) } )
+  expect_doppelganger(
+    "make_alignment_dummies() aligned on genE",
+    { print(p) }
+  )
 } )

@@ -3,6 +3,7 @@
 \docType{data}
 \name{example_features}
 \alias{example_features}
+\alias{example_features_polar}
 \title{A set of example genetic features.}
 \format{
 A data frame with 23 rows and five variables:
@@ -13,9 +14,13 @@ A data frame with 23 rows and five variables:
 \item{position}{the position of the feature}
 \item{forward}{is the feature oriented, and if so in the forward direction?}
 }
+
+An object of class \code{data.frame} with 6 rows and 5 columns.
 }
 \usage{
 example_features
+
+example_features_polar
 }
 \description{
 Genetic features for example purposes only.
