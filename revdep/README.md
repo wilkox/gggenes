@@ -2,22 +2,22 @@
 
 |field    |value                            |
 |:--------|:--------------------------------|
-|version  |R version 4.2.3 (2023-03-15)     |
-|os       |macOS Ventura 13.2.1             |
-|system   |aarch64, darwin22.3.0            |
+|version  |R version 4.3.1 (2023-06-16)     |
+|os       |macOS Ventura 13.4.1             |
+|system   |aarch64, darwin22.4.0            |
 |ui       |unknown                          |
 |language |(EN)                             |
 |collate  |en_AU.UTF-8                      |
 |ctype    |en_AU.UTF-8                      |
-|tz       |Australia/Sydney                 |
-|date     |2023-03-28                       |
-|pandoc   |3.1.1 @ /opt/homebrew/bin/pandoc |
+|tz       |Australia/Adelaide               |
+|date     |2023-07-02                       |
+|pandoc   |3.1.3 @ /opt/homebrew/bin/pandoc |
 
 # Dependencies
 
-|package |old   |new   |Δ  |
-|:-------|:-----|:-----|:--|
-|gggenes |0.4.1 |0.5.0 |*  |
+|package |old   |new        |Δ  |
+|:-------|:-----|:----------|:--|
+|gggenes |0.5.0 |0.5.0.9001 |*  |
 
 # Revdeps
 
