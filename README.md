@@ -237,6 +237,34 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
 
 ![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
 
+## Experimental: drawing in polar coordinates
+
+The current development version introduces drawing in polar coordinates,
+by adding `coord_polar()` to the plot. This works with all gene,
+subgene, feature, and terminator geoms.
+
+``` r
+ggplot(example_genes_polar, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
+  geom_feature(
+    data = example_features_polar,
+    aes(x = position, y = molecule, forward = forward)
+  ) +
+  geom_feature_label(
+    data = example_features_polar,
+    aes(x = position, y = molecule, label = name, forward = forward)
+  ) +
+  geom_terminator(data = example_terminators_polar, aes(x = position, y = molecule)) +
+  geom_terminator_label(data = example_terminators_polar, 
+                        aes(x = position, y = molecule, label = name)) +
+  geom_gene_arrow() +
+  geom_gene_label() +
+  scale_fill_brewer(palette = "Set3") +
+  coord_polar() +
+  scale_y_discrete(limits = c("", "Genome6", "Genome1"))
+```
+
+![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
+
 ## Other genetic features
 
 Do you have an idea, suggestion or request for another type of feature
