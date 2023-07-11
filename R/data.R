@@ -1,3 +1,16 @@
+#' A set of example SBOL sequence features
+#'
+#' Sequence features for example purposes only.
+#'
+#' @format A data frame with six rows and three variables:
+#' \describe{
+#'   \item{molecule}{the genome}
+#'   \item{start}{the start position or location of the feature}
+#'   \item{type}{the type of sequence features}
+#'   \item{name}{the name of the feature}
+#' }
+"example_SBOL_features"
+
 #' A set of example genes.
 #'
 #' Genes for example purposes only.
