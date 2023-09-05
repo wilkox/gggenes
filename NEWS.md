@@ -1,5 +1,10 @@
 # gggenes 0.5.1
 
+## Minor changes
+
+- Fix the 'ggfittext-package' documentation after a [breaking change to
+  roxygen2](https://github.com/r-lib/roxygen2/issues/1491)
+
 # gggenes 0.5.0
 
 ## Major changes

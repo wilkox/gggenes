@@ -1,6 +1,7 @@
 CMD
 GenBank
 Labelling
+Lifecycle
 README
 aes
 centre
@@ -13,7 +14,6 @@ ggfittext
 gggenomes
 ggplot
 labelled
-lifecycle
 linetype
 normalise
 patchlevel
@@ -23,6 +23,7 @@ pre
 reflowed
 reflowing
 reflows
+roxygen
 subgene
 subgenes
 tidyeval
