@@ -1,4 +1,4 @@
-# gggenes development version
+# gggenes (development version)
 
 ## Major changes
 
