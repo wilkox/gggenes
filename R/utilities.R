@@ -243,3 +243,7 @@ alaw_to_grid <- function(alongs, aways, coord_system, r = NULL) {
 
   stop("Can't convert alongs/aways to grid coords", call. = FALSE)
 }
+
+#' Infix %||% operator, from rlang
+#' @noRd
+`%||%` <- function(x, y) if (is.null(x)) y else x

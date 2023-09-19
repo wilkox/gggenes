@@ -15,6 +15,7 @@ gggenomes
 ggplot
 labelled
 linetype
+linewidth
 normalise
 patchlevel
 plasmapR

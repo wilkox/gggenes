@@ -15,18 +15,19 @@
 #'
 #' @section Aesthetics:
 #'
-#' -  xmin,xmax (start and end of the gene; will be used to determine gene
+#' - xmin,xmax (start and end of the gene; will be used to determine gene
 #' orientation)
-#' -  xsubmin,xsubmax (start and end of subgene segment). Should be consistent
+#' - xsubmin,xsubmax (start and end of subgene segment). Should be consistent
 #' with `xmin`/`xmax`
-#' -  y (molecule)
-#' -  forward (if FALSE, or coercible to FALSE, the gene arrow will be drawn in
+#' - y (molecule)
+#' - forward (if FALSE, or coercible to FALSE, the gene arrow will be drawn in
 #' the opposite direction to that determined by `xmin` and `xmax`)
-#' -  alpha
-#' -  colour
-#' -  fill
-#' -  linetype
-#' -  size
+#' - alpha
+#' - colour
+#' - fill
+#' - linetype
+#' - linewidth (the former size aesthetic has been deprecated and will be
+#' removed in future versions)
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for 'ggplot2'.
@@ -87,7 +88,7 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
     colour = "black",
     fill = "white",
     linetype = 1,
-    size = 0.3
+    linewidth = 0.3
   ),
   draw_key = function(data, params, size) {
     grid::rectGrob(
@@ -97,7 +98,7 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
         col = data$colour,
         fill = ggplot2::alpha(data$fill, data$alpha),
         lty = data$linetype,
-        lwd = data$size * ggplot2::.pt
+        lwd = (data$linewidth %||% data$size) * ggplot2::.pt
       )
     )
   },
@@ -137,7 +138,9 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
     )
     gt$name <- grid::grobName(gt, "geom_subgene_arrow")
     gt
-  }
+  },
+  non_missing_aes = "size",
+  rename_size = TRUE
 )
 
 #' @importFrom grid makeContent
@@ -262,7 +265,7 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
         fill = ggplot2::alpha(subgene$fill, subgene$alpha),
         col = ggplot2::alpha(subgene$colour, subgene$alpha),
         lty = subgene$linetype,
-        lwd = subgene$size * ggplot2::.pt
+        lwd = (subgene$linewidth %||% subgene$size) * ggplot2::.pt
       )
     )
 
@@ -404,7 +407,7 @@ makeContent.flipsubgenearrowtree <- function(x) {
         fill = ggplot2::alpha(subgene$fill, subgene$alpha),
         col = ggplot2::alpha(subgene$colour, subgene$alpha),
         lty = subgene$linetype,
-        lwd = subgene$size * ggplot2::.pt
+        lwd = (subgene$linewidth %||% subgene$size) * ggplot2::.pt
       )
     )
 

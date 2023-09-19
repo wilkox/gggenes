@@ -61,7 +61,8 @@ the feature will be drawn as a vertical line)
 \item alpha
 \item colour
 \item linetype
-\item size
+\item linewidth (the former size aesthetic has been deprecated and will be
+removed in future versions)
 }
 }
 

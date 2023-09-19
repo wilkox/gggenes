@@ -5,6 +5,11 @@
 - Add new `geom_terminator()` and `geom_terminator_label()`
 - Add support for polar coordinates
 
+## Minor changes
+
+- Deprecate the `size` aesthetic in favour of `linewidth` (`size` deprecated as
+  of ggplot2 3.4.0)
+
 # gggenes 0.5.1
 
 ## Minor changes

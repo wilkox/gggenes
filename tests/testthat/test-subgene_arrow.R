@@ -6,7 +6,8 @@ test_that("geom_subgene_arrow() and geom_subgene_label() in Cartesian coordinate
         geom_subgene_arrow(
           data = example_subgenes,
           aes(xmin = start, xmax = end, y = molecule, fill = gene, 
-              xsubmin = from, xsubmax = to, forward = orientation)
+              xsubmin = from, xsubmax = to, forward = orientation),
+              linewidth = 1
         )) +
         geom_subgene_label(
           data = example_subgenes,
@@ -26,7 +27,8 @@ test_that("geom_subgene_arrow() and geom_subgene_label() in flipped coordinates"
          geom_subgene_arrow(
            data = example_subgenes,
            aes(xmin = start, xmax = end, y = molecule, fill = gene, 
-               xsubmin = from, xsubmax = to, forward = orientation)
+               xsubmin = from, xsubmax = to, forward = orientation),
+           linewidth = 1
          ) +
          geom_subgene_label(
            data = example_subgenes,

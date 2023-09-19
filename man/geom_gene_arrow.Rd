@@ -65,7 +65,8 @@ and \code{xmax})
 \item colour
 \item fill
 \item linetype
-\item size
+\item linewidth (the former size aesthetic has been deprecated and will be
+removed in future versions)
 }
 }
 
