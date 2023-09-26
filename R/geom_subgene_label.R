@@ -131,7 +131,7 @@ GeomSubgeneLabel <- ggplot2::ggproto(
 
     # Check the value of 'align'
     if (! align %in% c("left", "centre", "center", "middle", "right")) {
-      stop("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
+      cli::cli_abort("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
     }
 
     # Use ggfittext's fittexttree to draw the text
@@ -162,7 +162,7 @@ GeomSubgeneLabel <- ggplot2::ggproto(
         fullheight = TRUE
       )
     } else {
-      stop("Don't know how to draw in this coordinate system", call. = FALSE)
+      cli::cli_abort("Don't know how to draw in this coordinate system")
     }
     gt$name <- grid::grobName(gt, "geom_subgene_label")
     gt

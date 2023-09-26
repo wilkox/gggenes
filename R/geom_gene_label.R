@@ -160,7 +160,7 @@ GeomGeneLabel <- ggplot2::ggproto(
       "middle",
       "right"
     )) {
-      stop("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
+      cli::cli_abort("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
     }
 
     # Use ggfittext's fittexttree to draw text
@@ -206,7 +206,7 @@ GeomGeneLabel <- ggplot2::ggproto(
         flip = FALSE
       )
     } else {
-      stop("Don't know how to draw in this coordinate system", call. = FALSE)
+      cli::cli_abort("Don't know how to draw in this coordinate system")
     }
     gt$name <- grid::grobName(gt, "geom_gene_label")
     gt

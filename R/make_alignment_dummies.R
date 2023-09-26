@@ -35,7 +35,7 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   required_aesthetics <- c("xmin", "xmax", "y", "id")
   for (required_aesthetic in required_aesthetics) {
     if (!required_aesthetic %in% names(mapping)) {
-      stop("align_genes requires a ", required_aesthetic, " aesthetic", call. = F)
+      cli::cli_abort("align_genes requires a {required_aesthetic} aesthetic")
     }
   }
 

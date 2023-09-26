@@ -125,7 +125,7 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
       tmp <- setNames(data[,c("xsubmin", "xsubmax")], c("xmin", "xmax"))
       data[,c("xsubmin", "xsubmax")] <- coord$transform(tmp, panel_scales)
     } else {
-      stop("Don't know how to draw in this coordinate system", call. = FALSE)
+      cli::cli_abort("Don't know how to draw in this coordinate system")
     }
 
     gt <- grid::gTree(
@@ -255,7 +255,7 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
     }
     else {
       ## will we ever get here?
-      stop("Condition not met")
+      cli::cli_abort("Condition not met")
     }
     # Create polygon grob
     pg <- grid::polygonGrob(
@@ -275,11 +275,9 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
   skip <- vapply(grobs, is.null, logical(1))
   if (any(skip)) {
     subgenes <- x$orig_data[skip,, drop = FALSE]
-    message <- "Subgene %d (%d..%d) breaks boundaries of gene (%d..%d), skipping"
-    message <- sprintf(message, which(skip),
-                                subgenes$xsubmin, subgenes$xsubmax,
-                                subgenes$xmin,    subgenes$xmax)
-    warning(paste(message, collaspe = "\n"), call. = FALSE)
+    for (i in seq_len(nrow(subgenes))) {
+      cli::cli_warn("Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping")
+    }
   }
 
   class(grobs) <- "gList"
@@ -397,7 +395,7 @@ makeContent.flipsubgenearrowtree <- function(x) {
       )
     } else {
       ## will we ever get here?
-      stop("Condition not met")
+      cli::cli_abort("Condition not met")
     }
     # Create polygon grob
     pg <- grid::polygonGrob(
@@ -417,11 +415,9 @@ makeContent.flipsubgenearrowtree <- function(x) {
   skip <- vapply(grobs, is.null, logical(1))
   if (any(skip)) {
     subgenes <- x$orig_data[skip,, drop = FALSE]
-    message <- "Subgene %d (%d..%d) breaks boundaries of gene (%d..%d), skipping"
-    message <- sprintf(message, which(skip),
-                                subgenes$xsubmin, subgenes$xsubmax,
-                                subgenes$xmin,    subgenes$xmax)
-    warning(paste(message, collaspe = "\n"), call. = FALSE)
+    for (i in seq_len(nrow(subgenes))) {
+      cli::cli_warn("Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping")
+    }
   }
 
   class(grobs) <- "gList"

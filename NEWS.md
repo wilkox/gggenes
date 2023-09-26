@@ -9,6 +9,7 @@
 
 - Deprecate the `size` aesthetic in favour of `linewidth` (`size` deprecated as
   of ggplot2 3.4.0)
+- Use the cli package for messages, warnings etc.
 
 # gggenes 0.5.1
 

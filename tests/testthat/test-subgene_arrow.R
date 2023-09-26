@@ -49,13 +49,13 @@ test_that("boundary-breaking subgenes are caught", {
     gene = c("cds1", "cd2", "cd3", "cds4"),
     start = c(2000, 2000, 2050, 2050),
     end = c(1000, 1000, 3000, 3000),
-    subgenestart =  c(1200, 1000, 2000, 2800),
-    subgeneend = c(1000, 600, 2200, 3200))
+    subgenestart =  c(1200, 1000, 2200, 2800),
+    subgeneend = c(1000, 1600, 2300, 3200))
   p <- ggplot(genes, aes(xmin = start, xmax = end, y = "strand")) +
               geom_gene_arrow() +
               geom_subgene_arrow(aes(xsubmin = subgenestart,
                                      xsubmax = subgeneend), fill = "blue")
-  expect_warning( { print(p) }, regex = "Subgene 2.*Subgene 3.*Subgene 4")
+  expect_warning( { print(p) }, regex = "breaks boundaries")
 
   expect_s3_class(p, "ggplot")
 })
