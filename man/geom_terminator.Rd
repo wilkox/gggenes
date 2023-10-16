@@ -42,7 +42,8 @@ transcription terminator.
 \item alpha
 \item color
 \item linetype
-\item size
+\item linewidth (the former size aesthetic has been deprecated and will be
+removed in future versions)
 }
 }
 

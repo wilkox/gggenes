@@ -10,7 +10,8 @@
 #' - alpha
 #' - color
 #' - linetype
-#' - size
+#' - linewidth (the former size aesthetic has been deprecated and will be
+#' removed in future versions)
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default, as terminators
@@ -70,7 +71,7 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
     alpha = 1,
     colour = "black",
     linetype = 1,
-    size = 1
+    linewidth = 1
   ),
 
   draw_key = ggplot2::draw_key_abline,
@@ -101,7 +102,9 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
     )
     gt$name <- grid::grobName(gt, "geom_terminator")
     gt
-  }
+  },
+  non_missing_aes = "size",
+  rename_size = TRUE
 )
 
 #' @importFrom grid makeContent
@@ -153,7 +156,7 @@ makeContent.terminatortree <- function(x) {
         col = terminator$colour,
         fill = terminator$colour,
         lty = terminator$linetype,
-        lwd = terminator$size
+        lwd = (terminator$linewidth %||% terminator$size)
       )
     )
 

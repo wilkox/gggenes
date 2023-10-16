@@ -8,7 +8,7 @@ get_coord_system <- function(coord) {
     } else if ("CoordCartesian" %in% class(coord)) {
       return("cartesian")
     } else {
-      stop("Unable to determine coordinate system", call. = FALSE)
+      cli::cli_abort("Unable to determine coordinate system")
     }
 }
 
@@ -25,7 +25,7 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
 
   # Make sure the data contains either x OR xmin/xmax, not both
   if ("x" %in% names(data) & any(c("xmin", "xmax") %in% names(data))) {
-    stop("data contains both x and xmin/xmax", call. = FALSE)
+    cli::cli_abort("data contains both x and xmin/xmax")
   }
 
   if (coord_system == "polar") {
@@ -61,7 +61,7 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
       data$theta <- NULL
 
     } else {
-      stop("Unable to transform to polar coordinates", call. = FALSE)
+      cli::cli_abort("Unable to transform to polar coordinates")
     }
 
     data$away <- data$r
@@ -102,7 +102,7 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
     data$x <- NULL
 
   } else {
-    stop("Don't know what to do with this coordinate system", call. = FALSE)
+    cli::cli_abort("Don't know what to do with this coordinate system")
   }
 
   return(data)
@@ -220,7 +220,7 @@ unit_to_alaw <- function(distance, to = c("away", "along"), coord_system, r = NU
     }
   }
 
-  stop("Something went wrong in unit conversion", call. = FALSE)
+  cli::cli_abort("Something went wrong in unit conversion")
 }
 
 #' Convert along/away coordinates into grid viewport coordinates
@@ -241,5 +241,9 @@ alaw_to_grid <- function(alongs, aways, coord_system, r = NULL) {
     return(list(x = aways, y = alongs))
   }
 
-  stop("Can't convert alongs/aways to grid coords", call. = FALSE)
+  cli::cli_abort("Can't convert alongs/aways to grid coords")
 }
+
+#' Infix %||% operator, from rlang
+#' @noRd
+`%||%` <- function(x, y) if (is.null(x)) y else x

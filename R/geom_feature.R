@@ -23,7 +23,8 @@
 #' - alpha
 #' - colour
 #' - linetype
-#' - size
+#' - linewidth (the former size aesthetic has been deprecated and will be
+#' removed in future versions)
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default, as features
@@ -90,7 +91,7 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     alpha = 1,
     colour = "black",
     linetype = 1,
-    size = 1
+    linewidth = 1
   ),
 
   draw_key = ggplot2::draw_key_abline,
@@ -129,7 +130,9 @@ GeomFeature <- ggplot2::ggproto("GeomFeature", ggplot2::Geom,
     )
     gt$name <- grid::grobName(gt, "geom_feature")
     gt
-  }
+  },
+  non_missing_aes = "size",
+  rename_size = TRUE
 )
 
 #' @importFrom grid makeContent
@@ -189,7 +192,7 @@ makeContent.featuretree <- function(x) {
         col = feature$colour,
         fill = feature$colour,
         lty = feature$linetype,
-        lwd = feature$size
+        lwd = (feature$linewidth %||% feature$size)
       )
     )
 

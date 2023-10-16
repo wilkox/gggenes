@@ -30,7 +30,8 @@
 #' - colour
 #' - fill
 #' - linetype
-#' - size
+#' - linewidth (the former size aesthetic has been deprecated and will be
+#' removed in future versions)
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2.
@@ -88,7 +89,8 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     colour = "black",
     fill = "white",
     linetype = 1,
-    size = 0.3
+    linewidth = 0.3,
+    size = NULL
   ),
   draw_key = function(data, params, size) {
     grid::rectGrob(
@@ -98,9 +100,21 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
         col = data$colour,
         fill = ggplot2::alpha(data$fill, data$alpha),
         lty = data$linetype,
-        lwd = data$size * ggplot2::.pt
+        lwd = (data$linewidth %||% data$size) * ggplot2::.pt
       )
     )
+  },
+  setup_data = function(data, params) {
+
+    if ("size" %in% names(data)) {
+      lifecycle::deprecate_warn(
+        when = "0.5.2",
+        what = "the size aesthetic",
+        details = "Use linewidth instead. The size aesthetic was deprecated in favour of linewidth in ggplot2 3.4.0."
+      )
+    }
+
+    data
   },
   draw_panel = function(
     data,
@@ -125,7 +139,9 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     )
     gt$name <- grid::grobName(gt, "geom_gene_arrow")
     gt
-  }
+  },
+  non_missing_aes = "size",
+  rename_size = TRUE
 )
 
 #' @importFrom grid makeContent
@@ -207,7 +223,7 @@ makeContent.genearrowtree <- function(x) {
         fill = ggplot2::alpha(gene$fill, gene$alpha),
         col = ggplot2::alpha(gene$colour, gene$alpha),
         lty = gene$linetype,
-        lwd = gene$size * ggplot2::.pt
+        lwd = gene$linewidth * ggplot2::.pt
       )
     )
 

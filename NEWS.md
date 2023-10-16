@@ -1,9 +1,22 @@
-# gggenes development version
+# gggenes (development version)
 
 ## Major changes
 
 - Add new `geom_terminator()` and `geom_terminator_label()`
 - Add support for polar coordinates
+
+## Minor changes
+
+- Deprecate the `size` aesthetic in favour of `linewidth` (`size` deprecated as
+  of ggplot2 3.4.0)
+- Use the cli package for messages, warnings etc.
+
+# gggenes 0.5.1
+
+## Minor changes
+
+- Fix the 'ggfittext-package' documentation after a [breaking change to
+  roxygen2](https://github.com/r-lib/roxygen2/issues/1491)
 
 # gggenes 0.5.0
 

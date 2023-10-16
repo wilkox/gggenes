@@ -9,9 +9,11 @@ aes
 aptamer
 aptamers
 centre
+cli
 coercible
 colour
 dplyr
+favour
 fontface
 geoms
 ggfittext
@@ -19,6 +21,7 @@ gggenomes
 ggplot
 labelled
 linetype
+linewidth
 normalise
 opbject
 patchlevel
@@ -30,8 +33,8 @@ pre
 reflowed
 reflowing
 reflows
-sequnce
 stylised
+roxygen
 subgene
 subgenes
 tidyeval
