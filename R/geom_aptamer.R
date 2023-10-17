@@ -22,7 +22,7 @@
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
 #' @param height `grid::unit()` opbject giving the height of the aptamer above
-#' the molecular backbone. Defaults to 3 mm. The aspect ratio of the aptamer is
+#' the molecular backbone. Defaults to 5 mm. The aspect ratio of the aptamer is
 #' fixed, so the width of the geom will be equal to the height.
 #'
 #' @examples
@@ -42,7 +42,7 @@ geom_aptamer <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
-  height = grid::unit(3, "mm"),
+  height = grid::unit(5, "mm"),
   ...
 ) {
   ggplot2::layer(
