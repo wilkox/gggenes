@@ -72,5 +72,5 @@ ggplot2::ggplot(example_SBOL_features[example_SBOL_features$type == "aptamer", ]
 
 }
 \seealso{
-\code{\link[=geom_aptamer]{geom_aptamer()}}
+\code{\link[=geom_aptamer_label]{geom_aptamer_label()}}
 }
