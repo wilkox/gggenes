@@ -27,7 +27,7 @@
 #' @examples
 #'
 #' ggplot2::ggplot(example_SBOL_features[example_SBOL_features$type == "assembly_scar", ],
-#'                 ggplot2::aes(x = start, y = molecule, label = name)) +
+#'                 ggplot2::aes(xmin = start, xmax = end, y = molecule, label = name)) +
 #'   geom_assembly_scar(inherit.aes = TRUE) +
 #'   geom_assembly_scar_label(inherit.aes = TRUE)
 #'
@@ -44,9 +44,9 @@ geom_assembly_scar_label <- function(
   inherit.aes = FALSE,
   height = unit(4, "mm"),
   label_height = unit(3, "mm"),
-  variant = "default",
   ...
 ) {
+
   ggplot2::layer(
     data = data,
     mapping = mapping,
@@ -60,7 +60,6 @@ geom_assembly_scar_label <- function(
       parent_geom = "geom_assembly_scar_label",
       height = height,
       label_height = label_height,
-      variant = variant,
       ...
     )
   )

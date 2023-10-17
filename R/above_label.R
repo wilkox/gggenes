@@ -32,6 +32,11 @@ GeomAboveLabel <- ggplot2::ggproto(
       data$xmax <- NULL
     }
 
+    # forward cannot be set to NA
+    if (any(is.na(data$forward))) {
+      cli::cli_abort("NA values detected for {.val forward} in {.fun {params$parent_geom}}")
+    }
+
     data
   },
 

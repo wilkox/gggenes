@@ -5,13 +5,12 @@ test_that("geom_feature() and geom_assembly_scar_label() in Cartesian coordinate
   p <- base_cartesian() + 
          geom_gene_arrow() +
          geom_assembly_scar(data = assembly_scars,
-                     aes(xmin = start, xmax = end, y = molecule, forward = strand)) +
+                     aes(xmin = start, xmax = end, y = molecule)) +
          geom_assembly_scar_label(data = assembly_scars, 
-                           aes(xmin = start, xmax = end, y = molecule, label = name,
-                               forward = strand))
+                           aes(xmin = start, xmax = end, y = molecule, label = name))
   expect_no_error( { print(p) } )
   expect_doppelganger(
-    "geom_assembly_scar(), geom_assembly_scar_label() in Cartesian coordinates",
+    "geom_assembly_scar*(), Cartesian coordinates",
     { print(p) }
   )
 
@@ -21,13 +20,12 @@ test_that("geom_assembly_scar() and geom_assembly_scar_label() in flipped coordi
   p <- base_flipped() + 
          geom_gene_arrow() +
          geom_assembly_scar(data = assembly_scars,
-                     aes(xmin = start, xmax = end, y = molecule, forward = strand)) +
+                     aes(xmin = start, xmax = end, y = molecule)) +
          geom_assembly_scar_label(data = assembly_scars, 
-                           aes(xmin = start, xmax = end, y = molecule, label = name,
-                               forward = strand))
+                           aes(xmin = start, xmax = end, y = molecule, label = name))
   expect_no_error( { print(p) } )
   expect_doppelganger(
-    "geom_assembly_scar() and geom_assembly_scar_label() in flipped coordinates",
+    "geom_assembly_scar*(), flipped coordinates",
     { print(p) }
   )
 })
@@ -36,13 +34,12 @@ test_that("geom_assembly_scar() and geom_assembly_scar_label() in polar coordina
   p <- base_polar() + 
          geom_gene_arrow() +
          geom_assembly_scar(data = assembly_scars,
-                     aes(xmin = start, xmax = end, y = molecule, forward = strand)) +
+                     aes(xmin = start, xmax = end, y = molecule)) +
          geom_assembly_scar_label(data = assembly_scars, 
-                           aes(xmin = start, xmax = end, y = molecule, label = name,
-                               forward = strand))
+                           aes(xmin = start, xmax = end, y = molecule, label = name))
   expect_no_error( { print(p) } )
   expect_doppelganger(
-    "geom_assembly_scar() and geom_assembly_scar_label() in polar coordinates",
+    "geom_assembly_scar(), polar coordinates",
     { print(p) }
   )
 })

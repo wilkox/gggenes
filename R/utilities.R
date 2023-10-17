@@ -115,9 +115,10 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
 #' viewport.
 #'
 #' @noRd
-segment_polargon <- function(thetas, rs) {
+segment_polargon <- function(thetas, rs, ids = NULL) {
   segmented_rs <- double()
   segmented_thetas <- double()
+  segmented_ids <- double()
   for (i in seq.int(length(rs))) {
 
     j <- ifelse(i == length(rs), 1, i + 1)
@@ -126,6 +127,10 @@ segment_polargon <- function(thetas, rs) {
     if (thetas[i] == thetas[j]) {
       segmented_rs <- c(segmented_rs, rs[i], rs[j])
       segmented_thetas <- c(segmented_thetas, thetas[i], thetas[j])
+      if (! is.null(ids)) {
+        segmented_ids <- c(segmented_ids, ids[i], ids[i])
+      }
+      next
     }
 
     # Get the length of the line
@@ -137,8 +142,18 @@ segment_polargon <- function(thetas, rs) {
     # Define the coordinates for each segment
     segmented_rs <- c(segmented_rs, seq(rs[i], rs[j], len = n_segs + 1))
     segmented_thetas <- c(segmented_thetas, seq(thetas[i], thetas[j], len = n_segs + 1))
+
+    # Set ids
+    if (! is.null(ids)) { 
+      segmented_ids <- c(segmented_ids, rep(ids[i], len = n_segs + 1)) 
+    }
   }
-  return(list(rs = segmented_rs, thetas = segmented_thetas))
+
+  if (! is.null(ids)) {
+    return(list(rs = segmented_rs, thetas = segmented_thetas, ids = segmented_ids))
+  } else {
+    return(list(rs = segmented_rs, thetas = segmented_thetas))
+  }
 }
 
 #' Segment a polyline in polar space
@@ -168,6 +183,7 @@ segment_polarline <- function(thetas, rs, ids = NULL) {
       if (! is.null(ids)) {
         segmented_ids <- c(segmented_ids, ids[i], ids[i])
       }
+      next
     }
 
     # Get the length of the line
