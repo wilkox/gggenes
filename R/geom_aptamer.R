@@ -79,6 +79,16 @@ GeomAptamer <- ggplot2::ggproto("GeomAptamer", ggplot2::Geom,
     data
   },
 
+  setup_params = function(data, params) {
+
+    # Height should not be negative
+    if (as.numeric(params$height) < 0) {
+      cli::cli_abort("{.arg height} argument to {.fun geom_aptamer} cannot be negative") 
+    }
+
+    params
+  },
+
   draw_panel = function(data, panel_scales, coord, height) {
 
     # Detect coordinate system and transform values
