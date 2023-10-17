@@ -1,36 +1,73 @@
+# This script prepares coordinates for SBOL sequence feature glyphs by
+# extracting them from the glyph SVGs. These are not necessarily the final
+# coordinates used to draw the respective geoms, but serve as the basis for the
+# geoms.
+#
+# The prepared coordinates are stored as internal data in R/sysdata.rda. This
+# is why all of the glphys are processed in this single script, which ends with
+# a call to usethis::use_data() in order to save the data to file. See
+# https://r-pkgs.org/data.html#sec-data-sysdata for more information.
+
 # Libraries
 library(svgparser)
 
-# Load raw aptamer coordinates
+# Aptamer
+
+## Load raw aptamer coordinates
 aptamer_raw <- read_svg("glyphs-svg/aptamer.svg", obj_type = "data.frame")
 
-# Prepare alongs
+## Prepare alongs
 
-## Divide by 45, the x-width of the glyph drawing area, to standardise between
-## (0,1); this was determined by inspecting the 'viewBox' value in the source
-## SVG
+### Divide by 45, the x-width of the glyph drawing area, to standardise between
+### (0,1); this was determined by inspecting the 'viewBox' value in the source
+### SVG
 aptamer_alongs <- aptamer_raw$x / 45
 
-## Shift the x-coordinates in the negative direction so that the origin sits at
-## the midpoint of the stalk (0.3580604, at the time of writing)
+### Shift the x-coordinates in the negative direction so that the origin sits
+### at the midpoint of the stalk (0.3580604, at the time of writing)
 stalk_offset <- (head(aptamer_alongs, 1) + tail(aptamer_alongs, 1)) / 2
 aptamer_alongs <- aptamer_alongs - stalk_offset
 
-usethis::use_data(aptamer_alongs, overwrite = TRUE, internal = TRUE)
+## Prepare aways
 
-# Prepare aways
-
-## Divide by 45, the y-height of the glyph drawing area, to standardise between
-## (0,1); this was determined by inspecting the 'viewBox' value in the source
-## SVG
+### Divide by 45, the y-height of the glyph drawing area, to standardise
+### between (0,1); this was determined by inspecting the 'viewBox' value in the
+### source SVG
 aptamer_aways <- aptamer_raw$y / 45
 
-## Invert along the y-axis (converting between SVG and ggplot2 coordinate
-## system)
+### Invert along the y-axis (converting between SVG and ggplot2 coordinate
+### system)
 aptamer_aways <- 1 - aptamer_aways
 
-## Shift the glyph down so the stalk is sitting on the baseline
+### Shift the glyph down so the stalk is sitting on the baseline
 aptamer_aways <- aptamer_aways - min(aptamer_aways)
 
+# Assembly scar
+
+## Load raw assembly scar coordinates
+assembly_scar_raw <- read_svg("glyphs-svg/assembly-scar.svg", obj_type = "data.frame")
+
+## Prepare alongs
+
+### Divide by 45, the x-width of the glyph drawing area, to standardise between
+### (0,1); this was determined by inspecting the 'viewBox' value in the source
+### SVG
+assembly_scar_alongs <- assembly_scar_raw$x / 45
+
+## Prepare aways
+
+### Divide by 45, the y-height of the glyph drawing area, to standardise
+### between (0,1); this was determined by inspecting the 'viewBox' value in the
+### source SVG
+assembly_scar_aways <- assembly_scar_raw$y / 45
+
+### Shift the glyph down so it is vertically centred on the molecular backbone
+assembly_scar_aways <- assembly_scar_aways - 0.5
+
 # Store internal data
-usethis::use_data(aptamer_alongs, aptamer_aways, overwrite = TRUE, internal = TRUE)
+usethis::use_data(
+  aptamer_alongs, aptamer_aways,
+  assembly_scar_alongs, assembly_scar_aways,
+  overwrite = TRUE,
+  internal = TRUE
+)

@@ -6,6 +6,7 @@
 #' \describe{
 #'   \item{molecule}{the genome}
 #'   \item{start}{the start position or location of the feature}
+#'   \item{end}{the end position of the feature}
 #'   \item{type}{the type of sequence features}
 #'   \item{name}{the name of the feature}
 #'   \item{strand}{whether the feature is on the forward strand}
