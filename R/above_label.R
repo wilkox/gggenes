@@ -8,6 +8,9 @@ GeomAboveLabel <- ggplot2::ggproto(
   ggplot2::Geom,
   required_aes = c("y", "label"),
   default_aes = ggplot2::aes(
+    x = NULL,
+    xmin = NULL,
+    xmax = NULL,
     forward = TRUE,
     colour = "black",
     size = 8,
@@ -23,7 +26,6 @@ GeomAboveLabel <- ggplot2::ggproto(
   setup_data = function(data, params) {
 
     # If xmin/xmax have been provided, convert to the midpoint
-    cli::cli_alert("names(data) are {names(data)}")
     if ("xmin" %in% names(data) & "xmax" %in% names(data)) {
       data$x <- (data$xmin + data$xmax) / 2
       data$xmin <- NULL
