@@ -14,6 +14,7 @@ geom_aptamer_label(
   inherit.aes = FALSE,
   height = unit(4, "mm"),
   label_height = unit(3, "mm"),
+  variant = "default",
   ...
 )
 }
@@ -26,6 +27,9 @@ molecular backbone. Defaults to 4 mm.}
 
 \item{label_height}{\code{grid::unit()} object giving the height of the label
 text. Defaults to 3 mm.}
+
+\item{variant}{Specify a variant form of the geom (see section Variant
+forms).}
 }
 \description{
 \code{geom_aptamer_label()} adds text labels to aptamers drawn with
@@ -34,6 +38,15 @@ text. Defaults to 3 mm.}
 \details{
 Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 }
+\section{Variant forms}{
+
+\itemize{
+\item default: the default form
+\item reverse_above: labels on the reverse strand will be drawn above the
+molecular backbone, as if the are on the forward strand
+}
+}
+
 \section{Aesthetics}{
 
 \itemize{

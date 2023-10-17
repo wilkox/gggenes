@@ -5,6 +5,12 @@
 #'
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 #'
+#' @section Variant forms:
+#'
+#' - default: the default form
+#' - reverse_above: labels on the reverse strand will be drawn above the
+#' molecular backbone, as if the are on the forward strand
+#'
 #' @section Aesthetics:
 #'
 #' - x (required; position of the aptamer)
@@ -18,6 +24,8 @@
 #' - fontface
 #' - angle
 #'
+#' @param variant Specify a variant form of the geom (see section Variant
+#' forms).
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
 #' @param height `grid::unit()` object giving the height of the label above the
@@ -45,6 +53,7 @@ geom_aptamer_label <- function(
   inherit.aes = FALSE,
   height = unit(4, "mm"),
   label_height = unit(3, "mm"),
+  variant = "default",
   ...
 ) {
   ggplot2::layer(
@@ -59,6 +68,7 @@ geom_aptamer_label <- function(
       na.rm = na.rm,
       height = height,
       label_height = label_height,
+      variant = variant,
       ...
     )
   )
@@ -89,7 +99,22 @@ GeomAptamerLabel <- ggplot2::ggproto(
     data
   },
 
-  draw_panel = function(data, panel_scales, coord, height, label_height) {
+  setup_params = function(data, params) {
+
+    # Height should not be negative
+    if (as.numeric(params$height) < 0) {
+      cli::cli_abort("{.arg height} argument to {.fun geom_aptamer_label} cannot be negative") 
+    }
+
+    # Check that variant is valid
+    if (! params$variant %in% c("default", "reverse_above")) {
+      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun geom_aptamer_label}")
+    }
+
+    params
+  },
+
+  draw_panel = function(data, panel_scales, coord, height, label_height, variant) {
 
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
@@ -100,7 +125,8 @@ GeomAptamerLabel <- ggplot2::ggproto(
       cl = "aptamerlabeltree",
       height = height,
       label_height = label_height,
-      coord_system = coord_system
+      coord_system = coord_system,
+      variant = variant
     )
     gt$name <- grid::grobName(gt, "geom_aptamer_label")
     gt
@@ -123,11 +149,23 @@ makeContent.aptamerlabeltree <- function(x) {
     awayness <- unit_to_alaw(x$height, "away", x$coord_system, r)
     label_awayness <- unit_to_alaw(x$label_height, "away", x$coord_system, r)
 
+    # Determine whether to position the label above or below the backbone
+    if (label$forward) {
+      away_sign <- 1
+
+    } else if (! label$forward) {
+
+      if (x$variant == "default") {
+        away_sign <- -1
+
+      } else if (x$variant == "reverse_above") {
+        away_sign <- 1
+      }
+    }
+
     # Set bounding box and place
     label$along_min <- label$along - 0.5
     label$along_max <- label$along + 0.5
-
-    away_sign <- ifelse(label$forward, 1, -1)
     label$away_min <- label$away + (awayness * away_sign)
     label$away_max <- label$away + ((awayness + label_awayness) * away_sign)
     align <- "centre"

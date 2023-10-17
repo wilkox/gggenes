@@ -11,6 +11,12 @@
 #' `y` aesthetic. The `forward` aesthetic can be used to set whether the
 #' aptamer is on the forward (default) or reverse strand.
 #'
+#' @section Variant forms:
+#'
+#' - default: the default form
+#' - reverse_above: aptamers on the reverse strand will be drawn above the
+#' molecular backbone, but will still be flipped horizontally
+#'
 #' @section Aesthetics:
 #'
 #' - x (required; position of the aptamer)
@@ -22,6 +28,8 @@
 #' - size
 #' - fill
 #'
+#' @param variant Specify a variant form of the geom (see section Variant
+#' forms).
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
 #' @param height `grid::unit()` opbject giving the height of the aptamer above
@@ -46,6 +54,7 @@ geom_aptamer <- function(
   show.legend = NA,
   inherit.aes = FALSE,
   height = grid::unit(5, "mm"),
+  variant = "default",
   ...
 ) {
   ggplot2::layer(
@@ -59,6 +68,7 @@ geom_aptamer <- function(
     params = list(
       na.rm = na.rm,
       height = height,
+      variant = variant,
       ...
     ) 
   )
@@ -90,10 +100,15 @@ GeomAptamer <- ggplot2::ggproto("GeomAptamer", ggplot2::Geom,
       cli::cli_abort("{.arg height} argument to {.fun geom_aptamer} cannot be negative") 
     }
 
+    # Check that variant is valid
+    if (! params$variant %in% c("default", "reverse_above")) {
+      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun geom_aptamer}")
+    }
+
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, height) {
+  draw_panel = function(data, panel_scales, coord, height, variant) {
 
     # Detect coordinate system and transform values
     coord_system <- get_coord_system(coord)
@@ -103,6 +118,7 @@ GeomAptamer <- ggplot2::ggproto("GeomAptamer", ggplot2::Geom,
       data = data,
       cl = "aptamertree",
       height = height,
+      variant = variant,
       coord_system = coord_system
     )
     gt$name <- grid::grobName(gt, "geom_aptamer")
@@ -126,10 +142,17 @@ makeContent.aptamertree <- function(x) {
     awayness <- unit_to_alaw(x$height, "away", x$coord_system, r) 
     alongness <- unit_to_alaw(x$height, "along", x$coord_system, r)
 
-    # If on the reverse strand, invert the glyph horizontally and vertically
+    # If on the reverse strand, invert the glyph horizontally and/or vertically
+    # as appropriate for the variant
     if (! aptamer$forward) {
-      aptamer_alongs <- 0 - aptamer_alongs
-      aptamer_aways <- 0 - aptamer_aways
+
+      if (x$variant == "default") {
+        aptamer_alongs <- 0 - aptamer_alongs
+        aptamer_aways <- 0 - aptamer_aways
+
+      } else if (x$variant == "reverse_above") {
+        aptamer_alongs <- 0 - aptamer_alongs
+      }
     }
 
     # Generate the polygon. The grob is drawn such that the 'stalk' of the
