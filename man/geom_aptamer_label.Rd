@@ -40,6 +40,7 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 \item x (required; position of the aptamer)
 \item y (required; the molecular backbone)
 \item label (required; the label text)
+\item forward
 \item colour
 \item size
 \item alpha

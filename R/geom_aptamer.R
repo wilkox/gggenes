@@ -3,16 +3,19 @@
 #' `geom_aptamer()` draws a geom representing an aptamer, a short
 #' polynucleotide or polypeptide sequence that binds a target molecule.
 #'
-#' The geom is drawn as a stylised secondary structure of a short
-#' polynucleotide. The position of the aptamer on the molecular backbone is
-#' expressed with the `x` aesthetic. Aptamers are not oriented, so this geom
-#' does not accept the `forward` aesthetic. The aptamer is drawn with an
-#' internal fill, which is white by default.
+#' The aptamer is drawn as a stylised secondary structure of a short
+#' polynucleotide. It has an internal fill, which is white by default.
+#'
+#' The position of the aptamer on the molecular backbone is set with the `x`
+#' aesthetic. The molecular backbone that it is associated with is set with the
+#' `y` aesthetic. The `forward` aesthetic can be used to set whether the
+#' aptamer is on the forward (default) or reverse strand.
 #'
 #' @section Aesthetics:
 #'
 #' - x (required; position of the aptamer)
 #' - y (required; the molecular backbone)
+#' - forward
 #' - alpha
 #' - colour
 #' - linetype
@@ -66,6 +69,7 @@ geom_aptamer <- function(
 GeomAptamer <- ggplot2::ggproto("GeomAptamer", ggplot2::Geom,
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(
+    forward = TRUE,
     alpha = 1,
     colour = "black",
     linetype = 1,
@@ -121,6 +125,12 @@ makeContent.aptamertree <- function(x) {
     r <- ifelse(x$coord_system == "polar", aptamer$away, NA)
     awayness <- unit_to_alaw(x$height, "away", x$coord_system, r) 
     alongness <- unit_to_alaw(x$height, "along", x$coord_system, r)
+
+    # If on the reverse strand, invert the glyph horizontally and vertically
+    if (! aptamer$forward) {
+      aptamer_alongs <- 0 - aptamer_alongs
+      aptamer_aways <- 0 - aptamer_aways
+    }
 
     # Generate the polygon. The grob is drawn such that the 'stalk' of the
     # aptamer is centred on the along coordinate. aptamer_alongs and

@@ -29,17 +29,20 @@ fixed, so the width of the geom will be equal to the height.}
 polynucleotide or polypeptide sequence that binds a target molecule.
 }
 \details{
-The geom is drawn as a stylised secondary structure of a short
-polynucleotide. The position of the aptamer on the molecular backbone is
-expressed with the \code{x} aesthetic. Aptamers are not oriented, so this geom
-does not accept the \code{forward} aesthetic. The aptamer is drawn with an
-internal fill, which is white by default.
+The aptamer is drawn as a stylised secondary structure of a short
+polynucleotide. It has an internal fill, which is white by default.
+
+The position of the aptamer on the molecular backbone is set with the \code{x}
+aesthetic. The molecular backbone that it is associated with is set with the
+\code{y} aesthetic. The \code{forward} aesthetic can be used to set whether the
+aptamer is on the forward (default) or reverse strand.
 }
 \section{Aesthetics}{
 
 \itemize{
 \item x (required; position of the aptamer)
 \item y (required; the molecular backbone)
+\item forward
 \item alpha
 \item colour
 \item linetype

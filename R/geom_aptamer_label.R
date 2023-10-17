@@ -10,6 +10,7 @@
 #' - x (required; position of the aptamer)
 #' - y (required; the molecular backbone)
 #' - label (required; the label text)
+#' - forward
 #' - colour
 #' - size
 #' - alpha
@@ -72,6 +73,7 @@ GeomAptamerLabel <- ggplot2::ggproto(
   ggplot2::Geom,
   required_aes = c("x", "y", "label"),
   default_aes = ggplot2::aes(
+    forward = TRUE,
     colour = "black",
     size = 8,
     alpha = 1,
@@ -80,7 +82,6 @@ GeomAptamerLabel <- ggplot2::ggproto(
     angle = 0,
     fill = "white",
     lineheight = 0.9,
-    forward = NA
   ),
   draw_key = ggplot2::draw_key_text,
 
@@ -126,7 +127,7 @@ makeContent.aptamerlabeltree <- function(x) {
     label$along_min <- label$along - 0.5
     label$along_max <- label$along + 0.5
 
-    away_sign <- awayness / abs(awayness)
+    away_sign <- ifelse(label$forward, 1, -1)
     label$away_min <- label$away + (awayness * away_sign)
     label$away_max <- label$away + ((awayness + label_awayness) * away_sign)
     align <- "centre"
