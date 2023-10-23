@@ -1,17 +1,16 @@
-#' A set of example SBOL sequence features
+#' The complete set of implemented SBOL sequence features
 #'
 #' Sequence features for example purposes only.
 #'
-#' @format A data frame with six rows and three variables:
+#' @format A data frame with four rows and five variables:
 #' \describe{
+#'   \item{feature}{the type of sequence feature}
 #'   \item{molecule}{the genome}
 #'   \item{start}{the start position or location of the feature}
 #'   \item{end}{the end position of the feature}
-#'   \item{type}{the type of sequence features}
-#'   \item{name}{the name of the feature}
-#'   \item{strand}{whether the feature is on the forward strand}
+#'   \item{forward}{whether the feature is on the forward strand}
 #' }
-"example_SBOL_features"
+"feature_garden"
 
 #' A set of example genes.
 #'

@@ -51,8 +51,9 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 
 \examples{
 
-ggplot2::ggplot(example_SBOL_features[example_SBOL_features$type == "assembly_scar", ],
-                ggplot2::aes(xmin = start, xmax = end, y = molecule, label = name)) +
+ggplot2::ggplot(feature_garden[feature_garden$feature == "assembly_scar", ],
+                ggplot2::aes(xmin = start, xmax = end, y = molecule, 
+                             label = feature)) +
   geom_assembly_scar(inherit.aes = TRUE) +
   geom_assembly_scar_label(inherit.aes = TRUE)
 

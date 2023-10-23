@@ -32,7 +32,7 @@
 #'
 #' @examples
 #'
-#' ggplot2::ggplot(example_SBOL_features[example_SBOL_features$type == "assembly_scar", ],
+#' ggplot2::ggplot(feature_garden[feature_garden$feature == "assembly_scar", ],
 #'                 ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
 #'   geom_assembly_scar(inherit.aes = TRUE)
 #'

@@ -35,8 +35,8 @@
 #'
 #' @examples
 #'
-#' ggplot2::ggplot(example_SBOL_features[example_SBOL_features$type == "aptamer", ],
-#'                 ggplot2::aes(x = start, y = molecule, label = name)) +
+#' ggplot2::ggplot(feature_garden[feature_garden$feature == "aptamer", ],
+#'                 ggplot2::aes(x = start, y = molecule, label = feature)) +
 #'   geom_aptamer(inherit.aes = TRUE) +
 #'   geom_aptamer_label(inherit.aes = TRUE)
 #'
