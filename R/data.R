@@ -5,6 +5,7 @@
 #' @format A data frame with four rows and five variables:
 #' \describe{
 #'   \item{feature}{the type of sequence feature}
+#'   \item{variant}{the variant of the sequence feature}
 #'   \item{molecule}{the genome}
 #'   \item{start}{the start position or location of the feature}
 #'   \item{end}{the end position of the feature}
