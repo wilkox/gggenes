@@ -7,7 +7,7 @@ test_that("plot aligned on genE with make_alignment_dummies()", {
     on = "genE",
     side = "right"
   )
-  p <- base_cartesian() + 
+  p <- base_cartesian_legacy() + 
     geom_gene_arrow() +
     geom_blank(
       data = dummies,

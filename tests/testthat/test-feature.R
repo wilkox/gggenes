@@ -1,7 +1,7 @@
 library(ggplot2)
 
 test_that("geom_feature() and geom_feature_label() in Cartesian coordinates", {
-  p <- base_cartesian() + 
+  p <- base_cartesian_legacy() + 
          geom_feature(data = example_features, 
                      aes(x = position, y = molecule, forward = forward),
                      linewidth = 1) +
@@ -17,7 +17,7 @@ test_that("geom_feature() and geom_feature_label() in Cartesian coordinates", {
 })
 
 test_that("geom_feature() and geom_feature_label() in flipped coordinates", {
-  p <- base_flipped() + 
+  p <- base_flipped_legacy() + 
          geom_feature(data = example_features, 
                       aes(x = position, y = molecule, forward = forward),
                       linewidth = 1) +
@@ -33,7 +33,7 @@ test_that("geom_feature() and geom_feature_label() in flipped coordinates", {
 })
 
 test_that("geom_feature() and geom_feature_label() in polar coordinates", {
-  p <- base_polar() + 
+  p <- base_polar_legacy() + 
          geom_feature(data = example_features_polar, 
                       aes(x = position, y = molecule, forward = forward),
                       linewidth = 1) +
@@ -51,7 +51,7 @@ test_that("geom_feature() and geom_feature_label() in polar coordinates", {
 test_that("geom_feature() with numeric 'forward'", {
   ef2 <- example_features
   ef2$forward <- as.numeric(example_features$forward)
-  p <- base_cartesian() +
+  p <- base_cartesian_legacy() +
     geom_feature(data = ef2, aes(x = position, y = molecule, forward = forward),
                  linewidth = 1) +
     geom_feature_label(data = ef2, aes(x = position, y = molecule, label = name, 

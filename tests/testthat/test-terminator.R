@@ -1,7 +1,7 @@
 library(ggplot2)
 
 test_that("geom_terminator() and geom_terminator_label() in Cartesian coordinates", {
-  p <- base_cartesian() +
+  p <- base_cartesian_legacy() +
          geom_gene_arrow() + 
          geom_terminator(data = example_terminators, aes(x = position, y = molecule), linewidth = 1) +
          geom_terminator_label(data = example_terminators, 
@@ -14,7 +14,7 @@ test_that("geom_terminator() and geom_terminator_label() in Cartesian coordinate
 } )
 
 test_that("geom_terminator() and geom_terminator_label() in flipped coordinates", {
-  p <- base_flipped() +
+  p <- base_flipped_legacy() +
          geom_gene_arrow() + 
          geom_terminator(data = example_terminators, aes(x = position, y = molecule), linewidth = 1) +
          geom_terminator_label(data = example_terminators, 
@@ -27,7 +27,7 @@ test_that("geom_terminator() and geom_terminator_label() in flipped coordinates"
 } )
 
 test_that("geom_terminator() and geom_terminator_label() in polar coordinates", {
-  p <- base_polar() +
+  p <- base_polar_legacy() +
          geom_gene_arrow() + 
          geom_terminator(data = example_terminators_polar, 
                          aes(x = position, y = molecule), linewidth = 1) +

@@ -1,7 +1,7 @@
 library(ggplot2)
 
 test_that("geom_subgene_arrow() and geom_subgene_label() in Cartesian coordinates", {
-  p <- print(base_cartesian() + 
+  p <- print(base_cartesian_legacy() + 
         geom_gene_arrow(fill = "white") + 
         geom_subgene_arrow(
           data = example_subgenes,
@@ -22,7 +22,7 @@ test_that("geom_subgene_arrow() and geom_subgene_label() in Cartesian coordinate
 })
 
 test_that("geom_subgene_arrow() and geom_subgene_label() in flipped coordinates", {
-  p <- base_flipped() + 
+  p <- base_flipped_legacy() + 
          geom_gene_arrow(fill = "white") + 
          geom_subgene_arrow(
            data = example_subgenes,
