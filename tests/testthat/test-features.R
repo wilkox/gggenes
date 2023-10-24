@@ -40,6 +40,16 @@ geoms <- function() {
     geom_blunt_restriction_site_label(
       data = subset(feature_garden, feature == "blunt restriction site"),
       aes(x = start, y = molecule, label = feature)
+    ),
+    geom_CDS(
+      data = subset(feature_garden, feature == "CDS" & variant == "default"),
+      aes(xmin = start, xmax = end, y = molecule)
+    ),
+    geom_CDS(
+      data = subset(feature_garden, feature == "CDS" & 
+                    variant == "notched_arrow"),
+      aes(xmin = start, xmax = end, y = molecule),
+      variant = "notched_arrow"
     )
   )
 }

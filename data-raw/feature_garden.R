@@ -5,7 +5,12 @@ feature_garden <- data.frame(rbind(
   c("aptamer", "reverse_above", "Genome1", 250, NA, FALSE),
   c("aptamer", "default", "Genome1", 250, NA, FALSE),
   c("assembly scar", "default", "Genome1", 350, 450, NA),
-  c("blunt restriction site", "default", "Genome1", 550, NA, NA)
+  c("blunt restriction site", "default", "Genome1", 550, NA, NA),
+  c("CDS", "default", "Genome2", 50, 150, TRUE),
+  c("CDS", "default", "Genome2", 250, 200, TRUE),
+  c("CDS", "default", "Genome2", 300, 400, FALSE),
+  c("CDS", "notched_arrow", "Genome2", 450, 500, TRUE),
+  c("CDS", "notched_arrow", "Genome2", 650, 550, TRUE)
 ))
 
 colnames(feature_garden) <- c("feature", "variant", "molecule", "start", "end",
