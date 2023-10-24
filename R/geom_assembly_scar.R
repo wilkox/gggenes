@@ -11,7 +11,7 @@
 #'
 #' The position of the assembly scar on the molecular backbone is set with the
 #' `xmin` and `xmax` aesthetics. The molecular backbone that it is associated
-#' with is set with the `y` aesthetic. This geom does not accept a forward
+#' with is set with the `y` aesthetic. This geom does not accept a `forward`
 #' aesthetic, as it is not associated with a particular strand.
 #'
 #' @section Aesthetics:

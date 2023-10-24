@@ -34,11 +34,10 @@
 <polygon points='430.48,54.29 515.27,54.29 515.27,51.77 430.48,51.77 ' style='stroke-width: 0.75; stroke: none; fill: #FFFFFF;' />
 <polyline points='430.48,54.29 515.27,54.29 ' style='stroke-width: 0.75;' />
 <polyline points='515.27,51.77 430.48,51.77 ' style='stroke-width: 0.75;' />
-<polygon points='600.06,54.29 684.85,54.29 684.85,51.77 600.06,51.77 ' style='stroke-width: 0.75; stroke: none; fill: #FFFFFF;' />
-<polyline points='600.06,54.29 684.85,54.29 ' style='stroke-width: 0.75;' />
-<polyline points='684.85,51.77 600.06,51.77 ' style='stroke-width: 0.75;' />
 <text x='472.88' y='39.36' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='51.14px' lengthAdjust='spacingAndGlyphs'>assembly scar</text>
-<text x='642.45' y='39.36' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='51.14px' lengthAdjust='spacingAndGlyphs'>assembly scar</text>
+<polyline points='682.96,57.13 683.90,57.13 683.90,48.94 682.96,48.94 ' style='stroke-width: 0.75;' />
+<polyline points='686.73,57.13 685.79,57.13 685.79,48.94 686.73,48.94 ' style='stroke-width: 0.75;' />
+<text x='684.85' y='40.16' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='68.92px' lengthAdjust='spacingAndGlyphs'>blunt restriction site</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>

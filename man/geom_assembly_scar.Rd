@@ -36,7 +36,7 @@ the background colour of the plot.
 
 The position of the assembly scar on the molecular backbone is set with the
 \code{xmin} and \code{xmax} aesthetics. The molecular backbone that it is associated
-with is set with the \code{y} aesthetic. This geom does not accept a forward
+with is set with the \code{y} aesthetic. This geom does not accept a \code{forward}
 aesthetic, as it is not associated with a particular strand.
 }
 \section{Aesthetics}{

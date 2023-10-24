@@ -64,10 +64,40 @@ assembly_scar_aways <- assembly_scar_raw$y / 45
 ### Shift the glyph down so it is vertically centred on the molecular backbone
 assembly_scar_aways <- assembly_scar_aways - 0.5
 
+# Blunt restriction site
+
+## Load raw blunt restriction site coordinates
+blunt_restriction_site_raw <- read_svg("glyphs-svg/blunt-restriction-site.svg", obj_type = "data.frame")
+
+## Prepare alongs
+
+### Divide by 45, the x-width of the glyph drawing area, to standardise between
+### (0,1); this was determined by inspecting the 'viewBox' value in the source
+### SVG
+blunt_restriction_site_alongs <- blunt_restriction_site_raw$x / 45
+
+### Shift the glyph so it is centred on the restriction site
+blunt_restriction_site_alongs <- blunt_restriction_site_alongs - 0.5
+
+## Prepare aways
+
+### Divide by 45, the y-height of the glyph drawing area, to standardise
+### between (0,1); this was determined by inspecting the 'viewBox' value in the
+### source SVG
+blunt_restriction_site_aways <- blunt_restriction_site_raw$y / 45
+
+### Shift the glyph down so it is vertically centred on the molecular backbone
+blunt_restriction_site_aways <- blunt_restriction_site_aways - 0.5
+
+## Prepare indices
+blunt_restriction_site_indices <- c(rep(1L, 4), rep(2L, 4))
+
 # Store internal data
 usethis::use_data(
   aptamer_alongs, aptamer_aways,
   assembly_scar_alongs, assembly_scar_aways,
+  blunt_restriction_site_alongs, blunt_restriction_site_aways, 
+    blunt_restriction_site_indices,
   overwrite = TRUE,
   internal = TRUE
 )

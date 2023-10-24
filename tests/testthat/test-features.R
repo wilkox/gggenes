@@ -13,12 +13,19 @@ geoms_default <- function() {
     ),
     geom_assembly_scar(
       data = subset(feature_garden, feature == "assembly scar"),
-      aes(xmin = start, xmax = end, y = molecule, forward = forward)
+      aes(xmin = start, xmax = end, y = molecule)
     ),
     geom_assembly_scar_label(
       data = subset(feature_garden, feature == "assembly scar"),
-      aes(xmin = start, xmax = end, y = molecule, label = feature, 
-          forward = forward)
+      aes(xmin = start, xmax = end, y = molecule, label = feature)
+    ),
+    geom_blunt_restriction_site(
+      data = subset(feature_garden, feature == "blunt restriction site"),
+      aes(x = start, y = molecule)
+    ),
+    geom_blunt_restriction_site_label(
+      data = subset(feature_garden, feature == "blunt restriction site"),
+      aes(x = start, y = molecule, label = feature)
     )
   )
 }
@@ -38,13 +45,20 @@ geoms_reverse_above <- function() {
     ),
     geom_assembly_scar(
       data = subset(feature_garden, feature == "assembly scar"),
-      aes(xmin = start, xmax = end, y = molecule, forward = forward)
+      aes(xmin = start, xmax = end, y = molecule)
     ),
     geom_assembly_scar_label(
       data = subset(feature_garden, feature == "assembly scar"),
-      aes(xmin = start, xmax = end, y = molecule, label = feature, 
-          forward = forward),
+      aes(xmin = start, xmax = end, y = molecule, label = feature),
       variant = "reverse_above"
+    ),
+    geom_blunt_restriction_site(
+      data = subset(feature_garden, feature == "blunt restriction site"),
+      aes(x = start, y = molecule)
+    ),
+    geom_blunt_restriction_site_label(
+      data = subset(feature_garden, feature == "blunt restriction site"),
+      aes(x = start, y = molecule, label = feature)
     )
   )
 }

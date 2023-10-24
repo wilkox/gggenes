@@ -3,8 +3,8 @@
 feature_garden <- data.frame(rbind(
   c("aptamer", "Genome1", 100, NA, TRUE),
   c("aptamer", "Genome1", 200, NA, FALSE),
-  c("assembly scar", "Genome1", 300, 350, TRUE),
-  c("assembly scar", "Genome1", 400, 450, FALSE)
+  c("assembly scar", "Genome1", 300, 350, NA),
+  c("blunt restriction site", "Genome1", 450, NA, NA)
 ))
 
 colnames(feature_garden) <- c("feature", "molecule", "start", "end", "forward")

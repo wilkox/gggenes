@@ -1,4 +1,3 @@
-Aptamers
 CMD
 GenBank
 Labelling
@@ -23,6 +22,7 @@ labelled
 linetype
 linewidth
 normalise
+nucleotides
 opbject
 patchlevel
 plasmapR
@@ -33,8 +33,8 @@ pre
 reflowed
 reflowing
 reflows
-stylised
 roxygen
+stylised
 subgene
 subgenes
 tidyeval
