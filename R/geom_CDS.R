@@ -79,6 +79,7 @@ geom_CDS <- function(
       arrowhead_width = arrowhead_width,
       arrowhead_height = arrowhead_height,
       arrow_body_height = arrow_body_height,
+      fix_forward = TRUE,
       ...
     )
   )

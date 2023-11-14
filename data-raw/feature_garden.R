@@ -7,9 +7,9 @@ feature_garden <- data.frame(rbind(
   c("assembly scar", "default", "Genome1", 350, 450, NA),
   c("blunt restriction site", "default", "Genome1", 550, NA, NA),
   c("CDS", "default", "Genome2", 50, 150, TRUE),
-  c("CDS", "default", "Genome2", 250, 200, TRUE),
+  c("CDS", "default", "Genome2", 250, 200, FALSE),
   c("CDS", "default", "Genome2", 300, 400, FALSE),
-  c("CDS", "notched_arrow", "Genome2", 450, 500, TRUE),
+  c("CDS", "notched_arrow", "Genome2", 450, 500, FALSE),
   c("CDS", "notched_arrow", "Genome2", 650, 550, TRUE)
 ))
 

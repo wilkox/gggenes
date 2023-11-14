@@ -48,7 +48,7 @@ geoms <- function() {
     geom_CDS(
       data = subset(feature_garden, feature == "CDS" & 
                     variant == "notched_arrow"),
-      aes(xmin = start, xmax = end, y = molecule),
+      aes(xmin = start, xmax = end, y = molecule, forward = forward),
       variant = "notched_arrow"
     )
   )

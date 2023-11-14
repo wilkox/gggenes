@@ -106,6 +106,16 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
   },
   setup_data = function(data, params) {
 
+    # If using the new (better) version of the forward aesthetic, set xmin/xmax
+    # correctly
+    if ((params$fix_forward %||% FALSE) & "forward" %in% names(data)) {
+      fixed_xmin <- ifelse(data$forward, pmin(data$xmin, data$xmax), pmax(data$xmin, data$xmax))
+      fixed_xmax <- ifelse(data$forward, pmax(data$xmin, data$xmax), pmin(data$xmin, data$xmax))
+      data$xmin <- fixed_xmin
+      data$xmax <- fixed_xmax
+      data$forward <- NULL
+    }
+
     if ("size" %in% names(data)) {
       lifecycle::deprecate_warn(
         when = "0.5.2",
@@ -122,7 +132,8 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     coord,
     arrowhead_width,
     arrowhead_height,
-    arrow_body_height
+    arrow_body_height,
+    fix_forward
   ) {
 
     # Detect coordinate system and transform values
