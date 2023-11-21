@@ -66,7 +66,7 @@ molecular backbone, but will still be flipped horizontally
 
 \examples{
 
-ggplot2::ggplot(feature_garden[feature_garden$feature == "aptamer", ],
+ggplot2::ggplot(subset(feature_garden, feature == "aptamer"),
                 ggplot2::aes(x = start, y = molecule)) +
   geom_aptamer(inherit.aes = TRUE)
 

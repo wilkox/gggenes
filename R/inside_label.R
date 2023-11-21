@@ -1,16 +1,14 @@
-#' A generic label that goes above the molecular backbone
+#' A generic label that goes inside another geom
 #'
 #' @noRd
 #' @import grid
 #' @import ggfittext
-GeomAboveLabel <- ggplot2::ggproto(
-  "GeomAboveLabel",
+GeomInsideLabel <- ggplot2::ggproto(
+  "GeomInsideLabel",
   ggplot2::Geom,
-  required_aes = c("y", "label"),
+  required_aes = c("xmin", "xmax", "y", "label"),
   default_aes = ggplot2::aes(
     x = NULL,
-    xmin = NULL,
-    xmax = NULL,
     forward = TRUE,
     colour = "black",
     size = 8,
@@ -19,21 +17,21 @@ GeomAboveLabel <- ggplot2::ggproto(
     fontface = 1,
     angle = 0,
     fill = "white",
-    lineheight = 0.9,
+    lineheight = 0.9
   ),
+
   draw_key = ggplot2::draw_key_text,
 
   setup_data = function(data, params) {
 
-    # If xmin/xmax have been provided, convert to the midpoint
-    if ("xmin" %in% names(data) & "xmax" %in% names(data)) {
-      data$x <- (data$xmin + data$xmax) / 2
-      data$xmin <- NULL
-      data$xmax <- NULL
-    }
-
     # forward cannot be set to NA
     check_for_NAs("forward", data$forward, params$parent_geom)
+
+    # Standardise min and max
+    mins <- pmin(data$xmin, data$xmax)
+    maxs <- pmax(data$xmin, data$xmax)
+    data$xmin <- mins
+    data$xmax <- maxs
 
     data
   },
@@ -42,26 +40,22 @@ GeomAboveLabel <- ggplot2::ggproto(
 
     # Parent geom must be provided
     if (is.null(params$parent_geom)) {
-      cli::cli_abort("{.val parent_geom} param missing for {.fun {GeomAboveLabel}}") 
+      cli::cli_abort("{.val parent_geom} param missing for {.fun {GeomInsideLabel}}") 
     }
 
-    # Height should not be negative
-    if (as.numeric(params$height) < 0) {
-      cli::cli_abort("{.arg height} argument to {.fun {params$parent_geom}} cannot be negative") 
+    # label_height should not be negative
+    if (as.numeric(params$label_height) < 0) {
+      cli::cli_abort("{.arg label_height} argument to {.fun {params$parent_geom}} cannot be negative") 
     }
 
-    # Check that variant is valid, if it is provided, or set it to "default" if
-    # it is not
-    if (is.null(params$variant)) {
-      params$variant <- "default"
-    } else if (! params$variant %in% c("default", "reverse_above")) {
-      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun {params$parent_geom}}")
-    }
+    # place must be valid
+    check_arguments("place", params$place, c("centre", "left", "right"),
+                    params$parent_geom)
 
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, parent_geom, height, label_height, variant) {
+  draw_panel = function(data, panel_scales, coord, parent_geom, label_height, place) {
 
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
@@ -69,12 +63,11 @@ GeomAboveLabel <- ggplot2::ggproto(
 
     gt <- grid::gTree(
       data = data,
-      cl = "abovelabeltree",
+      cl = "insidelabeltree",
       parent_geom = parent_geom,
-      height = height,
       label_height = label_height,
       coord_system = coord_system,
-      variant = variant
+      place = place
     )
     gt$name <- grid::grobName(gt, parent_geom)
     gt
@@ -83,7 +76,7 @@ GeomAboveLabel <- ggplot2::ggproto(
 
 #' @importFrom grid makeContent
 #' @export
-makeContent.abovelabeltree <- function(x) {
+makeContent.insidelabeltree <- function(x) {
 
   data <- x$data
 
@@ -94,29 +87,11 @@ makeContent.abovelabeltree <- function(x) {
 
     # Set up geometry
     r <- ifelse(x$coord_system == "polar", label$away, NA)
-    awayness <- unit_to_alaw(x$height, "away", x$coord_system, r)
     label_awayness <- unit_to_alaw(x$label_height, "away", x$coord_system, r)
 
-    # Determine whether to position the label above or below the backbone
-    if (label$forward) {
-      away_sign <- 1
-
-    } else if (! label$forward) {
-
-      if (x$variant == "default") {
-        away_sign <- -1
-
-      } else if (x$variant == "reverse_above") {
-        away_sign <- 1
-      }
-    }
-
     # Set bounding box and place
-    label$along_min <- label$along - 0.5
-    label$along_max <- label$along + 0.5
-    label$away_min <- label$away + (awayness * away_sign)
-    label$away_max <- label$away + ((awayness + label_awayness) * away_sign)
-    align <- "centre"
+    label$away_min <- label$away - (label_awayness / 2)
+    label$away_max <- label$away + (label_awayness / 2)
 
     # Use ggfittext's fittexttree to draw text
     if (x$coord_system == "cartesian") {
@@ -128,9 +103,9 @@ makeContent.abovelabeltree <- function(x) {
 
       gt <- grid::gTree(
         data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
+        padding.x = grid::unit(1, "mm"),
+        padding.y = grid::unit(0.1, "mm"),
+        place = x$place,
         min.size = 0,
         grow = FALSE,
         reflow = FALSE,
@@ -147,9 +122,9 @@ makeContent.abovelabeltree <- function(x) {
 
       gt <- grid::gTree(
         data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
+        padding.x = grid::unit(1, "mm"),
+        padding.y = grid::unit(0.1, "mm"),
+        place = x$place,
         min.size = 0,
         grow = FALSE,
         reflow = FALSE,
@@ -166,9 +141,9 @@ makeContent.abovelabeltree <- function(x) {
 
       gt <- grid::gTree(
         data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
+        padding.x = grid::unit(1, "mm"),
+        padding.y = grid::unit(0.1, "mm"),
+        place = x$place,
         min.size = 0,
         grow = FALSE,
         reflow = FALSE,

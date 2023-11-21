@@ -1,4 +1,4 @@
-#' A 'ggplot' geom to add text labels to aptamers
+#' A 'ggplot2' geom to add text labels to aptamers
 #'
 #' `geom_aptamer_label()` adds text labels to aptamers drawn with
 #' `geom_aptamer()`.
@@ -35,7 +35,7 @@
 #'
 #' @examples
 #'
-#' ggplot2::ggplot(feature_garden[feature_garden$feature == "aptamer", ],
+#' ggplot2::ggplot(subset(feature_garden, feature == "aptamer"),
 #'                 ggplot2::aes(x = start, y = molecule, label = feature)) +
 #'   geom_aptamer(inherit.aes = TRUE) +
 #'   geom_aptamer_label(inherit.aes = TRUE)
@@ -56,6 +56,12 @@ geom_aptamer_label <- function(
   variant = "default",
   ...
 ) {
+
+  # Check variants
+  if (! variant %in% c("default", "reverse_above")) {
+    cli::cli_abort("Unrecognised value {.val {variant}} for {.arg variant} argument to {.fun geom_aptamer_label}")
+  }
+
   ggplot2::layer(
     data = data,
     mapping = mapping,

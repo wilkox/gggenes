@@ -9,7 +9,7 @@ geoms <- function() {
     ),
     geom_aptamer_label(
       data = subset(feature_garden, feature == "aptamer" & variant == "default"),
-      aes(x = start, y = molecule, label = paste0(feature, " ", variant),
+      aes(x = start, y = molecule, label = paste0(feature, ", ", variant),
           forward = forward)
     ),
     geom_aptamer(
@@ -21,7 +21,7 @@ geoms <- function() {
     geom_aptamer_label(
       data = subset(feature_garden, feature == "aptamer" & 
                     variant == "reverse_above"),
-      aes(x = start, y = molecule, label = paste0(feature, " ", variant),
+      aes(x = start, y = molecule, label = paste0(feature, ", ", variant),
           forward = forward),
       variant = "reverse_above"
     ),
@@ -50,7 +50,11 @@ geoms <- function() {
                     variant == "notched_arrow"),
       aes(xmin = start, xmax = end, y = molecule, forward = forward),
       variant = "notched_arrow"
-    )
+    ),
+    geom_CDS_label(
+      data = subset(feature_garden, feature == "CDS"),
+      aes(xmin = start, xmax = end, y = molecule, forward = forward, 
+          label = paste0(feature, ", ", variant)))
   )
 }
 

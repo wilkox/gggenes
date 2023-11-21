@@ -263,3 +263,24 @@ alaw_to_grid <- function(alongs, aways, coord_system, r = NULL) {
 #' Infix %||% operator, from rlang
 #' @noRd
 `%||%` <- function(x, y) if (is.null(x)) y else x
+
+#' Check arguments
+#' @noRd
+check_arguments <- function(
+  argument_name,
+  argument_value,
+  allowed_values,
+  parent_function
+) {
+  if (! argument_value %in% allowed_values) {
+    cli::cli_abort(c("Unrecognised value {.val {argument_value}} for argument {.arg {argument_name}} to function {.fun {parent_function}}", i = "Allowed values for {.arg {argument_name}}: {.val {allowed_values}}"), call = NULL)
+  }
+}
+
+#' Check for NAs
+#' @noRd
+check_for_NAs <- function(name, value, parent_function) {
+    if (any(is.na(value))) {
+      cli::cli_abort("NA values detected for {.val {name}} in function {.fun {parent_function}}")
+    }
+}

@@ -37,7 +37,7 @@
 #'
 #' @examples
 #'
-#' ggplot2::ggplot(feature_garden[feature_garden$feature == "CDS", ],
+#' ggplot2::ggplot(subset(feature_garden, feature == "CDS"),
 #'                 ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
 #'   geom_CDS(inherit.aes = TRUE)
 #'

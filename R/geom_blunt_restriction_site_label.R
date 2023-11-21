@@ -26,8 +26,10 @@
 #'
 #' @examples
 #'
-#' ggplot2::ggplot(feature_garden[feature_garden$feature == "blunt restriction site", ],
-#'                 ggplot2::aes(x = start, y = molecule, label = feature)) +
+#' ggplot2::ggplot(subset(feature_garden,
+#'                        feature == "blunt restriction site"),
+#'                 ggplot2::aes(x = start, y = molecule, 
+#'                              label = feature)) +
 #'   geom_blunt_restriction_site(inherit.aes = TRUE) +
 #'   geom_blunt_restriction_site_label(inherit.aes = TRUE)
 #'

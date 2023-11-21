@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom_aptamer_label.R
 \name{geom_aptamer_label}
 \alias{geom_aptamer_label}
-\title{A 'ggplot' geom to add text labels to aptamers}
+\title{A 'ggplot2' geom to add text labels to aptamers}
 \usage{
 geom_aptamer_label(
   mapping = NULL,
@@ -65,7 +65,7 @@ molecular backbone, as if the are on the forward strand
 
 \examples{
 
-ggplot2::ggplot(feature_garden[feature_garden$feature == "aptamer", ],
+ggplot2::ggplot(subset(feature_garden, feature == "aptamer"),
                 ggplot2::aes(x = start, y = molecule, label = feature)) +
   geom_aptamer(inherit.aes = TRUE) +
   geom_aptamer_label(inherit.aes = TRUE)
