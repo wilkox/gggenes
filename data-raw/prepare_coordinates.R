@@ -92,12 +92,44 @@ blunt_restriction_site_aways <- blunt_restriction_site_aways - 0.5
 ## Prepare indices
 blunt_restriction_site_indices <- c(rep(1L, 4), rep(2L, 4))
 
+# Chromosomal locus
+
+## Load raw chromosomal locus coordinates
+chromosomal_locus <- read_svg("glyphs-svg/chromosomal-locus.svg", obj_type = "data.frame")
+
+## Prepare alongs
+
+### Divide by 45, the x-width of the glyph drawing area, to standardise between
+### (0,1); this was determined by inspecting the 'viewBox' value in the source
+### SVG
+chromosomal_locus_alongs <- (chromosomal_locus$x - min(chromosomal_locus$x)) / 45
+
+### Shift to right edge of drawing area
+chromosomal_locus_alongs <- chromosomal_locus_alongs + (1 - max(chromosomal_locus_alongs))
+
+### Shift into negative coordinates
+chromosomal_locus_alongs <- chromosomal_locus_alongs - 1
+
+## Prepare aways
+
+### Divide by 45, the y-height of the glyph drawing area, to standardise
+### between (0,1); this was determined by inspecting the 'viewBox' value in the
+### source SVG
+chromosomal_locus_aways <- (chromosomal_locus$y - min(chromosomal_locus$y)) / 45
+
+### Invert y-axis
+chromosomal_locus_aways <- 1 - chromosomal_locus_aways
+
+### Shift into negative coordinates
+chromosomal_locus_aways <- chromosomal_locus_aways - 1
+
 # Store internal data
 usethis::use_data(
   aptamer_alongs, aptamer_aways,
   assembly_scar_alongs, assembly_scar_aways,
   blunt_restriction_site_alongs, blunt_restriction_site_aways, 
     blunt_restriction_site_indices,
+  chromosomal_locus_alongs, chromosomal_locus_aways,
   overwrite = TRUE,
   internal = TRUE
 )

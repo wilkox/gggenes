@@ -54,7 +54,24 @@ geoms <- function() {
     geom_CDS_label(
       data = subset(feature_garden, feature == "CDS"),
       aes(xmin = start, xmax = end, y = molecule, forward = forward, 
-          label = paste0(feature, ", ", variant)))
+          label = paste0(feature, ", ", variant))
+    ),
+    geom_chromosomal_locus(
+      data = subset(feature_garden, feature == "chromosomal locus" & 
+                    variant == "default"),
+      aes(xmin = start, xmax = end, y = molecule)
+    ),
+    geom_chromosomal_locus(
+      data = subset(feature_garden, feature == "chromosomal locus" & 
+                    variant == "left"),
+      aes(x = start, y = molecule),
+      variant = "left"
+    ),
+    geom_chromosomal_locus(
+      data = subset(feature_garden, feature == "chromosomal locus" & 
+                    variant == "right"),
+      aes(xmin = start, xmax = end, y = molecule)
+    )
   )
 }
 
