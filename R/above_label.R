@@ -54,7 +54,8 @@ GeomAboveLabel <- ggplot2::ggproto(
     # it is not
     if (is.null(params$variant)) {
       params$variant <- "default"
-    } else if (! params$variant %in% c("default", "reverse_above")) {
+    } else if (! params$variant %in% c("default", "reverse_above", 
+                                       "left", "right")) {
       cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun {params$parent_geom}}")
     }
 
@@ -112,11 +113,29 @@ makeContent.abovelabeltree <- function(x) {
     }
 
     # Set bounding box and place
-    label$along_min <- label$along - 0.5
-    label$along_max <- label$along + 0.5
+    if (x$variant == "left") {
+      label$along_min <- label$along - 0.5
+      label$along_max <- label$along
+      if (x$coord_system == "flip") {
+        align <- "top"
+      } else {
+        align <- "right"
+      }
+    } else if (x$variant == "right") {
+      label$along_min <- label$along
+      label$along_max <- label$along + 0.5
+      if (x$coord_system == "flip") {
+        align <- "bottom"
+      } else {
+        align <- "left"
+      }
+    } else {
+      label$along_min <- label$along - 0.5
+      label$along_max <- label$along + 0.5
+      align <- "centre"
+    }
     label$away_min <- label$away + (awayness * away_sign)
     label$away_max <- label$away + ((awayness + label_awayness) * away_sign)
-    align <- "centre"
 
     # Use ggfittext's fittexttree to draw text
     if (x$coord_system == "cartesian") {

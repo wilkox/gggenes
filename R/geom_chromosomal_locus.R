@@ -42,7 +42,7 @@
 #'                 ggplot2::aes(xmin = start, xmax = end, y = molecule)) +
 #'   geom_chromosomal_locus(inherit.aes = TRUE)
 #'
-#' @seealso [chromosomal_locus_label()]
+#' @seealso [geom_chromosomal_locus_label()]
 #'
 #' @export
 geom_chromosomal_locus <- function(

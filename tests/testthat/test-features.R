@@ -61,16 +61,37 @@ geoms <- function() {
                     variant == "default"),
       aes(xmin = start, xmax = end, y = molecule)
     ),
+    geom_chromosomal_locus_label(
+      data = subset(feature_garden, feature == "chromosomal locus" & 
+                    variant == "default"),
+      aes(xmin = start, xmax = end, y = molecule, 
+          label = paste0(feature, ", ", variant)),
+      variant = "centre"
+    ),
     geom_chromosomal_locus(
       data = subset(feature_garden, feature == "chromosomal locus" & 
                     variant == "left"),
       aes(x = start, y = molecule),
       variant = "left"
     ),
+    geom_chromosomal_locus_label(
+      data = subset(feature_garden, feature == "chromosomal locus" & 
+                    variant == "left"),
+      aes(x = start, y = molecule,
+          label = paste0(feature, ", ", variant)),
+      variant = "left"
+    ),
     geom_chromosomal_locus(
       data = subset(feature_garden, feature == "chromosomal locus" & 
                     variant == "right"),
       aes(xmin = start, xmax = end, y = molecule)
+    ),
+    geom_chromosomal_locus_label(
+      data = subset(feature_garden, feature == "chromosomal locus" & 
+                    variant == "right"),
+      aes(xmin = start, xmax = end, y = molecule,
+          label = paste0(feature, ", ", variant)),
+      variant = "right"
     )
   )
 }

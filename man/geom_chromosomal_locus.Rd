@@ -70,5 +70,5 @@ ggplot2::ggplot(subset(feature_garden, feature == "chromosomal locus" &
 
 }
 \seealso{
-\code{\link[=chromosomal_locus_label]{chromosomal_locus_label()}}
+\code{\link[=geom_chromosomal_locus_label]{geom_chromosomal_locus_label()}}
 }
