@@ -14,7 +14,7 @@ geom_circular_plasmid_label(
   inherit.aes = FALSE,
   height = unit(4, "mm"),
   label_height = unit(3, "mm"),
-  variant = "default",
+  place = "left",
   ...
 )
 }
@@ -28,8 +28,11 @@ molecular backbone. Defaults to 4 mm.}
 \item{label_height}{\code{grid::unit()} object giving the height of the label
 text. Defaults to 3 mm.}
 
-\item{variant}{Specify a variant form of the geom (see section Variant
-forms).}
+\item{place}{Where to place the label, one of left (default; over the left
+end of the locus, or the right end if there is no left), right (over the
+right end of the locus, or the left end if there is no right), or middle
+(centred over the locus if it has two ends, or over the end if it has one
+end)}
 }
 \description{
 \code{geom_circular_plasmid_label()} adds text labels to circular plasmid
@@ -40,17 +43,6 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics). For
 compatibility, the geom accepts the same combinations of \code{x} or
 \code{xmin}/\code{xmax} aesthetics.
 }
-\section{Variant forms}{
-
-\itemize{
-\item default: the default form, with the text label drawn on the left
-\item left: synonym for 'default'
-\item right: the text label is drawn on the right
-\item centre: the text label is centred between the left and right ends of the
-section (only valid when used with \code{xmin}/\code{xmax} aesthetics)
-}
-}
-
 \section{Aesthetics}{
 
 \itemize{

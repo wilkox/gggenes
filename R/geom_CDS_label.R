@@ -26,7 +26,8 @@
 #' - fontface
 #' - angle
 #'
-#' @param variant Specify a variant form of the geom (see section Variant forms).
+#' @param variant Specify a variant form of the geom (see section Variant
+#' forms).
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
 #' @param height `grid::unit()` object giving the height of the label above the
@@ -94,9 +95,6 @@ geom_CDS_label <- function(
   # Draw above and reverse_above labels
   if (variant %in% c("above", "reverse_above")) {
 
-    # Rename "above" to "default" for GeomAboveLabel
-    variant <- ifelse(variant == "above", "default", variant)
-
     return(ggplot2::layer(
       data = data,
       mapping = mapping,
@@ -108,9 +106,9 @@ geom_CDS_label <- function(
       params = list(
         na.rm = na.rm,
         parent_geom = "geom_CDS_label",
+        reverse_above = TRUE,
         height = height,
         label_height = label_height,
-        variant = variant,
         ...
       )
     ))

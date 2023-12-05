@@ -59,6 +59,8 @@ geom_assembly_scar_label <- function(
     params = list(
       na.rm = na.rm,
       parent_geom = "geom_assembly_scar_label",
+      place = "centre",
+      reverse_above = FALSE,
       height = height,
       label_height = label_height,
       ...

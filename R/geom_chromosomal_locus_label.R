@@ -7,14 +7,6 @@
 #' compatibility, the geom accepts the same combinations of `x` or
 #' `xmin`/`xmax` aesthetics.
 #'
-#' @section Variant forms:
-#'
-#' - default: the default form, with the text label drawn on the left
-#' - left: synonym for 'default'
-#' - right: the text label is drawn on the right
-#' - centre: the text label is centred between the left and right ends of the
-#' locus (only valid when used with `xmin`/`xmax` aesthetics)
-#'
 #' @section Aesthetics:
 #'
 #' - x or xmin,xmax (required; one or both ends of the locus)
@@ -27,10 +19,13 @@
 #' - fontface
 #' - angle
 #'
-#' @param variant Specify a variant form of the geom (see section Variant
-#' forms).
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
+#' @param place Where to place the label, one of left (default; over the left
+#' end of the locus, or the right end if there is no left), right (over the
+#' right end of the locus, or the left end if there is no right), or middle
+#' (centred over the locus if it has two ends, or over the end if it has one
+#' end)
 #' @param height `grid::unit()` object giving the height of the label above the
 #' molecular backbone. Defaults to 4 mm.
 #' @param label_height `grid::unit()` object giving the height of the label
@@ -58,17 +53,17 @@ geom_chromosomal_locus_label <- function(
   inherit.aes = FALSE,
   height = unit(4, "mm"),
   label_height = unit(3, "mm"),
-  variant = "default",
+  place = "left",
   ...
 ) {
 
-  # Check variants
-  if (! variant %in% c("default", "left", "right",
+  # Check place
+  if (! place %in% c("default", "left", "right",
                        "centre", "center", "middle")) {
-    cli::cli_abort("Unrecognised value {.val {variant}} for {.arg variant} argument to {.fun geom_chromosomal_locus_label}")
+    cli::cli_abort("Unrecognised value {.val {place}} for {.arg place} argument to {.fun geom_chromosomal_locus_label}")
   }
-  if (variant == "default") variant <- "left"
-  if (variant %in% c("center", "middle")) variant <- "centre"
+  if (place == "default") place <- "left"
+  if (place %in% c("center", "middle")) place <- "centre"
 
   ggplot2::layer(
     data = data,
@@ -82,7 +77,7 @@ geom_chromosomal_locus_label <- function(
       na.rm = na.rm,
       height = height,
       label_height = label_height,
-      variant = variant,
+      place = place,
       ...
     )
   )
@@ -115,20 +110,17 @@ GeomChromosomalLocusLabel <- ggplot2::ggproto(
 
   setup_data = function(data, params) {
 
-    # Set x according to the mapped aesthetics and variant
-    if (params$variant == "centre" & ! "xmin" %in% names(data)) {
-      cli::cli_abort("Cannot use {.val centre} variant without {.val xmin}/{.val xmax} aesthetics in {.fun geom_chromosomal_locus_label}") 
-    }
+    # Set x according to the mapped aesthetics and place
     if ("xmin" %in% names(data) & "xmax" %in% names(data)) {
-      if (params$variant %in% c("left", "default")) {
+      if (params$place == c("left")) {
         data$x <- data$xmin
         data$xmin <- NULL
         data$xmax <- NULL
-      } else if (params$variant == "right") {
+      } else if (params$place == "right") {
         data$x <- data$xmax
         data$xmin <- NULL
         data$xmax <- NULL
-      } else if (params$variant == "centre") {
+      } else if (params$place == "centre") {
         data$x <- (data$xmin + data$xmax) / 2
         data$xmin <- NULL
         data$xmax <- NULL
@@ -148,18 +140,11 @@ GeomChromosomalLocusLabel <- ggplot2::ggproto(
       cli::cli_abort("{.arg height} argument to {.fun geom_chromosomal_locus_label} cannot be negative") 
     }
 
-    # Check that variant is valid, if it is provided, or set it to "default" if
-    # it is not
-    if (is.null(params$variant)) {
-      params$variant <- "default"
-    } else if (! params$variant %in% c("default", "left", "right", "centre")) {
-      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun geom_chromosomal_locus_label}")
-    }
-
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, height, label_height, variant) {
+  draw_panel = function(data, panel_scales, coord, height, label_height, 
+                        place) {
 
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
@@ -170,12 +155,12 @@ GeomChromosomalLocusLabel <- ggplot2::ggproto(
       cl = "abovelabeltree",
       parent_geom = "geom_chromosomal_locus_label",
       height = height,
+      reverse_above = FALSE,
+      place = place,
       label_height = label_height,
-      coord_system = coord_system,
-      variant = variant
+      coord_system = coord_system
     )
     gt$name <- grid::grobName(gt, "geom_chromosomal_locus_label")
     gt
   }
 )
-

@@ -50,19 +50,11 @@ GeomAboveLabel <- ggplot2::ggproto(
       cli::cli_abort("{.arg height} argument to {.fun {params$parent_geom}} cannot be negative") 
     }
 
-    # Check that variant is valid, if it is provided, or set it to "default" if
-    # it is not
-    if (is.null(params$variant)) {
-      params$variant <- "default"
-    } else if (! params$variant %in% c("default", "reverse_above", 
-                                       "left", "right")) {
-      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun {params$parent_geom}}")
-    }
-
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, parent_geom, height, label_height, variant) {
+  draw_panel = function(data, panel_scales, coord, parent_geom, reverse_above, 
+                        height, label_height, place) {
 
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
@@ -72,10 +64,11 @@ GeomAboveLabel <- ggplot2::ggproto(
       data = data,
       cl = "abovelabeltree",
       parent_geom = parent_geom,
+      coord_system = coord_system,
+      reverse_above = reverse_above,
       height = height,
       label_height = label_height,
-      coord_system = coord_system,
-      variant = variant
+      place = place
     )
     gt$name <- grid::grobName(gt, parent_geom)
     gt
@@ -104,35 +97,35 @@ makeContent.abovelabeltree <- function(x) {
 
     } else if (! label$forward) {
 
-      if (x$variant == "default") {
+      if (! x$reverse_above) {
         away_sign <- -1
 
-      } else if (x$variant == "reverse_above") {
+      } else if (x$reverse_above) {
         away_sign <- 1
       }
     }
 
     # Set bounding box and place
-    if (x$variant == "left") {
+    if (x$place == "left") {
       label$along_min <- label$along - 0.5
       label$along_max <- label$along
       if (x$coord_system == "flip") {
-        align <- "top"
+        place <- "top"
       } else {
-        align <- "right"
+        place <- "right"
       }
-    } else if (x$variant == "right") {
+    } else if (x$place == "right") {
       label$along_min <- label$along
       label$along_max <- label$along + 0.5
       if (x$coord_system == "flip") {
-        align <- "bottom"
+        place <- "bottom"
       } else {
-        align <- "left"
+        place <- "left"
       }
     } else {
       label$along_min <- label$along - 0.5
       label$along_max <- label$along + 0.5
-      align <- "centre"
+      place <- "centre"
     }
     label$away_min <- label$away + (awayness * away_sign)
     label$away_max <- label$away + ((awayness + label_awayness) * away_sign)
@@ -149,7 +142,7 @@ makeContent.abovelabeltree <- function(x) {
         data = label,
         padding.x = grid::unit(0, "mm"),
         padding.y = grid::unit(0, "mm"),
-        place = align,
+        place = place,
         min.size = 0,
         grow = FALSE,
         reflow = FALSE,
@@ -168,7 +161,7 @@ makeContent.abovelabeltree <- function(x) {
         data = label,
         padding.x = grid::unit(0, "mm"),
         padding.y = grid::unit(0, "mm"),
-        place = align,
+        place = place,
         min.size = 0,
         grow = FALSE,
         reflow = FALSE,
@@ -187,7 +180,7 @@ makeContent.abovelabeltree <- function(x) {
         data = label,
         padding.x = grid::unit(0, "mm"),
         padding.y = grid::unit(0, "mm"),
-        place = align,
+        place = place,
         min.size = 0,
         grow = FALSE,
         reflow = FALSE,

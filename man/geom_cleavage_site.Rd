@@ -71,7 +71,7 @@ cleavage site is on the forward (default) or reverse strand.
 ggplot2::ggplot(subset(feature_garden, feature == "cleavage site" &
                        variant == "DNA"),
                 ggplot2::aes(x = start, y = molecule)) +
-  geom_aptamer(inherit.aes = TRUE)
+  geom_cleavage_site(inherit.aes = TRUE, target = "protein")
 
 }
 \seealso{

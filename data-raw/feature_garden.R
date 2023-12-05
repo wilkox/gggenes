@@ -18,9 +18,9 @@ feature_garden <- data.frame(rbind(
   c("circular plasmid", "left", "Genome1", 500, NA, NA),
   c("circular plasmid", "right", "Genome1", 500, 600, NA),
   c("cleavage site", "DNA", "Genome3", 100, NA, TRUE),
-  c("cleavage site", "DNA", "Genome3", 150, NA, FALSE),
-  c("cleavage site", "RNA", "Genome3", 200, NA, TRUE),
-  c("cleavage site", "protein", "Genome3", 250, NA, TRUE)
+  c("cleavage site", "DNA", "Genome3", 200, NA, FALSE),
+  c("cleavage site", "RNA", "Genome3", 300, NA, TRUE),
+  c("cleavage site", "protein", "Genome3", 400, NA, FALSE)
 ))
 
 colnames(feature_garden) <- c("feature", "variant", "molecule", "start", "end",

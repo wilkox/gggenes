@@ -142,7 +142,7 @@ makeContent.stemtoptree <- function(x) {
       top_aways <- c(0.5, -0.5, 0.5, -0.5)
       top_ids <- c(1, 1, 2, 2)
     } else {
-      cli::abort("Panic! This top not yet implemented")
+      cli::cli_abort("Panic! This top not yet implemented")
     }
 
     # If on the reverse strand, invert the top horizontally and/or vertically
@@ -173,7 +173,7 @@ makeContent.stemtoptree <- function(x) {
         aways <- segmented$rs
         top_ids <- segmented$ids
       } else {
-        cli::abort("Panic! Don't know how to segment this type of top")
+        cli::cli_abort("Panic! Don't know how to segment this type of top")
       }
     }
 
@@ -196,7 +196,7 @@ makeContent.stemtoptree <- function(x) {
       )
 
     } else {
-        cli::abort("Panic! Don't know what grob to draw for this type of top")
+        cli::cli_abort("Panic! Don't know what grob to draw for this type of top")
     }
 
     # Return the grob

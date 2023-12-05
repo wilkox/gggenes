@@ -5,6 +5,7 @@ GenBank
 Labelling
 Lifecycle
 README
+RNAse
 SBOL
 aes
 aptamer
@@ -33,6 +34,7 @@ plasmid
 polynucleotide
 polypeptide
 pre
+protease
 reflowed
 reflowing
 reflows

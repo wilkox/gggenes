@@ -23,7 +23,7 @@ geoms <- function() {
                     variant == "reverse_above"),
       aes(x = start, y = molecule, label = paste0(feature, ", ", variant),
           forward = forward),
-      variant = "reverse_above"
+      reverse_above = TRUE
     ),
     geom_assembly_scar(
       data = subset(feature_garden, feature == "assembly scar"),
@@ -66,7 +66,7 @@ geoms <- function() {
                     variant == "default"),
       aes(xmin = start, xmax = end, y = molecule, 
           label = paste0(feature, ", ", variant)),
-      variant = "centre"
+      place = "centre"
     ),
     geom_chromosomal_locus(
       data = subset(feature_garden, feature == "chromosomal locus" & 
@@ -79,7 +79,7 @@ geoms <- function() {
                     variant == "left"),
       aes(x = start, y = molecule,
           label = paste0(feature, ", ", variant)),
-      variant = "left"
+      place = "left"
     ),
     geom_chromosomal_locus(
       data = subset(feature_garden, feature == "chromosomal locus" & 
@@ -91,7 +91,7 @@ geoms <- function() {
                     variant == "right"),
       aes(xmin = start, xmax = end, y = molecule,
           label = paste0(feature, ", ", variant)),
-      variant = "right"
+      place = "right"
     ),
     geom_circular_plasmid(
       data = subset(feature_garden, feature == "circular plasmid" & 
@@ -103,7 +103,7 @@ geoms <- function() {
                     variant == "default"),
       aes(xmin = start, xmax = end, y = molecule,
           label = paste0(feature, ", ", variant)),
-      variant = "centre", height = grid::unit(8, "mm")
+      place = "centre", height = grid::unit(8, "mm")
     ),
     geom_circular_plasmid(
       data = subset(feature_garden, feature == "circular plasmid" & 
@@ -115,7 +115,7 @@ geoms <- function() {
                     variant == "left"),
       aes(x = start, y = molecule,
           label = paste0(feature, ", ", variant)),
-      variant = "left", height = grid::unit(8, "mm")
+      place = "left", height = grid::unit(8, "mm")
     ),
     geom_circular_plasmid(
       data = subset(feature_garden, feature == "circular plasmid" & 
@@ -127,12 +127,18 @@ geoms <- function() {
                     variant == "right"),
       aes(xmin = start, xmax = end, y = molecule,
           label = paste0(feature, ", ", variant)),
-      variant = "right", height = grid::unit(8, "mm")
+      place = "right", height = grid::unit(8, "mm")
     ),
     geom_cleavage_site(
       data = subset(feature_garden, feature == "cleavage site" & 
                     variant == "DNA"),
       aes(x = start, y = molecule, forward = forward)
+    ),
+    geom_cleavage_site_label(
+      data = subset(feature_garden, feature == "cleavage site" & 
+                    variant == "DNA"),
+      aes(x = start, y = molecule, forward = forward,
+          label = paste0(feature, ", ", variant))
     ),
     geom_cleavage_site(
       data = subset(feature_garden, feature == "cleavage site" & 
@@ -140,11 +146,23 @@ geoms <- function() {
       aes(x = start, y = molecule, forward = forward),
       target = "RNA"
     ),
+    geom_cleavage_site_label(
+      data = subset(feature_garden, feature == "cleavage site" & 
+                    variant == "RNA"),
+      aes(x = start, y = molecule, forward = forward,
+          label = paste0(feature, ", ", variant))
+    ),
     geom_cleavage_site(
       data = subset(feature_garden, feature == "cleavage site" & 
                     variant == "protein"),
       aes(x = start, y = molecule, forward = forward),
       target = "protein"
+    ),
+    geom_cleavage_site_label(
+      data = subset(feature_garden, feature == "cleavage site" & 
+                    variant == "protein"),
+      aes(x = start, y = molecule, forward = forward,
+          label = paste0(feature, ", ", variant))
     )
   )
 }

@@ -30,7 +30,8 @@ forms. Defaults to 4 mm.}
 \item{label_height}{\code{grid::unit()} object giving the height of the label
 text. Defaults to 3 mm.}
 
-\item{variant}{Specify a variant form of the geom (see section Variant forms).}
+\item{variant}{Specify a variant form of the geom (see section Variant
+forms).}
 
 \item{align}{Where inside the gene to place the text label. Default is
 'centre'; other options are 'left' and 'right'.}
