@@ -4,15 +4,6 @@
 #'
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 #'
-#' @section Variant forms:
-#'
-#' - default: the default form, where the label is drawn inside the CDS geom
-#' - above: labels are drawn outside of the CDS geom, above the molecular
-#' backbone for CDSs on the forward strand and below it for CDSs on the reverse
-#' strand
-#' - reverse_above: labels for CDSs on the reverse strand will be drawn above
-#' the molecular backbone, as if they are on the forward strand
-#'
 #' @section Aesthetics:
 #'
 #' - xmin,xmax (required; start and end positions of the CDS)
@@ -26,17 +17,21 @@
 #' - fontface
 #' - angle
 #'
-#' @param variant Specify a variant form of the geom (see section Variant
-#' forms).
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
+#' @param place Where to draw the label, either 'inside' the CDS geom (the
+#' default) or 'outside' (above the molecular backbone for CDSs on the forward
+#' strand, and below it for CDSs on the reverse strand)
+#' @param align How the text label should be aligned relative to the ends of
+#' the CDS. Default is 'centre'; other options are 'left' and 'right'.
+#' @param reverse_above If TRUE, and if place is 'outside', labels for CDSs on
+#' the reverse strand will be drawn above the molecular backbone, as if they
+#' are on the forward strand (FALSE by default)
 #' @param height `grid::unit()` object giving the height of the label above the
-#' molecular backbone, if drawn with the 'above' or 'reverse_above' variant
+#' molecular backbone, if place is 'outside'
 #' forms. Defaults to 4 mm.
 #' @param label_height `grid::unit()` object giving the height of the label
 #' text. Defaults to 3 mm.
-#' @param align Where inside the gene to place the text label. Default is
-#' 'centre'; other options are 'left' and 'right'.
 #'
 #' @examples
 #'
@@ -58,22 +53,23 @@ geom_CDS_label <- function(
   na.rm = FALSE,
   show.legend = FALSE,
   inherit.aes = FALSE,
+  place = "inside",
+  reverse_above = FALSE,
   height = grid::unit(4, "mm"),
   label_height = grid::unit(3, "mm"),
-  variant = "default",
   align = "centre",
   ...
 ) {
 
   # Check arguments
-  check_arguments("variant", variant, c("default", "above", "reverse_above"),
+  check_arguments("place", place, c("inside", "outside"),
                   "geom_CDS_label")
   check_arguments("align", align, c("centre", "center", "middle", "left",
                                     "right"), "geom_CDS_label")
   if (align %in% c("center", "middle")) align <- "centre"
 
   # Draw default labels
-  if (variant == "default") {
+  if (place == "inside") {
     return(ggplot2::layer(
       data = data,
       mapping = mapping,
@@ -92,8 +88,8 @@ geom_CDS_label <- function(
     ))
   }
 
-  # Draw above and reverse_above labels
-  if (variant %in% c("above", "reverse_above")) {
+  # Draw outside labels
+  if (place == "outside") {
 
     return(ggplot2::layer(
       data = data,
@@ -106,7 +102,7 @@ geom_CDS_label <- function(
       params = list(
         na.rm = na.rm,
         parent_geom = "geom_CDS_label",
-        reverse_above = TRUE,
+        reverse_above = reverse_above,
         height = height,
         label_height = label_height,
         ...

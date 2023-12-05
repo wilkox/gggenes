@@ -12,7 +12,7 @@ geom_circular_plasmid(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
-  variant = "default",
+  place = "default",
   ...
 )
 }
@@ -20,8 +20,11 @@ geom_circular_plasmid(
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2. inherit.aes is set to FALSE by default.}
 
-\item{variant}{Specify a variant form of the geom (see section Variant
-forms).}
+\item{place}{If 'default' (the default), a pair of 'left' and 'right' curves
+(if \code{xmin}/\code{xmax} are mapped) or a single 'left' curve (if \code{x} is mapped).
+If 'left', a single 'left' curve, with the location set by either \code{xmin} or
+\code{x}. If 'right', a single 'right' curve, with the location set by either
+\code{xmax} or \code{x}.}
 }
 \description{
 \code{geom_circular_plasmid()} draws a geom indicating that the section of
@@ -33,20 +36,9 @@ backbone.
 
 By default, the geom comprises a pair of 'left' and 'right' curves, with the
 \code{xmin} and \code{xmax} aesthetics used to set their positions. A single 'left' or
-'right' curve can be drawn by selecting the 'left' or 'right' variant forms,
-and/or setting the \code{x} aesthetic instead of \code{xmin}/\code{xmax}.
+'right' curve can be drawn by selecting the 'left' or 'right' place, and/or
+setting the \code{x} aesthetic instead of \code{xmin}/\code{xmax}.
 }
-\section{Variant forms}{
-
-\itemize{
-\item default: the default form, a pair of 'left' and 'right' curves (if
-\code{xmin}/\code{xmax} are mapped) or a single 'left' curve (if \code{x} is mapped)
-\item left: a single 'left' curve, with the location set by either \code{xmin} or \code{x}
-\item right: a single 'right' curve, with the location set by either \code{xmax} or
-\code{x}
-}
-}
-
 \section{Aesthetics}{
 
 \itemize{

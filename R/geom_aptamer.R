@@ -11,12 +11,6 @@
 #' `y` aesthetic. The `forward` aesthetic can be used to set whether the
 #' aptamer is on the forward (default) or reverse strand.
 #'
-#' @section Variant forms:
-#'
-#' - default: the default form
-#' - reverse_above: aptamers on the reverse strand will be drawn above the
-#' molecular backbone, but will still be flipped horizontally
-#'
 #' @section Aesthetics:
 #'
 #' - x (required; position of the aptamer)
@@ -30,11 +24,12 @@
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
+#' @param reverse_above If TRUE, aptamers on the reverse strand will be drawn
+#' above the molecular backbone, but will still be flipped horizontally. FALSE
+#' by default
 #' @param height `grid::unit()` object giving the height of the aptamer above
 #' the molecular backbone. Defaults to 5 mm. The aspect ratio of the aptamer is
 #' fixed, so the width of the geom will be equal to the height.
-#' @param variant Specify a variant form of the geom (see section Variant
-#' forms).
 #'
 #' @examples
 #'
@@ -53,8 +48,8 @@ geom_aptamer <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
+  reverse_above = FALSE,
   height = grid::unit(5, "mm"),
-  variant = "default",
   ...
 ) {
   ggplot2::layer(
@@ -67,8 +62,8 @@ geom_aptamer <- function(
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
+      reverse_above = reverse_above,
       height = height,
-      variant = variant,
       ...
     ) 
   )
@@ -100,15 +95,10 @@ GeomAptamer <- ggplot2::ggproto("GeomAptamer", ggplot2::Geom,
       cli::cli_abort("{.arg height} argument to {.fun geom_aptamer} cannot be negative") 
     }
 
-    # Check that variant is valid
-    if (! params$variant %in% c("default", "reverse_above")) {
-      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun geom_aptamer}")
-    }
-
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, height, variant) {
+  draw_panel = function(data, panel_scales, coord, height, reverse_above) {
 
     # Detect coordinate system and transform values
     coord_system <- get_coord_system(coord)
@@ -118,7 +108,7 @@ GeomAptamer <- ggplot2::ggproto("GeomAptamer", ggplot2::Geom,
       data = data,
       cl = "aptamertree",
       height = height,
-      variant = variant,
+      reverse_above = reverse_above,
       coord_system = coord_system
     )
     gt$name <- grid::grobName(gt, "geom_aptamer")
@@ -143,14 +133,14 @@ makeContent.aptamertree <- function(x) {
     alongness <- unit_to_alaw(x$height, "along", x$coord_system, r)
 
     # If on the reverse strand, invert the glyph horizontally and/or vertically
-    # as appropriate for the variant
+    # as appropriate
     if (! aptamer$forward) {
 
-      if (x$variant == "default") {
+      if (! x$reverse_above) {
         aptamer_alongs <- 0 - aptamer_alongs
         aptamer_aways <- 0 - aptamer_aways
 
-      } else if (x$variant == "reverse_above") {
+      } else if (x$reverse_above) {
         aptamer_alongs <- 0 - aptamer_alongs
       }
     }

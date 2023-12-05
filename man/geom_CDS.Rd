@@ -12,8 +12,8 @@ geom_CDS(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
+  notched_arrow = FALSE,
   height = grid::unit(5, "mm"),
-  variant = "default",
   ...
 )
 }
@@ -21,11 +21,11 @@ geom_CDS(
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2. inherit.aes is set to FALSE by default.}
 
+\item{notched_arrow}{If TRUE, the CDS is drawn as a 'notched' rather than
+'box' arrow (FALSE by default)}
+
 \item{height}{\code{grid::unit()} opbject giving the height of the CDS above
 the molecular backbone. Defaults to 5 mm.}
-
-\item{variant}{Specify a variant form of the geom (see section Variant
-forms).}
 }
 \description{
 \code{geom_CDS()} draws a geom representing a coding sequence, a nucleotide
@@ -41,14 +41,6 @@ with the \code{y} aesthetic. The \code{forward} aesthetic can be used to set whe
 the CDS is on the forward (default) or reverse strand. If \code{forward} is not
 set, this will be inferred from the values of \code{xmin} and \code{xmax}.
 }
-\section{Variant forms}{
-
-\itemize{
-\item default: the default form
-\item notched_arrow: the CDS is drawn as a 'notched' rather than 'box' arrow
-}
-}
-
 \section{Aesthetics}{
 
 \itemize{

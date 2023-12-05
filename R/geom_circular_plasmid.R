@@ -8,16 +8,8 @@
 #'
 #' By default, the geom comprises a pair of 'left' and 'right' curves, with the
 #' `xmin` and `xmax` aesthetics used to set their positions. A single 'left' or
-#' 'right' curve can be drawn by selecting the 'left' or 'right' variant forms,
-#' and/or setting the `x` aesthetic instead of `xmin`/`xmax`.
-#'
-#' @section Variant forms:
-#'
-#' - default: the default form, a pair of 'left' and 'right' curves (if
-#' `xmin`/`xmax` are mapped) or a single 'left' curve (if `x` is mapped)
-#' - left: a single 'left' curve, with the location set by either `xmin` or `x`
-#' - right: a single 'right' curve, with the location set by either `xmax` or
-#' `x`
+#' 'right' curve can be drawn by selecting the 'left' or 'right' place, and/or
+#' setting the `x` aesthetic instead of `xmin`/`xmax`.
 #'
 #' @section Aesthetics:
 #'
@@ -31,8 +23,11 @@
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
-#' @param variant Specify a variant form of the geom (see section Variant
-#' forms).
+#' @param place If 'default' (the default), a pair of 'left' and 'right' curves
+#' (if `xmin`/`xmax` are mapped) or a single 'left' curve (if `x` is mapped).
+#' If 'left', a single 'left' curve, with the location set by either `xmin` or
+#' `x`. If 'right', a single 'right' curve, with the location set by either
+#' `xmax` or `x`.
 #'
 #' @examples
 #'
@@ -52,7 +47,7 @@ geom_circular_plasmid <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
-  variant = "default",
+  place = "default",
   ...
 ) {
   ggplot2::layer(
@@ -65,7 +60,7 @@ geom_circular_plasmid <- function(
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
-      variant = variant,
+      place = place,
       ...
     ) 
   )
@@ -102,15 +97,15 @@ GeomCircularPlasmid <- ggplot2::ggproto("GeomCircularPlasmid",
 
   setup_params = function(data, params) {
 
-    # Check that variant is valid
-    if (! params$variant %in% c("default", "left")) {
-      cli::cli_abort("{.val {params$variant}} is not a valid value for {.arg variant} in {.fun geom_circular_plasmid}")
+    # Check that place is valid
+    if (! params$place %in% c("default", "left", "right")) {
+      cli::cli_abort("{.val {params$place}} is not a valid value for {.arg place} in {.fun geom_circular_plasmid}")
     }
 
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, variant) {
+  draw_panel = function(data, panel_scales, coord, place) {
 
     # Detect coordinate system and transform values
     coord_system <- get_coord_system(coord)
@@ -119,7 +114,7 @@ GeomCircularPlasmid <- ggplot2::ggproto("GeomCircularPlasmid",
     gt <- grid::gTree(
       data = data,
       cl = "circularplasmidtree",
-      variant = variant,
+      place = place,
       coord_system = coord_system
     )
     gt$name <- grid::grobName(gt, "geom_circular_plasmid")
@@ -149,8 +144,9 @@ makeContent.circularplasmidtree <- function(x) {
     alongs <- numeric(0)
     aways <- numeric(0)
     ids <- numeric(0)
+
     ## Pair of curves
-    if (x$variant == "default" & "along_min" %in% names(circular_plasmid)) {
+    if (x$place == "default" & "along_min" %in% names(circular_plasmid)) {
 
       # Left
       alongs_left <- circular_plasmid$along_min + 
@@ -169,8 +165,8 @@ makeContent.circularplasmidtree <- function(x) {
       ids <- c(rep(1, length(alongs_left)), rep(2, length(alongs_right)))
 
     ## Left curve
-    } else if ((x$variant == "default" & 
-                "along" %in% names(circular_plasmid)) | x$variant == "left") {
+    } else if ((x$place == "default" & 
+                "along" %in% names(circular_plasmid)) | x$place == "left") {
 
       along <- ifelse(
         "along" %in% names(circular_plasmid),
@@ -183,7 +179,7 @@ makeContent.circularplasmidtree <- function(x) {
       ids <- rep(1, length(alongs))
 
     ## Right curve
-    } else if (x$variant == "right") {
+    } else if (x$place == "right") {
 
       along <- ifelse(
         "along" %in% names(circular_plasmid),

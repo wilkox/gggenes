@@ -12,8 +12,8 @@ geom_aptamer(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
+  reverse_above = FALSE,
   height = grid::unit(5, "mm"),
-  variant = "default",
   ...
 )
 }
@@ -21,12 +21,13 @@ geom_aptamer(
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2. inherit.aes is set to FALSE by default.}
 
+\item{reverse_above}{If TRUE, aptamers on the reverse strand will be drawn
+above the molecular backbone, but will still be flipped horizontally. FALSE
+by default}
+
 \item{height}{\code{grid::unit()} object giving the height of the aptamer above
 the molecular backbone. Defaults to 5 mm. The aspect ratio of the aptamer is
 fixed, so the width of the geom will be equal to the height.}
-
-\item{variant}{Specify a variant form of the geom (see section Variant
-forms).}
 }
 \description{
 \code{geom_aptamer()} draws a geom representing an aptamer, a short
@@ -41,15 +42,6 @@ aesthetic. The molecular backbone that it is associated with is set with the
 \code{y} aesthetic. The \code{forward} aesthetic can be used to set whether the
 aptamer is on the forward (default) or reverse strand.
 }
-\section{Variant forms}{
-
-\itemize{
-\item default: the default form
-\item reverse_above: aptamers on the reverse strand will be drawn above the
-molecular backbone, but will still be flipped horizontally
-}
-}
-
 \section{Aesthetics}{
 
 \itemize{

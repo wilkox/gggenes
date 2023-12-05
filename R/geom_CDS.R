@@ -12,11 +12,6 @@
 #' the CDS is on the forward (default) or reverse strand. If `forward` is not
 #' set, this will be inferred from the values of `xmin` and `xmax`.
 #'
-#' @section Variant forms:
-#'
-#' - default: the default form
-#' - notched_arrow: the CDS is drawn as a 'notched' rather than 'box' arrow
-#'
 #' @section Aesthetics:
 #'
 #' - xmin,xmax (required; start and end positions of the CDS)
@@ -28,10 +23,10 @@
 #' - size
 #' - fill
 #'
-#' @param variant Specify a variant form of the geom (see section Variant
-#' forms).
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
+#' @param notched_arrow If TRUE, the CDS is drawn as a 'notched' rather than
+#' 'box' arrow (FALSE by default)
 #' @param height `grid::unit()` opbject giving the height of the CDS above
 #' the molecular backbone. Defaults to 5 mm.
 #'
@@ -52,20 +47,15 @@ geom_CDS <- function(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = FALSE,
+  notched_arrow = FALSE,
   height = grid::unit(5, "mm"),
-  variant = "default",
   ...
 ) {
-
-  # Check variants
-  if (! variant %in% c("default", "notched_arrow")) {
-    cli::cli_abort("Unrecognised value {.val {variant}} for {.arg variant} argument to {.fun geom_CDS}")
-  }
 
   # Set up geometry
   arrowhead_height <- height
   arrowhead_width <- grid::unit(2, "mm")
-  if (variant == "notched_arrow") {
+  if (notched_arrow) {
     arrow_body_height <- height - grid::unit(1, "mm")
   } else {
     arrow_body_height <- height

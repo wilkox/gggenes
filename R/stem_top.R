@@ -84,7 +84,7 @@ makeContent.stemtoptree <- function(x) {
     }
 
     # If on the reverse strand, invert the stem horizontally and/or vertically
-    # as appropriate for the variant
+    # as appropriate
     if (! stem$forward) {
 
       if (! x$reverse_above) {
@@ -146,7 +146,7 @@ makeContent.stemtoptree <- function(x) {
     }
 
     # If on the reverse strand, invert the top horizontally and/or vertically
-    # as appropriate for the variant
+    # as appropriate
     if (! top$forward) {
 
       if (! x$reverse_above) {

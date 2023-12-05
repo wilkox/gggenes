@@ -16,7 +16,7 @@ geoms <- function() {
       data = subset(feature_garden, feature == "aptamer" & 
                     variant == "reverse_above"),
       aes(x = start, y = molecule, forward = forward),
-      variant = "reverse_above"
+      reverse_above = TRUE
     ),
     geom_aptamer_label(
       data = subset(feature_garden, feature == "aptamer" & 
@@ -49,7 +49,7 @@ geoms <- function() {
       data = subset(feature_garden, feature == "CDS" & 
                     variant == "notched_arrow"),
       aes(xmin = start, xmax = end, y = molecule, forward = forward),
-      variant = "notched_arrow"
+      notched_arrow = TRUE
     ),
     geom_CDS_label(
       data = subset(feature_garden, feature == "CDS"),
@@ -72,7 +72,7 @@ geoms <- function() {
       data = subset(feature_garden, feature == "chromosomal locus" & 
                     variant == "left"),
       aes(x = start, y = molecule),
-      variant = "left"
+      place = "left"
     ),
     geom_chromosomal_locus_label(
       data = subset(feature_garden, feature == "chromosomal locus" & 

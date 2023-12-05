@@ -12,9 +12,10 @@ geom_CDS_label(
   na.rm = FALSE,
   show.legend = FALSE,
   inherit.aes = FALSE,
+  place = "inside",
+  reverse_above = FALSE,
   height = grid::unit(4, "mm"),
   label_height = grid::unit(3, "mm"),
-  variant = "default",
   align = "centre",
   ...
 )
@@ -23,18 +24,23 @@ geom_CDS_label(
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2. inherit.aes is set to FALSE by default.}
 
+\item{place}{Where to draw the label, either 'inside' the CDS geom (the
+default) or 'outside' (above the molecular backbone for CDSs on the forward
+strand, and below it for CDSs on the reverse strand)}
+
+\item{reverse_above}{If TRUE, and if place is 'outside', labels for CDSs on
+the reverse strand will be drawn above the molecular backbone, as if they
+are on the forward strand (FALSE by default)}
+
 \item{height}{\code{grid::unit()} object giving the height of the label above the
-molecular backbone, if drawn with the 'above' or 'reverse_above' variant
+molecular backbone, if place is 'outside'
 forms. Defaults to 4 mm.}
 
 \item{label_height}{\code{grid::unit()} object giving the height of the label
 text. Defaults to 3 mm.}
 
-\item{variant}{Specify a variant form of the geom (see section Variant
-forms).}
-
-\item{align}{Where inside the gene to place the text label. Default is
-'centre'; other options are 'left' and 'right'.}
+\item{align}{How the text label should be aligned relative to the ends of
+the CDS. Default is 'centre'; other options are 'left' and 'right'.}
 }
 \description{
 \code{geom_CDS_label()} adds text labels to CDSs drawn with \code{geom_CDS()}.
@@ -42,18 +48,6 @@ forms).}
 \details{
 Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 }
-\section{Variant forms}{
-
-\itemize{
-\item default: the default form, where the label is drawn inside the CDS geom
-\item above: labels are drawn outside of the CDS geom, above the molecular
-backbone for CDSs on the forward strand and below it for CDSs on the reverse
-strand
-\item reverse_above: labels for CDSs on the reverse strand will be drawn above
-the molecular backbone, as if they are on the forward strand
-}
-}
-
 \section{Aesthetics}{
 
 \itemize{
