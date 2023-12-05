@@ -92,6 +92,42 @@ geoms <- function() {
       aes(xmin = start, xmax = end, y = molecule,
           label = paste0(feature, ", ", variant)),
       variant = "right"
+    ),
+    geom_circular_plasmid(
+      data = subset(feature_garden, feature == "circular plasmid" & 
+                    variant == "default"),
+      aes(xmin = start, xmax = end, y = molecule)
+    ),
+    geom_circular_plasmid_label(
+      data = subset(feature_garden, feature == "circular plasmid" & 
+                    variant == "default"),
+      aes(xmin = start, xmax = end, y = molecule,
+          label = paste0(feature, ", ", variant)),
+      variant = "centre", height = grid::unit(8, "mm")
+    ),
+    geom_circular_plasmid(
+      data = subset(feature_garden, feature == "circular plasmid" & 
+                    variant == "left"),
+      aes(x = start, y = molecule)
+    ),
+    geom_circular_plasmid_label(
+      data = subset(feature_garden, feature == "circular plasmid" & 
+                    variant == "left"),
+      aes(x = start, y = molecule,
+          label = paste0(feature, ", ", variant)),
+      variant = "left", height = grid::unit(8, "mm")
+    ),
+    geom_circular_plasmid(
+      data = subset(feature_garden, feature == "circular plasmid" & 
+                    variant == "right"),
+      aes(xmin = start, xmax = end, y = molecule)
+    ),
+    geom_circular_plasmid_label(
+      data = subset(feature_garden, feature == "circular plasmid" & 
+                    variant == "right"),
+      aes(xmin = start, xmax = end, y = molecule,
+          label = paste0(feature, ", ", variant)),
+      variant = "right", height = grid::unit(8, "mm")
     )
   )
 }

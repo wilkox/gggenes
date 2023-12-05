@@ -123,6 +123,37 @@ chromosomal_locus_aways <- 1 - chromosomal_locus_aways
 ### Shift into negative coordinates
 chromosomal_locus_aways <- chromosomal_locus_aways - 1
 
+# Chromosomal locus
+
+## Load raw chromosomal locus coordinates
+circular_plasmid <- read_svg("glyphs-svg/circular-plasmid.svg", obj_type = "data.frame")
+
+## Prepare alongs
+
+### Divide by 45, the x-width of the glyph drawing area, to standardise between
+### (0,1); this was determined by inspecting the 'viewBox' value in the source
+### SVG
+circular_plasmid_alongs <- (circular_plasmid$x - min(circular_plasmid$x)) / 45
+
+### Shift to right edge of drawing area
+circular_plasmid_alongs <- circular_plasmid_alongs + (1 - max(circular_plasmid_alongs))
+
+### Shift into negative coordinates
+circular_plasmid_alongs <- circular_plasmid_alongs - 1
+
+## Prepare aways
+
+### Divide by 45, the y-height of the glyph drawing area, to standardise
+### between (0,1); this was determined by inspecting the 'viewBox' value in the
+### source SVG
+circular_plasmid_aways <- (circular_plasmid$y - min(circular_plasmid$y)) / 45
+
+### Invert y-axis
+circular_plasmid_aways <- 1 - circular_plasmid_aways
+
+### Shift into negative coordinates
+circular_plasmid_aways <- circular_plasmid_aways - 1
+
 # Store internal data
 usethis::use_data(
   aptamer_alongs, aptamer_aways,
@@ -130,6 +161,7 @@ usethis::use_data(
   blunt_restriction_site_alongs, blunt_restriction_site_aways, 
     blunt_restriction_site_indices,
   chromosomal_locus_alongs, chromosomal_locus_aways,
+  circular_plasmid_alongs, circular_plasmid_aways,
   overwrite = TRUE,
   internal = TRUE
 )

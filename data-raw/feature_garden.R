@@ -13,7 +13,10 @@ feature_garden <- data.frame(rbind(
   c("CDS", "notched_arrow", "Genome2", 750, 650, TRUE),
   c("chromosomal locus", "default", "Genome2", 50, 400, NA),
   c("chromosomal locus", "left", "Genome2", 550, NA, NA),
-  c("chromosomal locus", "right", "Genome2", 550, 750, NA)
+  c("chromosomal locus", "right", "Genome2", 550, 750, NA),
+  c("circular plasmid", "default", "Genome1", 50, 300, NA),
+  c("circular plasmid", "left", "Genome1", 500, NA, NA),
+  c("circular plasmid", "right", "Genome1", 500, 600, NA)
 ))
 
 colnames(feature_garden) <- c("feature", "variant", "molecule", "start", "end",
