@@ -21,7 +21,7 @@ geom_aptamer(
 \item{mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...}{As
 standard for ggplot2. inherit.aes is set to FALSE by default.}
 
-\item{height}{\code{grid::unit()} opbject giving the height of the aptamer above
+\item{height}{\code{grid::unit()} object giving the height of the aptamer above
 the molecular backbone. Defaults to 5 mm. The aspect ratio of the aptamer is
 fixed, so the width of the geom will be equal to the height.}
 

@@ -128,6 +128,23 @@ geoms <- function() {
       aes(xmin = start, xmax = end, y = molecule,
           label = paste0(feature, ", ", variant)),
       variant = "right", height = grid::unit(8, "mm")
+    ),
+    geom_cleavage_site(
+      data = subset(feature_garden, feature == "cleavage site" & 
+                    variant == "DNA"),
+      aes(x = start, y = molecule, forward = forward)
+    ),
+    geom_cleavage_site(
+      data = subset(feature_garden, feature == "cleavage site" & 
+                    variant == "RNA"),
+      aes(x = start, y = molecule, forward = forward),
+      target = "RNA"
+    ),
+    geom_cleavage_site(
+      data = subset(feature_garden, feature == "cleavage site" & 
+                    variant == "protein"),
+      aes(x = start, y = molecule, forward = forward),
+      target = "protein"
     )
   )
 }

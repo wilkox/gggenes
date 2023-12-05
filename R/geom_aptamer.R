@@ -30,7 +30,7 @@
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
-#' @param height `grid::unit()` opbject giving the height of the aptamer above
+#' @param height `grid::unit()` object giving the height of the aptamer above
 #' the molecular backbone. Defaults to 5 mm. The aspect ratio of the aptamer is
 #' fixed, so the width of the geom will be equal to the height.
 #' @param variant Specify a variant form of the geom (see section Variant

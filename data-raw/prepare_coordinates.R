@@ -154,6 +154,38 @@ circular_plasmid_aways <- 1 - circular_plasmid_aways
 ### Shift into negative coordinates
 circular_plasmid_aways <- circular_plasmid_aways - 1
 
+# RNA stem
+
+## Load raw RNA stem coordinates
+RNA_stem <- read_svg("./glyphs-svg/location-rna-no-top.svg", 
+                          obj_type = "data.frame")[32:124, ]
+
+## Prepare alongs and aways, scaling the glyph so it fits vertically between
+## (0,1)
+RNA_stem_alongs <- RNA_stem$x / 45
+RNA_stem_aways <- RNA_stem$y / 45
+RNA_stem_aways <- RNA_stem_aways - min(RNA_stem_aways)
+RNA_stem_scaling_factor <- (1 / max(RNA_stem_aways))
+RNA_stem_alongs <- RNA_stem_alongs * RNA_stem_scaling_factor
+RNA_stem_alongs <- RNA_stem_alongs - tail(RNA_stem_alongs, 1)
+RNA_stem_aways <- RNA_stem_aways * RNA_stem_scaling_factor
+
+# Protein stem
+
+## Load raw protein stem coordinates
+protein_stem <- read_svg("./glyphs-svg/location-protein-no-top.svg", 
+                          obj_type = "data.frame")
+
+## Prepare alongs and aways, scaling the glyph so it fits vertically between
+## (0,1)
+protein_stem <- subset(protein_stem, elem_idx == 1)
+protein_stem_aways <- protein_stem$y[6:87]
+protein_stem_scaling_factor <- 45 / (max(protein_stem_aways) - min(protein_stem_aways))
+protein_stem_aways <- protein_stem_aways * protein_stem_scaling_factor
+protein_stem_aways <- (protein_stem_aways - head(protein_stem_aways, 1)) / 45
+protein_stem_alongs <- (protein_stem$x[6:87] * protein_stem_scaling_factor) / 45
+protein_stem_alongs <- protein_stem_alongs - protein_stem_alongs[1]
+
 # Store internal data
 usethis::use_data(
   aptamer_alongs, aptamer_aways,
@@ -162,6 +194,8 @@ usethis::use_data(
     blunt_restriction_site_indices,
   chromosomal_locus_alongs, chromosomal_locus_aways,
   circular_plasmid_alongs, circular_plasmid_aways,
+  RNA_stem_alongs, RNA_stem_aways,
+  protein_stem_alongs, protein_stem_aways,
   overwrite = TRUE,
   internal = TRUE
 )
