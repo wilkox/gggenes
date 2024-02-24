@@ -1,12 +1,13 @@
-#' A 'ggplot2' geom to add text labels to coding sequences (CDSs)
+#' A 'ggplot2' geom to add text labels to engineered regions
 #'
-#' `geom_CDS_label()` adds text labels to CDSs drawn with `geom_CDS()`.
+#' `geom_engineered_region_label()` adds text labels to engineered regions
+#' drawn with `geom_engineered_region()`.
 #'
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 #'
 #' @section Aesthetics:
 #'
-#' - xmin,xmax (required; start and end positions of the CDS)
+#' - xmin,xmax (required; start and end positions of the engineered region)
 #' - y (required; the molecular backbone)
 #' - label (required; the label text)
 #' - forward
@@ -19,32 +20,34 @@
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default.
-#' @param place Where to draw the label, either 'inside' the CDS geom (the
-#' default) or 'outside' (above the molecular backbone for CDSs on the forward
-#' strand, and below it for CDSs on the reverse strand)
+#' @param place Where to draw the label, either 'inside' the engineered region
+#' geom (the default) or 'outside' (above the molecular backbone for engineered
+#' regions on the forward strand, and below it for engineered regions on the
+#' reverse strand)
 #' @param align How the text label should be aligned relative to the ends of
-#' the CDS. Default is 'centre'; other options are 'left' and 'right'.
-#' @param reverse_above If TRUE, and if place is 'outside', labels for CDSs on
-#' the reverse strand will be drawn above the molecular backbone, as if they
-#' are on the forward strand (FALSE by default)
+#' the engineered region. Default is 'centre'; other options are 'left' and
+#' 'right'.
+#' @param reverse_above If TRUE, and if place is 'outside', labels for
+#' engineered regions on the reverse strand will be drawn above the molecular
+#' backbone, as if they are on the forward strand (FALSE by default)
 #' @param height `grid::unit()` object giving the height of the label above the
 #' molecular backbone, if place is 'outside'. Defaults to 4 mm.
 #' @param label_height `grid::unit()` object giving the height of the label
-#' text. Defaults to 3 mm.
+#' text. Defaults to 5 mm.
 #'
 #' @examples
 #'
-#' ggplot2::ggplot(subset(feature_garden, feature == "CDS"),
+#' ggplot2::ggplot(subset(feature_garden, feature == "engineered region"),
 #'                 ggplot2::aes(xmin = start, xmax = end, y = molecule, 
 #'                              forward = forward, 
 #'                              label = paste0(feature, ", ", variant))) +
-#'   geom_CDS(inherit.aes = TRUE) +
-#'   geom_CDS_label(inherit.aes = TRUE)
+#'   geom_engineered_region(inherit.aes = TRUE) +
+#'   geom_engineered_region_label(inherit.aes = TRUE)
 #'
-#' @seealso [geom_CDS()]
+#' @seealso [geom_engineered_region()]
 #'
 #' @export
-geom_CDS_label <- function(
+geom_engineered_region_label <- function(
   mapping = NULL,
   data = NULL,
   stat = "identity",
@@ -55,21 +58,20 @@ geom_CDS_label <- function(
   place = "inside",
   reverse_above = FALSE,
   height = grid::unit(4, "mm"),
-  label_height = grid::unit(3, "mm"),
+  label_height = grid::unit(5, "mm"),
   align = "centre",
   ...
 ) {
 
   # Check arguments
   check_arguments("place", place, c("inside", "outside"),
-                  "geom_CDS_label")
+                  "geom_engineered_region_label")
   check_arguments("align", align, c("centre", "center", "middle", "left",
-                                    "right"), "geom_CDS_label")
+                                    "right"), "geom_engineered_region_label")
   if (align %in% c("center", "middle")) align <- "centre"
 
   # Draw default labels
   if (place == "inside") {
-
     return(ggplot2::layer(
       data = data,
       mapping = mapping,
@@ -80,10 +82,10 @@ geom_CDS_label <- function(
       inherit.aes = inherit.aes,
       params = list(
         na.rm = na.rm,
-        parent_geom = "geom_CDS_label",
+        parent_geom = "geom_engineered_region_label",
         label_height = label_height,
         place = align,
-        on_backbone = TRUE,
+        on_backbone = FALSE,
         ...
       )
     ))
@@ -102,7 +104,7 @@ geom_CDS_label <- function(
       inherit.aes = inherit.aes,
       params = list(
         na.rm = na.rm,
-        parent_geom = "geom_CDS_label",
+        parent_geom = "geom_engineered_region_label",
         reverse_above = reverse_above,
         height = height,
         label_height = label_height,

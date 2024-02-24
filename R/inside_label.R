@@ -9,7 +9,7 @@ GeomInsideLabel <- ggplot2::ggproto(
   required_aes = c("xmin", "xmax", "y", "label"),
   default_aes = ggplot2::aes(
     x = NULL,
-    forward = TRUE,
+    forward = NA,
     colour = "black",
     size = 8,
     alpha = 1,
@@ -23,9 +23,6 @@ GeomInsideLabel <- ggplot2::ggproto(
   draw_key = ggplot2::draw_key_text,
 
   setup_data = function(data, params) {
-
-    # forward cannot be set to NA
-    check_for_NAs("forward", data$forward, params$parent_geom)
 
     # Standardise min and max
     mins <- pmin(data$xmin, data$xmax)
@@ -52,10 +49,14 @@ GeomInsideLabel <- ggplot2::ggproto(
     check_arguments("place", params$place, c("centre", "left", "right"),
                     params$parent_geom)
 
+    # on_backbone must be set
+    check_arguments("on_backbone", params$on_backbone, c(TRUE, FALSE),
+                    parms$parent_geom)
+
     params
   },
 
-  draw_panel = function(data, panel_scales, coord, parent_geom, label_height, place) {
+  draw_panel = function(data, panel_scales, coord, parent_geom, label_height, place, on_backbone) {
 
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
@@ -67,7 +68,8 @@ GeomInsideLabel <- ggplot2::ggproto(
       parent_geom = parent_geom,
       label_height = label_height,
       coord_system = coord_system,
-      place = place
+      place = place,
+      on_backbone = on_backbone
     )
     gt$name <- grid::grobName(gt, parent_geom)
     gt
@@ -90,8 +92,21 @@ makeContent.insidelabeltree <- function(x) {
     label_awayness <- unit_to_alaw(x$label_height, "away", x$coord_system, r)
 
     # Set bounding box and place
-    label$away_min <- label$away - (label_awayness / 2)
-    label$away_max <- label$away + (label_awayness / 2)
+    # on_backbone is used to set the away position of the bounding
+    # box:
+    # - TRUE will centre the box on the molecular backbone (e.g. for a CDS)
+    # - FALSE will put it sitting on/under the backbone as defined by the
+    # forward aesthetic (e.g. for an engineered region)
+    if (x$on_backbone) {
+      label$away_min <- label$away - (label_awayness / 2)
+      label$away_max <- label$away + (label_awayness / 2)
+    } else if (label$forward) {
+      label$away_min <- label$away
+      label$away_max <- label$away + label_awayness
+    } else {
+      label$away_min <- label$away - label_awayness
+      label$away_max <- label$away
+    }
 
     # Use ggfittext's fittexttree to draw text
     if (x$coord_system == "cartesian") {

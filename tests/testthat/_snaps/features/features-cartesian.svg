@@ -105,6 +105,10 @@
 <polyline points='331.57,452.85 325.90,458.51 ' style='stroke-width: 0.75;' />
 <polyline points='325.90,452.85 331.57,458.51 ' style='stroke-width: 0.75;' />
 <text x='328.74' y='464.69' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='75.61px' lengthAdjust='spacingAndGlyphs'>cleavage site, protein</text>
+<polygon points='447.44,447.18 447.44,433.00 506.79,433.00 506.79,447.18 ' style='stroke-width: 0.75; fill: #D3D3D3;' />
+<polygon points='506.79,447.18 506.79,461.35 566.14,461.35 566.14,447.18 ' style='stroke-width: 0.75; fill: #D3D3D3;' />
+<text x='477.12' y='441.20' text-anchor='middle' style='font-size: 4.62px; font-family: sans;' textLength='53.68px' lengthAdjust='spacingAndGlyphs'>engineered region, default</text>
+<text x='536.47' y='455.37' text-anchor='middle' style='font-size: 4.62px; font-family: sans;' textLength='53.68px' lengthAdjust='spacingAndGlyphs'>engineered region, default</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='56.73' y='450.20' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='38.65px' lengthAdjust='spacingAndGlyphs'>Genome3</text>

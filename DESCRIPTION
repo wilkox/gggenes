@@ -17,7 +17,7 @@ Imports:
     cli (>= 3.6.1)
 License: GPL-2
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 URL: https://wilkox.org/gggenes/
 BugReports: https://github.com/wilkox/gggenes/issues/
 Suggests: 

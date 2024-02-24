@@ -105,6 +105,10 @@
 <polyline points='582.86,328.60 577.19,334.27 ' style='stroke-width: 0.75;' />
 <polyline points='582.86,334.27 577.19,328.60 ' style='stroke-width: 0.75;' />
 <text x='572.94' y='331.65' text-anchor='middle' style='font-size: 0.90px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>cleavage site, protein</text>
+<polygon points='588.53,236.46 602.71,236.46 602.71,188.98 588.53,188.98 ' style='stroke-width: 0.75; fill: #D3D3D3;' />
+<polygon points='588.53,188.98 574.36,188.98 574.36,141.49 588.53,141.49 ' style='stroke-width: 0.75; fill: #D3D3D3;' />
+<text x='595.62' y='212.90' text-anchor='middle' style='font-size: 0.73px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>engineered region, default</text>
+<text x='581.45' y='165.41' text-anchor='middle' style='font-size: 0.73px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>engineered region, default</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='42.58,545.11 42.58,22.78 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />

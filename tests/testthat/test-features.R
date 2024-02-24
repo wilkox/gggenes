@@ -163,6 +163,15 @@ geoms <- function() {
                     variant == "protein"),
       aes(x = start, y = molecule, forward = forward,
           label = paste0(feature, ", ", variant))
+    ),
+    geom_engineered_region(
+      data = subset(feature_garden, feature == "engineered region"),
+      aes(xmin = start, xmax = end, y = molecule, forward = forward)
+    ),
+    geom_engineered_region_label(
+      data = subset(feature_garden, feature == "engineered region"),
+      aes(xmin = start, xmax = end, y = molecule, forward = forward,
+          label = paste0(feature, ", ", variant))
     )
   )
 }
