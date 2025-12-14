@@ -1,4 +1,4 @@
-# gggenes (development version)
+# gggenes 0.6.0
 
 ## Major changes
 
@@ -76,7 +76,7 @@
 
 ## Bug fixes
 
-- Now *actually* compatible with ggplot2 v2.3.0
+- Now _actually_ compatible with ggplot2 v2.3.0
 
 # gggenes 0.3.0
 

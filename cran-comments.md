@@ -4,19 +4,20 @@
 
 # Test environments
 
-- local install: macOS 13.4.1, R 4.3.1
-- win-builder: (with `devtools::check_win_release()` and `devtools::check_win_devel()`) R 4.3.1, 2023-09-04 r85066
+- local install: macOS 15.7.2, R 4.5.2
+- win-builder:
+  - With `devtools::check_win_release()`: R 4.5.2
+  - With `devtools::check_win_devel()`): R Under development (unstable) (2025-12-13 r89166 ucrt)
 - Using GitHub Actions:
-  - macos-latest: macOS 12.6.7, R 4.3.1
-  - windows-latest: Microsoft Windows Server 2022 10.0.20348, R 4.3.1
-  - ubuntu-latest (devel): Ubuntu 22.04.3 LTS, R unstable 2023-08-20 r84995
-  - ubuntu-latest (release): Ubuntu 22.04.3 LTS, R 4.3.1
-  - ubuntu-latest (oldrel-1): Ubuntu 22.04.3 LTS, R 4.2.3
+  - macos-latest: macOS 15.7.2, R 4.5.2
+  - windows-latest: Microsoft Windows Server 2025 10.0.26100, R 4.5.2
+  - ubuntu-latest (devel): Ubuntu 24.04.3 LTS, R Under development (unstable) (2025-12-12 r89163)
+  - ubuntu-latest (release): Ubuntu 24.04.3 LTS, R 4.5.2
+  - ubuntu-latest (oldrel-1): Ubuntu 24.04.3 LTS, R 4.4.3
 
-# Downstream dependencies
+# revdepcheck results
 
-We checked 3 reverse dependencies (1 from CRAN + 2 from Bioconductor),
-comparing R CMD check results across CRAN and dev versions of this package.
+We checked 5 reverse dependencies (3 from CRAN + 2 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
 - We saw 0 new problems
 - We failed to check 0 packages
