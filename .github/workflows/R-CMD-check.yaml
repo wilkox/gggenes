@@ -1,12 +1,24 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+# Main CI workflow. Runs R CMD CHECK on every push and every pull request to
+# main, master, and CRAN. Derived from
+# https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml
+
+# Define when the workflow runs: on pushes and pull requests to main, master,
+# and CRAN
 on:
   push:
-    branches: [main, master, cran]
+    branches: [main, master, CRAN]
   pull_request:
-    branches: [main, master, cran]
+    branches: [main, master, CRAN]
 
 name: R-CMD-check
+
+# Read only permission
+permissions: read-all
+
+# Cancel in-progress runs when new commits are pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   R-CMD-check:
@@ -15,21 +27,23 @@ jobs:
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
+      # Continue running on all platforms even after a failure on one
       fail-fast: false
+
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - { os: macos-latest, r: "release" }
+          - { os: windows-latest, r: "release" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
+          - { os: ubuntu-latest, r: "release" }
+          - { os: ubuntu-latest, r: "oldrel-1" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
