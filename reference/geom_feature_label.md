@@ -1,0 +1,88 @@
+# A 'ggplot2' geom to add text labels to point genetic features
+
+`geom_feature_label()` adds text labels to features drawn with
+`geom_feature`().
+
+## Usage
+
+``` r
+geom_feature_label(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = FALSE,
+  inherit.aes = FALSE,
+  feature_height = unit(4, "mm"),
+  label_height = unit(3, "mm"),
+  ...
+)
+```
+
+## Arguments
+
+- mapping, data, stat, position, na.rm, show.legend, inherit.aes, ...:
+
+  As standard for ggplot2. inherit.aes is set to FALSE by default, as
+  features are not likely to share any plot aesthetics other than y.
+
+- feature_height:
+
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) object giving the
+  height of the feature being labelled, and hence the distance of the
+  label above or below the molecule line. Can be set as a negative value
+  for features drawn below the line. Defaults to 4 mm, to align labels
+  with the default height of
+  [`geom_feature()`](https://wilkox.org/gggenes/reference/geom_feature.md).
+
+- label_height:
+
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) object giving the
+  height of the label text. Defaults to 3 mm.
+
+## Details
+
+Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
+
+## Aesthetics
+
+- x (required; position of the feature)
+
+- y (required; molecule)
+
+- label (required; the label text)
+
+- forward (optional; will draw text in the appropriate location for
+  features with angled arrowheads)
+
+- colour
+
+- size
+
+- alpha
+
+- family
+
+- fontface
+
+- angle
+
+## See also
+
+[`geom_feature()`](https://wilkox.org/gggenes/reference/geom_feature.md)
+
+## Examples
+
+``` r
+ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
+                                            y = molecule, fill = gene)) +
+  geom_gene_arrow() +
+  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule, 
+                                                     forward = forward)) +
+  geom_feature_label(data = example_features,
+                     ggplot2::aes(x = position, y = molecule, label = name, 
+                                  forward = forward)) + 
+  ggplot2::facet_wrap(~ molecule, scales = "free")
+
+```
