@@ -1,5 +1,7 @@
 # Changelog
 
+## gggenes (development version)
+
 ## gggenes 0.6.0
 
 CRAN release: 2025-12-14
