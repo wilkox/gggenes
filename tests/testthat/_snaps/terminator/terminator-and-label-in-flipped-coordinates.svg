@@ -37,8 +37,8 @@
 <polygon points='73.78,95.62 65.27,95.62 65.27,135.73 63.86,135.73 69.52,147.07 75.19,135.73 73.78,135.73 ' style='stroke-width: 0.64; fill: #C77CFF;' />
 <polygon points='73.78,46.65 65.27,46.65 65.27,84.23 63.86,84.23 69.52,95.57 75.19,84.23 73.78,84.23 ' style='stroke-width: 0.64; fill: #F564E3;' />
 <polygon points='73.78,160.27 65.27,160.27 65.27,260.36 63.86,260.36 69.52,271.70 75.19,260.36 73.78,260.36 ' style='stroke-width: 0.64; fill: #FF64B0;' />
-<polyline points='69.52,160.22 78.03,160.22 ' style='stroke-width: 0.75;' />
-<polyline points='78.03,164.47 78.03,155.96 ' style='stroke-width: 0.75;' />
+<polyline points='69.52,160.22 78.03,160.22 ' style='stroke-width: 0.64;' />
+<polyline points='78.03,164.47 78.03,155.96 ' style='stroke-width: 0.64;' />
 <text x='85.12' y='161.13' text-anchor='middle' style='font-size: 2.68px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>T-1000</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -130,8 +130,8 @@
 <polygon points='479.43,154.53 470.92,154.53 470.92,135.40 469.51,135.40 475.18,124.07 480.84,135.40 479.43,135.40 ' style='stroke-width: 0.64; fill: #00C08B;' />
 <polygon points='479.43,98.69 470.92,98.69 470.92,113.26 469.51,113.26 475.18,124.60 480.84,113.26 479.43,113.26 ' style='stroke-width: 0.64; fill: #00BFC4;' />
 <polygon points='479.43,46.65 470.92,46.65 470.92,85.38 469.51,85.38 475.18,96.72 480.84,85.38 479.43,85.38 ' style='stroke-width: 0.64; fill: #00B4F0;' />
-<polyline points='475.18,46.65 483.68,46.65 ' style='stroke-width: 0.75;' />
-<polyline points='483.68,50.90 483.68,42.40 ' style='stroke-width: 0.75;' />
+<polyline points='475.18,46.65 483.68,46.65 ' style='stroke-width: 0.64;' />
+<polyline points='483.68,50.90 483.68,42.40 ' style='stroke-width: 0.64;' />
 <text x='490.77' y='47.75' text-anchor='middle' style='font-size: 3.26px; font-family: sans;' textLength='8.50px' lengthAdjust='spacingAndGlyphs'>T-800</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>

@@ -12,6 +12,18 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 gggenes is a [ggplot2](https://ggplot2.tidyverse.org) extension for
 drawing gene arrow maps.
 
+## Breaking change to linewidth in version 0.6.0.9001
+
+Prior to version 0.6.0.9001, `linewidth` in `geom_feature()` and
+`geom_terminator()` was expressed in points, not millimetres, with a
+default value of 1. This was inconsistent with both `geom_gene_arrow()`
+and ggplot2 convention. From version 0.6.0.9001, `linewidth` is
+expressed in millimetres, and the default value is 0.3. This change
+results in visually near-identical `linewidth`s if using the default,
+but may result in a significant change in `linewidth`s if this value is
+set. To correct for this change, divide previous `linewidth` values by
+`ggplot2::.pt`.
+
 ## Installing gggenes
 
 Install the stable version of gggenes from CRAN:

@@ -1,5 +1,13 @@
 # gggenes (development version)
 
+## Breaking changes
+
+- `linewidth` in `geom_feature()` and `geom_terminator()` is now expressed in
+  millimetres, not points, for consistency with `geom_gene_arrow()` as well as
+  ggplot2 convention. This will have a negligible effect on plots that use the
+  default `linewidth` values for these geoms, but will cause a significant
+  visual change where `linewidth` is set manually (#89)
+
 # gggenes 0.6.0
 
 ## Major changes
@@ -39,7 +47,8 @@
 
 ## Bug fixes
 
-- Fix bug where `height` argument to `geom_gene_label()` and `geom_subgene_label()` were being ignored (#40, thanks @jvanbelzen)
+- Fix bug where `height` argument to `geom_gene_label()` and
+  `geom_subgene_label()` were being ignored (#40, thanks @jvanbelzen)
 
 # gggenes 0.4.1
 

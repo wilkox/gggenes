@@ -37,8 +37,8 @@
 <polygon points='566.56,43.17 566.56,51.68 520.15,51.68 520.15,53.09 508.81,47.43 520.15,41.76 520.15,43.17 ' style='stroke-width: 0.64; fill: #C77CFF;' />
 <polygon points='621.53,43.17 621.53,51.68 577.96,51.68 577.96,53.09 566.62,47.43 577.96,41.76 577.96,43.17 ' style='stroke-width: 0.64; fill: #F564E3;' />
 <polygon points='493.99,43.17 493.99,51.68 380.25,51.68 380.25,53.09 368.91,47.43 380.25,41.76 380.25,43.17 ' style='stroke-width: 0.64; fill: #FF64B0;' />
-<polyline points='494.05,47.43 494.05,38.92 ' style='stroke-width: 0.75;' />
-<polyline points='489.80,38.92 498.30,38.92 ' style='stroke-width: 0.75;' />
+<polyline points='494.05,47.43 494.05,38.92 ' style='stroke-width: 0.64;' />
+<polyline points='489.80,38.92 498.30,38.92 ' style='stroke-width: 0.64;' />
 <text x='494.05' y='34.55' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='25.35px' lengthAdjust='spacingAndGlyphs'>T-1000</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -130,8 +130,8 @@
 <polygon points='500.43,381.06 500.43,389.57 523.29,389.57 523.29,390.98 534.63,385.31 523.29,379.65 523.29,381.06 ' style='stroke-width: 0.64; fill: #00C08B;' />
 <polygon points='563.11,381.06 563.11,389.57 545.37,389.57 545.37,390.98 534.03,385.31 545.37,379.65 545.37,381.06 ' style='stroke-width: 0.64; fill: #00BFC4;' />
 <polygon points='621.53,381.06 621.53,389.57 576.67,389.57 576.67,390.98 565.33,385.31 576.67,379.65 576.67,381.06 ' style='stroke-width: 0.64; fill: #00B4F0;' />
-<polyline points='621.53,385.31 621.53,376.81 ' style='stroke-width: 0.75;' />
-<polyline points='617.28,376.81 625.78,376.81 ' style='stroke-width: 0.75;' />
+<polyline points='621.53,385.31 621.53,376.81 ' style='stroke-width: 0.64;' />
+<polyline points='617.28,376.81 625.78,376.81 ' style='stroke-width: 0.64;' />
 <text x='621.53' y='372.44' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='20.90px' lengthAdjust='spacingAndGlyphs'>T-800</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>

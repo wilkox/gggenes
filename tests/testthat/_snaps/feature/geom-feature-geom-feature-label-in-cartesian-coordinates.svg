@@ -27,9 +27,9 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDIyLjc4fDcyLjA3)'>
 <polyline points='58.92,47.43 648.32,47.43 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='508.92,47.43 508.92,38.92 ' style='stroke-width: 0.75;' />
-<polyline points='266.82,47.43 266.82,38.92 ' style='stroke-width: 0.75;' />
-<polyline points='240.82,47.43 240.82,38.92 ' style='stroke-width: 0.75;' />
+<polyline points='508.92,47.43 508.92,38.92 ' style='stroke-width: 0.64;' />
+<polyline points='266.82,47.43 266.82,38.92 ' style='stroke-width: 0.64;' />
+<polyline points='240.82,47.43 240.82,38.92 ' style='stroke-width: 0.64;' />
 <text x='508.92' y='34.55' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>tss9</text>
 <text x='266.82' y='34.55' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs4</text>
 <text x='240.82' y='34.55' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori5</text>
@@ -53,10 +53,10 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDkwLjM2fDEzOS42NQ==)'>
 <polyline points='58.92,115.00 648.32,115.00 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='404.48,115.00 404.48,106.50 ' style='stroke-width: 0.75;' />
-<polyline points='552.82,115.00 552.82,106.50 ' style='stroke-width: 0.75;' />
-<polyline points='494.06,115.00 494.06,106.50 485.55,106.50 ' style='stroke-width: 0.75;' />
-<polygon points='490.88,104.56 485.55,106.50 490.88,108.44 ' style='stroke-width: 0.75; fill: #000000;' />
+<polyline points='404.48,115.00 404.48,106.50 ' style='stroke-width: 0.64;' />
+<polyline points='552.82,115.00 552.82,106.50 ' style='stroke-width: 0.64;' />
+<polyline points='494.06,115.00 494.06,106.50 485.55,106.50 ' style='stroke-width: 0.64;' />
+<polygon points='490.88,104.56 485.55,106.50 490.88,108.44 ' style='stroke-width: 0.64; fill: #000000;' />
 <text x='404.48' y='102.13' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs0</text>
 <text x='552.82' y='102.13' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs1</text>
 <text x='494.06' y='102.13' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori1</text>
@@ -78,11 +78,11 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDE1Ny45NHwyMDcuMjI=)'>
 <polyline points='58.92,182.58 648.32,182.58 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='495.06,182.58 495.06,174.08 ' style='stroke-width: 0.75;' />
-<polyline points='254.37,182.58 254.37,174.08 245.86,174.08 ' style='stroke-width: 0.75;' />
-<polygon points='251.19,172.14 245.86,174.08 251.19,176.02 ' style='stroke-width: 0.75; fill: #000000;' />
-<polyline points='367.99,182.58 367.99,174.08 376.50,174.08 ' style='stroke-width: 0.75;' />
-<polygon points='371.17,176.02 376.50,174.08 371.17,172.14 ' style='stroke-width: 0.75; fill: #000000;' />
+<polyline points='495.06,182.58 495.06,174.08 ' style='stroke-width: 0.64;' />
+<polyline points='254.37,182.58 254.37,174.08 245.86,174.08 ' style='stroke-width: 0.64;' />
+<polygon points='251.19,172.14 245.86,174.08 251.19,176.02 ' style='stroke-width: 0.64; fill: #000000;' />
+<polyline points='367.99,182.58 367.99,174.08 376.50,174.08 ' style='stroke-width: 0.64;' />
+<polygon points='371.17,176.02 376.50,174.08 371.17,172.14 ' style='stroke-width: 0.64; fill: #000000;' />
 <text x='495.06' y='169.71' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs9</text>
 <text x='254.37' y='169.71' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>tss2</text>
 <text x='367.99' y='169.71' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori2</text>
@@ -104,9 +104,9 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDIyNS41MnwyNzQuODA=)'>
 <polyline points='58.92,250.16 648.32,250.16 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='578.27,250.16 578.27,241.66 569.76,241.66 ' style='stroke-width: 0.75;' />
-<polygon points='575.09,239.72 569.76,241.66 575.09,243.59 ' style='stroke-width: 0.75; fill: #000000;' />
-<polyline points='284.67,250.16 284.67,241.66 ' style='stroke-width: 0.75;' />
+<polyline points='578.27,250.16 578.27,241.66 569.76,241.66 ' style='stroke-width: 0.64;' />
+<polygon points='575.09,239.72 569.76,241.66 575.09,243.59 ' style='stroke-width: 0.64; fill: #000000;' />
+<polyline points='284.67,250.16 284.67,241.66 ' style='stroke-width: 0.64;' />
 <text x='578.27' y='237.28' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>tss1</text>
 <text x='284.67' y='237.28' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs3</text>
 <polygon points='85.71,245.91 85.71,254.41 273.02,254.41 273.02,255.83 284.36,250.16 273.02,244.49 273.02,245.91 ' style='stroke-width: 0.64; fill: #F8766D;' />
@@ -125,10 +125,10 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDI5My4wOXwzNDIuMzg=)'>
 <polyline points='58.92,317.74 648.32,317.74 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='435.31,317.74 435.31,309.23 ' style='stroke-width: 0.75;' />
-<polyline points='510.54,317.74 510.54,309.23 ' style='stroke-width: 0.75;' />
-<polyline points='285.19,317.74 285.19,309.23 293.70,309.23 ' style='stroke-width: 0.75;' />
-<polygon points='288.37,311.17 293.70,309.23 288.37,307.29 ' style='stroke-width: 0.75; fill: #000000;' />
+<polyline points='435.31,317.74 435.31,309.23 ' style='stroke-width: 0.64;' />
+<polyline points='510.54,317.74 510.54,309.23 ' style='stroke-width: 0.64;' />
+<polyline points='285.19,317.74 285.19,309.23 293.70,309.23 ' style='stroke-width: 0.64;' />
+<polygon points='288.37,311.17 293.70,309.23 288.37,307.29 ' style='stroke-width: 0.64; fill: #000000;' />
 <text x='435.31' y='304.86' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs4</text>
 <text x='510.54' y='304.86' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>tss5</text>
 <text x='285.19' y='304.86' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori6</text>
@@ -152,11 +152,11 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDM2MC42N3w0MDkuOTY=)'>
 <polyline points='58.92,385.31 648.32,385.31 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='405.60,385.31 405.60,376.81 397.10,376.81 ' style='stroke-width: 0.75;' />
-<polygon points='402.42,374.87 397.10,376.81 402.42,378.75 ' style='stroke-width: 0.75; fill: #000000;' />
-<polyline points='251.24,385.31 251.24,376.81 ' style='stroke-width: 0.75;' />
-<polyline points='326.97,385.31 326.97,376.81 318.47,376.81 ' style='stroke-width: 0.75;' />
-<polygon points='323.79,374.87 318.47,376.81 323.79,378.75 ' style='stroke-width: 0.75; fill: #000000;' />
+<polyline points='405.60,385.31 405.60,376.81 397.10,376.81 ' style='stroke-width: 0.64;' />
+<polygon points='402.42,374.87 397.10,376.81 402.42,378.75 ' style='stroke-width: 0.64; fill: #000000;' />
+<polyline points='251.24,385.31 251.24,376.81 ' style='stroke-width: 0.64;' />
+<polyline points='326.97,385.31 326.97,376.81 318.47,376.81 ' style='stroke-width: 0.64;' />
+<polygon points='323.79,374.87 318.47,376.81 323.79,378.75 ' style='stroke-width: 0.64; fill: #000000;' />
 <text x='405.60' y='372.44' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori8</text>
 <text x='251.24' y='372.44' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>tss6</text>
 <text x='326.97' y='372.44' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori9</text>
@@ -178,10 +178,10 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDQyOC4yNXw0NzcuNTM=)'>
 <polyline points='58.92,452.89 648.32,452.89 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='167.87,452.89 167.87,444.39 ' style='stroke-width: 0.75;' />
-<polyline points='411.95,452.89 411.95,444.39 ' style='stroke-width: 0.75;' />
-<polyline points='262.54,452.89 262.54,444.39 254.04,444.39 ' style='stroke-width: 0.75;' />
-<polygon points='259.37,442.45 254.04,444.39 259.37,446.33 ' style='stroke-width: 0.75; fill: #000000;' />
+<polyline points='167.87,452.89 167.87,444.39 ' style='stroke-width: 0.64;' />
+<polyline points='411.95,452.89 411.95,444.39 ' style='stroke-width: 0.64;' />
+<polyline points='262.54,452.89 262.54,444.39 254.04,444.39 ' style='stroke-width: 0.64;' />
+<polygon points='259.37,442.45 254.04,444.39 259.37,446.33 ' style='stroke-width: 0.64; fill: #000000;' />
 <text x='167.87' y='440.02' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori9</text>
 <text x='411.95' y='440.02' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs1</text>
 <text x='262.54' y='440.02' text-anchor='end' style='font-size: 8.00px; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>tss1</text>
@@ -206,10 +206,10 @@
 </defs>
 <g clip-path='url(#cpNTguOTJ8NjQ4LjMyfDQ5NS44M3w1NDUuMTE=)'>
 <polyline points='58.92,520.47 648.32,520.47 ' style='stroke-width: 2.13; stroke: #BEBEBE; stroke-linecap: butt;' />
-<polyline points='238.17,520.47 238.17,511.97 246.68,511.97 ' style='stroke-width: 0.75;' />
-<polygon points='241.35,513.91 246.68,511.97 241.35,510.03 ' style='stroke-width: 0.75; fill: #000000;' />
-<polyline points='143.14,520.47 143.14,511.97 ' style='stroke-width: 0.75;' />
-<polyline points='464.03,520.47 464.03,511.97 ' style='stroke-width: 0.75;' />
+<polyline points='238.17,520.47 238.17,511.97 246.68,511.97 ' style='stroke-width: 0.64;' />
+<polygon points='241.35,513.91 246.68,511.97 241.35,510.03 ' style='stroke-width: 0.64; fill: #000000;' />
+<polyline points='143.14,520.47 143.14,511.97 ' style='stroke-width: 0.64;' />
+<polyline points='464.03,520.47 464.03,511.97 ' style='stroke-width: 0.64;' />
 <text x='238.17' y='507.59' style='font-size: 8.00px; font-family: sans;' textLength='13.34px' lengthAdjust='spacingAndGlyphs'>ori2</text>
 <text x='143.14' y='507.59' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs5</text>
 <text x='464.03' y='507.59' text-anchor='middle' style='font-size: 8.00px; font-family: sans;' textLength='11.12px' lengthAdjust='spacingAndGlyphs'>rs4</text>

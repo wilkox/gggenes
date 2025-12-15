@@ -67,8 +67,13 @@ geom_gene_arrow <- function(
   ...
 ) {
   ggplot2::layer(
-    geom = GeomGeneArrow, mapping = mapping, data = data, stat = stat,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    geom = GeomGeneArrow,
+    mapping = mapping,
+    data = data,
+    stat = stat,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
       arrowhead_width = arrowhead_width,
@@ -81,7 +86,9 @@ geom_gene_arrow <- function(
 
 #' GeomGeneArrow
 #' @noRd
-GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
+GeomGeneArrow <- ggplot2::ggproto(
+  "GeomGeneArrow",
+  ggplot2::Geom,
   required_aes = c("xmin", "xmax", "y"),
   default_aes = ggplot2::aes(
     forward = TRUE,
@@ -100,12 +107,13 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
         col = data$colour,
         fill = ggplot2::alpha(data$fill, data$alpha),
         lty = data$linetype,
+        # linewidth is expressed in mm but grid expects points; multiplying by
+        # .pt converts
         lwd = (data$linewidth %||% data$size) * ggplot2::.pt
       )
     )
   },
   setup_data = function(data, params) {
-
     if ("size" %in% names(data)) {
       lifecycle::deprecate_warn(
         when = "0.5.2",
@@ -124,7 +132,6 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
     arrowhead_height,
     arrow_body_height
   ) {
-
     # Detect coordinate system and transform values
     coord_system <- get_coord_system(coord)
     data <- data_to_grid(data, coord_system, panel_scales, coord)
@@ -147,16 +154,14 @@ GeomGeneArrow <- ggplot2::ggproto("GeomGeneArrow", ggplot2::Geom,
 #' @importFrom grid makeContent
 #' @export
 makeContent.genearrowtree <- function(x) {
-
   data <- x$data
 
   # Prepare grob for each gene
   grobs <- lapply(seq_len(nrow(data)), function(i) {
-
     gene <- data[i, ]
 
     # Reverse non-forward genes
-    if (! as.logical(gene$forward)) {
+    if (!as.logical(gene$forward)) {
       gene[, c("along_min", "along_max")] <- gene[, c("along_max", "along_min")]
     }
 
@@ -166,12 +171,26 @@ makeContent.genearrowtree <- function(x) {
     # Set up arrow and arrowhead geometry. It's convenient to divide awayness
     # by 2 here
     r <- ifelse(x$coord_system == "polar", gene$away, NA)
-    arrowhead_alongness <- unit_to_alaw(x$arrowhead_width, 
-                                        "along", x$coord_system, r)
-    arrowhead_awayness <- unit_to_alaw(x$arrowhead_height, 
-                                       "away", x$coord_system, r) / 2
-    arrow_body_awayness <- unit_to_alaw(x$arrow_body_height, 
-                                        "away", x$coord_system, r) / 2
+    arrowhead_alongness <- unit_to_alaw(
+      x$arrowhead_width,
+      "along",
+      x$coord_system,
+      r
+    )
+    arrowhead_awayness <- unit_to_alaw(
+      x$arrowhead_height,
+      "away",
+      x$coord_system,
+      r
+    ) /
+      2
+    arrow_body_awayness <- unit_to_alaw(
+      x$arrow_body_height,
+      "away",
+      x$coord_system,
+      r
+    ) /
+      2
 
     # If the gene is shorter than the arrowhead alongness, the gene is 100%
     # arrowhead

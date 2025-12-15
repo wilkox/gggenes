@@ -64,6 +64,14 @@ the feature will be drawn as a vertical line)
 \item linewidth (the former size aesthetic has been deprecated and will be
 removed in future versions)
 }
+
+Prior to version 0.6.0.9001, linewidth was expressed in points, not millimetres,
+with a default value of 1. This was inconsistent with both
+\code{geom_gene_arrow()} and ggplot2 convention. From version 0.6.0.9001, linewidth
+is expressed in millimetres, and the default value is 0.3. This results in visually
+near-identical linewidths if using the default, but may result in a
+significant change in linewidths if this value is set. To correct for this
+change, divide previous linewidth values by \code{ggplot2::.pt}.
 }
 
 \examples{
@@ -71,7 +79,7 @@ removed in future versions)
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule, 
+  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule,
                                                      forward = forward)) +
   ggplot2::facet_wrap(~ molecule, scales = "free")
 

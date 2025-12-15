@@ -6,7 +6,6 @@ README
 aes
 centre
 cli
-coercible
 colour
 dplyr
 favour
@@ -18,6 +17,8 @@ ggplot
 labelled
 linetype
 linewidth
+linewidths
+millimetres
 normalise
 patchlevel
 plasmapR

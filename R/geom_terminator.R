@@ -13,6 +13,14 @@
 #' - linewidth (the former size aesthetic has been deprecated and will be
 #' removed in future versions)
 #'
+#' Prior to version 0.6.0.9001, linewidth was expressed in points, not millimetres,
+#' with a default value of 1. This was inconsistent with both
+#' `geom_gene_arrow()` and ggplot2 convention. From version 0.6.0.9001, linewidth
+#' is expressed in millimetres, and the default value is 0.3. This results in visually
+#' near-identical linewidths if using the default, but may result in a
+#' significant change in linewidths if this value is set. To correct for this
+#' change, divide previous linewidth values by `ggplot2::.pt`.
+#'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default, as terminators
 #' are not likely to share any plot aesthetics other than y.
@@ -65,19 +73,20 @@ geom_terminator <- function(
 
 #' GeomTerminator
 #' @noRd
-GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
+GeomTerminator <- ggplot2::ggproto(
+  "GeomTerminator",
+  ggplot2::Geom,
   required_aes = c("x", "y"),
   default_aes = ggplot2::aes(
     alpha = 1,
     colour = "black",
     linetype = 1,
-    linewidth = 1
+    linewidth = 0.3
   ),
 
   draw_key = ggplot2::draw_key_abline,
 
   setup_data = function(data, params) {
-
     data
   },
 
@@ -88,7 +97,6 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
     terminator_height,
     terminator_width
   ) {
-
     # Detect coordinate system
     coord_system <- get_coord_system(coord)
     data <- data_to_grid(data, coord_system, panel_scales, coord)
@@ -110,23 +118,31 @@ GeomTerminator <- ggplot2::ggproto("GeomTerminator", ggplot2::Geom,
 #' @importFrom grid makeContent
 #' @export
 makeContent.terminatortree <- function(x) {
-
   data <- x$data
 
   # Prepare grob for each terminator
   grobs <- lapply(seq_len(nrow(data)), function(i) {
-
     terminator <- data[i, ]
 
     # Set up geometry
     r <- ifelse(x$coord_system == "polar", terminator$away, NA)
-    terminator_alongness <- unit_to_alaw(x$terminator_width, "along", x$coord_system, r)
-    terminator_awayness <- unit_to_alaw(x$terminator_height, "away", x$coord_system, r)
+    terminator_alongness <- unit_to_alaw(
+      x$terminator_width,
+      "along",
+      x$coord_system,
+      r
+    )
+    terminator_awayness <- unit_to_alaw(
+      x$terminator_height,
+      "away",
+      x$coord_system,
+      r
+    )
     alongs <- c(
       terminator$along,
       terminator$along,
       terminator$along - (terminator_alongness / 2),
-      terminator$along + (terminator_alongness/ 2)
+      terminator$along + (terminator_alongness / 2)
     )
     aways <- c(
       terminator$away,
@@ -156,7 +172,9 @@ makeContent.terminatortree <- function(x) {
         col = terminator$colour,
         fill = terminator$colour,
         lty = terminator$linetype,
-        lwd = (terminator$linewidth %||% terminator$size)
+        # linewidth is expressed in mm but grid expects points; multiplying by
+        # .pt converts
+        lwd = (terminator$linewidth %||% terminator$size) * ggplot2::.pt
       )
     )
 
