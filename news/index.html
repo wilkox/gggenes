@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gggenes-development-version">gggenes (development version)<a class="anchor" aria-label="anchor" href="#gggenes-development-version"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>
+<code>linewidth</code> in <code><a href="../reference/geom_feature.html">geom_feature()</a></code> and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> is now expressed in millimetres, not points, for consistency with <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> as well as ggplot2 convention. This will have a negligible effect on plots that use the default <code>linewidth</code> values for these geoms, but will cause a significant visual change where <code>linewidth</code> is set manually (<a href="https://github.com/wilkox/gggenes/issues/89" class="external-link">#89</a>)</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="gggenes-060">gggenes 0.6.0<a class="anchor" aria-label="anchor" href="#gggenes-060"></a></h2><p class="text-muted">CRAN release: 2025-12-14</p>

@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gggenes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,11 @@
 <div class="page-header"><h1 id="gggenes">gggenes<a class="anchor" aria-label="anchor" href="#gggenes"></a>
 </h1></div>
 <p>gggenes is a <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> extension for drawing gene arrow maps.</p>
+<div class="section level2">
+<h2 id="breaking-change-to-linewidth-in-version-0609001">Breaking change to linewidth in version 0.6.0.9001<a class="anchor" aria-label="anchor" href="#breaking-change-to-linewidth-in-version-0609001"></a>
+</h2>
+<p>Prior to version 0.6.0.9001, <code>linewidth</code> in <code><a href="reference/geom_feature.html">geom_feature()</a></code> and <code><a href="reference/geom_terminator.html">geom_terminator()</a></code> was expressed in points, not millimetres, with a default value of 1. This was inconsistent with both <code><a href="reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention. From version 0.6.0.9001, <code>linewidth</code> is expressed in millimetres, and the default value is 0.3. This change results in visually near-identical <code>linewidth</code>s if using the default, but may result in a significant change in <code>linewidth</code>s if this value is set. To correct for this change, divide previous <code>linewidth</code> values by <code><a href="https://ggplot2.tidyverse.org/reference/graphical-units.html" class="external-link">ggplot2::.pt</a></code>.</p>
+</div>
 <div class="section level2">
 <h2 id="installing-gggenes">Installing gggenes<a class="anchor" aria-label="anchor" href="#installing-gggenes"></a>
 </h2>

@@ -11,7 +11,7 @@ transcription start sites."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,7 +116,14 @@ the feature will be drawn as a vertical line)</p></li>
 <li><p>linetype</p></li>
 <li><p>linewidth (the former size aesthetic has been deprecated and will be
 removed in future versions)</p></li>
-</ul></div>
+</ul><p>Prior to version 0.6.0.9001, linewidth was expressed in points, not millimetres,
+with a default value of 1. This was inconsistent with both
+<code><a href="geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention. From version 0.6.0.9001, linewidth
+is expressed in millimetres, and the default value is 0.3. This results in visually
+near-identical linewidths if using the default, but may result in a
+significant change in linewidths if this value is set. To correct for this
+change, divide previous linewidth values by <code><a href="https://ggplot2.tidyverse.org/reference/graphical-units.html" class="external-link">ggplot2::.pt</a></code>.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="geom_feature_label.html">geom_feature_label()</a></code>, <code><a href="geom_terminator.html">geom_terminator()</a></code></p></div>
@@ -128,7 +135,7 @@ removed in future versions)</p></li>
 <span class="r-in"><span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">example_genes</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">start</span>, xmax <span class="op">=</span> <span class="va">end</span>,</span></span>
 <span class="r-in"><span>                                            y <span class="op">=</span> <span class="va">molecule</span>, fill <span class="op">=</span> <span class="va">gene</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="geom_gene_arrow.html">geom_gene_arrow</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu">geom_feature</span><span class="op">(</span>data <span class="op">=</span> <span class="va">example_features</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position</span>, y <span class="op">=</span> <span class="va">molecule</span>, </span></span>
+<span class="r-in"><span>  <span class="fu">geom_feature</span><span class="op">(</span>data <span class="op">=</span> <span class="va">example_features</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position</span>, y <span class="op">=</span> <span class="va">molecule</span>,</span></span>
 <span class="r-in"><span>                                                     forward <span class="op">=</span> <span class="va">forward</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="geom_feature-1.png" alt="" width="700" height="433"></span>
