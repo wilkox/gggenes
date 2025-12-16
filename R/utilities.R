@@ -24,7 +24,7 @@ get_coord_system <- function(coord) {
 data_to_grid <- function(data, coord_system, panel_scales, coord) {
   # Make sure the data contains either x OR xmin/xmax, not both
   if ("x" %in% names(data) & any(c("xmin", "xmax") %in% names(data))) {
-    cli::cli_abort("data contains both x and xmin/xmax")
+    cli::cli_abort("data contains both {.field x} and {.field xmin}/{.field xmax}")
   }
 
   if (coord_system == "polar") {

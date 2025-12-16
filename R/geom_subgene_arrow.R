@@ -285,8 +285,10 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
         subgene$y + arrowhead_end_height
       )
     } else {
-      ## will we ever get here?
-      cli::cli_abort("Condition not met")
+      cli::cli_abort(c(
+        "Unable to draw subgene",
+        "i" = "This is an internal error; please file a bug report at {.url https://github.com/wilkox/gggenes/issues}"
+      ))
     }
     # Create polygon grob
     pg <- grid::polygonGrob(
@@ -308,7 +310,7 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
     subgenes <- x$orig_data[skip, , drop = FALSE]
     for (i in seq_len(nrow(subgenes))) {
       cli::cli_warn(
-        "Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping"
+        "Subgene ({.val {subgenes$xsubmin[i]}}..{.val {subgenes$xsubmax[i]}}) breaks boundaries of gene ({.val {subgenes$xmin[i]}}..{.val {subgenes$xmax[i]}}), skipping"
       )
     }
   }
@@ -449,8 +451,10 @@ makeContent.flipsubgenearrowtree <- function(x) {
         subgene$x + arrowhead_end_height
       )
     } else {
-      ## will we ever get here?
-      cli::cli_abort("Condition not met")
+      cli::cli_abort(c(
+        "Unable to draw subgene",
+        "i" = "This is an internal error; please file a bug report at {.url https://github.com/wilkox/gggenes/issues}"
+      ))
     }
     # Create polygon grob
     pg <- grid::polygonGrob(
@@ -472,7 +476,7 @@ makeContent.flipsubgenearrowtree <- function(x) {
     subgenes <- x$orig_data[skip, , drop = FALSE]
     for (i in seq_len(nrow(subgenes))) {
       cli::cli_warn(
-        "Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping"
+        "Subgene ({.val {subgenes$xsubmin[i]}}..{.val {subgenes$xsubmax[i]}}) breaks boundaries of gene ({.val {subgenes$xmin[i]}}..{.val {subgenes$xmax[i]}}), skipping"
       )
     }
   }

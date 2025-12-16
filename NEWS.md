@@ -10,7 +10,8 @@
 
 ## Minor changes
 
-- Add comprehensive input validation
+- Add comprehensive input validation (#91)
+- Improve error messages (#92)
 
 # gggenes 0.6.0
 
