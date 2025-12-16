@@ -9,7 +9,7 @@ transcription terminator."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@ transcription terminator."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>A 'ggplot2' geom to draw transcription terminators</h1>
-      <small class="dont-index">Source: <a href="https://github.com/wilkox/gggenes/blob/master/R/geom_terminator.R" class="external-link"><code>R/geom_terminator.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/wilkox/gggenes/blob/update_pkgdown_0.6.0/R/geom_terminator.R" class="external-link"><code>R/geom_terminator.R</code></a></small>
       <div class="d-none name"><code>geom_terminator.Rd</code></div>
     </div>
 
@@ -92,14 +92,7 @@ horizontal 'beam' of the terminator glyph. Defaults to 3 mm.</p></dd>
 <li><p>linetype</p></li>
 <li><p>linewidth (the former size aesthetic has been deprecated and will be
 removed in future versions)</p></li>
-</ul><p>Prior to version 0.6.0.9001, linewidth was expressed in points, not millimetres,
-with a default value of 1. This was inconsistent with both
-<code><a href="geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention. From version 0.6.0.9001, linewidth
-is expressed in millimetres, and the default value is 0.3. This results in visually
-near-identical linewidths if using the default, but may result in a
-significant change in linewidths if this value is set. To correct for this
-change, divide previous linewidth values by <code><a href="https://ggplot2.tidyverse.org/reference/graphical-units.html" class="external-link">ggplot2::.pt</a></code>.</p>
-    </div>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="geom_terminator_label.html">geom_terminator_label()</a></code>, <code><a href="geom_feature.html">geom_feature()</a></code></p></div>

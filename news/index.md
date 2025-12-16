@@ -1,20 +1,5 @@
 # Changelog
 
-## gggenes (development version)
-
-### Breaking changes
-
-- `linewidth` in
-  [`geom_feature()`](https://wilkox.org/gggenes/reference/geom_feature.md)
-  and
-  [`geom_terminator()`](https://wilkox.org/gggenes/reference/geom_terminator.md)
-  is now expressed in millimetres, not points, for consistency with
-  [`geom_gene_arrow()`](https://wilkox.org/gggenes/reference/geom_gene_arrow.md)
-  as well as ggplot2 convention. This will have a negligible effect on
-  plots that use the default `linewidth` values for these geoms, but
-  will cause a significant visual change where `linewidth` is set
-  manually ([\#89](https://github.com/wilkox/gggenes/issues/89))
-
 ## gggenes 0.6.0
 
 CRAN release: 2025-12-14

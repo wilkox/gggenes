@@ -1,60 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/introduction-to-gggenes.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_dummies.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_features.html</loc>
-  </url>
-  <url>
-    <loc>/reference/example_genes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geom_feature.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geom_feature_label.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geom_gene_arrow.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geom_gene_label.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geom_subgene_arrow.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geom_subgene_label.html</loc>
-  </url>
-  <url>
-    <loc>/reference/gggenes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/make_alignment_dummies.html</loc>
-  </url>
-  <url>
-    <loc>/reference/theme_genes.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://wilkox.org/gggenes/404.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/articles/index.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/articles/introduction-to-gggenes.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/authors.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/index.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/news/index.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/example_dummies.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/example_features.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/example_genes.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/example_terminators.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_feature.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_feature_label.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_gene_arrow.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_gene_label.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_subgene_arrow.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_subgene_label.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_terminator.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/geom_terminator_label.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/gggenes-package.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/index.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/make_alignment_dummies.html</loc></url>
+<url><loc>https://wilkox.org/gggenes/reference/theme_genes.html</loc></url>
 </urlset>
+
