@@ -2,7 +2,7 @@
 #'
 #' `geom_feature_label()` adds text labels to features drawn with
 #' `geom_feature`().
-#' 
+#'
 #' Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 #'
 #' @section Aesthetics:
@@ -35,11 +35,11 @@
 #' ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
 #'                                             y = molecule, fill = gene)) +
 #'   geom_gene_arrow() +
-#'   geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule, 
+#'   geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule,
 #'                                                      forward = forward)) +
 #'   geom_feature_label(data = example_features,
-#'                      ggplot2::aes(x = position, y = molecule, label = name, 
-#'                                   forward = forward)) + 
+#'                      ggplot2::aes(x = position, y = molecule, label = name,
+#'                                   forward = forward)) +
 #'   ggplot2::facet_wrap(~ molecule, scales = "free")
 #'
 #' @seealso [geom_feature()]
@@ -57,6 +57,9 @@ geom_feature_label <- function(
   label_height = unit(3, "mm"),
   ...
 ) {
+  assert_scalar_unit(feature_height)
+  assert_scalar_unit(label_height)
+
   ggplot2::layer(
     data = data,
     mapping = mapping,
@@ -96,7 +99,6 @@ GeomFeatureLabel <- ggplot2::ggproto(
   draw_key = ggplot2::draw_key_text,
 
   setup_data = function(data, params) {
-
     # The 'forward' aesthetic, if provided, should be logical or coerced to
     # logical
     if (!is.null(data$forward)) {
@@ -106,8 +108,13 @@ GeomFeatureLabel <- ggplot2::ggproto(
     data
   },
 
-  draw_panel = function(data, panel_scales, coord, feature_height, label_height) {
-
+  draw_panel = function(
+    data,
+    panel_scales,
+    coord,
+    feature_height,
+    label_height
+  ) {
     # Detect coordinate system and transform coordinates
     coord_system <- get_coord_system(coord)
     data <- data_to_grid(data, coord_system, panel_scales, coord)
@@ -127,36 +134,38 @@ GeomFeatureLabel <- ggplot2::ggproto(
 #' @importFrom grid makeContent
 #' @export
 makeContent.featurelabeltree <- function(x) {
-
   data <- x$data
 
   # Prepare grob for each label
   grobs <- lapply(seq_len(nrow(data)), function(i) {
-
     label <- data[i, ]
 
     # Set up geometry
     r <- ifelse(x$coord_system == "polar", label$away, NA)
-    feature_awayness <- unit_to_alaw(x$feature_height, "away", x$coord_system, r)
+    feature_awayness <- unit_to_alaw(
+      x$feature_height,
+      "away",
+      x$coord_system,
+      r
+    )
     label_awayness <- unit_to_alaw(x$label_height, "away", x$coord_system, r)
 
     # Determine if the feature to be labelled is oriented, and set
     # appropriate bounding box and place
-    # 
+    #
     # For non-oriented features:
-    if (is.na(label$forward) | ! is.logical(label$forward)) {
-
+    if (is.na(label$forward) | !is.logical(label$forward)) {
       label$along_min <- label$along - 0.5
       label$along_max <- label$along + 0.5
 
       away_sign <- feature_awayness / abs(feature_awayness)
       label$away_min <- label$away + (feature_awayness * away_sign)
-      label$away_max <- label$away + ((feature_awayness + label_awayness) * away_sign)
+      label$away_max <- label$away +
+        ((feature_awayness + label_awayness) * away_sign)
       align <- "centre"
-    
-    # For oriented features:
-    } else {
 
+      # For oriented features:
+    } else {
       alongness_sign <- ifelse(label$forward, 1, -1)
       if (alongness_sign == 1) {
         label$along_min <- label$along
@@ -170,12 +179,12 @@ makeContent.featurelabeltree <- function(x) {
 
       away_sign <- feature_awayness / abs(feature_awayness)
       label$away_min <- label$away + (feature_awayness * away_sign)
-      label$away_max <- label$away + ((feature_awayness + label_awayness) * away_sign)
+      label$away_max <- label$away +
+        ((feature_awayness + label_awayness) * away_sign)
     }
 
     # Use ggfittext's fittexttree to draw text
     if (x$coord_system == "cartesian") {
-
       label$xmin <- label$along_min
       label$xmax <- label$along_max
       label$ymin <- label$away_min
@@ -192,9 +201,7 @@ makeContent.featurelabeltree <- function(x) {
         cl = "fittexttree",
         fullheight = TRUE
       )
-
     } else if (x$coord_system == "flip") {
-
       label$xmin <- label$away_min
       label$xmax <- label$away_max
       label$ymin <- label$along_min
@@ -211,9 +218,7 @@ makeContent.featurelabeltree <- function(x) {
         cl = "fittexttree",
         fullheight = TRUE
       )
-
     } else if (x$coord_system == "polar") {
-
       label$xmin <- label$along_min
       label$xmax <- label$along_max
       label$ymin <- label$away_min
@@ -232,12 +237,11 @@ makeContent.featurelabeltree <- function(x) {
         height = 0,
         flip = FALSE
       )
-
     }
 
     gt$name <- grid::grobName(gt, "geom_feature_label")
     gt
-  } )
+  })
   class(grobs) <- "gList"
   grid::setChildren(x, grobs)
 }

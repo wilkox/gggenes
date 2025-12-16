@@ -30,12 +30,19 @@
 #'
 #' @export
 make_alignment_dummies <- function(data, mapping, on, side = "left") {
+  # Validate arguments
+  assert_data_frame(data)
+  assert_mapping(mapping)
+  assert_scalar_character(on)
+  assert_choice(side, c("left", "right"))
 
   # Check mapping
   required_aesthetics <- c("xmin", "xmax", "y", "id")
   for (required_aesthetic in required_aesthetics) {
     if (!required_aesthetic %in% names(mapping)) {
-      cli::cli_abort("align_genes requires a {required_aesthetic} aesthetic")
+      cli::cli_abort(
+        "{.fun make_alignment_dummies} requires a {.field {required_aesthetic}} aesthetic"
+      )
     }
   }
 
@@ -51,27 +58,46 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
 
   # Get range of each molecule
   dummies <- split(data, data$y)
-  dummies <- lapply(dummies, function(m) { cbind(m, range_min = min(c(m$xmin, m$xmax))) })
-  dummies <- lapply(dummies, function(m) { cbind(m, range_max = max(c(m$xmin, m$xmax))) })
+  dummies <- lapply(dummies, function(m) {
+    cbind(m, range_min = min(c(m$xmin, m$xmax)))
+  })
+  dummies <- lapply(dummies, function(m) {
+    cbind(m, range_max = max(c(m$xmin, m$xmax)))
+  })
   dummies <- do.call("rbind", dummies)
 
   # Get alignment edge of target gene (start if side is left, end if right)
   dummies <- dummies[which(dummies$id == on), ]
-  dummies$true_min <- ifelse(dummies$xmin < dummies$xmax, dummies$xmin, dummies$xmax)
-  dummies$true_max <- ifelse(dummies$xmin > dummies$xmax, dummies$xmin, dummies$xmax)
-  dummies <- dummies[, c("id", "y", "range_min", "range_max",
-                         ifelse(side == "left", "true_min", "true_max"))]
+  dummies$true_min <- ifelse(
+    dummies$xmin < dummies$xmax,
+    dummies$xmin,
+    dummies$xmax
+  )
+  dummies$true_max <- ifelse(
+    dummies$xmin > dummies$xmax,
+    dummies$xmin,
+    dummies$xmax
+  )
+  dummies <- dummies[, c(
+    "id",
+    "y",
+    "range_min",
+    "range_max",
+    ifelse(side == "left", "true_min", "true_max")
+  )]
   names(dummies)[5] <- "target_edge"
 
   # Calculate target offset from start of operon
   dummies$target_offset <- dummies$target_edge - dummies$range_min
 
   # Position start dummy
-  dummies$start_dummy <- dummies$range_min - (max(dummies$target_offset, na.rm = TRUE) - dummies$target_offset)
+  dummies$start_dummy <- dummies$range_min -
+    (max(dummies$target_offset, na.rm = TRUE) - dummies$target_offset)
 
   # Position end dummy
   dummies$range <- dummies$range_max - dummies$start_dummy
-  dummies$end_dummy <- dummies$range_max + (max(dummies$range, na.rm = TRUE) - dummies$range)
+  dummies$end_dummy <- dummies$range_max +
+    (max(dummies$range, na.rm = TRUE) - dummies$range)
 
   # Clean up
   dummies <- dummies[, c("y", "start_dummy", "end_dummy", "id")]
@@ -81,12 +107,18 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   # required, this can be removed
   if (utils::packageVersion("ggplot2") >= "2.2.1.9000") {
     names(dummies)[names(dummies) == "y"] <- rlang::quo_name(mapping$y)
-    names(dummies)[names(dummies) == "start_dummy"] <- rlang::quo_name(mapping$xmin)
-    names(dummies)[names(dummies) == "end_dummy"] <- rlang::quo_name(mapping$xmax)
+    names(dummies)[names(dummies) == "start_dummy"] <- rlang::quo_name(
+      mapping$xmin
+    )
+    names(dummies)[names(dummies) == "end_dummy"] <- rlang::quo_name(
+      mapping$xmax
+    )
     names(dummies)[names(dummies) == "id"] <- rlang::quo_name(mapping$id)
   } else {
     names(dummies)[names(dummies) == "y"] <- as.character(mapping$y)
-    names(dummies)[names(dummies) == "start_dummy"] <- as.character(mapping$xmin)
+    names(dummies)[names(dummies) == "start_dummy"] <- as.character(
+      mapping$xmin
+    )
     names(dummies)[names(dummies) == "end_dummy"] <- as.character(mapping$xmax)
     names(dummies)[names(dummies) == "id"] <- as.character(mapping$id)
   }

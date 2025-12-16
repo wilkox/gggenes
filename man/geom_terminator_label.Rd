@@ -58,7 +58,7 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  geom_terminator(data = example_terminators, 
+  geom_terminator(data = example_terminators,
                   ggplot2::aes(x = position, y = molecule)) +
   geom_terminator_label(data = example_terminators,
                      ggplot2::aes(x = position, y = molecule, label = name)) +

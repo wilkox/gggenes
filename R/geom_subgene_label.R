@@ -27,7 +27,7 @@
 #' of subgenes) drawn with `geom_gene_arrow()`.
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... Standard
 #' geom arguments as for `ggplot2::geom_text()`.
-#' 
+#'
 #' @section Aesthetics:
 #'
 #' -  xsubmin,xsubmax (start and end of the subgene; required)
@@ -52,11 +52,19 @@ geom_subgene_label <- function(
   padding.y = grid::unit(0.1, "lines"),
   align = "centre",
   min.size = 4,
-  grow = F,
-  reflow = F,
+  grow = FALSE,
+  reflow = FALSE,
   height = grid::unit(3, "mm"),
   ...
 ) {
+  assert_scalar_unit(padding.x)
+  assert_scalar_unit(padding.y)
+  assert_choice(align, c("left", "centre", "center", "middle", "right"))
+  assert_scalar_nonnegative_number(min.size)
+  assert_flag(grow)
+  assert_flag(reflow)
+  assert_scalar_unit(height)
+
   ggplot2::layer(
     data = data,
     mapping = mapping,
@@ -113,7 +121,6 @@ GeomSubgeneLabel <- ggplot2::ggproto(
     height = grid::unit(3, "mm"),
     subgroup = NA
   ) {
-
     # Detect coordinate system
     coord_system <- get_coord_system(coord)
     if (coord_system == "flip") {
@@ -128,11 +135,6 @@ GeomSubgeneLabel <- ggplot2::ggproto(
 
     # Transform data to panel scales
     data <- coord$transform(data, panel_scales)
-
-    # Check the value of 'align'
-    if (! align %in% c("left", "centre", "center", "middle", "right")) {
-      cli::cli_abort("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
-    }
 
     # Use ggfittext's fittexttree to draw the text
     if (coord_system == "flip") {

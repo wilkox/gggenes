@@ -1,5 +1,18 @@
 library(ggplot2)
 
+test_that("geom_terminator() and geom_terminator_label() validate arguments", {
+  expect_error(geom_terminator(terminator_height = "not a unit"))
+  expect_no_error(geom_terminator(terminator_height = grid::unit(3, "mm")))
+  expect_error(geom_terminator(terminator_width = "not a unit"))
+  expect_no_error(geom_terminator(terminator_width = grid::unit(3, "mm")))
+  expect_error(geom_terminator_label(terminator_height = "not a unit"))
+  expect_no_error(geom_terminator_label(
+    terminator_height = grid::unit(3, "mm")
+  ))
+  expect_error(geom_terminator_label(label_height = "not a unit"))
+  expect_no_error(geom_terminator_label(label_height = grid::unit(3, "mm")))
+})
+
 test_that("geom_terminator() and geom_terminator_label() in Cartesian coordinates", {
   p <- base_cartesian() +
     geom_gene_arrow() +

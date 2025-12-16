@@ -1,5 +1,18 @@
 library(ggplot2)
 
+test_that("geom_feature() and geom_feature_label() validate arguments", {
+  expect_error(geom_feature(feature_height = "not a unit"))
+  expect_no_error(geom_feature(feature_height = grid::unit(4, "mm")))
+  expect_error(geom_feature(feature_width = "not a unit"))
+  expect_no_error(geom_feature(feature_width = grid::unit(4, "mm")))
+  expect_error(geom_feature(arrowhead_width = "not a unit"))
+  expect_no_error(geom_feature(arrowhead_width = grid::unit(2, "mm")))
+  expect_error(geom_feature_label(feature_height = "not a unit"))
+  expect_no_error(geom_feature_label(feature_height = grid::unit(4, "mm")))
+  expect_error(geom_feature_label(label_height = "not a unit"))
+  expect_no_error(geom_feature_label(label_height = grid::unit(3, "mm")))
+})
+
 test_that("geom_feature() and geom_feature_label() in Cartesian coordinates", {
   p <- base_cartesian() +
     geom_feature(

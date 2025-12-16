@@ -16,8 +16,8 @@ geom_subgene_label(
   padding.y = grid::unit(0.1, "lines"),
   align = "centre",
   min.size = 4,
-  grow = F,
-  reflow = F,
+  grow = FALSE,
+  reflow = FALSE,
   height = grid::unit(3, "mm"),
   ...
 )

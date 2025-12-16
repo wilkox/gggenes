@@ -1,15 +1,15 @@
 #' Report coordinate system of a Coord ggproto object
 #' @noRd
 get_coord_system <- function(coord) {
-    if ("CoordPolar" %in% class(coord)) {
-      return("polar")
-    } else if ("CoordFlip" %in% class(coord)) {
-      return("flip")
-    } else if ("CoordCartesian" %in% class(coord)) {
-      return("cartesian")
-    } else {
-      cli::cli_abort("Unable to determine coordinate system")
-    }
+  if ("CoordPolar" %in% class(coord)) {
+    return("polar")
+  } else if ("CoordFlip" %in% class(coord)) {
+    return("flip")
+  } else if ("CoordCartesian" %in% class(coord)) {
+    return("cartesian")
+  } else {
+    cli::cli_abort("Unable to determine coordinate system")
+  }
 }
 
 #' Transform from dataspace into grid coordinates
@@ -22,14 +22,12 @@ get_coord_system <- function(coord) {
 #'
 #' @noRd
 data_to_grid <- function(data, coord_system, panel_scales, coord) {
-
   # Make sure the data contains either x OR xmin/xmax, not both
   if ("x" %in% names(data) & any(c("xmin", "xmax") %in% names(data))) {
     cli::cli_abort("data contains both x and xmin/xmax")
   }
 
   if (coord_system == "polar") {
-
     # if the data contains xmin/xmax, transform them into theta values
     if ("xmin" %in% names(data) & "xmax" %in% names(data)) {
       data$x <- data$xmin
@@ -54,28 +52,24 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
       data$along_max <- thetamax
       data$x <- data$xmin <- data$xmax <- NULL
 
-    # If the data contains x, transform it into theta
+      # If the data contains x, transform it into theta
     } else if ("x" %in% names(data)) {
       data <- coord$transform(data, panel_scales)
       data$along <- data$theta
       data$theta <- NULL
-
     } else {
       cli::cli_abort("Unable to transform to polar coordinates")
     }
 
     data$away <- data$r
     data$r <- NULL
-
   } else if (coord_system == "cartesian") {
-
     data <- coord$transform(data, panel_scales)
-    
+
     if ("xmin" %in% names(data) & "xmax" %in% names(data)) {
       data$along_min <- data$xmin
       data$along_max <- data$xmax
       data$xmin <- data$xmax <- NULL
-
     } else if ("x" %in% names(data)) {
       data$along <- data$x
       data$x <- NULL
@@ -83,16 +77,13 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
 
     data$away <- data$y
     data$y <- NULL
-
   } else if (coord_system == "flip") {
-
     data <- coord$transform(data, panel_scales)
-    
+
     if ("ymin" %in% names(data) & "ymax" %in% names(data)) {
       data$along_min <- data$ymin
       data$along_max <- data$ymax
       data$ymin <- data$ymax <- NULL
-
     } else if ("y" %in% names(data)) {
       data$along <- data$y
       data$y <- NULL
@@ -100,7 +91,6 @@ data_to_grid <- function(data, coord_system, panel_scales, coord) {
 
     data$away <- data$x
     data$x <- NULL
-
   } else {
     cli::cli_abort("Don't know what to do with this coordinate system")
   }
@@ -119,7 +109,6 @@ segment_polargon <- function(thetas, rs) {
   segmented_rs <- double()
   segmented_thetas <- double()
   for (i in seq.int(length(rs))) {
-
     j <- ifelse(i == length(rs), 1, i + 1)
 
     # If the line is vertical, no need to segment it
@@ -129,14 +118,17 @@ segment_polargon <- function(thetas, rs) {
     }
 
     # Get the length of the line
-    len <- sqrt((abs(rs[i] - rs[j]) ^ 2) + (abs(thetas[i] - thetas[j]) ^ 2))
-    
+    len <- sqrt((abs(rs[i] - rs[j])^2) + (abs(thetas[i] - thetas[j])^2))
+
     # Determine how many segments to break the line into
     n_segs <- round(len * 100)
 
     # Define the coordinates for each segment
     segmented_rs <- c(segmented_rs, seq(rs[i], rs[j], len = n_segs + 1))
-    segmented_thetas <- c(segmented_thetas, seq(thetas[i], thetas[j], len = n_segs + 1))
+    segmented_thetas <- c(
+      segmented_thetas,
+      seq(thetas[i], thetas[j], len = n_segs + 1)
+    )
   }
   return(list(rs = segmented_rs, thetas = segmented_thetas))
 }
@@ -153,41 +145,49 @@ segment_polarline <- function(thetas, rs, ids = NULL) {
   segmented_thetas <- double()
   segmented_ids <- double()
   for (i in seq.int(length(rs) - 1)) {
-
     j <- i + 1
 
     # Skip if ids are provided and there is no line between these points
-    if (! is.null(ids)) {
-      if (! ids[i] == ids[j]) { next }
+    if (!is.null(ids)) {
+      if (!ids[i] == ids[j]) {
+        next
+      }
     }
 
     # If the line is vertical, no need to segment it
     if (thetas[i] == thetas[j]) {
       segmented_rs <- c(segmented_rs, rs[i], rs[j])
       segmented_thetas <- c(segmented_thetas, thetas[i], thetas[j])
-      if (! is.null(ids)) {
+      if (!is.null(ids)) {
         segmented_ids <- c(segmented_ids, ids[i], ids[i])
       }
     }
 
     # Get the length of the line
-    len <- sqrt((abs(rs[i] - rs[j]) ^ 2) + (abs(thetas[i] - thetas[j]) ^ 2))
-    
+    len <- sqrt((abs(rs[i] - rs[j])^2) + (abs(thetas[i] - thetas[j])^2))
+
     # Determine how many segments to break the line into
     n_segs <- round(len * 100)
 
     # Define the coordinates for each segment
     segmented_rs <- c(segmented_rs, seq(rs[i], rs[j], len = n_segs + 1))
-    segmented_thetas <- c(segmented_thetas, seq(thetas[i], thetas[j], len = n_segs + 1))
+    segmented_thetas <- c(
+      segmented_thetas,
+      seq(thetas[i], thetas[j], len = n_segs + 1)
+    )
 
     # Set ids
-    if (! is.null(ids)) { 
-      segmented_ids <- c(segmented_ids, rep(ids[i], len = n_segs + 1)) 
+    if (!is.null(ids)) {
+      segmented_ids <- c(segmented_ids, rep(ids[i], len = n_segs + 1))
     }
   }
 
-  if (! is.null(ids)) {
-    return(list(rs = segmented_rs, thetas = segmented_thetas, ids = segmented_ids))
+  if (!is.null(ids)) {
+    return(list(
+      rs = segmented_rs,
+      thetas = segmented_thetas,
+      ids = segmented_ids
+    ))
   } else {
     return(list(rs = segmented_rs, thetas = segmented_thetas))
   }
@@ -196,15 +196,18 @@ segment_polarline <- function(thetas, rs, ids = NULL) {
 #' Convert grid unit distance to appropriate along/away value
 #'
 #' @noRd
-unit_to_alaw <- function(distance, to = c("away", "along"), coord_system, r = NULL) {
-
+unit_to_alaw <- function(
+  distance,
+  to = c("away", "along"),
+  coord_system,
+  r = NULL
+) {
   if (coord_system == "cartesian") {
     if (to == "along") {
       return(as.numeric(grid::convertWidth(distance, "native")))
     } else if (to == "away") {
       return(as.numeric(grid::convertHeight(distance, "native")))
     }
-
   } else if (coord_system == "polar") {
     if (to == "along") {
       distance <- as.numeric(grid::convertWidth(distance, "native"))
@@ -227,16 +230,13 @@ unit_to_alaw <- function(distance, to = c("away", "along"), coord_system, r = NU
 #'
 #' @noRd
 alaw_to_grid <- function(alongs, aways, coord_system, r = NULL) {
-
   if (coord_system == "cartesian") {
     return(list(x = alongs, y = aways))
-
   } else if (coord_system == "polar") {
     return(list(
       x = 0.5 + (aways * sin(alongs)),
       y = 0.5 + (aways * cos(alongs))
     ))
-
   } else if (coord_system == "flip") {
     return(list(x = aways, y = alongs))
   }
@@ -247,3 +247,109 @@ alaw_to_grid <- function(alongs, aways, coord_system, r = NULL) {
 #' Infix %||% operator, from rlang
 #' @noRd
 `%||%` <- function(x, y) if (is.null(x)) y else x
+
+#' Assert that an argument is a scalar grid::unit object
+#' @noRd
+assert_scalar_unit <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!inherits(x, "unit") || length(x) != 1) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a scalar {.cls grid::unit} object",
+      call = call
+    )
+  }
+}
+
+#' Assert that an argument is one of a set of choices
+#' @noRd
+assert_choice <- function(
+  x,
+  choices,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.character(x) || length(x) != 1 || !x %in% choices) {
+    cli::cli_abort(
+      "{.arg {arg}} must be one of {.or {.val {choices}}}",
+      call = call
+    )
+  }
+}
+
+#' Assert that an argument is a scalar logical value
+#' @noRd
+assert_flag <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.logical(x) || length(x) != 1 || is.na(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a scalar logical value",
+      call = call
+    )
+  }
+}
+
+#' Assert that an argument is a scalar non-negative number
+#' @noRd
+assert_scalar_nonnegative_number <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.numeric(x) || length(x) != 1 || is.na(x) || x < 0) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a scalar non-negative number",
+      call = call
+    )
+  }
+}
+
+#' Assert that an argument is a data frame
+#' @noRd
+assert_data_frame <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.data.frame(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a data frame",
+      call = call
+    )
+  }
+}
+
+#' Assert that an argument is a scalar character vector
+#' @noRd
+assert_scalar_character <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.character(x) || length(x) != 1 || is.na(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a scalar character vector",
+      call = call
+    )
+  }
+}
+
+#' Assert that an argument is a ggplot2 aesthetic mapping
+#' @noRd
+assert_mapping <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!inherits(x, "uneval")) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a {.cls ggplot2::aes} mapping object",
+      call = call
+    )
+  }
+}

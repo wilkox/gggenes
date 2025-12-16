@@ -65,9 +65,18 @@ geom_subgene_arrow <- function(
   arrow_body_height = grid::unit(3, "mm"),
   ...
 ) {
+  assert_scalar_unit(arrowhead_width)
+  assert_scalar_unit(arrowhead_height)
+  assert_scalar_unit(arrow_body_height)
+
   ggplot2::layer(
-    geom = GeomSubgeneArrow, mapping = mapping, data = data, stat = stat,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    geom = GeomSubgeneArrow,
+    mapping = mapping,
+    data = data,
+    stat = stat,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
       arrowhead_width = arrowhead_width,
@@ -80,7 +89,9 @@ geom_subgene_arrow <- function(
 
 #' GeomSubgeneArrow
 #' @noRd
-GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
+GeomSubgeneArrow <- ggplot2::ggproto(
+  "GeomSubgeneArrow",
+  ggplot2::Geom,
   required_aes = c("xsubmin", "xsubmax", "xmin", "xmax", "y"),
   default_aes = ggplot2::aes(
     forward = TRUE,
@@ -110,7 +121,6 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
     arrowhead_height,
     arrow_body_height
   ) {
-
     # Detect coordinate system
     coord_system <- get_coord_system(coord)
 
@@ -119,11 +129,11 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
     data <- coord$transform(data, panel_scales)
     ## force rescale of sub characteristics
     if (coord_system == "flip") {
-      tmp <- setNames(data[,c("ysubmin", "ysubmax")], c("xmin", "xmax"))
-      data[,c("ysubmin", "ysubmax")] <- coord$transform(tmp, panel_scales)
+      tmp <- setNames(data[, c("ysubmin", "ysubmax")], c("xmin", "xmax"))
+      data[, c("ysubmin", "ysubmax")] <- coord$transform(tmp, panel_scales)
     } else if (coord_system == "cartesian") {
-      tmp <- setNames(data[,c("xsubmin", "xsubmax")], c("xmin", "xmax"))
-      data[,c("xsubmin", "xsubmax")] <- coord$transform(tmp, panel_scales)
+      tmp <- setNames(data[, c("xsubmin", "xsubmax")], c("xmin", "xmax"))
+      data[, c("xsubmin", "xsubmax")] <- coord$transform(tmp, panel_scales)
     } else {
       cli::cli_abort("Don't know how to draw in this coordinate system")
     }
@@ -146,16 +156,14 @@ GeomSubgeneArrow <- ggplot2::ggproto("GeomSubgeneArrow", ggplot2::Geom,
 #' @importFrom grid makeContent
 #' @export
 makeContent.cartesiansubgenearrowtree <- function(x) {
-
   data <- x$data
 
   # Prepare grob for each subgenearrowtree
   grobs <- lapply(seq_len(nrow(data)), function(i) {
-
     subgene <- data[i, ]
 
     # Reverse non-forward subgenes
-    if (! as.logical(subgene$forward)) {
+    if (!as.logical(subgene$forward)) {
       subgene[, c("xmin", "xmax")] <- subgene[, c("xmax", "xmin")]
       subgene[, c("xsubmin", "xsubmax")] <- subgene[, c("xsubmax", "xsubmin")]
     }
@@ -166,13 +174,22 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
     orientation <- ifelse(orientbool, 1, -1)
 
     # Check if subgene is consistent with gene boundaries
-    between <- function(i, a, b) { i >= min(c(a, b)) & i <= max(c(a, b)) }
-    if (! between(subgene$xsubmin, subgene$xmin, subgene$xmax)) { return(NULL) }
-    if (! between(subgene$xsubmax, subgene$xmin, subgene$xmax)) { return(NULL) }
+    between <- function(i, a, b) {
+      i >= min(c(a, b)) & i <= max(c(a, b))
+    }
+    if (!between(subgene$xsubmin, subgene$xmin, subgene$xmax)) {
+      return(NULL)
+    }
+    if (!between(subgene$xsubmax, subgene$xmin, subgene$xmax)) {
+      return(NULL)
+    }
 
     # Arrowhead defaults to 4 mm, unless the subgene is shorter in which case the
     # subgene is 100% arrowhead
-    arrowhead_width <- as.numeric(grid::convertWidth(x$arrowhead_width, "native"))
+    arrowhead_width <- as.numeric(grid::convertWidth(
+      x$arrowhead_width,
+      "native"
+    ))
     subgene_width <- abs(subgene$xmax - subgene$xmin)
     arrowhead_width <- ifelse(
       arrowhead_width > subgene_width,
@@ -185,8 +202,16 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
 
     # Set arrow and arrowhead heights; it's convenient to divide these by two
     # for calculating y coordinates on the polygon
-    arrowhead_height <- as.numeric(grid::convertHeight(x$arrowhead_height, "native")) / 2
-    arrow_body_height <- as.numeric(grid::convertHeight(x$arrow_body_height, "native")) / 2
+    arrowhead_height <- as.numeric(grid::convertHeight(
+      x$arrowhead_height,
+      "native"
+    )) /
+      2
+    arrow_body_height <- as.numeric(grid::convertHeight(
+      x$arrow_body_height,
+      "native"
+    )) /
+      2
 
     if (f(subgene$xsubmax <= flangex)) {
       x <- c(
@@ -202,11 +227,13 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
         subgene$y + arrow_body_height
       )
 
-    # If a subgene boundary is within the arrowhead, an 8 point polygon is
-    # needed
+      # If a subgene boundary is within the arrowhead, an 8 point polygon is
+      # needed
     } else if (f(subgene$xsubmin <= flangex)) {
       arrowhead_end_height <- arrowhead_height /
-            (subgene$xmax -flangex) * (subgene$xmax -subgene$xsubmax)*orientation
+        (subgene$xmax - flangex) *
+        (subgene$xmax - subgene$xsubmax) *
+        orientation
 
       x <- c(
         subgene$xsubmin,
@@ -228,17 +255,22 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
         subgene$y + arrowhead_height,
         subgene$y + arrow_body_height
       )
-      if (!orientbool)
-        y[c(5,6)] <- y[c(6,5)]
+      if (!orientbool) {
+        y[c(5, 6)] <- y[c(6, 5)]
+      }
 
-    # If both subgene boundaries are outside the arrowhead, the subgene can be
-    # drawn as a 4-point polygon (rectangle)
+      # If both subgene boundaries are outside the arrowhead, the subgene can be
+      # drawn as a 4-point polygon (rectangle)
     } else if (f(subgene$xsubmin > flangex)) {
-      arrowhead_start_height <- arrowhead_height * (subgene$xmax-subgene$xsubmin) /
-                                  (subgene$xmax -flangex)*orientation
+      arrowhead_start_height <- arrowhead_height *
+        (subgene$xmax - subgene$xsubmin) /
+        (subgene$xmax - flangex) *
+        orientation
 
-      arrowhead_end_height <- arrowhead_height / (subgene$xmax -flangex) *
-                                  (subgene$xmax -subgene$xsubmax)*orientation
+      arrowhead_end_height <- arrowhead_height /
+        (subgene$xmax - flangex) *
+        (subgene$xmax - subgene$xsubmax) *
+        orientation
 
       x <- c(
         subgene$xsubmin,
@@ -252,8 +284,7 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
         subgene$y - arrowhead_end_height,
         subgene$y + arrowhead_end_height
       )
-    }
-    else {
+    } else {
       ## will we ever get here?
       cli::cli_abort("Condition not met")
     }
@@ -274,9 +305,11 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
   })
   skip <- vapply(grobs, is.null, logical(1))
   if (any(skip)) {
-    subgenes <- x$orig_data[skip,, drop = FALSE]
+    subgenes <- x$orig_data[skip, , drop = FALSE]
     for (i in seq_len(nrow(subgenes))) {
-      cli::cli_warn("Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping")
+      cli::cli_warn(
+        "Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping"
+      )
     }
   }
 
@@ -287,16 +320,14 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
 #' @importFrom grid makeContent
 #' @export
 makeContent.flipsubgenearrowtree <- function(x) {
-
   data <- x$data
 
   # Prepare grob for each subgenearrowtree
   grobs <- lapply(seq_len(nrow(data)), function(i) {
-
     subgene <- data[i, ]
 
     # Reverse non-forward subgenes
-    if (! as.logical(subgene$forward)) {
+    if (!as.logical(subgene$forward)) {
       subgene[, c("ymin", "ymax")] <- subgene[, c("ymax", "ymin")]
       subgene[, c("ysubmin", "ysubmax")] <- subgene[, c("ysubmax", "ysubmin")]
     }
@@ -307,13 +338,22 @@ makeContent.flipsubgenearrowtree <- function(x) {
     orientation <- ifelse(orientbool, 1, -1)
 
     # Check if subgene is consistent with gene boundaries
-    between <- function(i, a, b) { i >= min(c(a, b)) & i <= max(c(a, b)) }
-    if (! between(subgene$ysubmin, subgene$ymin, subgene$ymax)) { return(NULL) }
-    if (! between(subgene$ysubmax, subgene$ymin, subgene$ymax)) { return(NULL) }
+    between <- function(i, a, b) {
+      i >= min(c(a, b)) & i <= max(c(a, b))
+    }
+    if (!between(subgene$ysubmin, subgene$ymin, subgene$ymax)) {
+      return(NULL)
+    }
+    if (!between(subgene$ysubmax, subgene$ymin, subgene$ymax)) {
+      return(NULL)
+    }
 
     # Arrowhead defaults to 4 mm, unless the subgene is shorter in which case the
     # subgene is 100% arrowhead
-    arrowhead_width <- as.numeric(grid::convertHeight(x$arrowhead_width, "native"))
+    arrowhead_width <- as.numeric(grid::convertHeight(
+      x$arrowhead_width,
+      "native"
+    ))
     subgene_width <- abs(subgene$ymax - subgene$ymin)
     arrowhead_width <- ifelse(
       arrowhead_width > subgene_width,
@@ -326,8 +366,16 @@ makeContent.flipsubgenearrowtree <- function(x) {
 
     # Set arrow and arrowhead heights; it's convenient to divide these by two
     # for calculating x coordinates on the polygon
-    arrowhead_height <- as.numeric(grid::convertWidth(x$arrowhead_height, "native")) / 2
-    arrow_body_height <- as.numeric(grid::convertWidth(x$arrow_body_height, "native")) / 2
+    arrowhead_height <- as.numeric(grid::convertWidth(
+      x$arrowhead_height,
+      "native"
+    )) /
+      2
+    arrow_body_height <- as.numeric(grid::convertWidth(
+      x$arrow_body_height,
+      "native"
+    )) /
+      2
 
     if (f(subgene$ysubmax <= flangey)) {
       y <- c(
@@ -343,11 +391,13 @@ makeContent.flipsubgenearrowtree <- function(x) {
         subgene$x + arrow_body_height
       )
 
-    # If a subgene boundary is within the arrowhead, an 8 point polygon is
-    # needed
+      # If a subgene boundary is within the arrowhead, an 8 point polygon is
+      # needed
     } else if (f(subgene$ysubmin <= flangey)) {
       arrowhead_end_height <- arrowhead_height /
-            (subgene$ymax -flangey) * (subgene$ymax -subgene$ysubmax)*orientation
+        (subgene$ymax - flangey) *
+        (subgene$ymax - subgene$ysubmax) *
+        orientation
 
       y <- c(
         subgene$ysubmin,
@@ -369,17 +419,22 @@ makeContent.flipsubgenearrowtree <- function(x) {
         subgene$x + arrowhead_height,
         subgene$x + arrow_body_height
       )
-      if (!orientbool)
-        x[c(5,6)] <- x[c(6,5)]
+      if (!orientbool) {
+        x[c(5, 6)] <- x[c(6, 5)]
+      }
 
-    # If both subgene boundaries are outside the arrowhead, the subgene can be
-    # drawn as a 4-point polygon (rectangle)
+      # If both subgene boundaries are outside the arrowhead, the subgene can be
+      # drawn as a 4-point polygon (rectangle)
     } else if (f(subgene$ysubmin > flangey)) {
-      arrowhead_start_height <- arrowhead_height * (subgene$ymax-subgene$ysubmin) /
-                                  (subgene$ymax -flangey)*orientation
+      arrowhead_start_height <- arrowhead_height *
+        (subgene$ymax - subgene$ysubmin) /
+        (subgene$ymax - flangey) *
+        orientation
 
-      arrowhead_end_height <- arrowhead_height / (subgene$ymax -flangey) *
-                                  (subgene$ymax -subgene$ysubmax)*orientation
+      arrowhead_end_height <- arrowhead_height /
+        (subgene$ymax - flangey) *
+        (subgene$ymax - subgene$ysubmax) *
+        orientation
 
       y <- c(
         subgene$ysubmin,
@@ -414,9 +469,11 @@ makeContent.flipsubgenearrowtree <- function(x) {
   })
   skip <- vapply(grobs, is.null, logical(1))
   if (any(skip)) {
-    subgenes <- x$orig_data[skip,, drop = FALSE]
+    subgenes <- x$orig_data[skip, , drop = FALSE]
     for (i in seq_len(nrow(subgenes))) {
-      cli::cli_warn("Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping")
+      cli::cli_warn(
+        "Subgene ({subgenes$xsubmin[i]}..{subgenes$xsubmax[i]}) breaks boundaries of gene ({subgenes$xmin[i]}..{subgenes$xmax[i]}), skipping"
+      )
     }
   }
 

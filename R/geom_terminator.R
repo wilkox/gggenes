@@ -54,6 +54,9 @@ geom_terminator <- function(
   terminator_width = unit(3, "mm"),
   ...
 ) {
+  assert_scalar_unit(terminator_height)
+  assert_scalar_unit(terminator_width)
+
   ggplot2::layer(
     geom = GeomTerminator,
     mapping = mapping,

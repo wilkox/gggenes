@@ -11,7 +11,7 @@
 #'   \item{strand}{the strand of the gene}
 #'   \item{orientation}{the orientation of the gene}
 #' }
-#' 
+#'
 #' example_subgenes (143 rows) also contains:
 #' \describe{
 #'   \item{subgene}{the name of the subgene}

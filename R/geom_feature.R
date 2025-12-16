@@ -72,6 +72,10 @@ geom_feature <- function(
   arrowhead_width = unit(2, "mm"),
   ...
 ) {
+  assert_scalar_unit(feature_height)
+  assert_scalar_unit(feature_width)
+  assert_scalar_unit(arrowhead_width)
+
   ggplot2::layer(
     geom = GeomFeature,
     mapping = mapping,

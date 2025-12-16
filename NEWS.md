@@ -8,6 +8,10 @@
   default `linewidth` values for these geoms, but will cause a significant
   visual change where `linewidth` is set manually (#89)
 
+## Minor changes
+
+- Add comprehensive input validation
+
 # gggenes 0.6.0
 
 ## Major changes

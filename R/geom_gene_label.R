@@ -62,11 +62,19 @@ geom_gene_label <- function(
   padding.y = grid::unit(0.1, "lines"),
   align = "centre",
   min.size = 4,
-  grow = F,
-  reflow = F,
+  grow = FALSE,
+  reflow = FALSE,
   height = grid::unit(3, "mm"),
   ...
 ) {
+  assert_scalar_unit(padding.x)
+  assert_scalar_unit(padding.y)
+  assert_choice(align, c("left", "centre", "center", "middle", "right"))
+  assert_scalar_nonnegative_number(min.size)
+  assert_flag(grow)
+  assert_flag(reflow)
+  assert_scalar_unit(height)
+
   ggplot2::layer(
     data = data,
     mapping = mapping,
@@ -110,7 +118,6 @@ GeomGeneLabel <- ggplot2::ggproto(
   draw_key = ggplot2::draw_key_text,
 
   setup_data = function(data, params) {
-
     # The 'forward' aesthetic, if provided, should be logical or coerced to
     # logical
     if (!is.null(data$forward)) {
@@ -133,34 +140,40 @@ GeomGeneLabel <- ggplot2::ggproto(
     height = grid::unit(3, "mm"),
     subgroup = NA
   ) {
-
     # Detect coordinate system and transform coordinates. The ggfittext
     # makeContent methods expect a different set of aesthetic names.
     coord_system <- get_coord_system(coord)
     data <- data_to_grid(data, coord_system, panel_scales, coord)
     if (coord_system == "cartesian") {
-      if ("along_min" %in% names(data)) { data$xmin <- data$along_min }
-      if ("along_max" %in% names(data)) { data$xmax <- data$along_max }
-      if ("away" %in% names(data)) { data$y <- data$away }
+      if ("along_min" %in% names(data)) {
+        data$xmin <- data$along_min
+      }
+      if ("along_max" %in% names(data)) {
+        data$xmax <- data$along_max
+      }
+      if ("away" %in% names(data)) {
+        data$y <- data$away
+      }
     } else if (coord_system == "flip") {
-      if ("along_min" %in% names(data)) { data$ymin <- data$along_min }
-      if ("along_max" %in% names(data)) { data$ymax <- data$along_max }
-      if ("away" %in% names(data)) { data$x <- data$away }
+      if ("along_min" %in% names(data)) {
+        data$ymin <- data$along_min
+      }
+      if ("along_max" %in% names(data)) {
+        data$ymax <- data$along_max
+      }
+      if ("away" %in% names(data)) {
+        data$x <- data$away
+      }
     } else if (coord_system == "polar") {
-      if ("along_min" %in% names(data)) { data$xmin <- data$along_min }
-      if ("along_max" %in% names(data)) { data$xmax <- data$along_max }
-      if ("away" %in% names(data)) { data$r <- data$away }
-    }
-
-    # Check value of 'align'
-    if (! align %in% c(
-      "left",
-      "centre",
-      "center",
-      "middle",
-      "right"
-    )) {
-      cli::cli_abort("`align` must be one of `left`, `centre`, `center`, `middle` or `right`")
+      if ("along_min" %in% names(data)) {
+        data$xmin <- data$along_min
+      }
+      if ("along_max" %in% names(data)) {
+        data$xmax <- data$along_max
+      }
+      if ("away" %in% names(data)) {
+        data$r <- data$away
+      }
     }
 
     # Use ggfittext's fittexttree to draw text

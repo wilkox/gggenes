@@ -66,6 +66,10 @@ geom_gene_arrow <- function(
   arrow_body_height = grid::unit(3, "mm"),
   ...
 ) {
+  assert_scalar_unit(arrowhead_width)
+  assert_scalar_unit(arrowhead_height)
+  assert_scalar_unit(arrow_body_height)
+
   ggplot2::layer(
     geom = GeomGeneArrow,
     mapping = mapping,
