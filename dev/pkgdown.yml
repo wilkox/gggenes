@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   introduction-to-gggenes: introduction-to-gggenes.html
-last_built: 2025-12-16T05:17Z
+last_built: 2025-12-16T05:37Z
 urls:
   reference: https://wilkox.org/gggenes/reference
   article: https://wilkox.org/gggenes/articles

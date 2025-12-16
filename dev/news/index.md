@@ -18,6 +18,9 @@
 ### Minor changes
 
 - Add comprehensive input validation
+  ([\#91](https://github.com/wilkox/gggenes/issues/91))
+- Improve error messages
+  ([\#92](https://github.com/wilkox/gggenes/issues/92))
 
 ## gggenes 0.6.0
 
