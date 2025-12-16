@@ -1,32 +1,6 @@
 url: https://wilkox.org/gggenes/
 template:
   bootstrap: 5
-navbar:
-  structure:
-    left:
-    - home
-    - intro
-    - reference
-    - articles
-    - tutorials
-    - news
-    right: github
-  components:
-    home:
-      icon: fa-home fa-lg
-      href: index.html
-    reference:
-      text: Reference
-      href: reference/index.html
-    articles:
-      text: Articles
-      menu:
-      - text: Introduction to 'gggenes'
-        href: articles/introduction-to-gggenes.html
-    news:
-      text: Changelog
-      href: news/index.html
-    github:
-      icon: fa-github
-      href: https://github.com/wilkox/gggenes
+development:
+  mode: auto
 
