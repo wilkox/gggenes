@@ -353,3 +353,9 @@ assert_mapping <- function(
     )
   }
 }
+
+#' Check if a value is between two bounds (inclusive)
+#' @noRd
+between <- function(i, a, b) {
+  i >= min(c(a, b)) & i <= max(c(a, b))
+}

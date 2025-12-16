@@ -12,6 +12,7 @@
 
 - Add comprehensive input validation (#91)
 - Improve error messages (#92)
+- Minor internal refactoring (#93)
 
 # gggenes 0.6.0
 

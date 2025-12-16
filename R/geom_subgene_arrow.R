@@ -174,9 +174,6 @@ makeContent.cartesiansubgenearrowtree <- function(x) {
     orientation <- ifelse(orientbool, 1, -1)
 
     # Check if subgene is consistent with gene boundaries
-    between <- function(i, a, b) {
-      i >= min(c(a, b)) & i <= max(c(a, b))
-    }
     if (!between(subgene$xsubmin, subgene$xmin, subgene$xmax)) {
       return(NULL)
     }
@@ -340,9 +337,6 @@ makeContent.flipsubgenearrowtree <- function(x) {
     orientation <- ifelse(orientbool, 1, -1)
 
     # Check if subgene is consistent with gene boundaries
-    between <- function(i, a, b) {
-      i >= min(c(a, b)) & i <= max(c(a, b))
-    }
     if (!between(subgene$ysubmin, subgene$ymin, subgene$ymax)) {
       return(NULL)
     }
