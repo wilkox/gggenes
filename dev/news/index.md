@@ -15,6 +15,10 @@
   will cause a significant visual change where `linewidth` is set
   manually ([\#89](https://github.com/wilkox/gggenes/issues/89))
 
+### Minor changes
+
+- Add comprehensive input validation
+
 ## gggenes 0.6.0
 
 CRAN release: 2025-12-14

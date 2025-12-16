@@ -78,11 +78,11 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule, 
+  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule,
                                                      forward = forward)) +
   geom_feature_label(data = example_features,
-                     ggplot2::aes(x = position, y = molecule, label = name, 
-                                  forward = forward)) + 
+                     ggplot2::aes(x = position, y = molecule, label = name,
+                                  forward = forward)) +
   ggplot2::facet_wrap(~ molecule, scales = "free")
 
 ```
