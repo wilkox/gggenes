@@ -21,6 +21,8 @@
   ([\#91](https://github.com/wilkox/gggenes/issues/91))
 - Improve error messages
   ([\#92](https://github.com/wilkox/gggenes/issues/92))
+- Minor internal refactoring
+  ([\#93](https://github.com/wilkox/gggenes/issues/93))
 
 ## gggenes 0.6.0
 
