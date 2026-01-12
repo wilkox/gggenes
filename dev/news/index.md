@@ -17,6 +17,13 @@
 
 ### Minor changes
 
+- Add polar coordinate support for
+  [`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md)
+  and
+  [`geom_subgene_label()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_label.md)
+- Add developer vignette documenting coordinate transformation internals
+- Consolidate coordinate transformation logic into `compose_grob()`
+  interface
 - Add comprehensive input validation
   ([\#91](https://github.com/wilkox/gggenes/issues/91))
 - Improve error messages

@@ -1,0 +1,401 @@
+# Coordinate Transformations in gggenes
+
+This vignette is intended as a reference for gggenes development. It
+explains the internal coordinate transformation pipeline and the
+rationale behind its design. If you are not planning to make changes to
+gggenes, you probably don’t need to read this.
+
+## The Problem
+
+gggenes geoms need to combine two types of measurements:
+
+1.  **Data-derived coordinates** (e.g. gene positions defined with
+    `xmin` and `xmax`) that scale with the plot axes
+2.  **Absolute measurements** (e.g. arrowhead dimensions defined in
+    millimetres) that remain constant regardless of plot size
+
+This creates a challenge because ggplot2’s standard approach of
+transforming data coordinates in `draw_panel()` doesn’t work when
+absolute measurements are involved. At `draw_panel()` time, the viewport
+doesn’t exist yet, so there’s no way to convert “4 mm” to native
+coordinate units. Even if we could, resizing the plot would invalidate
+the calculation without re-running `draw_panel()`.
+
+## The Solution: Deferred Rendering
+
+gggenes solves this by deferring grob construction to render time using
+grid’s `makeContent()` mechanism:
+
+1.  `draw_panel()` packages the raw data, `coord`, and `panel_scales`
+    into a `gTree` with a custom class
+2.  `makeContent()` is called by grid at render time, when the viewport
+    exists and unit conversions are valid
+3.  The actual geometry is constructed and converted to grid coordinates
+    inside `makeContent()`
+
+This ensures that absolute measurements are correctly converted
+regardless of plot size, and that resizing triggers a fresh conversion.
+
+## The Along/Away Abstraction
+
+gggenes supports three coordinate systems: Cartesian, flipped
+([`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html)),
+and polar
+([`coord_polar()`](https://ggplot2.tidyverse.org/reference/coord_radial.html)).
+Rather than writing separate geometry logic for each, the package uses
+an abstraction called “along/away”:
+
+- **Along**: The direction along the molecule backbone
+- **Away**: The direction perpendicular to the backbone
+
+This maps to different axes depending on the coordinate system:
+
+| Coordinate System | Along          | Away           |
+|-------------------|----------------|----------------|
+| Cartesian         | x (horizontal) | y (vertical)   |
+| Flipped           | y (vertical)   | x (horizontal) |
+| Polar             | theta (angle)  | r (radius)     |
+
+With this abstraction, geometry can be defined once in along/away terms
+and then transformed appropriately for any coordinate system.
+
+The following diagram illustrates the full transformation pipeline for
+each coordinate system:
+
+                            TRANSFORMATION PIPELINE
+
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │                              RAW DATA                                       │
+    │                    (xmin, xmax, y in data units)                            │
+    └─────────────────────────────────────────────────────────────────────────────┘
+                                        │
+                                        ▼
+                              coord$transform()
+                                        │
+              ┌─────────────────────────┼─────────────────────────┐
+              │                         │                         │
+              ▼                         ▼                         ▼
+    ┌───────────────────┐   ┌───────────────────┐   ┌───────────────────┐
+    │     CARTESIAN     │   │      FLIPPED      │   │       POLAR       │
+    ├───────────────────┤   ├───────────────────┤   ├───────────────────┤
+    │ along = x (NPC)   │   │ along = y (NPC)   │   │ along = θ (rad)   │
+    │ away  = y (NPC)   │   │ away  = x (NPC)   │   │ away  = r (0–0.5) │
+    └───────────────────┘   └───────────────────┘   └───────────────────┘
+              │                         │                         │
+              ▼                         ▼                         ▼
+    ┌───────────────────────────────────────────────────────────────────┐
+    │                      GEOMETRY FUNCTION                            │
+    │         (operates in along/away space, same for all coords)       │
+    └───────────────────────────────────────────────────────────────────┘
+              │                         │                         │
+              │                         │                         ▼
+              │                         │              ┌───────────────────┐
+              │                         │              │ Polar segmentation│
+              │                         │              │ (add vertices for │
+              │                         │              │  smooth curves)   │
+              │                         │              └───────────────────┘
+              │                         │                         │
+              ▼                         ▼                         ▼
+    ┌───────────────────┐   ┌───────────────────┐   ┌───────────────────┐
+    │ FINAL CONVERSION  │   │ FINAL CONVERSION  │   │ FINAL CONVERSION  │
+    ├───────────────────┤   ├───────────────────┤   ├───────────────────┤
+    │ x = along         │   │ x = away          │   │ x = 0.5 + r×sin(θ)│
+    │ y = away          │   │ y = along         │   │ y = 0.5 + r×cos(θ)│
+    └───────────────────┘   └───────────────────┘   └───────────────────┘
+              │                         │                         │
+              └─────────────────────────┼─────────────────────────┘
+                                        │
+                                        ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │                           GRID GROB                                         │
+    │                      (x, y in NPC units)                                    │
+    └─────────────────────────────────────────────────────────────────────────────┘
+
+### Important: Along/Away Are Not Always NPC
+
+A key subtlety is that along/away values represent different things
+depending on the coordinate system:
+
+- **Cartesian/Flipped**: Along and away are NPC (normalised parent
+  coordinates), scaled 0-1. The transformation from data to NPC happens
+  via `coord$transform()` and is complete at this point.
+
+- **Polar**: Along is theta (radians, 0 to 2π) and away is r (radius,
+  scaled 0–0.5). These are *not* NPC—they’re polar coordinates that
+  still need to be converted to Cartesian NPC for grid to draw.
+
+This means the data-to-NPC transformation happens at different stages:
+
+    Cartesian: data → coord$transform() → NPC (stored as along/away) → grid
+    Polar:     data → coord$transform() → θ/r (stored as along/away) → trig conversion → NPC → grid
+
+## The compose_grob() Pipeline
+
+To encapsulate this complexity, gggenes uses a `compose_grob()` function
+that handles the entire transformation pipeline from raw data to final
+grob. This function:
+
+1.  Detects the coordinate system
+2.  Transforms data to along/away coordinates
+3.  Converts unit measurements (mm, etc.) to along/away values
+4.  Calls a geometry function with the transformed values
+5.  Segments the geometry for polar coordinates (so curves appear
+    smooth)
+6.  Converts along/away to grid NPC coordinates
+7.  Creates and returns the appropriate grob
+
+### Geometry Functions
+
+Geometry is defined as a regular R function that receives a data row
+with transformed coordinates, and returns the polygon or polyline
+vertices:
+
+``` r
+gene_arrow_geometry <- function(data_row, gt, as_along, as_away) {
+  # Extract transformed coordinates from data_row
+  along_min <- data_row$along_min
+  along_max <- data_row$along_max
+  away <- data_row$away
+
+  # Convert units using the converter functions
+  arrowhead_along <- as_along(gt$arrowhead_width)
+  arrowhead_away <- as_away(gt$arrowhead_height)
+  body_away <- as_away(gt$arrow_body_height)
+
+  # Compute intermediate values
+  orientation <- ifelse(along_max > along_min, 1, -1)
+  arrowhead_along_clamped <- ifelse(
+    arrowhead_along > abs(along_max - along_min),
+    abs(along_max - along_min),
+    arrowhead_along
+  )
+  flange <- along_max - orientation * arrowhead_along_clamped
+  arrowhead_away_half <- arrowhead_away / 2
+  body_away_half <- body_away / 2
+
+  # Return vertex coordinates
+  list(
+    alongs = c(along_min, along_min, flange, flange, along_max, flange, flange),
+    aways = c(
+      away + body_away_half,
+      away - body_away_half,
+      away - body_away_half,
+      away - arrowhead_away_half,
+      away,
+      away + arrowhead_away_half,
+      away + body_away_half
+    )
+  )
+}
+```
+
+The function receives a standard interface:
+
+- `data_row`: A single-row data frame with transformed coordinates.
+  Contains `along` (for point geoms) or `along_min`/`along_max` (for
+  range geoms), plus `away`. For subgene geoms, also contains
+  `along_submin`/`along_submax`.
+- `gt`: The gTree object containing geom-specific parameters as
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) objects (e.g.,
+  `gt$arrowhead_width`).
+- `as_along`: Function to convert a
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to native
+  along-units.
+- `as_away`: Function to convert a
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to native
+  away-units.
+
+All coordinate values in `data_row` are already transformed to
+along/away space. The geometry function converts unit measurements as
+needed using the converter functions.
+
+### Unit Conversion
+
+Converting absolute measurements to along/away values requires knowing:
+
+1.  The coordinate system (determines which grid dimension to convert)
+2.  For polar “along”, the current radius (angular size scales inversely
+    with radius)
+
+`compose_grob()` creates the `as_along` and `as_away` converter
+functions that close over these values:
+
+``` r
+# Inside compose_grob():
+as_along <- if (coord_system == "cartesian") {
+
+  function(unit) as.numeric(grid::convertWidth(unit, "native"))
+} else if (coord_system == "polar") {
+  function(unit) as.numeric(grid::convertWidth(unit, "native")) / r
+} else if (coord_system == "flip") {
+  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+}
+
+as_away <- if (coord_system == "cartesian") {
+  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+} else if (coord_system == "polar") {
+  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+} else if (coord_system == "flip") {
+  function(unit) as.numeric(grid::convertWidth(unit, "native"))
+}
+```
+
+### Polar Segmentation
+
+ggplot2 draws polar-coordinate plots by defining them in Cartesian
+coordinates that are passed to grid. Grid doesn’t know it’s drawing a
+polar-coordinate plot. Hence, a straight line in a polar-coordinate plot
+cannot be defined as a line between two points, as this would be drawn
+as a straight chord rather than an arc. To make lines follow the polar
+geometry, they must be broken into many small segments before conversion
+to Cartesian coordinates. In ggplot2, this is known as ‘munching’. This
+segmentation is handled automatically by `compose_grob()`.
+
+The segmentation algorithm works as follows:
+
+1.  For each pair of consecutive vertices (with wrap-around for
+    polygons), calculate a “length” in polar space:
+    `sqrt((Δr)² + (Δθ)²)`
+2.  Create `round(length * 100)` segments between the
+    vertices—approximately 100 segments per unit of combined polar
+    distance
+3.  Linearly interpolate both r and θ to create the intermediate points
+4.  For polylines, the algorithm respects `id` groupings to keep
+    separate line segments separate
+
+Note that `compose_grob()` includes handling for the special case where
+theta wraps around at 0/2π. When a range geom’s endpoint transforms to
+exactly 0 radians but should logically be 2π (based on the original data
+ordering), the value is corrected. However, geometries that truly span
+across the 0/2π boundary (e.g., from 350° to 10°) are not currently
+supported and would need to be split into two separate geometries.
+
+### Final Conversion
+
+After geometry is computed in along/away space, it’s converted to grid
+x/y:
+
+``` r
+if (coord_system == "cartesian") {
+  x <- alongs
+  y <- aways
+} else if (coord_system == "polar") {
+  x <- 0.5 + aways * sin(alongs)
+  y <- 0.5 + aways * cos(alongs)
+} else if (coord_system == "flip") {
+  x <- aways
+  y <- alongs
+}
+```
+
+For polar, this is the standard polar-to-Cartesian conversion, centered
+at (0.5, 0.5) in the viewport.
+
+## Putting It Together
+
+With this architecture:
+
+- `draw_panel()` is minimal; it just packages data, coord, and
+  panel_scales into a gTree
+- `makeContent()` defines units and the `geometry()` function, then
+  iterates over data rows calling `compose_grob()` for each
+- `compose_grob()` encapsulates the coordinate transformation pipeline,
+  which is independent of the geometry of any individual geom
+
+This makes it straightforward to add new geoms: define a geometry
+function and unit specifications, then call `compose_grob()` with the
+appropriate grob type. Currently, `compose_grob()` supports three grob
+types:
+
+- `"polygon"`: Creates a closed polygon using
+  [`grid::polygonGrob()`](https://rdrr.io/r/grid/grid.polygon.html)
+- `"polyline"`: Creates open line(s) using
+  [`grid::polylineGrob()`](https://rdrr.io/r/grid/grid.lines.html), with
+  optional `id` vector for multiple segments and `arrow` parameter for
+  arrowheads
+- `"text"`: Creates a text label using ggfittext. The geometry function
+  returns a bounding box (`along_min`, `along_max`, `away_min`,
+  `away_max`) instead of vertices. Text styling (fontface, colour, etc.)
+  comes from `data_row` columns rather than the `gp` parameter
+
+### Example: Complete makeContent Implementation
+
+``` r
+makeContent.genearrowtree <- function(x) {
+  data <- x$data
+
+  # Define geometry function with standard interface
+  geometry <- function(data_row, gt, as_along, as_away) {
+    # Extract transformed coordinates
+    along_min <- data_row$along_min
+    along_max <- data_row$along_max
+    away <- data_row$away
+
+    # Convert units
+    arrowhead_along <- as_along(gt$arrowhead_width)
+    arrowhead_away <- as_away(gt$arrowhead_height)
+    body_away <- as_away(gt$arrow_body_height)
+
+    # Compute geometry
+    orientation <- ifelse(along_max > along_min, 1, -1)
+    arrowhead_along_clamped <- ifelse(
+      arrowhead_along > abs(along_max - along_min),
+      abs(along_max - along_min),
+      arrowhead_along
+    )
+    flange <- along_max - orientation * arrowhead_along_clamped
+    arrowhead_away_half <- arrowhead_away / 2
+    body_away_half <- body_away / 2
+
+    list(
+      alongs = c(
+        along_min,
+        along_min,
+        flange,
+        flange,
+        along_max,
+        flange,
+        flange
+      ),
+      aways = c(
+        away + body_away_half,
+        away - body_away_half,
+        away - body_away_half,
+        away - arrowhead_away_half,
+        away,
+        away + arrowhead_away_half,
+        away + body_away_half
+      )
+    )
+  }
+
+  # Prepare grob for each gene
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+    gene <- data[i, ]
+
+    # Reverse non-forward genes
+    if (!as.logical(gene$forward)) {
+      gene[, c("xmin", "xmax")] <- gene[, c("xmax", "xmin")]
+    }
+
+    # Set up graphical parameters
+    gp <- grid::gpar(
+      fill = ggplot2::alpha(gene$fill, gene$alpha),
+      col = ggplot2::alpha(gene$colour, gene$alpha),
+      lty = gene$linetype,
+      lwd = gene$linewidth * ggplot2::.pt
+    )
+
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = gene,
+      grob_type = "polygon",
+      gp = gp
+    )
+  })
+
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}
+```

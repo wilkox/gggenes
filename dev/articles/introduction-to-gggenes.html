@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/introduction-to-gggenes.html">Introduction to 'gggenes'</a></li>
+<li><a class="dropdown-item" href="../articles/coordinate-transformations.html">Coordinate Transformations in gggenes</a></li>
+    <li><a class="dropdown-item" href="../articles/introduction-to-gggenes.html">Introduction to 'gggenes'</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -61,7 +62,7 @@
                         <h4 data-toc-skip class="author">David
 Wilkins</h4>
             
-            <h4 data-toc-skip class="date">2025-12-16</h4>
+            <h4 data-toc-skip class="date">2026-01-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/wilkox/gggenes/blob/master/vignettes/introduction-to-gggenes.Rmd" class="external-link"><code>vignettes/introduction-to-gggenes.Rmd</code></a></small>
       <div class="d-none name"><code>introduction-to-gggenes.Rmd</code></div>
@@ -90,7 +91,7 @@ molecules with ridiculously tiny genes.</p>
 <span>  <span class="fu"><a href="../reference/geom_gene_arrow.html">geom_gene_arrow</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/geom_gene_arrow-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/geom_gene_arrow-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="beautifying-the-plot-with-theme_genes">Beautifying the plot with <code>theme_genes()</code><a class="anchor" aria-label="anchor" href="#beautifying-the-plot-with-theme_genes"></a>
@@ -103,7 +104,7 @@ molecules with ridiculously tiny genes.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_genes.html">theme_genes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/theme_genes-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/theme_genes-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="aligning-genes-across-facets-with-make_alignment_dummies">Aligning genes across facets with
@@ -127,7 +128,7 @@ to visually align the selected gene across facets.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_genes.html">theme_genes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/make_alignment_dummies-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/make_alignment_dummies-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="labelling-genes-with-geom_gene_label">Labelling genes with <code>geom_gene_label()</code><a class="anchor" aria-label="anchor" href="#labelling-genes-with-geom_gene_label"></a>
@@ -147,7 +148,7 @@ text to make it fit.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_genes.html">theme_genes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/labelled_genes-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/labelled_genes-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="reversing-gene-direction-with-the-optional-forward-aesthetic">Reversing gene direction with the optional <code>forward</code>
@@ -171,7 +172,7 @@ direction:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_genes.html">theme_genes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/reversing_direction-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/reversing_direction-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="viewing-subgene-segments">Viewing subgene segments<a class="anchor" aria-label="anchor" href="#viewing-subgene-segments"></a>
@@ -196,7 +197,7 @@ fill, and then add a subgene layer over this:</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">start</span>, xmax <span class="op">=</span> <span class="va">end</span>, y <span class="op">=</span> <span class="va">molecule</span>, fill <span class="op">=</span> <span class="va">gene</span>,</span>
 <span>        xsubmin <span class="op">=</span> <span class="va">from</span>, xsubmax <span class="op">=</span> <span class="va">to</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_genes.html">theme_genes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/subgenes-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/subgenes-1.png" class="r-plt" alt="" width="576"></p>
 <p>To label subgenes, we can use <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code>,
 which works similarly to <code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> with the major
 difference that it requires <code>xsubmin</code> and
@@ -217,7 +218,7 @@ difference that it requires <code>xsubmin</code> and
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xsubmin <span class="op">=</span> <span class="va">from</span>, xsubmax <span class="op">=</span> <span class="va">to</span>, label <span class="op">=</span> <span class="va">subgene</span><span class="op">)</span>,</span>
 <span>    min.size <span class="op">=</span> <span class="fl">0</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/subgene%20labels-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/subgene%20labels-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="drawing-point-genetic-features">Drawing point genetic features<a class="anchor" aria-label="anchor" href="#drawing-point-genetic-features"></a>
@@ -244,7 +245,7 @@ left).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">molecule</span>, scales <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_genes.html">theme_genes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction-to-gggenes_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="576"></p>
+<p><img src="introduction-to-gggenes_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="576"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
