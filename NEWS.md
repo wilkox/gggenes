@@ -10,6 +10,10 @@
 
 ## Minor changes
 
+- Add polar coordinate support for `geom_subgene_arrow()` and
+  `geom_subgene_label()`
+- Add developer vignette documenting coordinate transformation internals
+- Consolidate coordinate transformation logic into `compose_grob()` interface
 - Add comprehensive input validation (#91)
 - Improve error messages (#92)
 - Minor internal refactoring (#93)

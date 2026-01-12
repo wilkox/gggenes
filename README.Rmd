@@ -256,9 +256,13 @@ ggplot(example_genes_polar, aes(xmin = start, xmax = end, y = molecule, fill = g
     aes(x = position, y = molecule, label = name, forward = forward)
   ) +
   geom_terminator(data = example_terminators_polar, aes(x = position, y = molecule)) +
-  geom_terminator_label(data = example_terminators_polar, 
+  geom_terminator_label(data = example_terminators_polar,
                         aes(x = position, y = molecule, label = name)) +
-  geom_gene_arrow() +
+  geom_gene_arrow(fill = "white") +
+  geom_subgene_arrow(
+    data = example_subgenes_polar,
+    aes(xmin = start, xmax = end, y = molecule, xsubmin = from, xsubmax = to)
+  ) +
   geom_gene_label() +
   scale_fill_brewer(palette = "Set3") +
   coord_polar() +

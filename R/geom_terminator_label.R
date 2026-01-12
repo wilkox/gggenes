@@ -95,6 +95,8 @@ GeomTerminatorLabel <- ggplot2::ggproto(
   draw_key = ggplot2::draw_key_text,
 
   setup_data = function(data, params) {
+    # Terminator labels are always centred
+    data$place <- "centre"
     data
   },
 
@@ -105,16 +107,19 @@ GeomTerminatorLabel <- ggplot2::ggproto(
     terminator_height,
     label_height
   ) {
-    # Detect coordinate system and transform coordinates
-    coord_system <- get_coord_system(coord)
-    data <- data_to_grid(data, coord_system, panel_scales, coord)
-
+    # Package raw data and parameters into a gTree for deferred rendering
     gt <- grid::gTree(
       data = data,
-      cl = "terminatorlabeltree",
+      coord = coord,
+      panel_scales = panel_scales,
       terminator_height = terminator_height,
       label_height = label_height,
-      coord_system = coord_system
+      padding.x = grid::unit(0, "mm"),
+      padding.y = grid::unit(0, "mm"),
+      min.size = 0,
+      grow = FALSE,
+      reflow = FALSE,
+      cl = "terminatorlabeltree"
     )
     gt$name <- grid::grobName(gt, "geom_terminator_label")
     gt
@@ -126,133 +131,37 @@ GeomTerminatorLabel <- ggplot2::ggproto(
 makeContent.terminatorlabeltree <- function(x) {
   data <- x$data
 
-  # Prepare grob for each label
+  # Geometry function computes offset bounding box above the terminator
+  geometry <- function(data_row, gt, as_along, as_away) {
+    terminator_awayness <- as_away(gt$terminator_height)
+    label_awayness <- as_away(gt$label_height)
+
+    # Label spans viewport width, centered on terminator position
+    along_min <- data_row$along - 0.5
+    along_max <- data_row$along + 0.5
+
+    # Position label above the terminator
+    away_sign <- sign(terminator_awayness)
+    away_min <- data_row$away + (terminator_awayness * away_sign)
+    away_max <- data_row$away + ((terminator_awayness + label_awayness) * away_sign)
+
+    list(
+      along_min = along_min,
+      along_max = along_max,
+      away_min = away_min,
+      away_max = away_max
+    )
+  }
+
   grobs <- lapply(seq_len(nrow(data)), function(i) {
-    label <- data[i, ]
-
-    # Set up geometry
-    r <- ifelse(x$coord_system == "polar", label$away, NA)
-    terminator_awayness <- unit_to_alaw(
-      x$terminator_height,
-      "away",
-      x$coord_system,
-      r
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = data[i, , drop = FALSE],
+      grob_type = "text"
     )
-    label_awayness <- unit_to_alaw(x$label_height, "away", x$coord_system, r)
-
-    label$along_min <- label$along - 0.5
-    label$along_max <- label$along + 0.5
-
-    awayness_sign <- terminator_awayness / abs(terminator_awayness)
-    label$away_min <- label$away + (terminator_awayness * awayness_sign)
-    label$away_max <- label$away +
-      ((terminator_awayness + label_awayness) * awayness_sign)
-    align <- "centre"
-
-    # Use ggfittext's fittexttree to draw text
-    if (x$coord_system == "cartesian") {
-      label$xmin <- label$along_min
-      label$xmax <- label$along_max
-      label$ymin <- label$away_min
-      label$ymax <- label$away_max
-
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttree",
-        fullheight = TRUE
-      )
-    } else if (x$coord_system == "flip") {
-      label$xmin <- label$away_min
-      label$xmax <- label$away_max
-      label$ymin <- label$along_min
-      label$ymax <- label$along_max
-
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttree",
-        fullheight = TRUE
-      )
-    } else if (x$coord_system == "polar") {
-      label$xmin <- label$along_min
-      label$xmax <- label$along_max
-      label$ymin <- label$away_min
-      label$ymax <- label$away_max
-
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttreepolar",
-        fullheight = TRUE,
-        height = 0,
-        flip = FALSE
-      )
-    }
-
-    gt$name <- grid::grobName(gt, "geom_terminator_label")
-    gt
   })
-  class(grobs) <- "gList"
-  grid::setChildren(x, grobs)
-}
 
-#' @importFrom grid makeContent
-#' @export
-makeContent.flipterminatorlabeltree <- function(x) {
-  data <- x$data
-  terminator_height <- x$terminator_height
-  label_height <- x$label_height
-
-  # Prepare grob for each label
-  grobs <- lapply(seq_len(nrow(data)), function(i) {
-    label <- data[i, ]
-
-    label$ymin <- label$y - 0.5
-    label$ymax <- label$y + 0.5
-
-    x_sign <- ifelse(
-      grid::convertWidth(terminator_height, "native", TRUE) >= 0,
-      1,
-      -1
-    )
-    inside <- label$x + grid::convertWidth(terminator_height, "native", TRUE)
-    outside <- inside +
-      (x_sign * grid::convertWidth(label_height, "native", TRUE))
-    label$xmin <- max(min(c(inside, outside)), 0)
-    label$xmax <- min(max(c(inside, outside)), 1)
-    align <- "centre"
-
-    # Use ggfittext's fittexttree to draw text
-    gt <- grid::gTree(
-      data = label,
-      padding.x = grid::unit(0, "mm"),
-      padding.y = grid::unit(0, "mm"),
-      place = align,
-      min.size = 0,
-      grow = FALSE,
-      reflow = FALSE,
-      cl = "fittexttree",
-      fullheight = TRUE
-    )
-    gt$name <- grid::grobName(gt, "geom_terminator_label")
-    gt
-  })
   class(grobs) <- "gList"
   grid::setChildren(x, grobs)
 }

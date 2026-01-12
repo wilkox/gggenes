@@ -136,17 +136,14 @@ GeomGeneArrow <- ggplot2::ggproto(
     arrowhead_height,
     arrow_body_height
   ) {
-    # Detect coordinate system and transform values
-    coord_system <- get_coord_system(coord)
-    data <- data_to_grid(data, coord_system, panel_scales, coord)
-
     gt <- grid::gTree(
       data = data,
       cl = "genearrowtree",
+      coord = coord,
+      panel_scales = panel_scales,
       arrowhead_width = arrowhead_width,
       arrowhead_height = arrowhead_height,
-      arrow_body_height = arrow_body_height,
-      coord_system = coord_system
+      arrow_body_height = arrow_body_height
     )
     gt$name <- grid::grobName(gt, "geom_gene_arrow")
     gt
@@ -160,98 +157,80 @@ GeomGeneArrow <- ggplot2::ggproto(
 makeContent.genearrowtree <- function(x) {
   data <- x$data
 
+  # Define geometry function
+  geometry <- function(data_row, gt, as_along, as_away) {
+    # Extract transformed coordinates
+    along_min <- data_row$along_min
+    along_max <- data_row$along_max
+    away <- data_row$away
+
+    # Determine arrow orientation
+    orientation <- ifelse(along_max > along_min, 1, -1)
+
+    # Calculate arrowhead width; if the arrowhead is wider than the gene,
+    # it's all arrowhead
+    arrowhead_along <- as_along(gt$arrowhead_width)
+    arrowhead_along_clamped <- ifelse(
+      arrowhead_along > abs(along_max - along_min),
+      abs(along_max - along_min),
+      arrowhead_along
+    )
+    flange <- along_max - orientation * arrowhead_along_clamped
+
+    # Calculate arrowhead and arrow body heights
+    arrowhead_away <- as_away(gt$arrowhead_height)
+    arrowhead_away_half <- arrowhead_away / 2
+    body_away <- as_away(gt$arrow_body_height)
+    body_away_half <- body_away / 2
+
+    # Vertices
+    list(
+      alongs = c(
+        along_min,
+        along_min,
+        flange,
+        flange,
+        along_max,
+        flange,
+        flange
+      ),
+      aways = c(
+        away + body_away_half,
+        away - body_away_half,
+        away - body_away_half,
+        away - arrowhead_away_half,
+        away,
+        away + arrowhead_away_half,
+        away + body_away_half
+      )
+    )
+  }
+
   # Prepare grob for each gene
   grobs <- lapply(seq_len(nrow(data)), function(i) {
     gene <- data[i, ]
 
     # Reverse non-forward genes
     if (!as.logical(gene$forward)) {
-      gene[, c("along_min", "along_max")] <- gene[, c("along_max", "along_min")]
+      gene[, c("xmin", "xmax")] <- gene[, c("xmax", "xmin")]
     }
 
-    # Determine orientation
-    orientation <- ifelse(gene$along_max > gene$along_min, 1, -1)
-
-    # Set up arrow and arrowhead geometry. It's convenient to divide awayness
-    # by 2 here
-    r <- ifelse(x$coord_system == "polar", gene$away, NA)
-    arrowhead_alongness <- unit_to_alaw(
-      x$arrowhead_width,
-      "along",
-      x$coord_system,
-      r
-    )
-    arrowhead_awayness <- unit_to_alaw(
-      x$arrowhead_height,
-      "away",
-      x$coord_system,
-      r
-    ) /
-      2
-    arrow_body_awayness <- unit_to_alaw(
-      x$arrow_body_height,
-      "away",
-      x$coord_system,
-      r
-    ) /
-      2
-
-    # If the gene is shorter than the arrowhead alongness, the gene is 100%
-    # arrowhead
-    gene_alongness <- abs(gene$along_max - gene$along_min)
-    arrowhead_alongness <- ifelse(
-      arrowhead_alongness > gene_alongness,
-      gene_alongness,
-      arrowhead_alongness
+    # Set up graphical parameters
+    gp <- grid::gpar(
+      fill = ggplot2::alpha(gene$fill, gene$alpha),
+      col = ggplot2::alpha(gene$colour, gene$alpha),
+      lty = gene$linetype,
+      lwd = gene$linewidth * ggplot2::.pt
     )
 
-    # Calculate along coordinate of flange
-    flange_along <- (-orientation * arrowhead_alongness) + gene$along_max
-
-    # Define polygon
-    alongs <- c(
-      gene$along_min,
-      gene$along_min,
-      flange_along,
-      flange_along,
-      gene$along_max,
-      flange_along,
-      flange_along
+    # Compose grob
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = gene,
+      grob_type = "polygon",
+      gp = gp
     )
-    aways <- c(
-      gene$away + arrow_body_awayness,
-      gene$away - arrow_body_awayness,
-      gene$away - arrow_body_awayness,
-      gene$away - arrowhead_awayness,
-      gene$away,
-      gene$away + arrowhead_awayness,
-      gene$away + arrow_body_awayness
-    )
-
-    # If in polar coordinates, segment the polygon
-    if (x$coord_system == "polar") {
-      segmented <- segment_polargon(alongs, aways)
-      alongs <- segmented$thetas
-      aways <- segmented$rs
-    }
-
-    # Convert polygon into Cartesian coordinates within the grid viewport
-    coords <- alaw_to_grid(alongs, aways, x$coord_system, r)
-
-    # Create polygon grob
-    pg <- grid::polygonGrob(
-      x = coords$x,
-      y = coords$y,
-      gp = grid::gpar(
-        fill = ggplot2::alpha(gene$fill, gene$alpha),
-        col = ggplot2::alpha(gene$colour, gene$alpha),
-        lty = gene$linetype,
-        lwd = gene$linewidth * ggplot2::.pt
-      )
-    )
-
-    # Return the polygon grob
-    pg
   })
 
   class(grobs) <- "gList"

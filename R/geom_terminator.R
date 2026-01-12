@@ -100,16 +100,13 @@ GeomTerminator <- ggplot2::ggproto(
     terminator_height,
     terminator_width
   ) {
-    # Detect coordinate system
-    coord_system <- get_coord_system(coord)
-    data <- data_to_grid(data, coord_system, panel_scales, coord)
-
     gt <- grid::gTree(
       data = data,
       cl = "terminatortree",
+      coord = coord,
+      panel_scales = panel_scales,
       terminator_height = terminator_height,
-      terminator_width = terminator_width,
-      coord_system = coord_system
+      terminator_width = terminator_width
     )
     gt$name <- grid::grobName(gt, "geom_terminator")
     gt
@@ -123,66 +120,49 @@ GeomTerminator <- ggplot2::ggproto(
 makeContent.terminatortree <- function(x) {
   data <- x$data
 
+  # Define geometry function for T-shaped terminator
+  geometry <- function(data_row, gt, as_along, as_away) {
+    along <- data_row$along
+    away <- data_row$away
+    terminator_alongness <- as_along(gt$terminator_width)
+    terminator_awayness <- as_away(gt$terminator_height)
+
+    list(
+      alongs = c(
+        along,
+        along,
+        along - (terminator_alongness / 2),
+        along + (terminator_alongness / 2)
+      ),
+      aways = c(
+        away,
+        away + terminator_awayness,
+        away + terminator_awayness,
+        away + terminator_awayness
+      ),
+      ids = c(1, 1, 2, 2)
+    )
+  }
+
   # Prepare grob for each terminator
   grobs <- lapply(seq_len(nrow(data)), function(i) {
     terminator <- data[i, ]
 
-    # Set up geometry
-    r <- ifelse(x$coord_system == "polar", terminator$away, NA)
-    terminator_alongness <- unit_to_alaw(
-      x$terminator_width,
-      "along",
-      x$coord_system,
-      r
-    )
-    terminator_awayness <- unit_to_alaw(
-      x$terminator_height,
-      "away",
-      x$coord_system,
-      r
-    )
-    alongs <- c(
-      terminator$along,
-      terminator$along,
-      terminator$along - (terminator_alongness / 2),
-      terminator$along + (terminator_alongness / 2)
-    )
-    aways <- c(
-      terminator$away,
-      terminator$away + terminator_awayness,
-      terminator$away + terminator_awayness,
-      terminator$away + terminator_awayness
-    )
-    ids <- c(1, 1, 2, 2)
-
-    # If in polar coordinates, segment the polyline
-    if (x$coord_system == "polar") {
-      segmented <- segment_polarline(alongs, aways, ids)
-      alongs <- segmented$thetas
-      aways <- segmented$rs
-      ids <- segmented$ids
-    }
-
-    # Convert polyline into Cartesian coordinates within the grid viewport
-    coords <- alaw_to_grid(alongs, aways, x$coord_system, r)
-
-    # Generate polyline grob for the terminator
-    pg <- grid::polylineGrob(
-      x = coords$x,
-      y = coords$y,
-      id = ids,
-      gp = grid::gpar(
-        col = terminator$colour,
-        fill = terminator$colour,
-        lty = terminator$linetype,
-        # linewidth is expressed in mm but grid expects points; multiplying by
-        # .pt converts
-        lwd = (terminator$linewidth %||% terminator$size) * ggplot2::.pt
-      )
+    # Set up graphical parameters
+    gp <- grid::gpar(
+      col = terminator$colour,
+      fill = terminator$colour,
+      lty = terminator$linetype,
+      lwd = (terminator$linewidth %||% terminator$size) * ggplot2::.pt
     )
 
-    # Return the grob
-    pg
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = terminator,
+      grob_type = "polyline",
+      gp = gp
+    )
   })
 
   class(grobs) <- "gList"

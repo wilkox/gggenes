@@ -108,6 +108,12 @@ GeomSubgeneLabel <- ggplot2::ggproto(
 
   draw_key = ggplot2::draw_key_text,
 
+  setup_data = function(data, params) {
+    # Set place from align parameter
+    data$place <- params$align
+    data
+  },
+
   draw_panel = function(
     data,
     panel_scales,
@@ -121,52 +127,59 @@ GeomSubgeneLabel <- ggplot2::ggproto(
     height = grid::unit(3, "mm"),
     subgroup = NA
   ) {
-    # Detect coordinate system
-    coord_system <- get_coord_system(coord)
-    if (coord_system == "flip") {
-      data$angle <- data$angle + 90
-    }
-
-    # Convert aesthetic names
-    data$xmin <- data$xsubmin
-    data$xmax <- data$xsubmax
-    data$xsubmin <- NULL
-    data$xsubmax <- NULL
-
-    # Transform data to panel scales
-    data <- coord$transform(data, panel_scales)
-
-    # Use ggfittext's fittexttree to draw the text
-    if (coord_system == "flip") {
-      gt <- grid::gTree(
-        data = data,
-        padding.x = padding.x,
-        padding.y = padding.y,
-        place = align,
-        min.size = min.size,
-        grow = grow,
-        reflow = reflow,
-        cl = "fittexttree",
-        width = height,
-        fullheight = TRUE
-      )
-    } else if (coord_system == "cartesian") {
-      gt <- grid::gTree(
-        data = data,
-        padding.x = padding.x,
-        padding.y = padding.y,
-        place = align,
-        min.size = min.size,
-        grow = grow,
-        reflow = reflow,
-        cl = "fittexttree",
-        height = height,
-        fullheight = TRUE
-      )
-    } else {
-      cli::cli_abort("Don't know how to draw in this coordinate system")
-    }
+    # Package raw data and parameters into a gTree for deferred rendering
+    gt <- grid::gTree(
+      data = data,
+      coord = coord,
+      panel_scales = panel_scales,
+      padding.x = padding.x,
+      padding.y = padding.y,
+      min.size = min.size,
+      grow = grow,
+      reflow = reflow,
+      height = height,
+      cl = "subgenelabeltree"
+    )
     gt$name <- grid::grobName(gt, "geom_subgene_label")
     gt
   }
 )
+
+#' @export
+makeContent.subgenelabeltree <- function(x) {
+  data <- x$data
+
+  # Detect coordinate system for angle adjustment
+  is_flipped <- "CoordFlip" %in% class(x$coord)
+
+  # Geometry function returns the full bounding box for the label
+  # using along_submin/along_submax (transformed from xsubmin/xsubmax)
+  geometry <- function(data_row, gt, as_along, as_away) {
+    height <- as_away(gt$height)
+    list(
+      along_min = data_row$along_submin,
+      along_max = data_row$along_submax,
+      away_min = data_row$away - height / 2,
+      away_max = data_row$away + height / 2
+    )
+  }
+
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+    data_row <- data[i, , drop = FALSE]
+
+    # Rotate text 90 degrees for flipped coordinates
+    if (is_flipped) {
+      data_row$angle <- (data_row$angle %||% 0) + 90
+    }
+
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = data_row,
+      grob_type = "text"
+    )
+  })
+
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}

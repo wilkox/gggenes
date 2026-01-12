@@ -37,8 +37,7 @@ test_that("geom_subgene_arrow() and geom_subgene_label() in Cartesian coordinate
           xsubmin = from,
           xsubmax = to,
           forward = orientation
-        ),
-        linewidth = 1
+        )
       )
   ) +
     geom_subgene_label(
@@ -72,8 +71,7 @@ test_that("geom_subgene_arrow() and geom_subgene_label() in flipped coordinates"
         xsubmin = from,
         xsubmax = to,
         forward = orientation
-      ),
-      linewidth = 1
+      )
     ) +
     geom_subgene_label(
       data = example_subgenes,
@@ -90,6 +88,62 @@ test_that("geom_subgene_arrow() and geom_subgene_label() in flipped coordinates"
     print(p)
   })
   expect_doppelganger("subgene arrow and label in flipped coordinates", {
+    print(p)
+  })
+})
+
+test_that("geom_subgene_arrow() in polar coordinates", {
+  p <- base_polar() +
+    geom_gene_arrow(fill = "white") +
+    geom_subgene_arrow(
+      data = example_subgenes_polar,
+      aes(
+        xmin = start,
+        xmax = end,
+        y = molecule,
+        fill = gene,
+        xsubmin = from,
+        xsubmax = to,
+        forward = orientation
+      )
+    )
+  expect_no_error({
+    print(p)
+  })
+  expect_doppelganger("subgene arrow in polar coordinates", {
+    print(p)
+  })
+})
+
+test_that("geom_subgene_label() in polar coordinates", {
+  p <- base_polar() +
+    geom_gene_arrow(fill = "white") +
+    geom_subgene_arrow(
+      data = example_subgenes_polar,
+      aes(
+        xmin = start,
+        xmax = end,
+        y = molecule,
+        fill = gene,
+        xsubmin = from,
+        xsubmax = to,
+        forward = orientation
+      )
+    ) +
+    geom_subgene_label(
+      data = example_subgenes_polar,
+      aes(
+        y = molecule,
+        fill = gene,
+        xsubmin = from,
+        xsubmax = to,
+        label = subgene
+      )
+    )
+  expect_no_error({
+    print(p)
+  })
+  expect_doppelganger("subgene label in polar coordinates", {
     print(p)
   })
 })

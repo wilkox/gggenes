@@ -128,17 +128,14 @@ GeomFeature <- ggplot2::ggproto(
     feature_width,
     arrowhead_width
   ) {
-    # Detect coordinate system and transform values
-    coord_system <- get_coord_system(coord)
-    data <- data_to_grid(data, coord_system, panel_scales, coord)
-
     gt <- grid::gTree(
       data = data,
       cl = "featuretree",
+      coord = coord,
+      panel_scales = panel_scales,
       feature_height = feature_height,
       feature_width = feature_width,
-      arrowhead_width = arrowhead_width,
-      coord_system = coord_system
+      arrowhead_width = arrowhead_width
     )
     gt$name <- grid::grobName(gt, "geom_feature")
     gt
@@ -152,84 +149,70 @@ GeomFeature <- ggplot2::ggproto(
 makeContent.featuretree <- function(x) {
   data <- x$data
 
+  # Define geometry function for non-oriented features (simple vertical line)
+  geometry_non_oriented <- function(data_row, gt, as_along, as_away) {
+    along <- data_row$along
+    away <- data_row$away
+    feature_awayness <- as_away(gt$feature_height)
+
+    list(
+      alongs = c(along, along),
+      aways = c(away, away + feature_awayness)
+    )
+  }
+
+  # Define geometry function for oriented features (vertical + horizontal arm)
+  geometry_oriented <- function(data_row, gt, as_along, as_away) {
+    along <- data_row$along
+    away <- data_row$away
+    feature_alongness <- as_along(gt$feature_width)
+    feature_awayness <- as_away(gt$feature_height)
+
+    arrow_sign <- ifelse(data_row$forward, 1, -1)
+    end_along <- along + (feature_alongness * arrow_sign)
+
+    list(
+      alongs = c(along, along, end_along),
+      aways = c(away, away + feature_awayness, away + feature_awayness)
+    )
+  }
+
   # Prepare grob for each feature
   grobs <- lapply(seq_len(nrow(data)), function(i) {
     feature <- data[i, ]
 
-    # Set up geometry
-    r <- ifelse(x$coord_system == "polar", feature$away, NA)
-    feature_alongness <- unit_to_alaw(
-      x$feature_width,
-      "along",
-      x$coord_system,
-      r
-    )
-    arrowhead_alongness <- unit_to_alaw(
-      x$arrowhead_width,
-      "along",
-      x$coord_system,
-      r
-    )
-    feature_awayness <- unit_to_alaw(
-      x$feature_height,
-      "away",
-      x$coord_system,
-      r
+    # Set up graphical parameters
+    gp <- grid::gpar(
+      col = feature$colour,
+      fill = feature$colour,
+      lty = feature$linetype,
+      lwd = (feature$linewidth %||% feature$size) * ggplot2::.pt
     )
 
-    # Determine whether this is a feature with orientation or not (i.e. whether
-    # or not to draw an elbow and arrowhead), and generate appropriate polyline
-
-    # For non-oriented features:
-    if (is.na(feature$forward) | !is.logical(feature$forward)) {
-      alongs <- c(feature$along, feature$along)
-      aways <- c(feature$away, feature$away + feature_awayness)
-      arrow <- NULL
-
-      # For oriented features:
-    } else {
-      arrow_sign <- ifelse(feature$forward, 1, -1)
-      end_along <- feature$along + (feature_alongness * arrow_sign)
-      alongs <- c(feature$along, feature$along, end_along)
-      aways <- c(
-        feature$away,
-        feature$away + feature_awayness,
-        feature$away + feature_awayness
+    # Determine whether this is a feature with orientation or not
+    if (is.na(feature$forward)) {
+      compose_grob(
+        geometry_fn = geometry_non_oriented,
+        gt = x,
+        data_row = feature,
+        grob_type = "polyline",
+        gp = gp
       )
+    } else {
       arrow <- grid::arrow(
         angle = 20,
         length = x$arrowhead_width,
         type = "closed"
       )
-    }
-
-    # If in polar coordinates, segment the polyline
-    if (x$coord_system == "polar") {
-      segmented <- segment_polarline(alongs, aways)
-      alongs <- segmented$thetas
-      aways <- segmented$rs
-    }
-
-    # Convert polyline into Cartesian coordinates within the grid viewport
-    coords <- alaw_to_grid(alongs, aways, x$coord_system, r)
-
-    # Generate polyline grob for the feature
-    pg <- grid::polylineGrob(
-      x = coords$x,
-      y = coords$y,
-      arrow = arrow,
-      gp = grid::gpar(
-        col = feature$colour,
-        fill = feature$colour,
-        lty = feature$linetype,
-        # linewidth is expressed in mm but grid expects points; multiplying by
-        # .pt converts
-        lwd = (feature$linewidth %||% feature$size) * ggplot2::.pt
+      compose_grob(
+        geometry_fn = geometry_oriented,
+        gt = x,
+        data_row = feature,
+        grob_type = "polyline",
+        gp = gp,
+        arrow = arrow
       )
-    )
-
-    # Return the grob
-    pg
+    }
   })
 
   class(grobs) <- "gList"

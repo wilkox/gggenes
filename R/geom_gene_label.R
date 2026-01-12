@@ -124,6 +124,9 @@ GeomGeneLabel <- ggplot2::ggproto(
       data$forward <- as.logical(data$forward)
     }
 
+    # Set place from align parameter
+    data$place <- params$align
+
     data
   },
 
@@ -140,88 +143,58 @@ GeomGeneLabel <- ggplot2::ggproto(
     height = grid::unit(3, "mm"),
     subgroup = NA
   ) {
-    # Detect coordinate system and transform coordinates. The ggfittext
-    # makeContent methods expect a different set of aesthetic names.
-    coord_system <- get_coord_system(coord)
-    data <- data_to_grid(data, coord_system, panel_scales, coord)
-    if (coord_system == "cartesian") {
-      if ("along_min" %in% names(data)) {
-        data$xmin <- data$along_min
-      }
-      if ("along_max" %in% names(data)) {
-        data$xmax <- data$along_max
-      }
-      if ("away" %in% names(data)) {
-        data$y <- data$away
-      }
-    } else if (coord_system == "flip") {
-      if ("along_min" %in% names(data)) {
-        data$ymin <- data$along_min
-      }
-      if ("along_max" %in% names(data)) {
-        data$ymax <- data$along_max
-      }
-      if ("away" %in% names(data)) {
-        data$x <- data$away
-      }
-    } else if (coord_system == "polar") {
-      if ("along_min" %in% names(data)) {
-        data$xmin <- data$along_min
-      }
-      if ("along_max" %in% names(data)) {
-        data$xmax <- data$along_max
-      }
-      if ("away" %in% names(data)) {
-        data$r <- data$away
-      }
-    }
-
-    # Use ggfittext's fittexttree to draw text
-    if (coord_system == "flip") {
-      data$angle <- data$angle + 90
-      gt <- grid::gTree(
-        data = data,
-        padding.x = padding.x,
-        padding.y = padding.y,
-        place = align,
-        min.size = min.size,
-        grow = grow,
-        reflow = reflow,
-        cl = "fittexttree",
-        width = height,
-        fullheight = TRUE
-      )
-    } else if (coord_system == "cartesian") {
-      gt <- grid::gTree(
-        data = data,
-        padding.x = padding.x,
-        padding.y = padding.y,
-        place = align,
-        min.size = min.size,
-        grow = grow,
-        reflow = reflow,
-        cl = "fittexttree",
-        height = height,
-        fullheight = TRUE
-      )
-    } else if (coord_system == "polar") {
-      gt <- grid::gTree(
-        data = data,
-        padding.x = padding.x,
-        padding.y = padding.y,
-        place = align,
-        min.size = min.size,
-        grow = grow,
-        reflow = reflow,
-        cl = "fittexttreepolar",
-        height = height,
-        fullheight = TRUE,
-        flip = FALSE
-      )
-    } else {
-      cli::cli_abort("Don't know how to draw in this coordinate system")
-    }
+    # Package raw data and parameters into a gTree for deferred rendering
+    gt <- grid::gTree(
+      data = data,
+      coord = coord,
+      panel_scales = panel_scales,
+      padding.x = padding.x,
+      padding.y = padding.y,
+      min.size = min.size,
+      grow = grow,
+      reflow = reflow,
+      height = height,
+      cl = "genelabeltree"
+    )
     gt$name <- grid::grobName(gt, "geom_gene_label")
     gt
   }
 )
+
+#' @export
+makeContent.genelabeltree <- function(x) {
+  data <- x$data
+
+  # Detect coordinate system for angle adjustment
+  is_flipped <- "CoordFlip" %in% class(x$coord)
+
+  # Geometry function returns the full bounding box for the label
+  geometry <- function(data_row, gt, as_along, as_away) {
+    height <- as_away(gt$height)
+    list(
+      along_min = data_row$along_min,
+      along_max = data_row$along_max,
+      away_min = data_row$away - height / 2,
+      away_max = data_row$away + height / 2
+    )
+  }
+
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+    data_row <- data[i, , drop = FALSE]
+
+    # Rotate text 90 degrees for flipped coordinates
+    if (is_flipped) {
+      data_row$angle <- (data_row$angle %||% 0) + 90
+    }
+
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = data_row,
+      grob_type = "text"
+    )
+  })
+
+  class(grobs) <- "gList"
+  grid::setChildren(x, grobs)
+}

@@ -105,6 +105,16 @@ GeomFeatureLabel <- ggplot2::ggproto(
       data$forward <- as.logical(data$forward)
     }
 
+    # Set place based on forward aesthetic
+    # Non-oriented features: centre
+    # Forward features: align to start of bounding box (near the feature)
+    # Backward features: align to end of bounding box (near the feature)
+    data$place <- ifelse(
+      is.na(data$forward),
+      "centre",
+      ifelse(data$forward, "along_start", "along_end")
+    )
+
     data
   },
 
@@ -115,16 +125,19 @@ GeomFeatureLabel <- ggplot2::ggproto(
     feature_height,
     label_height
   ) {
-    # Detect coordinate system and transform coordinates
-    coord_system <- get_coord_system(coord)
-    data <- data_to_grid(data, coord_system, panel_scales, coord)
-
+    # Package raw data and parameters into a gTree for deferred rendering
     gt <- grid::gTree(
       data = data,
-      cl = "featurelabeltree",
+      coord = coord,
+      panel_scales = panel_scales,
       feature_height = feature_height,
       label_height = label_height,
-      coord_system = coord_system
+      padding.x = grid::unit(0, "mm"),
+      padding.y = grid::unit(0, "mm"),
+      min.size = 0,
+      grow = FALSE,
+      reflow = FALSE,
+      cl = "featurelabeltree"
     )
     gt$name <- grid::grobName(gt, "geom_feature_label")
     gt
@@ -136,112 +149,48 @@ GeomFeatureLabel <- ggplot2::ggproto(
 makeContent.featurelabeltree <- function(x) {
   data <- x$data
 
-  # Prepare grob for each label
-  grobs <- lapply(seq_len(nrow(data)), function(i) {
-    label <- data[i, ]
+  # Geometry function computes the bounding box for offset labels
+  geometry <- function(data_row, gt, as_along, as_away) {
+    feature_awayness <- as_away(gt$feature_height)
+    label_awayness <- as_away(gt$label_height)
 
-    # Set up geometry
-    r <- ifelse(x$coord_system == "polar", label$away, NA)
-    feature_awayness <- unit_to_alaw(
-      x$feature_height,
-      "away",
-      x$coord_system,
-      r
-    )
-    label_awayness <- unit_to_alaw(x$label_height, "away", x$coord_system, r)
-
-    # Determine if the feature to be labelled is oriented, and set
-    # appropriate bounding box and place
-    #
-    # For non-oriented features:
-    if (is.na(label$forward) | !is.logical(label$forward)) {
-      label$along_min <- label$along - 0.5
-      label$along_max <- label$along + 0.5
-
-      away_sign <- feature_awayness / abs(feature_awayness)
-      label$away_min <- label$away + (feature_awayness * away_sign)
-      label$away_max <- label$away +
-        ((feature_awayness + label_awayness) * away_sign)
-      align <- "centre"
-
-      # For oriented features:
+    # Compute along extent based on orientation
+    if (is.na(data_row$forward)) {
+      # Non-oriented: span viewport width, centered on feature
+      along_min <- data_row$along - 0.5
+      along_max <- data_row$along + 0.5
+    } else if (data_row$forward) {
+      # Forward: from feature to end of viewport
+      along_min <- data_row$along
+      along_max <- 1
     } else {
-      alongness_sign <- ifelse(label$forward, 1, -1)
-      if (alongness_sign == 1) {
-        label$along_min <- label$along
-        label$along_max <- 1
-        align <- ifelse(x$coord_system == "flip", "bottom", "left")
-      } else {
-        label$along_min <- 0
-        label$along_max <- label$along
-        align <- ifelse(x$coord_system == "flip", "top", "right")
-      }
-
-      away_sign <- feature_awayness / abs(feature_awayness)
-      label$away_min <- label$away + (feature_awayness * away_sign)
-      label$away_max <- label$away +
-        ((feature_awayness + label_awayness) * away_sign)
+      # Backward: from start of viewport to feature
+      along_min <- 0
+      along_max <- data_row$along
     }
 
-    # Use ggfittext's fittexttree to draw text
-    if (x$coord_system == "cartesian") {
-      label$xmin <- label$along_min
-      label$xmax <- label$along_max
-      label$ymin <- label$away_min
-      label$ymax <- label$away_max
+    # Compute away extent from feature_height and label_height offsets
+    away_sign <- sign(feature_awayness)
+    away_min <- data_row$away + (feature_awayness * away_sign)
+    away_max <- data_row$away + ((feature_awayness + label_awayness) * away_sign)
 
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttree",
-        fullheight = TRUE
-      )
-    } else if (x$coord_system == "flip") {
-      label$xmin <- label$away_min
-      label$xmax <- label$away_max
-      label$ymin <- label$along_min
-      label$ymax <- label$along_max
+    list(
+      along_min = along_min,
+      along_max = along_max,
+      away_min = away_min,
+      away_max = away_max
+    )
+  }
 
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttree",
-        fullheight = TRUE
-      )
-    } else if (x$coord_system == "polar") {
-      label$xmin <- label$along_min
-      label$xmax <- label$along_max
-      label$ymin <- label$away_min
-      label$ymax <- label$away_max
-
-      gt <- grid::gTree(
-        data = label,
-        padding.x = grid::unit(0, "mm"),
-        padding.y = grid::unit(0, "mm"),
-        place = align,
-        min.size = 0,
-        grow = FALSE,
-        reflow = FALSE,
-        cl = "fittexttreepolar",
-        fullheight = TRUE,
-        height = 0,
-        flip = FALSE
-      )
-    }
-
-    gt$name <- grid::grobName(gt, "geom_feature_label")
-    gt
+  grobs <- lapply(seq_len(nrow(data)), function(i) {
+    compose_grob(
+      geometry_fn = geometry,
+      gt = x,
+      data_row = data[i, , drop = FALSE],
+      grob_type = "text"
+    )
   })
+
   class(grobs) <- "gList"
   grid::setChildren(x, grobs)
 }
