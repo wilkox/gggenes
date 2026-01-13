@@ -17,6 +17,9 @@
 
 ### Minor changes
 
+- Clarify `feature_height` and `terminator_height` parameter
+  documentation in label geoms
+  ([\#90](https://github.com/wilkox/gggenes/issues/90))
 - Add polar coordinate support for
   [`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md)
   and

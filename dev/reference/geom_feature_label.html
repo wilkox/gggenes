@@ -9,7 +9,7 @@ geom_feature()."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,11 +72,11 @@ are not likely to share any plot aesthetics other than y.</p></dd>
 
 
 <dt id="arg-feature-height">feature_height<a class="anchor" aria-label="anchor" href="#arg-feature-height"></a></dt>
-<dd><p><code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> object giving the height of the feature
-being labelled, and hence the distance of the label above or below the
-molecule line. Can be set as a negative value for features drawn below the
-line. Defaults to 4 mm, to align labels with the default height of
-<code><a href="geom_feature.html">geom_feature()</a></code>.</p></dd>
+<dd><p><code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> object giving the offset from the
+molecule line to the inner edge of the label's bounding box. Can be set as a
+negative value to position labels on the opposite side of the molecule line.
+Defaults to 4 mm, which provides a 1 mm gap between feature and label when
+used with the default <code>feature_height</code> of <code><a href="geom_feature.html">geom_feature()</a></code> (3 mm).</p></dd>
 
 
 <dt id="arg-label-height">label_height<a class="anchor" aria-label="anchor" href="#arg-label-height"></a></dt>

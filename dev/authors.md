@@ -12,12 +12,12 @@ Source:
 [`DESCRIPTION`](https://github.com/wilkox/gggenes/blob/master/DESCRIPTION)
 
 Wilkins D (2026). *gggenes: Draw Gene Arrow Maps in 'ggplot2'*. R
-package version 0.6.0.9005, <https://wilkox.org/gggenes/>.
+package version 0.6.0.9006, <https://wilkox.org/gggenes/>.
 
     @Manual{,
       title = {gggenes: Draw Gene Arrow Maps in 'ggplot2'},
       author = {David Wilkins},
       year = {2026},
-      note = {R package version 0.6.0.9005},
+      note = {R package version 0.6.0.9006},
       url = {https://wilkox.org/gggenes/},
     }

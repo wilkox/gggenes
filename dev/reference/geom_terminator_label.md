@@ -30,11 +30,13 @@ geom_terminator_label(
 - terminator_height:
 
   [`grid::unit()`](https://rdrr.io/r/grid/unit.html) object giving the
-  height of the terminator being labelled, and hence the distance of the
-  label above or below the molecule line. Can be set as a negative value
-  for terminators drawn below the line. Defaults to 4 mm, to align
-  labels with the default height of
-  [`geom_terminator()`](https://wilkox.org/gggenes/dev/reference/geom_terminator.md).
+  offset from the molecule line to the inner edge of the label's
+  bounding box. Can be set as a negative value to position labels on the
+  opposite side of the molecule line. Defaults to 4 mm, which provides a
+  1 mm gap between terminator and label when used with the default
+  `terminator_height` of
+  [`geom_terminator()`](https://wilkox.org/gggenes/dev/reference/geom_terminator.md)
+  (3 mm).
 
 - label_height:
 
