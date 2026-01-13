@@ -22,11 +22,11 @@
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default, as features
 #' are not likely to share any plot aesthetics other than y.
-#' @param feature_height `grid::unit()` object giving the height of the feature
-#' being labelled, and hence the distance of the label above or below the
-#' molecule line. Can be set as a negative value for features drawn below the
-#' line. Defaults to 4 mm, to align labels with the default height of
-#' `geom_feature()`.
+#' @param feature_height `grid::unit()` object giving the offset from the
+#' molecule line to the inner edge of the label's bounding box. Can be set as a
+#' negative value to position labels on the opposite side of the molecule line.
+#' Defaults to 4 mm, which provides a 1 mm gap between feature and label when
+#' used with the default `feature_height` of `geom_feature()` (3 mm).
 #' @param label_height `grid::unit()` object giving the height of the label
 #' text. Defaults to 3 mm.
 #'

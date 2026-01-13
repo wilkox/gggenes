@@ -20,11 +20,11 @@
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default, as terminators
 #' are not likely to share any plot aesthetics other than y.
-#' @param terminator_height `grid::unit()` object giving the height of the terminator
-#' being labelled, and hence the distance of the label above or below the
-#' molecule line. Can be set as a negative value for terminators drawn below the
-#' line. Defaults to 4 mm, to align labels with the default height of
-#' `geom_terminator()`.
+#' @param terminator_height `grid::unit()` object giving the offset from the
+#' molecule line to the inner edge of the label's bounding box. Can be set as a
+#' negative value to position labels on the opposite side of the molecule line.
+#' Defaults to 4 mm, which provides a 1 mm gap between terminator and label when
+#' used with the default `terminator_height` of `geom_terminator()` (3 mm).
 #' @param label_height `grid::unit()` object giving the height of the label
 #' text. Defaults to 3 mm.
 #'

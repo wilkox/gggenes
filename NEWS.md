@@ -10,6 +10,8 @@
 
 ## Minor changes
 
+- Clarify `feature_height` and `terminator_height` parameter documentation in
+  label geoms (#90)
 - Add polar coordinate support for `geom_subgene_arrow()` and
   `geom_subgene_label()`
 - Add developer vignette documenting coordinate transformation internals
