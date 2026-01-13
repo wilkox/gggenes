@@ -33,6 +33,8 @@
   ([\#92](https://github.com/wilkox/gggenes/issues/92))
 - Minor internal refactoring
   ([\#93](https://github.com/wilkox/gggenes/issues/93))
+- Standardise on use of NPC (not native) grid coordinates internally
+  ([\#94](https://github.com/wilkox/gggenes/issues/94))
 
 ## gggenes 0.6.0
 

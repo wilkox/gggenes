@@ -199,11 +199,9 @@ The function receives a standard interface:
   [`grid::unit()`](https://rdrr.io/r/grid/unit.html) objects (e.g.,
   `gt$arrowhead_width`).
 - `as_along`: Function to convert a
-  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to native
-  along-units.
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to NPC along-units.
 - `as_away`: Function to convert a
-  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to native
-  away-units.
+  [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to NPC away-units.
 
 All coordinate values in `data_row` are already transformed to
 along/away space. The geometry function converts unit measurements as
@@ -224,19 +222,19 @@ functions that close over these values:
 # Inside compose_grob():
 as_along <- if (coord_system == "cartesian") {
 
-  function(unit) as.numeric(grid::convertWidth(unit, "native"))
+  function(unit) as.numeric(grid::convertWidth(unit, "npc"))
 } else if (coord_system == "polar") {
-  function(unit) as.numeric(grid::convertWidth(unit, "native")) / r
+  function(unit) as.numeric(grid::convertWidth(unit, "npc")) / r
 } else if (coord_system == "flip") {
-  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+  function(unit) as.numeric(grid::convertHeight(unit, "npc"))
 }
 
 as_away <- if (coord_system == "cartesian") {
-  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+  function(unit) as.numeric(grid::convertHeight(unit, "npc"))
 } else if (coord_system == "polar") {
-  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+  function(unit) as.numeric(grid::convertHeight(unit, "npc"))
 } else if (coord_system == "flip") {
-  function(unit) as.numeric(grid::convertWidth(unit, "native"))
+  function(unit) as.numeric(grid::convertWidth(unit, "npc"))
 }
 ```
 
