@@ -4,6 +4,7 @@ Labelling
 Lifecycle
 NPC
 README
+Standardise
 aes
 centre
 cli
@@ -18,7 +19,6 @@ geoms
 ggfittext
 gggenomes
 ggplot
-labelled
 linetype
 linewidth
 linewidths
@@ -26,6 +26,7 @@ makeContent
 millimetres
 normalise
 normalised
+npc
 patchlevel
 plasmapR
 plasmid

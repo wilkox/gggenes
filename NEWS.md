@@ -19,6 +19,7 @@
 - Add comprehensive input validation (#91)
 - Improve error messages (#92)
 - Minor internal refactoring (#93)
+- Standardise on use of NPC (not native) grid coordinates internally (#94)
 
 # gggenes 0.6.0
 

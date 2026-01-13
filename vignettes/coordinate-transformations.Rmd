@@ -208,8 +208,8 @@ The function receives a standard interface:
   `away`. For subgene geoms, also contains `along_submin`/`along_submax`.
 - `gt`: The gTree object containing geom-specific parameters as `grid::unit()`
   objects (e.g., `gt$arrowhead_width`).
-- `as_along`: Function to convert a `grid::unit()` to native along-units.
-- `as_away`: Function to convert a `grid::unit()` to native away-units.
+- `as_along`: Function to convert a `grid::unit()` to NPC along-units.
+- `as_away`: Function to convert a `grid::unit()` to NPC away-units.
 
 All coordinate values in `data_row` are already transformed to along/away space.
 The geometry function converts unit measurements as needed using the converter
@@ -230,19 +230,19 @@ close over these values:
 # Inside compose_grob():
 as_along <- if (coord_system == "cartesian") {
 
-  function(unit) as.numeric(grid::convertWidth(unit, "native"))
+  function(unit) as.numeric(grid::convertWidth(unit, "npc"))
 } else if (coord_system == "polar") {
-  function(unit) as.numeric(grid::convertWidth(unit, "native")) / r
+  function(unit) as.numeric(grid::convertWidth(unit, "npc")) / r
 } else if (coord_system == "flip") {
-  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+  function(unit) as.numeric(grid::convertHeight(unit, "npc"))
 }
 
 as_away <- if (coord_system == "cartesian") {
-  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+  function(unit) as.numeric(grid::convertHeight(unit, "npc"))
 } else if (coord_system == "polar") {
-  function(unit) as.numeric(grid::convertHeight(unit, "native"))
+  function(unit) as.numeric(grid::convertHeight(unit, "npc"))
 } else if (coord_system == "flip") {
-  function(unit) as.numeric(grid::convertWidth(unit, "native"))
+  function(unit) as.numeric(grid::convertWidth(unit, "npc"))
 }
 ```
 

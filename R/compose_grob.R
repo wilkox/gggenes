@@ -169,9 +169,9 @@ transform_to_along_away <- function(data_row, coord, panel_scales) {
 #'     `along_submin`/`along_submax`.
 #'   - `gt`: The gTree object passed to `compose_grob()`, containing
 #'     geom-specific parameters like arrowhead dimensions.
-#'   - `as_along`: Function to convert a `grid::unit()` to native along-units.
+#'   - `as_along`: Function to convert a `grid::unit()` to NPC along-units.
 #'     Use as `as_along(gt$arrowhead_width)`.
-#'   - `as_away`: Function to convert a `grid::unit()` to native away-units.
+#'   - `as_away`: Function to convert a `grid::unit()` to NPC away-units.
 #'     Use as `as_away(gt$arrowhead_height)`.
 #'
 #'   **Return value for polygon/polyline:** A list with components:
@@ -225,19 +225,19 @@ compose_grob <- function(
 
   # Create unit converter functions that close over coord_system and r
   as_along <- if (coord_system == "cartesian") {
-    function(unit) as.numeric(grid::convertWidth(unit, "native"))
+    function(unit) as.numeric(grid::convertWidth(unit, "npc"))
   } else if (coord_system == "polar") {
-    function(unit) as.numeric(grid::convertWidth(unit, "native")) / r
+    function(unit) as.numeric(grid::convertWidth(unit, "npc")) / r
   } else if (coord_system == "flip") {
-    function(unit) as.numeric(grid::convertHeight(unit, "native"))
+    function(unit) as.numeric(grid::convertHeight(unit, "npc"))
   }
 
   as_away <- if (coord_system == "cartesian") {
-    function(unit) as.numeric(grid::convertHeight(unit, "native"))
+    function(unit) as.numeric(grid::convertHeight(unit, "npc"))
   } else if (coord_system == "polar") {
-    function(unit) as.numeric(grid::convertHeight(unit, "native"))
+    function(unit) as.numeric(grid::convertHeight(unit, "npc"))
   } else if (coord_system == "flip") {
-    function(unit) as.numeric(grid::convertWidth(unit, "native"))
+    function(unit) as.numeric(grid::convertWidth(unit, "npc"))
   }
 
   # Call geometry function with standard interface
