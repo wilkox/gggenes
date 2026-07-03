@@ -11,4 +11,5 @@
 ^\.github$
 ^CRAN-SUBMISSION$
 ^CLAUDE\.md$
+^\.claude$
 ^pkgdown$
