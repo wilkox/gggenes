@@ -54,3 +54,18 @@ test_that("geom_gene_arrow() and geom_gene_label() in polar coordinates", {
     print(p)
   })
 })
+
+test_that("geom_gene_arrow() and geom_gene_label() build and draw with minimal aesthetics", {
+  genes <- data.frame(molecule = "M", start = 10, end = 90, lab = "G")
+  for (add_coord in smoke_coords()) {
+    draws_without_error(add_coord(
+      ggplot(genes, aes(xmin = start, xmax = end, y = molecule)) +
+        geom_gene_arrow()
+    ))
+    draws_without_error(add_coord(
+      ggplot(genes, aes(xmin = start, xmax = end, y = molecule, label = lab)) +
+        geom_gene_arrow() +
+        geom_gene_label()
+    ))
+  }
+})

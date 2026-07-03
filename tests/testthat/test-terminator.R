@@ -69,3 +69,15 @@ test_that("geom_terminator() and geom_terminator_label() in polar coordinates", 
     print(p)
   })
 })
+
+test_that("geom_terminator() and geom_terminator_label() build and draw with minimal aesthetics", {
+  pts <- data.frame(molecule = "M", position = 50, name = "T")
+  for (add_coord in smoke_coords()) {
+    draws_without_error(add_coord(
+      ggplot() + geom_terminator(data = pts, aes(x = position, y = molecule))
+    ))
+    draws_without_error(add_coord(
+      ggplot() + geom_terminator_label(data = pts, aes(x = position, y = molecule, label = name))
+    ))
+  }
+})

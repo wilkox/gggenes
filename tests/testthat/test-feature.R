@@ -90,3 +90,29 @@ test_that("geom_feature() with numeric 'forward'", {
     print(p)
   })
 })
+
+test_that("geom_feature() and geom_feature_label() build and draw with minimal aesthetics", {
+  pts <- data.frame(molecule = "M", position = 50, name = "F", fwd = TRUE)
+  for (add_coord in smoke_coords()) {
+    # feature with and without the optional forward aesthetic
+    draws_without_error(add_coord(
+      ggplot() + geom_feature(data = pts, aes(x = position, y = molecule, forward = fwd))
+    ))
+    draws_without_error(add_coord(
+      ggplot() + geom_feature(data = pts, aes(x = position, y = molecule))
+    ))
+    draws_without_error(add_coord(
+      ggplot() + geom_feature_label(data = pts, aes(x = position, y = molecule, label = name, forward = fwd))
+    ))
+  }
+})
+
+test_that("geom_feature_label() draws with forward unmapped (#98)", {
+  skip("#98: geom_feature_label() errors when the forward aesthetic is not mapped")
+  pts <- data.frame(molecule = "M", position = 50, name = "F")
+  for (add_coord in smoke_coords()) {
+    draws_without_error(add_coord(
+      ggplot() + geom_feature_label(data = pts, aes(x = position, y = molecule, label = name))
+    ))
+  }
+})

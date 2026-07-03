@@ -172,3 +172,35 @@ test_that("boundary-breaking subgenes are caught", {
 
   expect_s3_class(p, "ggplot")
 })
+
+test_that("geom_subgene_arrow() and geom_subgene_label() build and draw with minimal aesthetics", {
+  sub <- data.frame(
+    molecule = "M", start = 10, end = 90, from = 30, to = 70, lab = "S"
+  )
+  coords <- smoke_coords()
+  for (add_coord in coords) {
+    draws_without_error(add_coord(
+      ggplot(sub, aes(xmin = start, xmax = end, xsubmin = from, xsubmax = to, y = molecule)) +
+        geom_subgene_arrow()
+    ))
+  }
+  # geom_subgene_label() in polar without xmin/xmax is broken (#106); the
+  # working coordinate systems are covered here, polar separately below.
+  for (add_coord in coords[c("cartesian", "flipped")]) {
+    draws_without_error(add_coord(
+      ggplot(sub, aes(xsubmin = from, xsubmax = to, y = molecule, label = lab)) +
+        geom_subgene_label()
+    ))
+  }
+})
+
+test_that("geom_subgene_label() draws in polar with only required aesthetics (#106)", {
+  skip("#106: geom_subgene_label() errors in polar unless xmin/xmax are also mapped")
+  sub <- data.frame(molecule = "M", from = 30, to = 70, lab = "S")
+  draws_without_error(
+    ggplot(sub, aes(xsubmin = from, xsubmax = to, y = molecule, label = lab)) +
+      geom_subgene_label() +
+      coord_polar() +
+      scale_y_discrete(limits = c(NA, "M"))
+  )
+})

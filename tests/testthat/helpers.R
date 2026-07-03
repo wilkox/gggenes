@@ -53,3 +53,27 @@ base_polar <- function() {
     theme_genes()
   return(p)
 }
+
+#' Draw a plot to a null device and assert it builds and renders without error.
+#' Used by the smoke tests, which (unlike the vdiffr tests) are not skipped on
+#' CRAN and so guard against build/draw-time crashes.
+draws_without_error <- function(p) {
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  testthat::expect_no_error(print(p))
+}
+
+#' Coordinate-system variants for smoke tests, as functions that add a coord to
+#' a plot. The polar variant supplies the discrete y scale needed to give a
+#' radius; smoke tests use a single molecule "M".
+smoke_coords <- function() {
+  list(
+    cartesian = function(p) p,
+    flipped = function(p) p + ggplot2::coord_flip(),
+    polar = function(p) {
+      p +
+        ggplot2::coord_polar() +
+        ggplot2::scale_y_discrete(limits = c(NA, "M"))
+    }
+  )
+}
