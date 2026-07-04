@@ -100,20 +100,12 @@ GeomFeatureLabel <- ggplot2::ggproto(
 
   setup_data = function(data, params) {
     # The 'forward' aesthetic, if provided, should be logical or coerced to
-    # logical
+    # logical. When 'forward' is not mapped it is absent here, as default
+    # aesthetics are merged after setup_data(); 'place' is therefore derived
+    # from 'forward' later, in makeContent(), once the default is present.
     if (!is.null(data$forward)) {
       data$forward <- as.logical(data$forward)
     }
-
-    # Set place based on forward aesthetic
-    # Non-oriented features: centre
-    # Forward features: align to start of bounding box (near the feature)
-    # Backward features: align to end of bounding box (near the feature)
-    data$place <- ifelse(
-      is.na(data$forward),
-      "centre",
-      ifelse(data$forward, "along_start", "along_end")
-    )
 
     data
   },
@@ -148,6 +140,17 @@ GeomFeatureLabel <- ggplot2::ggproto(
 #' @export
 makeContent.featurelabeltree <- function(x) {
   data <- x$data
+
+  # Derive placement from the 'forward' aesthetic, now that default aesthetics
+  # (including forward = NA) have been merged.
+  # Non-oriented features: centre
+  # Forward features: align to start of bounding box (near the feature)
+  # Backward features: align to end of bounding box (near the feature)
+  data$place <- ifelse(
+    is.na(data$forward),
+    "centre",
+    ifelse(data$forward, "along_start", "along_end")
+  )
 
   # Geometry function computes the bounding box for offset labels
   geometry <- function(data_row, gt, as_along, as_away) {

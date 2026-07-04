@@ -108,7 +108,6 @@ test_that("geom_feature() and geom_feature_label() build and draw with minimal a
 })
 
 test_that("geom_feature_label() draws with forward unmapped (#98)", {
-  skip("#98: geom_feature_label() errors when the forward aesthetic is not mapped")
   pts <- data.frame(molecule = "M", position = 50, name = "F")
   for (add_coord in smoke_coords()) {
     draws_without_error(add_coord(
