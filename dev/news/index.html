@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,8 @@
 <li>
 <code><a href="../reference/geom_feature_label.html">geom_feature_label()</a></code> and <code><a href="../reference/geom_terminator_label.html">geom_terminator_label()</a></code> now correctly draw on the opposite side of the molecule with a negative <code>feature_height</code> or <code>terminator_height</code> (<a href="https://github.com/wilkox/gggenes/issues/99" class="external-link">#99</a>).</li>
 <li>The legend key for <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> now applies <code>alpha</code> to the outline colour as well as the fill, matching the drawn geoms (<a href="https://github.com/wilkox/gggenes/issues/101" class="external-link">#101</a>).</li>
+<li>
+<code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> now draws in polar coordinates with only its required aesthetics mapped, without also needing <code>xmin</code>/<code>xmax</code> (<a href="https://github.com/wilkox/gggenes/issues/106" class="external-link">#106</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
