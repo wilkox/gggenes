@@ -140,10 +140,12 @@ makeContent.terminatorlabeltree <- function(x) {
     along_min <- data_row$along - 0.5
     along_max <- data_row$along + 0.5
 
-    # Position label above the terminator
-    away_sign <- sign(terminator_awayness)
-    away_min <- data_row$away + (terminator_awayness * away_sign)
-    away_max <- data_row$away + ((terminator_awayness + label_awayness) * away_sign)
+    # Offset the label from the molecule line by terminator_height, stacking the
+    # label's own height beyond it. A negative terminator_height places the label
+    # on the opposite side of the line.
+    away_min <- data_row$away + terminator_awayness
+    away_max <- data_row$away + terminator_awayness +
+      (label_awayness * sign(terminator_awayness))
 
     list(
       along_min = along_min,

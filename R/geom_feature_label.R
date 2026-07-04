@@ -172,10 +172,12 @@ makeContent.featurelabeltree <- function(x) {
       along_max <- data_row$along
     }
 
-    # Compute away extent from feature_height and label_height offsets
-    away_sign <- sign(feature_awayness)
-    away_min <- data_row$away + (feature_awayness * away_sign)
-    away_max <- data_row$away + ((feature_awayness + label_awayness) * away_sign)
+    # Offset the label from the molecule line by feature_height, stacking the
+    # label's own height beyond it. A negative feature_height places the label on
+    # the opposite side of the line.
+    away_min <- data_row$away + feature_awayness
+    away_max <- data_row$away + feature_awayness +
+      (label_awayness * sign(feature_awayness))
 
     list(
       along_min = along_min,

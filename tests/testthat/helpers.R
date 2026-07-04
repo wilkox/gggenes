@@ -63,6 +63,21 @@ draws_without_error <- function(p) {
   testthat::expect_no_error(print(p))
 }
 
+#' Away-axis bounding box of the first label in a feature/terminator label plot.
+#' Forces the layer's deferred makeContent() within an open device and returns
+#' the resulting text grob's away-axis extent (`ymin`/`ymax`, in npc) as a named
+#' numeric vector. Used to assert the direction a label is offset from the
+#' molecule line without resorting to a visual snapshot.
+label_away_box <- function(p) {
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  grid::grid.newpage()
+  grid::pushViewport(grid::viewport())
+  outer <- ggplot2::layer_grob(p, 1)[[1]]
+  child <- grid::makeContent(outer)$children[[1]]
+  c(ymin = unname(child$data$ymin), ymax = unname(child$data$ymax))
+}
+
 #' Coordinate-system variants for smoke tests, as functions that add a coord to
 #' a plot. The polar variant supplies the discrete y scale needed to give a
 #' radius; smoke tests use a single molecule "M".

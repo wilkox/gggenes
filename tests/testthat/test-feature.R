@@ -91,6 +91,33 @@ test_that("geom_feature() with numeric 'forward'", {
   })
 })
 
+test_that("geom_feature_label() places labels on the opposite side for negative feature_height (#99)", {
+  pts <- data.frame(molecule = "M", position = 50, name = "F")
+  box <- function(th) {
+    p <- ggplot() +
+      geom_feature_label(
+        data = pts,
+        aes(x = position, y = molecule, label = name),
+        feature_height = grid::unit(th, "mm")
+      ) +
+      xlim(0, 100)
+    label_away_box(p)
+  }
+
+  # A zero offset collapses the box onto the molecule line, giving the baseline.
+  baseline <- box(0)[["ymin"]]
+  above <- box(4)
+  below <- box(-4)
+
+  # A positive height sits entirely above the line, a negative height entirely
+  # below it.
+  expect_true(all(above > baseline))
+  expect_true(all(below < baseline))
+
+  # Equal magnitudes of opposite sign mirror across the line.
+  expect_equal(unname(above - baseline), unname(baseline - below))
+})
+
 test_that("geom_feature() and geom_feature_label() build and draw with minimal aesthetics", {
   pts <- data.frame(molecule = "M", position = 50, name = "F", fwd = TRUE)
   for (add_coord in smoke_coords()) {
