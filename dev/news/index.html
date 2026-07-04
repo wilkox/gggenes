@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9014</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@
 <li>Standardise on use of NPC (not native) grid coordinates internally (<a href="https://github.com/wilkox/gggenes/issues/94" class="external-link">#94</a>)</li>
 <li>
 <code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> and <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> register the <code>align</code> parameter explicitly and drop unused arguments from their internal <code>draw_panel()</code> methods (<a href="https://github.com/wilkox/gggenes/issues/104" class="external-link">#104</a>)</li>
+<li>Declare honest dependency version floors: <code>ggplot2 (&gt;= 3.4.0)</code> for the <code>linewidth</code> aesthetic, <code>rlang (&gt;= 1.0.0)</code> for <code><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">rlang::caller_arg()</a></code>, and <code>ggfittext (&gt;= 0.9.0)</code> for polar-coordinate text fitting (<a href="https://github.com/wilkox/gggenes/issues/107" class="external-link">#107</a>)</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>

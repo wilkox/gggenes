@@ -41,6 +41,11 @@
   register the `align` parameter explicitly and drop unused arguments
   from their internal `draw_panel()` methods
   ([\#104](https://github.com/wilkox/gggenes/issues/104))
+- Declare honest dependency version floors: `ggplot2 (>= 3.4.0)` for the
+  `linewidth` aesthetic, `rlang (>= 1.0.0)` for
+  [`rlang::caller_arg()`](https://rlang.r-lib.org/reference/caller_arg.html),
+  and `ggfittext (>= 0.9.0)` for polar-coordinate text fitting
+  ([\#107](https://github.com/wilkox/gggenes/issues/107))
 
 ### Bug fixes
 
