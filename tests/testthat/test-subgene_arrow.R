@@ -173,6 +173,18 @@ test_that("boundary-breaking subgenes are caught", {
   expect_s3_class(p, "ggplot")
 })
 
+test_that("geom_subgene_arrow() legend key applies alpha to the outline colour", {
+  data <- data.frame(
+    colour = "black",
+    fill = "white",
+    alpha = 0.5,
+    linetype = 1,
+    linewidth = 0.3
+  )
+  key <- GeomSubgeneArrow$draw_key(data, list(), NULL)
+  expect_equal(key$gp$col, ggplot2::alpha("black", 0.5))
+})
+
 test_that("geom_subgene_arrow() and geom_subgene_label() build and draw with minimal aesthetics", {
   sub <- data.frame(
     molecule = "M", start = 10, end = 90, from = 30, to = 70, lab = "S"

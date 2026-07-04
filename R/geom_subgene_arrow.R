@@ -106,7 +106,7 @@ GeomSubgeneArrow <- ggplot2::ggproto(
       width = grid::unit(1, "npc") - grid::unit(1, "mm"),
       height = grid::unit(1, "npc") - grid::unit(1, "mm"),
       gp = grid::gpar(
-        col = data$colour,
+        col = ggplot2::alpha(data$colour, data$alpha),
         fill = ggplot2::alpha(data$fill, data$alpha),
         lty = data$linetype,
         lwd = (data$linewidth %||% data$size) * ggplot2::.pt

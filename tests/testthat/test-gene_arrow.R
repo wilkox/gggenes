@@ -55,6 +55,18 @@ test_that("geom_gene_arrow() and geom_gene_label() in polar coordinates", {
   })
 })
 
+test_that("geom_gene_arrow() legend key applies alpha to the outline colour", {
+  data <- data.frame(
+    colour = "black",
+    fill = "white",
+    alpha = 0.5,
+    linetype = 1,
+    linewidth = 0.3
+  )
+  key <- GeomGeneArrow$draw_key(data, list(), NULL)
+  expect_equal(key$gp$col, ggplot2::alpha("black", 0.5))
+})
+
 test_that("geom_gene_arrow() and geom_gene_label() build and draw with minimal aesthetics", {
   genes <- data.frame(molecule = "M", start = 10, end = 90, lab = "G")
   for (add_coord in smoke_coords()) {

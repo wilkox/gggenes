@@ -28,6 +28,9 @@
 - `geom_feature_label()` and `geom_terminator_label()` now correctly draw on
   the opposite side of the molecule with a negative `feature_height` or
   `terminator_height` (#99).
+- The legend key for `geom_gene_arrow()` and `geom_subgene_arrow()` now applies
+  `alpha` to the outline colour as well as the fill, matching the drawn geoms
+  (#101).
 
 # gggenes 0.6.0
 
