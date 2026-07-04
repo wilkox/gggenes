@@ -47,6 +47,13 @@
   now correctly draw on the opposite side of the molecule with a
   negative `feature_height` or `terminator_height`
   ([\#99](https://github.com/wilkox/gggenes/issues/99)).
+- The legend key for
+  [`geom_gene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_gene_arrow.md)
+  and
+  [`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md)
+  now applies `alpha` to the outline colour as well as the fill,
+  matching the drawn geoms
+  ([\#101](https://github.com/wilkox/gggenes/issues/101)).
 
 ## gggenes 0.6.0
 
