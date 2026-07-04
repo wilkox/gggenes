@@ -186,7 +186,7 @@ makeContent.featuretree <- function(x) {
       col = feature$colour,
       fill = feature$colour,
       lty = feature$linetype,
-      lwd = (feature$linewidth %||% feature$size) * ggplot2::.pt
+      lwd = feature$linewidth * ggplot2::.pt
     )
 
     # Determine whether this is a feature with orientation or not

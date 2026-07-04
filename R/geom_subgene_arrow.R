@@ -109,7 +109,7 @@ GeomSubgeneArrow <- ggplot2::ggproto(
         col = ggplot2::alpha(data$colour, data$alpha),
         fill = ggplot2::alpha(data$fill, data$alpha),
         lty = data$linetype,
-        lwd = (data$linewidth %||% data$size) * ggplot2::.pt
+        lwd = data$linewidth * ggplot2::.pt
       )
     )
   },
@@ -259,7 +259,7 @@ makeContent.subgenearrowtree <- function(x) {
       fill = ggplot2::alpha(subgene$fill, subgene$alpha),
       col = ggplot2::alpha(subgene$colour, subgene$alpha),
       lty = subgene$linetype,
-      lwd = (subgene$linewidth %||% subgene$size) * ggplot2::.pt
+      lwd = subgene$linewidth * ggplot2::.pt
     )
 
     # Compose grob

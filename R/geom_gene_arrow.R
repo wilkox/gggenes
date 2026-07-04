@@ -100,8 +100,7 @@ GeomGeneArrow <- ggplot2::ggproto(
     colour = "black",
     fill = "white",
     linetype = 1,
-    linewidth = 0.3,
-    size = NULL
+    linewidth = 0.3
   ),
   draw_key = function(data, params, size) {
     grid::rectGrob(
@@ -113,20 +112,9 @@ GeomGeneArrow <- ggplot2::ggproto(
         lty = data$linetype,
         # linewidth is expressed in mm but grid expects points; multiplying by
         # .pt converts
-        lwd = (data$linewidth %||% data$size) * ggplot2::.pt
+        lwd = data$linewidth * ggplot2::.pt
       )
     )
-  },
-  setup_data = function(data, params) {
-    if ("size" %in% names(data)) {
-      lifecycle::deprecate_warn(
-        when = "0.5.2",
-        what = "the size aesthetic",
-        details = "Use linewidth instead. The size aesthetic was deprecated in favour of linewidth in ggplot2 3.4.0."
-      )
-    }
-
-    data
   },
   draw_panel = function(
     data,

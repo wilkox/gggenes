@@ -153,7 +153,7 @@ makeContent.terminatortree <- function(x) {
       col = terminator$colour,
       fill = terminator$colour,
       lty = terminator$linetype,
-      lwd = (terminator$linewidth %||% terminator$size) * ggplot2::.pt
+      lwd = terminator$linewidth * ggplot2::.pt
     )
 
     compose_grob(

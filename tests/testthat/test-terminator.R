@@ -108,3 +108,18 @@ test_that("geom_terminator() and geom_terminator_label() build and draw with min
     ))
   }
 })
+
+test_that("geom_terminator() warns on and renames the deprecated size aesthetic", {
+  rlang::local_options(lifecycle_verbosity = "warning")
+  terminators <- data.frame(molecule = "M", position = 50)
+  built <- NULL
+  expect_warning(
+    built <- ggplot_build(
+      ggplot(terminators) +
+        geom_terminator(aes(x = position, y = molecule, size = 2)) +
+        scale_size_identity()
+    ),
+    class = "lifecycle_warning_deprecated"
+  )
+  expect_equal(unique(built$data[[1]]$linewidth), 2)
+})

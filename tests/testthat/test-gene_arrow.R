@@ -81,3 +81,18 @@ test_that("geom_gene_arrow() and geom_gene_label() build and draw with minimal a
     ))
   }
 })
+
+test_that("geom_gene_arrow() warns on and renames the deprecated size aesthetic", {
+  rlang::local_options(lifecycle_verbosity = "warning")
+  genes <- data.frame(molecule = "M", start = 10, end = 90)
+  built <- NULL
+  expect_warning(
+    built <- ggplot_build(
+      ggplot(genes, aes(xmin = start, xmax = end, y = molecule, size = 2)) +
+        geom_gene_arrow() +
+        scale_size_identity()
+    ),
+    class = "lifecycle_warning_deprecated"
+  )
+  expect_equal(unique(built$data[[1]]$linewidth), 2)
+})

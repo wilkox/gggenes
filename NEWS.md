@@ -33,6 +33,9 @@
   (#101).
 - `geom_subgene_label()` now draws in polar coordinates with only its required
   aesthetics mapped, without also needing `xmin`/`xmax` (#106).
+- `geom_gene_arrow()`, `geom_subgene_arrow()`, `geom_feature()`, and
+  `geom_terminator()` now handle the deprecated `size` aesthetic consistently,
+  each emitting a single deprecation warning (#102).
 
 # gggenes 0.6.0
 

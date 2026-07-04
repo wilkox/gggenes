@@ -213,3 +213,21 @@ test_that("geom_subgene_label() draws in polar with only required aesthetics (#1
       scale_y_discrete(limits = c(NA, "M"))
   )
 })
+
+test_that("geom_subgene_arrow() warns on and renames the deprecated size aesthetic", {
+  rlang::local_options(lifecycle_verbosity = "warning")
+  subgenes <- data.frame(molecule = "M", start = 10, end = 90, from = 30, to = 70)
+  built <- NULL
+  expect_warning(
+    built <- ggplot_build(
+      ggplot(subgenes, aes(
+        xmin = start, xmax = end, xsubmin = from, xsubmax = to,
+        y = molecule, size = 2
+      )) +
+        geom_subgene_arrow() +
+        scale_size_identity()
+    ),
+    class = "lifecycle_warning_deprecated"
+  )
+  expect_equal(unique(built$data[[1]]$linewidth), 2)
+})

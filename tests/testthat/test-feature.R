@@ -142,3 +142,18 @@ test_that("geom_feature_label() draws with forward unmapped (#98)", {
     ))
   }
 })
+
+test_that("geom_feature() warns on and renames the deprecated size aesthetic", {
+  rlang::local_options(lifecycle_verbosity = "warning")
+  features <- data.frame(molecule = "M", position = 50)
+  built <- NULL
+  expect_warning(
+    built <- ggplot_build(
+      ggplot(features) +
+        geom_feature(aes(x = position, y = molecule, size = 2)) +
+        scale_size_identity()
+    ),
+    class = "lifecycle_warning_deprecated"
+  )
+  expect_equal(unique(built$data[[1]]$linewidth), 2)
+})
