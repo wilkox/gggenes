@@ -58,6 +58,14 @@
   now draws in polar coordinates with only its required aesthetics
   mapped, without also needing `xmin`/`xmax`
   ([\#106](https://github.com/wilkox/gggenes/issues/106)).
+- [`geom_gene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_gene_arrow.md),
+  [`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md),
+  [`geom_feature()`](https://wilkox.org/gggenes/dev/reference/geom_feature.md),
+  and
+  [`geom_terminator()`](https://wilkox.org/gggenes/dev/reference/geom_terminator.md)
+  now handle the deprecated `size` aesthetic consistently, each emitting
+  a single deprecation warning
+  ([\#102](https://github.com/wilkox/gggenes/issues/102)).
 
 ## gggenes 0.6.0
 
