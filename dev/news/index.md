@@ -41,6 +41,12 @@
 - [`geom_feature_label()`](https://wilkox.org/gggenes/dev/reference/geom_feature_label.md)
   now draws when the `forward` aesthetic is not mapped
   ([\#98](https://github.com/wilkox/gggenes/issues/98)).
+- [`geom_feature_label()`](https://wilkox.org/gggenes/dev/reference/geom_feature_label.md)
+  and
+  [`geom_terminator_label()`](https://wilkox.org/gggenes/dev/reference/geom_terminator_label.md)
+  now correctly draw on the opposite side of the molecule with a
+  negative `feature_height` or `terminator_height`
+  ([\#99](https://github.com/wilkox/gggenes/issues/99)).
 
 ## gggenes 0.6.0
 
