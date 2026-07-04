@@ -151,6 +151,7 @@ with transformed coordinates, and returns the polygon or polyline
 vertices:
 
 ``` r
+
 gene_arrow_geometry <- function(data_row, gt, as_along, as_away) {
   # Extract transformed coordinates from data_row
   along_min <- data_row$along_min
@@ -219,6 +220,7 @@ Converting absolute measurements to along/away values requires knowing:
 functions that close over these values:
 
 ``` r
+
 # Inside compose_grob():
 as_along <- if (coord_system == "cartesian") {
 
@@ -274,6 +276,7 @@ After geometry is computed in along/away space, it’s converted to grid
 x/y:
 
 ``` r
+
 if (coord_system == "cartesian") {
   x <- alongs
   y <- aways
@@ -319,6 +322,7 @@ types:
 ### Example: Complete makeContent Implementation
 
 ``` r
+
 makeContent.genearrowtree <- function(x) {
   data <- x$data
 

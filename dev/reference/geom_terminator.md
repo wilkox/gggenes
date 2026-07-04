@@ -73,6 +73,7 @@ this change, divide previous linewidth values by
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +

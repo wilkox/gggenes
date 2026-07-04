@@ -77,6 +77,7 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +

@@ -36,6 +36,12 @@
 - Standardise on use of NPC (not native) grid coordinates internally
   ([\#94](https://github.com/wilkox/gggenes/issues/94))
 
+### Bug fixes
+
+- [`geom_feature_label()`](https://wilkox.org/gggenes/dev/reference/geom_feature_label.md)
+  now draws when the `forward` aesthetic is not mapped
+  ([\#98](https://github.com/wilkox/gggenes/issues/98)).
+
 ## gggenes 0.6.0
 
 CRAN release: 2025-12-14

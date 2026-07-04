@@ -102,6 +102,7 @@ geom_gene_arrow
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
   y = molecule, fill = gene, label = gene)) +
   geom_gene_arrow() +
