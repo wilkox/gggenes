@@ -78,6 +78,24 @@ label_away_box <- function(p) {
   c(ymin = unname(child$data$ymin), ymax = unname(child$data$ymax))
 }
 
+#' Grid coordinates of a glyph child grob.
+#' Forces the layer's deferred makeContent() within an open device and returns
+#' the npc x/y vertices of the requested polygon/polyline child grob as a list
+#' of named numeric vectors. Used to assert glyph geometry (orientation,
+#' reflection, side of the backbone) without resorting to a visual snapshot.
+glyph_child_coords <- function(p, child = 1, layer = 1) {
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  grid::grid.newpage()
+  grid::pushViewport(grid::viewport())
+  outer <- ggplot2::layer_grob(p, layer)[[1]]
+  kid <- grid::makeContent(outer)$children[[child]]
+  list(
+    x = as.numeric(grid::convertX(kid$x, "npc")),
+    y = as.numeric(grid::convertY(kid$y, "npc"))
+  )
+}
+
 #' Coordinate-system variants for smoke tests, as functions that add a coord to
 #' a plot. The polar variant supplies the discrete y scale needed to give a
 #' radius; smoke tests use a single molecule "M".

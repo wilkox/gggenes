@@ -149,32 +149,69 @@ GeomFeature <- ggplot2::ggproto(
 makeContent.featuretree <- function(x) {
   data <- x$data
 
+  # A negative feature_height draws the glyph on the other side of the
+  # backbone; normalise it to an away-flip (see the coordinate transformations
+  # vignette)
+  flip_away <- as.numeric(x$feature_height) < 0
+  if (flip_away) {
+    x$feature_height <- x$feature_height * -1
+  }
+
   # Define geometry function for non-oriented features (simple vertical line)
-  geometry_non_oriented <- function(data_row, gt, as_along, as_away) {
+  geometry_non_oriented <- function(
+    data_row,
+    gt,
+    as_along,
+    as_away,
+    flip_along,
+    flip_away
+  ) {
     along <- data_row$along
     away <- data_row$away
     feature_awayness <- as_away(gt$feature_height)
 
-    list(
-      alongs = c(along, along),
-      aways = c(away, away + feature_awayness)
-    )
+    alongs <- c(along, along)
+    aways <- c(away, away + feature_awayness)
+
+    # Reflect for the reverse strand
+    if (flip_along) {
+      alongs <- 2 * along - alongs
+    }
+    if (flip_away) {
+      aways <- 2 * away - aways
+    }
+
+    list(alongs = alongs, aways = aways)
   }
 
   # Define geometry function for oriented features (vertical + horizontal arm)
-  geometry_oriented <- function(data_row, gt, as_along, as_away) {
+  geometry_oriented <- function(
+    data_row,
+    gt,
+    as_along,
+    as_away,
+    flip_along,
+    flip_away
+  ) {
     along <- data_row$along
     away <- data_row$away
     feature_alongness <- as_along(gt$feature_width)
     feature_awayness <- as_away(gt$feature_height)
 
-    arrow_sign <- ifelse(data_row$forward, 1, -1)
-    end_along <- along + (feature_alongness * arrow_sign)
+    end_along <- along + feature_alongness
 
-    list(
-      alongs = c(along, along, end_along),
-      aways = c(away, away + feature_awayness, away + feature_awayness)
-    )
+    alongs <- c(along, along, end_along)
+    aways <- c(away, away + feature_awayness, away + feature_awayness)
+
+    # Reflect for the reverse strand
+    if (flip_along) {
+      alongs <- 2 * along - alongs
+    }
+    if (flip_away) {
+      aways <- 2 * away - aways
+    }
+
+    list(alongs = alongs, aways = aways)
   }
 
   # Prepare grob for each feature
@@ -196,7 +233,8 @@ makeContent.featuretree <- function(x) {
         gt = x,
         data_row = feature,
         grob_type = "polyline",
-        gp = gp
+        gp = gp,
+        flip_away = flip_away
       )
     } else {
       arrow <- grid::arrow(
@@ -210,7 +248,9 @@ makeContent.featuretree <- function(x) {
         data_row = feature,
         grob_type = "polyline",
         gp = gp,
-        arrow = arrow
+        arrow = arrow,
+        flip_along = !as.logical(feature$forward),
+        flip_away = flip_away
       )
     }
   })

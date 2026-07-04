@@ -206,6 +206,11 @@ transform_to_along_away <- function(data_row, coord, panel_scales) {
 #'   used for polyline grobs; ignored for polygon and text grobs.
 #' @param arrow Optional grid::arrow object. Only used for polyline grobs;
 #'   ignored for polygon and text grobs.
+#' @param flip_along,flip_away Logical flags passed through to `geometry_fn`,
+#'   indicating whether the glyph should be reflected along the backbone and/or
+#'   perpendicular to it. Only forwarded to polygon/polyline geometry functions;
+#'   text geometry functions return a bounding box and are never flipped. See
+#'   the coordinate transformations vignette for details.
 #'
 #' @return A grid grob (polygon/polyline) or ggfittext gTree (text)
 #' @noRd
@@ -216,7 +221,9 @@ compose_grob <- function(
   grob_type = "polygon",
   gp = NULL,
   ids = NULL,
-  arrow = NULL
+  arrow = NULL,
+  flip_along = FALSE,
+  flip_away = FALSE
 ) {
   # Transform data to along/away coordinates
   transformed <- transform_to_along_away(data_row, gt$coord, gt$panel_scales)
@@ -243,13 +250,27 @@ compose_grob <- function(
     function(unit) as.numeric(grid::convertWidth(unit, "npc"))
   }
 
-  # Call geometry function with standard interface
-  result <- geometry_fn(
-    data_row = data_row,
-    gt = gt,
-    as_along = as_along,
-    as_away = as_away
-  )
+  # Call geometry function with standard interface. Vertex (polygon/polyline)
+  # geometry functions receive the strand-flip flags and perform the reflection
+  # themselves; text geometry functions return a bounding box and are not
+  # flipped.
+  result <- if (grob_type == "text") {
+    geometry_fn(
+      data_row = data_row,
+      gt = gt,
+      as_along = as_along,
+      as_away = as_away
+    )
+  } else {
+    geometry_fn(
+      data_row = data_row,
+      gt = gt,
+      as_along = as_along,
+      as_away = as_away,
+      flip_along = flip_along,
+      flip_away = flip_away
+    )
+  }
 
   # Handle text grobs separately - they use ggfittext and don't need
   # the polygon/polyline processing (segmentation, coordinate conversion)

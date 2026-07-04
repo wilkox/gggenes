@@ -120,28 +120,43 @@ GeomTerminator <- ggplot2::ggproto(
 makeContent.terminatortree <- function(x) {
   data <- x$data
 
+  # A negative terminator_height draws the glyph on the other side of the
+  # backbone; normalise it to an away-flip (see the coordinate transformations
+  # vignette)
+  flip_away <- as.numeric(x$terminator_height) < 0
+  if (flip_away) {
+    x$terminator_height <- x$terminator_height * -1
+  }
+
   # Define geometry function for T-shaped terminator
-  geometry <- function(data_row, gt, as_along, as_away) {
+  geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
     along <- data_row$along
     away <- data_row$away
     terminator_alongness <- as_along(gt$terminator_width)
     terminator_awayness <- as_away(gt$terminator_height)
 
-    list(
-      alongs = c(
-        along,
-        along,
-        along - (terminator_alongness / 2),
-        along + (terminator_alongness / 2)
-      ),
-      aways = c(
-        away,
-        away + terminator_awayness,
-        away + terminator_awayness,
-        away + terminator_awayness
-      ),
-      ids = c(1, 1, 2, 2)
+    alongs <- c(
+      along,
+      along,
+      along - (terminator_alongness / 2),
+      along + (terminator_alongness / 2)
     )
+    aways <- c(
+      away,
+      away + terminator_awayness,
+      away + terminator_awayness,
+      away + terminator_awayness
+    )
+
+    # Reflect for the reverse strand
+    if (flip_along) {
+      alongs <- 2 * along - alongs
+    }
+    if (flip_away) {
+      aways <- 2 * away - aways
+    }
+
+    list(alongs = alongs, aways = aways, ids = c(1, 1, 2, 2))
   }
 
   # Prepare grob for each terminator
@@ -161,7 +176,8 @@ makeContent.terminatortree <- function(x) {
       gt = x,
       data_row = terminator,
       grob_type = "polyline",
-      gp = gp
+      gp = gp,
+      flip_away = flip_away
     )
   })
 

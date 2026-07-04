@@ -143,13 +143,28 @@ makeContent.subgenearrowtree <- function(x) {
   data <- x$data
 
   # Define geometry function
-  geometry <- function(data_row, gt, as_along, as_away) {
+  geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
     # Extract transformed coordinates
     along_min <- data_row$along_min
     along_max <- data_row$along_max
     along_submin <- data_row$along_submin
     along_submax <- data_row$along_submax
     away <- data_row$away
+
+    # A subgene's shape depends on where the arrowhead sits, so its reverse-
+    # strand form is not a mirror image of the forward form: the arrowhead moves
+    # to the other end of the gene and the body/arrowhead split is recomputed,
+    # while each subgene stays at its physical position along the backbone.
+    # Swapping the along endpoints reverses the tip and produces this recomputed
+    # shape (see the coordinate transformations vignette).
+    if (flip_along) {
+      tmp <- along_min
+      along_min <- along_max
+      along_max <- tmp
+      tmp <- along_submin
+      along_submin <- along_submax
+      along_submax <- tmp
+    }
 
     # Determine arrow orientation
     orientation <- ifelse(along_max > along_min, 1, -1)
@@ -178,60 +193,64 @@ makeContent.subgenearrowtree <- function(x) {
 
     if (submax_from_tip >= arrowhead_length) {
       # Case 1: Subgene entirely in body (4-point rectangle)
-      list(
-        alongs = c(along_submin, along_submin, along_submax, along_submax),
-        aways = c(
-          away + body_away_half,
-          away - body_away_half,
-          away - body_away_half,
-          away + body_away_half
-        )
+      alongs <- c(along_submin, along_submin, along_submax, along_submax)
+      aways <- c(
+        away + body_away_half,
+        away - body_away_half,
+        away - body_away_half,
+        away + body_away_half
       )
     } else if (submin_from_tip >= arrowhead_length) {
       # Case 2: Subgene straddles flange (8-point polygon)
       # Calculate height at subgene end (linear interpolation in arrowhead)
       arrowhead_end_height <- arrowhead_away_half *
-        submax_from_tip / arrowhead_length
+        submax_from_tip /
+        arrowhead_length
 
-      list(
-        alongs = c(
-          along_submin,
-          along_submin,
-          flange,
-          flange,
-          along_submax,
-          along_submax,
-          flange,
-          flange
-        ),
-        aways = c(
-          away + body_away_half,
-          away - body_away_half,
-          away - body_away_half,
-          away - arrowhead_away_half,
-          away - arrowhead_end_height,
-          away + arrowhead_end_height,
-          away + arrowhead_away_half,
-          away + body_away_half
-        )
+      alongs <- c(
+        along_submin,
+        along_submin,
+        flange,
+        flange,
+        along_submax,
+        along_submax,
+        flange,
+        flange
+      )
+      aways <- c(
+        away + body_away_half,
+        away - body_away_half,
+        away - body_away_half,
+        away - arrowhead_away_half,
+        away - arrowhead_end_height,
+        away + arrowhead_end_height,
+        away + arrowhead_away_half,
+        away + body_away_half
       )
     } else {
       # Case 3: Subgene entirely in arrowhead (4-point trapezoid)
       arrowhead_start_height <- arrowhead_away_half *
-        submin_from_tip / arrowhead_length
+        submin_from_tip /
+        arrowhead_length
       arrowhead_end_height <- arrowhead_away_half *
-        submax_from_tip / arrowhead_length
+        submax_from_tip /
+        arrowhead_length
 
-      list(
-        alongs = c(along_submin, along_submin, along_submax, along_submax),
-        aways = c(
-          away + arrowhead_start_height,
-          away - arrowhead_start_height,
-          away - arrowhead_end_height,
-          away + arrowhead_end_height
-        )
+      alongs <- c(along_submin, along_submin, along_submax, along_submax)
+      aways <- c(
+        away + arrowhead_start_height,
+        away - arrowhead_start_height,
+        away - arrowhead_end_height,
+        away + arrowhead_end_height
       )
     }
+
+    # Reflect perpendicular to the backbone for the reverse strand
+    if (flip_away) {
+      aways <- 2 * away - aways
+    }
+
+    list(alongs = alongs, aways = aways)
   }
 
   # Prepare grob for each subgene
@@ -241,15 +260,11 @@ makeContent.subgenearrowtree <- function(x) {
   for (i in seq_len(nrow(data))) {
     subgene <- data[i, ]
 
-    # Reverse non-forward subgenes
-    if (!as.logical(subgene$forward)) {
-      subgene[, c("xmin", "xmax")] <- subgene[, c("xmax", "xmin")]
-      subgene[, c("xsubmin", "xsubmax")] <- subgene[, c("xsubmax", "xsubmin")]
-    }
-
-    # Validate boundaries before transformation (using original coordinates)
-    if (!between(subgene$xsubmin, subgene$xmin, subgene$xmax) ||
-      !between(subgene$xsubmax, subgene$xmin, subgene$xmax)) {
+    # Validate boundaries before transformation
+    if (
+      !between(subgene$xsubmin, subgene$xmin, subgene$xmax) ||
+        !between(subgene$xsubmax, subgene$xmin, subgene$xmax)
+    ) {
       skip_indices <- c(skip_indices, i)
       next
     }
@@ -268,7 +283,8 @@ makeContent.subgenearrowtree <- function(x) {
       gt = x,
       data_row = subgene,
       grob_type = "polygon",
-      gp = gp
+      gp = gp,
+      flip_along = !as.logical(subgene$forward)
     )
   }
 

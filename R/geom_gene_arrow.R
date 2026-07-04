@@ -146,7 +146,7 @@ makeContent.genearrowtree <- function(x) {
   data <- x$data
 
   # Define geometry function
-  geometry <- function(data_row, gt, as_along, as_away) {
+  geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
     # Extract transformed coordinates
     along_min <- data_row$along_min
     along_max <- data_row$along_max
@@ -171,37 +171,33 @@ makeContent.genearrowtree <- function(x) {
     body_away <- as_away(gt$arrow_body_height)
     body_away_half <- body_away / 2
 
-    # Vertices
-    list(
-      alongs = c(
-        along_min,
-        along_min,
-        flange,
-        flange,
-        along_max,
-        flange,
-        flange
-      ),
-      aways = c(
-        away + body_away_half,
-        away - body_away_half,
-        away - body_away_half,
-        away - arrowhead_away_half,
-        away,
-        away + arrowhead_away_half,
-        away + body_away_half
-      )
+    # Assemble the forward-glyph vertices
+    alongs <- c(along_min, along_min, flange, flange, along_max, flange, flange)
+    aways <- c(
+      away + body_away_half,
+      away - body_away_half,
+      away - body_away_half,
+      away - arrowhead_away_half,
+      away,
+      away + arrowhead_away_half,
+      away + body_away_half
     )
+
+    # Reflect for the reverse strand
+    along_pivot <- (along_min + along_max) / 2
+    if (flip_along) {
+      alongs <- 2 * along_pivot - alongs
+    }
+    if (flip_away) {
+      aways <- 2 * away - aways
+    }
+
+    list(alongs = alongs, aways = aways)
   }
 
   # Prepare grob for each gene
   grobs <- lapply(seq_len(nrow(data)), function(i) {
     gene <- data[i, ]
-
-    # Reverse non-forward genes
-    if (!as.logical(gene$forward)) {
-      gene[, c("xmin", "xmax")] <- gene[, c("xmax", "xmin")]
-    }
 
     # Set up graphical parameters
     gp <- grid::gpar(
@@ -217,7 +213,8 @@ makeContent.genearrowtree <- function(x) {
       gt = x,
       data_row = gene,
       grob_type = "polygon",
-      gp = gp
+      gp = gp,
+      flip_along = !as.logical(gene$forward)
     )
   })
 
