@@ -4,6 +4,7 @@ Labelling
 Lifecycle
 NPC
 README
+SBOL
 Standardise
 aes
 centre
@@ -26,7 +27,6 @@ makeContent
 millimetres
 normalise
 normalised
-npc
 patchlevel
 plasmapR
 plasmid
