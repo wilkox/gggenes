@@ -28,6 +28,17 @@ transform_to_along_away <- function(data_row, coord, panel_scales) {
 
   # Transform data to along/away coordinates
   if (coord_system == "polar") {
+    # The away axis (the polar radius) is derived from the y aesthetic alone;
+    # coord$transform needs an x value to run, but the resulting radius does not
+    # depend on it. Compute it once here from a dummy x, so every geom gets an
+    # away value regardless of which along aesthetics (x, xmin/xmax, xsub*) it
+    # supplies.
+    r_row <- data_row
+    r_row$x <- 1
+    data_row$away <- coord$transform(r_row, panel_scales)$r
+
+    # Transform the along aesthetics to theta. coord$transform maps x -> theta,
+    # so each along field is placed in x in turn and its theta read back.
     if ("xmin" %in% names(data_row) && "xmax" %in% names(data_row)) {
       data_row$x <- data_row$xmin
       thetamin <- coord$transform(data_row, panel_scales)$theta
@@ -42,20 +53,14 @@ transform_to_along_away <- function(data_row, coord, panel_scales) {
         thetamax <- 2 * pi
       }
 
-      data_row$x <- 1
-      transformed <- coord$transform(data_row, panel_scales)
-      data_row$r <- transformed$r
       data_row$along_min <- thetamin
       data_row$along_max <- thetamax
     } else if ("x" %in% names(data_row)) {
-      data_row <- coord$transform(data_row, panel_scales)
-      data_row$along <- data_row$theta
+      data_row$along <- coord$transform(data_row, panel_scales)$theta
     }
 
-    # Transform xsubmin/xsubmax if present. In the polar branch above, we only
-    # transform specific fields (x -> theta, y -> r), so xsubmin and xsubmax
-    # remain in their original untransformed x-axis units and can be
-    # transformed to theta here.
+    # xsubmin/xsubmax are non-standard aesthetics, so coord$transform leaves them
+    # in their original x-axis units; place each in x in turn to read its theta.
     if ("xsubmin" %in% names(data_row) && "xsubmax" %in% names(data_row)) {
       tmp <- data_row
       tmp$x <- data_row$xsubmin
@@ -74,8 +79,6 @@ transform_to_along_away <- function(data_row, coord, panel_scales) {
       data_row$along_submin <- thetasubmin
       data_row$along_submax <- thetasubmax
     }
-
-    data_row$away <- data_row$r
   } else if (coord_system == "cartesian") {
     # Transform xsubmin/xsubmax if present (they're non-standard aesthetics,
     # so coord$transform won't handle them automatically)

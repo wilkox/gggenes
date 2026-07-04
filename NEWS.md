@@ -31,6 +31,8 @@
 - The legend key for `geom_gene_arrow()` and `geom_subgene_arrow()` now applies
   `alpha` to the outline colour as well as the fill, matching the drawn geoms
   (#101).
+- `geom_subgene_label()` now draws in polar coordinates with only its required
+  aesthetics mapped, without also needing `xmin`/`xmax` (#106).
 
 # gggenes 0.6.0
 
