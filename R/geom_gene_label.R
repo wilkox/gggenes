@@ -105,6 +105,9 @@ GeomGeneLabel <- ggplot2::ggproto(
   "GeomGeneLabel",
   ggplot2::Geom,
   required_aes = c("xmin", "xmax", "y", "label"),
+  # 'align' is consumed in setup_data() rather than draw_panel(), so it is
+  # registered here to keep it a recognised parameter of the geom
+  extra_params = c("na.rm", "align"),
   default_aes = ggplot2::aes(
     colour = "black",
     size = 18,
@@ -139,9 +142,7 @@ GeomGeneLabel <- ggplot2::ggproto(
     min.size = 4,
     grow = FALSE,
     reflow = FALSE,
-    align = "centre",
-    height = grid::unit(3, "mm"),
-    subgroup = NA
+    height = grid::unit(3, "mm")
   ) {
     # Package raw data and parameters into a gTree for deferred rendering
     gt <- grid::gTree(

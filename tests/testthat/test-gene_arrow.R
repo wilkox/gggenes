@@ -96,3 +96,16 @@ test_that("geom_gene_arrow() warns on and renames the deprecated size aesthetic"
   )
   expect_equal(unique(built$data[[1]]$linewidth), 2)
 })
+
+test_that("geom_gene_label() align is registered and reaches the layer data", {
+  base <- ggplot(
+    example_genes[example_genes$molecule == example_genes$molecule[1], ],
+    aes(xmin = start, xmax = end, y = molecule, label = gene)
+  )
+  for (a in c("left", "centre", "right")) {
+    ld <- layer_data(base + geom_gene_label(align = a), 1)
+    expect_true("place" %in% names(ld))
+    expect_true(all(as.character(ld$place) == a))
+  }
+  expect_false("subgroup" %in% GeomGeneLabel$parameters(TRUE))
+})

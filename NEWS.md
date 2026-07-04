@@ -20,6 +20,9 @@
 - Improve error messages (#92)
 - Minor internal refactoring (#93)
 - Standardise on use of NPC (not native) grid coordinates internally (#94)
+- `geom_gene_label()` and `geom_subgene_label()` register the `align` parameter
+  explicitly and drop unused arguments from their internal `draw_panel()`
+  methods (#104)
 
 ## Bug fixes
 

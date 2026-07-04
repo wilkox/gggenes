@@ -231,3 +231,16 @@ test_that("geom_subgene_arrow() warns on and renames the deprecated size aesthet
   )
   expect_equal(unique(built$data[[1]]$linewidth), 2)
 })
+
+test_that("geom_subgene_label() align is registered and reaches the layer data", {
+  base <- ggplot(
+    example_subgenes[example_subgenes$molecule == example_subgenes$molecule[1], ],
+    aes(xsubmin = from, xsubmax = to, y = molecule, label = subgene)
+  )
+  for (a in c("left", "centre", "right")) {
+    ld <- layer_data(base + geom_subgene_label(align = a), 1)
+    expect_true("place" %in% names(ld))
+    expect_true(all(as.character(ld$place) == a))
+  }
+  expect_false("subgroup" %in% GeomSubgeneLabel$parameters(TRUE))
+})
