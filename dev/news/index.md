@@ -35,6 +35,12 @@
   ([\#93](https://github.com/wilkox/gggenes/issues/93))
 - Standardise on use of NPC (not native) grid coordinates internally
   ([\#94](https://github.com/wilkox/gggenes/issues/94))
+- [`geom_gene_label()`](https://wilkox.org/gggenes/dev/reference/geom_gene_label.md)
+  and
+  [`geom_subgene_label()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_label.md)
+  register the `align` parameter explicitly and drop unused arguments
+  from their internal `draw_panel()` methods
+  ([\#104](https://github.com/wilkox/gggenes/issues/104))
 
 ### Bug fixes
 
