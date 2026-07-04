@@ -23,6 +23,9 @@
 - `geom_gene_label()` and `geom_subgene_label()` register the `align` parameter
   explicitly and drop unused arguments from their internal `draw_panel()`
   methods (#104)
+- Declare honest dependency version floors: `ggplot2 (>= 3.4.0)` for the
+  `linewidth` aesthetic, `rlang (>= 1.0.0)` for `rlang::caller_arg()`, and
+  `ggfittext (>= 0.9.0)` for polar-coordinate text fitting (#107)
 
 ## Bug fixes
 

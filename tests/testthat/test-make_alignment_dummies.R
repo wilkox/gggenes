@@ -30,6 +30,15 @@ test_that("make_alignment_dummies() validates arguments", {
   ))
 })
 
+test_that("make_alignment_dummies() renames columns to the mapped aesthetics", {
+  dummies <- make_alignment_dummies(
+    example_genes,
+    aes(xmin = start, xmax = end, y = molecule, id = gene),
+    on = "genE"
+  )
+  expect_setequal(names(dummies), c("molecule", "start", "end", "gene"))
+})
+
 test_that("plot aligned on genE with make_alignment_dummies()", {
   dummies <- make_alignment_dummies(
     example_genes,
