@@ -152,7 +152,7 @@ vertices:
 
 ``` r
 
-gene_arrow_geometry <- function(data_row, gt, as_along, as_away) {
+gene_arrow_geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
   # Extract transformed coordinates from data_row
   along_min <- data_row$along_min
   along_max <- data_row$along_max
@@ -174,19 +174,25 @@ gene_arrow_geometry <- function(data_row, gt, as_along, as_away) {
   arrowhead_away_half <- arrowhead_away / 2
   body_away_half <- body_away / 2
 
-  # Return vertex coordinates
-  list(
-    alongs = c(along_min, along_min, flange, flange, along_max, flange, flange),
-    aways = c(
-      away + body_away_half,
-      away - body_away_half,
-      away - body_away_half,
-      away - arrowhead_away_half,
-      away,
-      away + arrowhead_away_half,
-      away + body_away_half
-    )
+  # Assemble the forward-glyph vertices
+  alongs <- c(along_min, along_min, flange, flange, along_max, flange, flange)
+  aways <- c(
+    away + body_away_half,
+    away - body_away_half,
+    away - body_away_half,
+    away - arrowhead_away_half,
+    away,
+    away + arrowhead_away_half,
+    away + body_away_half
   )
+
+  # Reflect for reverse-strand / upside-down glyphs (see "Reverse-strand
+  # rendering" below)
+  along_pivot <- (along_min + along_max) / 2
+  if (flip_along) alongs <- 2 * along_pivot - alongs
+  if (flip_away) aways <- 2 * away - aways
+
+  list(alongs = alongs, aways = aways)
 }
 ```
 
@@ -203,10 +209,104 @@ The function receives a standard interface:
   [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to NPC along-units.
 - `as_away`: Function to convert a
   [`grid::unit()`](https://rdrr.io/r/grid/unit.html) to NPC away-units.
+- `flip_along`, `flip_away`: Logical flags indicating whether to reflect
+  the glyph along the backbone and/or perpendicular to it (polygon and
+  polyline geometry functions only). See “Reverse-strand rendering”.
 
 All coordinate values in `data_row` are already transformed to
 along/away space. The geometry function converts unit measurements as
 needed using the converter functions.
+
+### Reverse-strand Rendering
+
+Some glyphs need to be drawn “reversed”. A gene on the reverse strand
+points the other way, and a terminator or promoter on the reverse strand
+is, per the SBOL Visual specification (§5.2), flipped both horizontally
+and vertically. Rather than each geom reinventing this at a different
+pipeline stage, reversal is expressed as two orthogonal reflections in
+along/away space:
+
+- **along-flip**: reflect the glyph about its along-pivot. This is a
+  horizontal reversal in Cartesian coordinates and an angular reversal
+  in polar coordinates.
+- **away-flip**: reflect the glyph about the backbone, its away-pivot.
+  This is a vertical reversal in Cartesian coordinates and a
+  radially-inward reflection in polar coordinates.
+
+Because both reflections are defined in along/away space, upstream of
+the conversion to grid coordinates, each composes with all three
+coordinate systems automatically. The away-flip becoming a
+radially-inward reflection in polar coordinates, for example, requires
+no special handling—it falls out of the same reflection applied before
+the along/away values are converted to grid x/y.
+
+The pivots follow a fixed convention:
+
+- **along-pivot**: the centre of the glyph along the backbone,
+  `(along_min + along_max) / 2` for range geoms, or the anchor `along`
+  for point geoms.
+- **away-pivot**: the backbone itself, `away`.
+
+`compose_grob()` forwards two logical flags, `flip_along` and
+`flip_away`, to the vertex (polygon and polyline) geometry function,
+which performs the reflection itself. Text geometry functions return a
+bounding box and are never flipped, so they do not receive these flags.
+
+``` r
+
+geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
+  # ... compute the forward-glyph alongs / aways ...
+
+  along_pivot <- (data_row$along_min + data_row$along_max) / 2
+  away_pivot <- data_row$away
+  if (flip_along) alongs <- 2 * along_pivot - alongs
+  if (flip_away) aways <- 2 * away_pivot - aways
+
+  list(alongs = alongs, aways = aways)
+}
+```
+
+Placing the reflection in the geometry function, rather than in
+`compose_grob()`, keeps the interface declarative: the geometry function
+is the single, complete description of how the glyph looks in every
+permutation of orientation and strand. Most glyphs reflect about the
+standard pivots, and a shared helper factors out those two lines. But a
+glyph whose reverse-strand form is a genuinely different shape—not a
+mirror image of the forward form—can branch on the flags and emit
+different vertices instead, without `compose_grob()` needing to know.
+
+#### Negative heights
+
+The `*_height` arguments to
+[`geom_feature()`](https://wilkox.org/gggenes/dev/reference/geom_feature.md)
+and
+[`geom_terminator()`](https://wilkox.org/gggenes/dev/reference/geom_terminator.md)
+accept negative values, historically used to draw a glyph “upside down”,
+below the backbone. This is the away-flip by another name. It is
+normalised in `makeContent()`: a negative height is converted to its
+magnitude and paired with `flip_away = TRUE`, so it flows through the
+same reflection as every other reversal rather than through a separate
+signed-unit code path.
+
+#### Strand semantics live above the flip
+
+The `flip_along` and `flip_away` flags are purely mechanical; the
+mapping from *meaning* to flags is resolved in each geom’s
+`makeContent()`, and differs between geoms. In particular, the `forward`
+aesthetic is not consistent across the package. In
+[`geom_gene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_gene_arrow.md)
+and
+[`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md),
+`forward` is a *relative* flip of the direction implied by
+`xmin`/`xmax`—so `forward = FALSE` combined with `xmin > xmax` can
+actually describe a forward-strand gene. In
+[`geom_feature()`](https://wilkox.org/gggenes/dev/reference/geom_feature.md),
+by contrast, `forward = TRUE` is an *absolute* statement that the
+feature is on the forward strand. The mechanical flip layer is agnostic
+to this: it receives resolved booleans and does not know how they were
+derived. The semantic model that reconciles these cases—strand as a
+first-class concept, reverse-strand variants, and the meaning of
+`forward` in each geom—is discussed in issue \#64.
 
 ### Unit Conversion
 
@@ -327,7 +427,7 @@ makeContent.genearrowtree <- function(x) {
   data <- x$data
 
   # Define geometry function with standard interface
-  geometry <- function(data_row, gt, as_along, as_away) {
+  geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
     # Extract transformed coordinates
     along_min <- data_row$along_min
     along_max <- data_row$along_max
@@ -349,36 +449,29 @@ makeContent.genearrowtree <- function(x) {
     arrowhead_away_half <- arrowhead_away / 2
     body_away_half <- body_away / 2
 
-    list(
-      alongs = c(
-        along_min,
-        along_min,
-        flange,
-        flange,
-        along_max,
-        flange,
-        flange
-      ),
-      aways = c(
-        away + body_away_half,
-        away - body_away_half,
-        away - body_away_half,
-        away - arrowhead_away_half,
-        away,
-        away + arrowhead_away_half,
-        away + body_away_half
-      )
+    # Assemble the forward-glyph vertices
+    alongs <- c(along_min, along_min, flange, flange, along_max, flange, flange)
+    aways <- c(
+      away + body_away_half,
+      away - body_away_half,
+      away - body_away_half,
+      away - arrowhead_away_half,
+      away,
+      away + arrowhead_away_half,
+      away + body_away_half
     )
+
+    # Reflect for reverse-strand / upside-down glyphs
+    along_pivot <- (along_min + along_max) / 2
+    if (flip_along) alongs <- 2 * along_pivot - alongs
+    if (flip_away) aways <- 2 * away - aways
+
+    list(alongs = alongs, aways = aways)
   }
 
   # Prepare grob for each gene
   grobs <- lapply(seq_len(nrow(data)), function(i) {
     gene <- data[i, ]
-
-    # Reverse non-forward genes
-    if (!as.logical(gene$forward)) {
-      gene[, c("xmin", "xmax")] <- gene[, c("xmax", "xmin")]
-    }
 
     # Set up graphical parameters
     gp <- grid::gpar(
@@ -393,7 +486,8 @@ makeContent.genearrowtree <- function(x) {
       gt = x,
       data_row = gene,
       grob_type = "polygon",
-      gp = gp
+      gp = gp,
+      flip_along = !as.logical(gene$forward)
     )
   })
 

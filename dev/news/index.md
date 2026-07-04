@@ -25,14 +25,13 @@
   and
   [`geom_subgene_label()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_label.md)
 - Add developer vignette documenting coordinate transformation internals
-- Consolidate coordinate transformation logic into `compose_grob()`
-  interface
 - Add comprehensive input validation
   ([\#91](https://github.com/wilkox/gggenes/issues/91))
 - Improve error messages
   ([\#92](https://github.com/wilkox/gggenes/issues/92))
-- Minor internal refactoring
-  ([\#93](https://github.com/wilkox/gggenes/issues/93))
+- Internal refactoring
+  ([\#93](https://github.com/wilkox/gggenes/issues/93),
+  [\#109](https://github.com/wilkox/gggenes/issues/109))
 - Standardise on use of NPC (not native) grid coordinates internally
   ([\#94](https://github.com/wilkox/gggenes/issues/94))
 - [`geom_gene_label()`](https://wilkox.org/gggenes/dev/reference/geom_gene_label.md)

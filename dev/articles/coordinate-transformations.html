@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -250,7 +250,7 @@ smooth)</li>
 with transformed coordinates, and returns the polygon or polyline
 vertices:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gene_arrow_geometry</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data_row</span>, <span class="va">gt</span>, <span class="va">as_along</span>, <span class="va">as_away</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="va">gene_arrow_geometry</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data_row</span>, <span class="va">gt</span>, <span class="va">as_along</span>, <span class="va">as_away</span>, <span class="va">flip_along</span>, <span class="va">flip_away</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Extract transformed coordinates from data_row</span></span>
 <span>  <span class="va">along_min</span> <span class="op">&lt;-</span> <span class="va">data_row</span><span class="op">$</span><span class="va">along_min</span></span>
 <span>  <span class="va">along_max</span> <span class="op">&lt;-</span> <span class="va">data_row</span><span class="op">$</span><span class="va">along_max</span></span>
@@ -272,19 +272,25 @@ vertices:</p>
 <span>  <span class="va">arrowhead_away_half</span> <span class="op">&lt;-</span> <span class="va">arrowhead_away</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span>  <span class="va">body_away_half</span> <span class="op">&lt;-</span> <span class="va">body_away</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span></span>
-<span>  <span class="co"># Return vertex coordinates</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    alongs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">along_min</span>, <span class="va">along_min</span>, <span class="va">flange</span>, <span class="va">flange</span>, <span class="va">along_max</span>, <span class="va">flange</span>, <span class="va">flange</span><span class="op">)</span>,</span>
-<span>    aways <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>      <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span>,</span>
-<span>      <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
-<span>      <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
-<span>      <span class="va">away</span> <span class="op">-</span> <span class="va">arrowhead_away_half</span>,</span>
-<span>      <span class="va">away</span>,</span>
-<span>      <span class="va">away</span> <span class="op">+</span> <span class="va">arrowhead_away_half</span>,</span>
-<span>      <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span></span>
-<span>    <span class="op">)</span></span>
+<span>  <span class="co"># Assemble the forward-glyph vertices</span></span>
+<span>  <span class="va">alongs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">along_min</span>, <span class="va">along_min</span>, <span class="va">flange</span>, <span class="va">flange</span>, <span class="va">along_max</span>, <span class="va">flange</span>, <span class="va">flange</span><span class="op">)</span></span>
+<span>  <span class="va">aways</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span>,</span>
+<span>    <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
+<span>    <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
+<span>    <span class="va">away</span> <span class="op">-</span> <span class="va">arrowhead_away_half</span>,</span>
+<span>    <span class="va">away</span>,</span>
+<span>    <span class="va">away</span> <span class="op">+</span> <span class="va">arrowhead_away_half</span>,</span>
+<span>    <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span></span>
 <span>  <span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Reflect for reverse-strand / upside-down glyphs (see "Reverse-strand</span></span>
+<span>  <span class="co"># rendering" below)</span></span>
+<span>  <span class="va">along_pivot</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">along_min</span> <span class="op">+</span> <span class="va">along_max</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">flip_along</span><span class="op">)</span> <span class="va">alongs</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">along_pivot</span> <span class="op">-</span> <span class="va">alongs</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">flip_away</span><span class="op">)</span> <span class="va">aways</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">away</span> <span class="op">-</span> <span class="va">aways</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alongs <span class="op">=</span> <span class="va">alongs</span>, aways <span class="op">=</span> <span class="va">aways</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>The function receives a standard interface:</p>
 <ul>
@@ -304,10 +310,108 @@ parameters as <code><a href="https://rdrr.io/r/grid/unit.html" class="external-l
 <li>
 <code>as_away</code>: Function to convert a
 <code><a href="https://rdrr.io/r/grid/unit.html" class="external-link">grid::unit()</a></code> to NPC away-units.</li>
+<li>
+<code>flip_along</code>, <code>flip_away</code>: Logical flags
+indicating whether to reflect the glyph along the backbone and/or
+perpendicular to it (polygon and polyline geometry functions only). See
+“Reverse-strand rendering”.</li>
 </ul>
 <p>All coordinate values in <code>data_row</code> are already
 transformed to along/away space. The geometry function converts unit
 measurements as needed using the converter functions.</p>
+</div>
+<div class="section level3">
+<h3 id="reverse-strand-rendering">Reverse-strand Rendering<a class="anchor" aria-label="anchor" href="#reverse-strand-rendering"></a>
+</h3>
+<p>Some glyphs need to be drawn “reversed”. A gene on the reverse strand
+points the other way, and a terminator or promoter on the reverse strand
+is, per the SBOL Visual specification (§5.2), flipped both horizontally
+and vertically. Rather than each geom reinventing this at a different
+pipeline stage, reversal is expressed as two orthogonal reflections in
+along/away space:</p>
+<ul>
+<li>
+<strong>along-flip</strong>: reflect the glyph about its
+along-pivot. This is a horizontal reversal in Cartesian coordinates and
+an angular reversal in polar coordinates.</li>
+<li>
+<strong>away-flip</strong>: reflect the glyph about the backbone,
+its away-pivot. This is a vertical reversal in Cartesian coordinates and
+a radially-inward reflection in polar coordinates.</li>
+</ul>
+<p>Because both reflections are defined in along/away space, upstream of
+the conversion to grid coordinates, each composes with all three
+coordinate systems automatically. The away-flip becoming a
+radially-inward reflection in polar coordinates, for example, requires
+no special handling—it falls out of the same reflection applied before
+the along/away values are converted to grid x/y.</p>
+<p>The pivots follow a fixed convention:</p>
+<ul>
+<li>
+<strong>along-pivot</strong>: the centre of the glyph along the
+backbone, <code>(along_min + along_max) / 2</code> for range geoms, or
+the anchor <code>along</code> for point geoms.</li>
+<li>
+<strong>away-pivot</strong>: the backbone itself,
+<code>away</code>.</li>
+</ul>
+<p><code>compose_grob()</code> forwards two logical flags,
+<code>flip_along</code> and <code>flip_away</code>, to the vertex
+(polygon and polyline) geometry function, which performs the reflection
+itself. Text geometry functions return a bounding box and are never
+flipped, so they do not receive these flags.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">geometry</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data_row</span>, <span class="va">gt</span>, <span class="va">as_along</span>, <span class="va">as_away</span>, <span class="va">flip_along</span>, <span class="va">flip_away</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># ... compute the forward-glyph alongs / aways ...</span></span>
+<span></span>
+<span>  <span class="va">along_pivot</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">data_row</span><span class="op">$</span><span class="va">along_min</span> <span class="op">+</span> <span class="va">data_row</span><span class="op">$</span><span class="va">along_max</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>  <span class="va">away_pivot</span> <span class="op">&lt;-</span> <span class="va">data_row</span><span class="op">$</span><span class="va">away</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">flip_along</span><span class="op">)</span> <span class="va">alongs</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">along_pivot</span> <span class="op">-</span> <span class="va">alongs</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">flip_away</span><span class="op">)</span> <span class="va">aways</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">away_pivot</span> <span class="op">-</span> <span class="va">aways</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alongs <span class="op">=</span> <span class="va">alongs</span>, aways <span class="op">=</span> <span class="va">aways</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Placing the reflection in the geometry function, rather than in
+<code>compose_grob()</code>, keeps the interface declarative: the
+geometry function is the single, complete description of how the glyph
+looks in every permutation of orientation and strand. Most glyphs
+reflect about the standard pivots, and a shared helper factors out those
+two lines. But a glyph whose reverse-strand form is a genuinely
+different shape—not a mirror image of the forward form—can branch on the
+flags and emit different vertices instead, without
+<code>compose_grob()</code> needing to know.</p>
+<div class="section level4">
+<h4 id="negative-heights">Negative heights<a class="anchor" aria-label="anchor" href="#negative-heights"></a>
+</h4>
+<p>The <code>*_height</code> arguments to <code><a href="../reference/geom_feature.html">geom_feature()</a></code>
+and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> accept negative values, historically
+used to draw a glyph “upside down”, below the backbone. This is the
+away-flip by another name. It is normalised in
+<code>makeContent()</code>: a negative height is converted to its
+magnitude and paired with <code>flip_away = TRUE</code>, so it flows
+through the same reflection as every other reversal rather than through
+a separate signed-unit code path.</p>
+</div>
+<div class="section level4">
+<h4 id="strand-semantics-live-above-the-flip">Strand semantics live above the flip<a class="anchor" aria-label="anchor" href="#strand-semantics-live-above-the-flip"></a>
+</h4>
+<p>The <code>flip_along</code> and <code>flip_away</code> flags are
+purely mechanical; the mapping from <em>meaning</em> to flags is
+resolved in each geom’s <code>makeContent()</code>, and differs between
+geoms. In particular, the <code>forward</code> aesthetic is not
+consistent across the package. In <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and
+<code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code>, <code>forward</code> is a
+<em>relative</em> flip of the direction implied by
+<code>xmin</code>/<code>xmax</code>—so <code>forward = FALSE</code>
+combined with <code>xmin &gt; xmax</code> can actually describe a
+forward-strand gene. In <code><a href="../reference/geom_feature.html">geom_feature()</a></code>, by contrast,
+<code>forward = TRUE</code> is an <em>absolute</em> statement that the
+feature is on the forward strand. The mechanical flip layer is agnostic
+to this: it receives resolved booleans and does not know how they were
+derived. The semantic model that reconciles these cases—strand as a
+first-class concept, reverse-strand variants, and the meaning of
+<code>forward</code> in each geom—is discussed in issue #64.</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="unit-conversion">Unit Conversion<a class="anchor" aria-label="anchor" href="#unit-conversion"></a>
@@ -323,7 +427,7 @@ with radius)</li>
 <p><code>compose_grob()</code> creates the <code>as_along</code> and
 <code>as_away</code> converter functions that close over these
 values:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Inside compose_grob():</span></span>
 <span><span class="va">as_along</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="va">coord_system</span> <span class="op">==</span> <span class="st">"cartesian"</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
@@ -381,7 +485,7 @@ separate geometries.</p>
 </h3>
 <p>After geometry is computed in along/away space, it’s converted to
 grid x/y:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="va">coord_system</span> <span class="op">==</span> <span class="st">"cartesian"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">alongs</span></span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">aways</span></span>
@@ -438,12 +542,12 @@ parameter</li>
 <div class="section level3">
 <h3 id="example-complete-makecontent-implementation">Example: Complete makeContent Implementation<a class="anchor" aria-label="anchor" href="#example-complete-makecontent-implementation"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">makeContent.genearrowtree</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">data</span></span>
 <span></span>
 <span>  <span class="co"># Define geometry function with standard interface</span></span>
-<span>  <span class="va">geometry</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data_row</span>, <span class="va">gt</span>, <span class="va">as_along</span>, <span class="va">as_away</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">geometry</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data_row</span>, <span class="va">gt</span>, <span class="va">as_along</span>, <span class="va">as_away</span>, <span class="va">flip_along</span>, <span class="va">flip_away</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co"># Extract transformed coordinates</span></span>
 <span>    <span class="va">along_min</span> <span class="op">&lt;-</span> <span class="va">data_row</span><span class="op">$</span><span class="va">along_min</span></span>
 <span>    <span class="va">along_max</span> <span class="op">&lt;-</span> <span class="va">data_row</span><span class="op">$</span><span class="va">along_max</span></span>
@@ -465,36 +569,29 @@ parameter</li>
 <span>    <span class="va">arrowhead_away_half</span> <span class="op">&lt;-</span> <span class="va">arrowhead_away</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span>    <span class="va">body_away_half</span> <span class="op">&lt;-</span> <span class="va">body_away</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>      alongs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>        <span class="va">along_min</span>,</span>
-<span>        <span class="va">along_min</span>,</span>
-<span>        <span class="va">flange</span>,</span>
-<span>        <span class="va">flange</span>,</span>
-<span>        <span class="va">along_max</span>,</span>
-<span>        <span class="va">flange</span>,</span>
-<span>        <span class="va">flange</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>      aways <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>        <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span>,</span>
-<span>        <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
-<span>        <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
-<span>        <span class="va">away</span> <span class="op">-</span> <span class="va">arrowhead_away_half</span>,</span>
-<span>        <span class="va">away</span>,</span>
-<span>        <span class="va">away</span> <span class="op">+</span> <span class="va">arrowhead_away_half</span>,</span>
-<span>        <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span></span>
-<span>      <span class="op">)</span></span>
+<span>    <span class="co"># Assemble the forward-glyph vertices</span></span>
+<span>    <span class="va">alongs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">along_min</span>, <span class="va">along_min</span>, <span class="va">flange</span>, <span class="va">flange</span>, <span class="va">along_max</span>, <span class="va">flange</span>, <span class="va">flange</span><span class="op">)</span></span>
+<span>    <span class="va">aways</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span>,</span>
+<span>      <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
+<span>      <span class="va">away</span> <span class="op">-</span> <span class="va">body_away_half</span>,</span>
+<span>      <span class="va">away</span> <span class="op">-</span> <span class="va">arrowhead_away_half</span>,</span>
+<span>      <span class="va">away</span>,</span>
+<span>      <span class="va">away</span> <span class="op">+</span> <span class="va">arrowhead_away_half</span>,</span>
+<span>      <span class="va">away</span> <span class="op">+</span> <span class="va">body_away_half</span></span>
 <span>    <span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># Reflect for reverse-strand / upside-down glyphs</span></span>
+<span>    <span class="va">along_pivot</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">along_min</span> <span class="op">+</span> <span class="va">along_max</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">flip_along</span><span class="op">)</span> <span class="va">alongs</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">along_pivot</span> <span class="op">-</span> <span class="va">alongs</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">flip_away</span><span class="op">)</span> <span class="va">aways</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">away</span> <span class="op">-</span> <span class="va">aways</span></span>
+<span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alongs <span class="op">=</span> <span class="va">alongs</span>, aways <span class="op">=</span> <span class="va">aways</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span></span>
 <span>  <span class="co"># Prepare grob for each gene</span></span>
 <span>  <span class="va">grobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">gene</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span>
-<span></span>
-<span>    <span class="co"># Reverse non-forward genes</span></span>
-<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">gene</span><span class="op">$</span><span class="va">forward</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="va">gene</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"xmin"</span>, <span class="st">"xmax"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">gene</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"xmax"</span>, <span class="st">"xmin"</span><span class="op">)</span><span class="op">]</span></span>
-<span>    <span class="op">}</span></span>
 <span></span>
 <span>    <span class="co"># Set up graphical parameters</span></span>
 <span>    <span class="va">gp</span> <span class="op">&lt;-</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span></span>
@@ -509,7 +606,8 @@ parameter</li>
 <span>      gt <span class="op">=</span> <span class="va">x</span>,</span>
 <span>      data_row <span class="op">=</span> <span class="va">gene</span>,</span>
 <span>      grob_type <span class="op">=</span> <span class="st">"polygon"</span>,</span>
-<span>      gp <span class="op">=</span> <span class="va">gp</span></span>
+<span>      gp <span class="op">=</span> <span class="va">gp</span>,</span>
+<span>      flip_along <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">gene</span><span class="op">$</span><span class="va">forward</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span></span>
