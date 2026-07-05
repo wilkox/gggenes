@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9016</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -230,12 +230,14 @@ Polar:     data → coord$transform() → θ/r (stored as along/away) → trig c
 <div class="section level2">
 <h2 id="the-compose_grob-pipeline">The compose_grob() Pipeline<a class="anchor" aria-label="anchor" href="#the-compose_grob-pipeline"></a>
 </h2>
-<p>To encapsulate this complexity, gggenes uses a
-<code>compose_grob()</code> function that handles the entire
-transformation pipeline from raw data to final grob. This function:</p>
+<p>To encapsulate this complexity, gggenes splits the work across two
+steps. The data-coordinate transform is viewport-independent and
+vectorised, so <code>transform_to_along_away()</code> runs it once per
+panel over the whole layer data, detecting the coordinate system and
+adding the along/away columns. Each glyph is then drawn by
+<code>compose_grob()</code>, which handles only the viewport-dependent,
+per-row work:</p>
 <ol style="list-style-type: decimal">
-<li>Detects the coordinate system</li>
-<li>Transforms data to along/away coordinates</li>
 <li>Converts unit measurements (mm, etc.) to along/away values</li>
 <li>Calls a geometry function with the transformed values</li>
 <li>Segments the geometry for polar coordinates (so curves appear
@@ -243,6 +245,11 @@ smooth)</li>
 <li>Converts along/away to grid NPC coordinates</li>
 <li>Creates and returns the appropriate grob</li>
 </ol>
+<p><code>compose_grob()</code> receives the already-transformed
+<code>data_row</code> and the panel’s <code>coord_system</code> (both
+produced by <code>transform_to_along_away()</code>), so the O(N)
+coordinate transform collapses to a single vectorised call per
+panel.</p>
 <div class="section level3">
 <h3 id="geometry-functions">Geometry Functions<a class="anchor" aria-label="anchor" href="#geometry-functions"></a>
 </h3>
@@ -472,13 +479,13 @@ points</li>
 <li>For polylines, the algorithm respects <code>id</code> groupings to
 keep separate line segments separate</li>
 </ol>
-<p>Note that <code>compose_grob()</code> includes handling for the
-special case where theta wraps around at 0/2π. When a range geom’s
-endpoint transforms to exactly 0 radians but should logically be 2π
-(based on the original data ordering), the value is corrected. However,
-geometries that truly span across the 0/2π boundary (e.g., from 350° to
-10°) are not currently supported and would need to be split into two
-separate geometries.</p>
+<p>Note that <code>transform_to_along_away()</code> includes handling
+for the special case where theta wraps around at 0/2π. When a range
+geom’s endpoint transforms to exactly 0 radians but should logically be
+2π (based on the original data ordering), the value is corrected.
+However, geometries that truly span across the 0/2π boundary (e.g., from
+350° to 10°) are not currently supported and would need to be split into
+two separate geometries.</p>
 </div>
 <div class="section level3">
 <h3 id="final-conversion">Final Conversion<a class="anchor" aria-label="anchor" href="#final-conversion"></a>
@@ -509,13 +516,14 @@ centered at (0.5, 0.5) in the viewport.</p>
 <code>draw_panel()</code> is minimal; it just packages data, coord,
 and panel_scales into a gTree</li>
 <li>
-<code>makeContent()</code> defines units and the
-<code>geometry()</code> function, then iterates over data rows calling
-<code>compose_grob()</code> for each</li>
+<code>makeContent()</code> transforms the whole panel’s data once
+with <code>transform_to_along_away()</code>, defines units and the
+<code>geometry()</code> function, then iterates over the transformed
+data rows calling <code>compose_grob()</code> for each</li>
 <li>
-<code>compose_grob()</code> encapsulates the coordinate
-transformation pipeline, which is independent of the geometry of any
-individual geom</li>
+<code>compose_grob()</code> encapsulates the per-glyph drawing
+pipeline, which is independent of the geometry of any individual
+geom</li>
 </ul>
 <p>This makes it straightforward to add new geoms: define a geometry
 function and unit specifications, then call <code>compose_grob()</code>
@@ -544,7 +552,10 @@ parameter</li>
 </h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">makeContent.genearrowtree</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">data</span></span>
+<span>  <span class="co"># Transform data to along/away coordinates once for the whole panel</span></span>
+<span>  <span class="va">transformed</span> <span class="op">&lt;-</span> <span class="fu">transform_to_along_away</span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">data</span>, <span class="va">x</span><span class="op">$</span><span class="va">coord</span>, <span class="va">x</span><span class="op">$</span><span class="va">panel_scales</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">transformed</span><span class="op">$</span><span class="va">data</span></span>
+<span>  <span class="va">coord_system</span> <span class="op">&lt;-</span> <span class="va">transformed</span><span class="op">$</span><span class="va">coord_system</span></span>
 <span></span>
 <span>  <span class="co"># Define geometry function with standard interface</span></span>
 <span>  <span class="va">geometry</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data_row</span>, <span class="va">gt</span>, <span class="va">as_along</span>, <span class="va">as_away</span>, <span class="va">flip_along</span>, <span class="va">flip_away</span><span class="op">)</span> <span class="op">{</span></span>
@@ -605,6 +616,7 @@ parameter</li>
 <span>      geometry_fn <span class="op">=</span> <span class="va">geometry</span>,</span>
 <span>      gt <span class="op">=</span> <span class="va">x</span>,</span>
 <span>      data_row <span class="op">=</span> <span class="va">gene</span>,</span>
+<span>      coord_system <span class="op">=</span> <span class="va">coord_system</span>,</span>
 <span>      grob_type <span class="op">=</span> <span class="st">"polygon"</span>,</span>
 <span>      gp <span class="op">=</span> <span class="va">gp</span>,</span>
 <span>      flip_along <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">as.logical</a></span><span class="op">(</span><span class="va">gene</span><span class="op">$</span><span class="va">forward</span><span class="op">)</span></span>

@@ -32,6 +32,9 @@
 - Internal refactoring
   ([\#93](https://github.com/wilkox/gggenes/issues/93),
   [\#109](https://github.com/wilkox/gggenes/issues/109))
+- Transform data coordinates once per panel rather than once per glyph,
+  speeding up the rendering of layers with many glyphs
+  ([\#113](https://github.com/wilkox/gggenes/issues/113))
 - Standardise on use of NPC (not native) grid coordinates internally
   ([\#94](https://github.com/wilkox/gggenes/issues/94))
 - [`geom_gene_label()`](https://wilkox.org/gggenes/dev/reference/geom_gene_label.md)
