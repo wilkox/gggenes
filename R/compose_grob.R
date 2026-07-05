@@ -357,7 +357,7 @@ compose_grob <- function(
           len <- sqrt(
             (abs(aways[i] - aways[j])^2) + (abs(alongs[i] - alongs[j])^2)
           )
-          n_segs <- round(len * 100)
+          n_segs <- max(1, round(len * 100))
 
           segmented_rs <- c(
             segmented_rs,
@@ -394,7 +394,7 @@ compose_grob <- function(
           len <- sqrt(
             (abs(aways[i] - aways[j])^2) + (abs(alongs[i] - alongs[j])^2)
           )
-          n_segs <- round(len * 100)
+          n_segs <- max(1, round(len * 100))
 
           segmented_rs <- c(
             segmented_rs,

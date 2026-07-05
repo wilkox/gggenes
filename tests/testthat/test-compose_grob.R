@@ -222,3 +222,58 @@ test_that("each facet panel is transformed with its own scales", {
     expect_lt(e[["max"]], 1.05)
   }
 })
+
+# Polar segmentation splits each edge into round(len * 100) arcs. For an edge
+# shorter than half a segment the count rounded to 0, and seq(len = 1) returned
+# only the start vertex, silently dropping the endpoint (#114). A single-edge
+# polyline then collapsed to one undrawable point; flooring the count at 1 keeps
+# the endpoint as a straight two-point fallback.
+test_that("polar segmentation keeps the endpoint of a near-zero-length polyline edge", {
+  # One edge whose length (0.001) is far below one segment.
+  geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
+    list(alongs = c(0, 0.001), aways = c(0.5, 0.5))
+  }
+  grob <- compose_grob(
+    geometry_fn = geometry,
+    gt = NULL,
+    data_row = data.frame(away = 0.5),
+    coord_system = "polar",
+    grob_type = "polyline",
+    gp = grid::gpar()
+  )
+
+  # Both endpoints survive: the edge is drawn, not collapsed to a single point.
+  x <- as.numeric(grob$x)
+  y <- as.numeric(grob$y)
+  expect_length(x, 2)
+  expect_true(any(
+    abs(x - (0.5 + 0.5 * sin(0.001))) < 1e-9 &
+      abs(y - (0.5 + 0.5 * cos(0.001))) < 1e-9
+  ))
+})
+
+test_that("polar segmentation keeps the endpoint of a near-zero-length polygon edge", {
+  # A triangle whose first edge (theta 0 -> 0.001) is shorter than one segment;
+  # the other two edges span a full segment and segment normally.
+  geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
+    list(alongs = c(0, 0.001, 1), aways = c(0.5, 0.5, 0.5))
+  }
+  grob <- compose_grob(
+    geometry_fn = geometry,
+    gt = NULL,
+    data_row = data.frame(away = 0.5),
+    coord_system = "polar",
+    grob_type = "polygon",
+    gp = grid::gpar()
+  )
+
+  # The short edge's endpoint appears twice — once closing the short edge, once
+  # opening the next. Dropping it would leave a single copy.
+  x <- as.numeric(grob$x)
+  y <- as.numeric(grob$y)
+  hits <- sum(
+    abs(x - (0.5 + 0.5 * sin(0.001))) < 1e-9 &
+      abs(y - (0.5 + 0.5 * cos(0.001))) < 1e-9
+  )
+  expect_equal(hits, 2)
+})
