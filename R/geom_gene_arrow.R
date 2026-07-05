@@ -143,7 +143,10 @@ GeomGeneArrow <- ggplot2::ggproto(
 #' @importFrom grid makeContent
 #' @export
 makeContent.genearrowtree <- function(x) {
-  data <- x$data
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(x$data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
 
   # Define geometry function
   geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
@@ -212,6 +215,7 @@ makeContent.genearrowtree <- function(x) {
       geometry_fn = geometry,
       gt = x,
       data_row = gene,
+      coord_system = coord_system,
       grob_type = "polygon",
       gp = gp,
       flip_along = !as.logical(gene$forward)

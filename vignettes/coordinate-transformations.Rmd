@@ -145,17 +145,22 @@ Polar:     data → coord$transform() → θ/r (stored as along/away) → trig c
 
 ## The compose_grob() Pipeline
 
-To encapsulate this complexity, gggenes uses a `compose_grob()` function that
-handles the entire transformation pipeline from raw data to final grob. This
-function:
+To encapsulate this complexity, gggenes splits the work across two steps. The
+data-coordinate transform is viewport-independent and vectorised, so
+`transform_to_along_away()` runs it once per panel over the whole layer data,
+detecting the coordinate system and adding the along/away columns. Each glyph is
+then drawn by `compose_grob()`, which handles only the viewport-dependent,
+per-row work:
 
-1. Detects the coordinate system
-2. Transforms data to along/away coordinates
-3. Converts unit measurements (mm, etc.) to along/away values
-4. Calls a geometry function with the transformed values
-5. Segments the geometry for polar coordinates (so curves appear smooth)
-6. Converts along/away to grid NPC coordinates
-7. Creates and returns the appropriate grob
+1. Converts unit measurements (mm, etc.) to along/away values
+2. Calls a geometry function with the transformed values
+3. Segments the geometry for polar coordinates (so curves appear smooth)
+4. Converts along/away to grid NPC coordinates
+5. Creates and returns the appropriate grob
+
+`compose_grob()` receives the already-transformed `data_row` and the panel's
+`coord_system` (both produced by `transform_to_along_away()`), so the O(N)
+coordinate transform collapses to a single vectorised call per panel.
 
 ### Geometry Functions
 
@@ -354,12 +359,12 @@ The segmentation algorithm works as follows:
 4. For polylines, the algorithm respects `id` groupings to keep separate line
    segments separate
 
-Note that `compose_grob()` includes handling for the special case where theta
-wraps around at 0/2π. When a range geom's endpoint transforms to exactly 0
-radians but should logically be 2π (based on the original data ordering), the
-value is corrected. However, geometries that truly span across the 0/2π boundary
-(e.g., from 350° to 10°) are not currently supported and would need to be split
-into two separate geometries.
+Note that `transform_to_along_away()` includes handling for the special case
+where theta wraps around at 0/2π. When a range geom's endpoint transforms to
+exactly 0 radians but should logically be 2π (based on the original data
+ordering), the value is corrected. However, geometries that truly span across
+the 0/2π boundary (e.g., from 350° to 10°) are not currently supported and would
+need to be split into two separate geometries.
 
 ### Final Conversion
 
@@ -387,9 +392,10 @@ With this architecture:
 
 - `draw_panel()` is minimal; it just packages data, coord, and panel_scales into
   a gTree
-- `makeContent()` defines units and the `geometry()` function, then iterates
-  over data rows calling `compose_grob()` for each
-- `compose_grob()` encapsulates the coordinate transformation pipeline, which is
+- `makeContent()` transforms the whole panel's data once with
+  `transform_to_along_away()`, defines units and the `geometry()` function, then
+  iterates over the transformed data rows calling `compose_grob()` for each
+- `compose_grob()` encapsulates the per-glyph drawing pipeline, which is
   independent of the geometry of any individual geom
 
 This makes it straightforward to add new geoms: define a geometry function and
@@ -408,7 +414,10 @@ Currently, `compose_grob()` supports three grob types:
 
 ```r
 makeContent.genearrowtree <- function(x) {
-  data <- x$data
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(x$data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
 
   # Define geometry function with standard interface
   geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
@@ -469,6 +478,7 @@ makeContent.genearrowtree <- function(x) {
       geometry_fn = geometry,
       gt = x,
       data_row = gene,
+      coord_system = coord_system,
       grob_type = "polygon",
       gp = gp,
       flip_along = !as.logical(gene$forward)

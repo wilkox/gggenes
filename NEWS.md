@@ -18,6 +18,8 @@
 - Add comprehensive input validation (#91)
 - Improve error messages (#92)
 - Internal refactoring (#93, #109)
+- Transform data coordinates once per panel rather than once per glyph, speeding
+  up the rendering of layers with many glyphs (#113)
 - Standardise on use of NPC (not native) grid coordinates internally (#94)
 - `geom_gene_label()` and `geom_subgene_label()` register the `align` parameter
   explicitly and drop unused arguments from their internal `draw_panel()`

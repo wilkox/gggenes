@@ -152,6 +152,11 @@ makeContent.featurelabeltree <- function(x) {
     ifelse(data$forward, "along_start", "along_end")
   )
 
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
+
   # Geometry function computes the bounding box for offset labels
   geometry <- function(data_row, gt, as_along, as_away) {
     feature_awayness <- as_away(gt$feature_height)
@@ -165,7 +170,7 @@ makeContent.featurelabeltree <- function(x) {
     } else if (data_row$forward) {
       # Forward: from feature to end of viewport
       along_min <- data_row$along
-      along_max <- if ("CoordPolar" %in% class(gt$coord)) 2 * pi else 1
+      along_max <- if (coord_system == "polar") 2 * pi else 1
     } else {
       # Backward: from start of viewport to feature
       along_min <- 0
@@ -193,6 +198,7 @@ makeContent.featurelabeltree <- function(x) {
       geometry_fn = geometry,
       gt = x,
       data_row = data[i, , drop = FALSE],
+      coord_system = coord_system,
       grob_type = "text"
     )
   })

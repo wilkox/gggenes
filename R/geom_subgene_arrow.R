@@ -142,6 +142,13 @@ GeomSubgeneArrow <- ggplot2::ggproto(
 makeContent.subgenearrowtree <- function(x) {
   data <- x$data
 
+  # Transform data to along/away coordinates once for the whole panel. The raw
+  # data is retained for boundary validation and warnings below, which compare
+  # untransformed x-axis coordinates.
+  transformed <- transform_to_along_away(data, x$coord, x$panel_scales)
+  tdata <- transformed$data
+  coord_system <- transformed$coord_system
+
   # Define geometry function
   geometry <- function(data_row, gt, as_along, as_away, flip_along, flip_away) {
     # Extract transformed coordinates
@@ -281,7 +288,8 @@ makeContent.subgenearrowtree <- function(x) {
     grobs[[length(grobs) + 1]] <- compose_grob(
       geometry_fn = geometry,
       gt = x,
-      data_row = subgene,
+      data_row = tdata[i, ],
+      coord_system = coord_system,
       grob_type = "polygon",
       gp = gp,
       flip_along = !as.logical(subgene$forward)

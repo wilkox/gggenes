@@ -129,7 +129,10 @@ GeomTerminatorLabel <- ggplot2::ggproto(
 #' @importFrom grid makeContent
 #' @export
 makeContent.terminatorlabeltree <- function(x) {
-  data <- x$data
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(x$data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
 
   # Geometry function computes offset bounding box above the terminator
   geometry <- function(data_row, gt, as_along, as_away) {
@@ -144,7 +147,8 @@ makeContent.terminatorlabeltree <- function(x) {
     # label's own height beyond it. A negative terminator_height places the label
     # on the opposite side of the line.
     away_min <- data_row$away + terminator_awayness
-    away_max <- data_row$away + terminator_awayness +
+    away_max <- data_row$away +
+      terminator_awayness +
       (label_awayness * sign(terminator_awayness))
 
     list(
@@ -160,6 +164,7 @@ makeContent.terminatorlabeltree <- function(x) {
       geometry_fn = geometry,
       gt = x,
       data_row = data[i, , drop = FALSE],
+      coord_system = coord_system,
       grob_type = "text"
     )
   })

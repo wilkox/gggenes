@@ -148,10 +148,13 @@ GeomSubgeneLabel <- ggplot2::ggproto(
 
 #' @export
 makeContent.subgenelabeltree <- function(x) {
-  data <- x$data
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(x$data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
 
   # Detect coordinate system for angle adjustment
-  is_flipped <- "CoordFlip" %in% class(x$coord)
+  is_flipped <- coord_system == "flip"
 
   # Geometry function returns the full bounding box for the label
   # using along_submin/along_submax (transformed from xsubmin/xsubmax)
@@ -177,6 +180,7 @@ makeContent.subgenelabeltree <- function(x) {
       geometry_fn = geometry,
       gt = x,
       data_row = data_row,
+      coord_system = coord_system,
       grob_type = "text"
     )
   })

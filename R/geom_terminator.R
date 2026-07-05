@@ -118,7 +118,10 @@ GeomTerminator <- ggplot2::ggproto(
 #' @importFrom grid makeContent
 #' @export
 makeContent.terminatortree <- function(x) {
-  data <- x$data
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(x$data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
 
   # A negative terminator_height draws the glyph on the other side of the
   # backbone; normalise it to an away-flip (see the coordinate transformations
@@ -175,6 +178,7 @@ makeContent.terminatortree <- function(x) {
       geometry_fn = geometry,
       gt = x,
       data_row = terminator,
+      coord_system = coord_system,
       grob_type = "polyline",
       gp = gp,
       flip_away = flip_away

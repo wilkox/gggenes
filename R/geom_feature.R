@@ -147,7 +147,10 @@ GeomFeature <- ggplot2::ggproto(
 #' @importFrom grid makeContent
 #' @export
 makeContent.featuretree <- function(x) {
-  data <- x$data
+  # Transform data to along/away coordinates once for the whole panel
+  transformed <- transform_to_along_away(x$data, x$coord, x$panel_scales)
+  data <- transformed$data
+  coord_system <- transformed$coord_system
 
   # A negative feature_height draws the glyph on the other side of the
   # backbone; normalise it to an away-flip (see the coordinate transformations
@@ -232,6 +235,7 @@ makeContent.featuretree <- function(x) {
         geometry_fn = geometry_non_oriented,
         gt = x,
         data_row = feature,
+        coord_system = coord_system,
         grob_type = "polyline",
         gp = gp,
         flip_away = flip_away
@@ -246,6 +250,7 @@ makeContent.featuretree <- function(x) {
         geometry_fn = geometry_oriented,
         gt = x,
         data_row = feature,
+        coord_system = coord_system,
         grob_type = "polyline",
         gp = gp,
         arrow = arrow,
