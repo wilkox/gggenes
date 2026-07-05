@@ -4,6 +4,8 @@
 
 ## gggenes 0.7.0
 
+CRAN release: 2026-07-05
+
 ### New features
 
 - [`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md)

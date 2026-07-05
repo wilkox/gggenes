@@ -48,7 +48,7 @@ geom_terminator(
 
 - alpha
 
-- color
+- colour
 
 - linetype
 
