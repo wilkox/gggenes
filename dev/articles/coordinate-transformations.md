@@ -227,10 +227,11 @@ needed using the converter functions.
 
 Some glyphs need to be drawn “reversed”. A gene on the reverse strand
 points the other way, and a terminator or promoter on the reverse strand
-is, per the SBOL Visual specification (§5.2), flipped both horizontally
-and vertically. Rather than each geom reinventing this at a different
-pipeline stage, reversal is expressed as two orthogonal reflections in
-along/away space:
+is, per the [SBOL Visual
+specification](https://sbolstandard.org/docs/SBOL-Visual-3.0.pdf)
+(§5.2), flipped both horizontally and vertically. Rather than each geom
+reinventing this at a different pipeline stage, reversal is expressed as
+two orthogonal reflections in along/away space:
 
 - **along-flip**: reflect the glyph about its along-pivot. This is a
   horizontal reversal in Cartesian coordinates and an angular reversal

@@ -55,11 +55,11 @@ geom_terminator(
 - linewidth (the former size aesthetic has been deprecated and will be
   removed in future versions)
 
-Prior to version 0.6.0.9001, linewidth was expressed in points, not
+Prior to version 0.7.0, linewidth was expressed in points, not
 millimetres, with a default value of 1. This was inconsistent with both
 [`geom_gene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_gene_arrow.md)
-and ggplot2 convention. From version 0.6.0.9001, linewidth is expressed
-in millimetres, and the default value is 0.3. This results in visually
+and ggplot2 convention. From version 0.7.0, linewidth is expressed in
+millimetres, and the default value is 0.3. This results in visually
 near-identical linewidths if using the default, but may result in a
 significant change in linewidths if this value is set. To correct for
 this change, divide previous linewidth values by

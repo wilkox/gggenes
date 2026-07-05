@@ -24,7 +24,10 @@
   [`geom_subgene_arrow()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_arrow.md)
   and
   [`geom_subgene_label()`](https://wilkox.org/gggenes/dev/reference/geom_subgene_label.md)
-- Add developer vignette documenting coordinate transformation internals
+- Documentation updates
+  ([\#116](https://github.com/wilkox/gggenes/issues/116),
+  [\#117](https://github.com/wilkox/gggenes/issues/117),
+  [\#122](https://github.com/wilkox/gggenes/issues/122))
 - Add comprehensive input validation
   ([\#91](https://github.com/wilkox/gggenes/issues/91))
 - Improve error messages

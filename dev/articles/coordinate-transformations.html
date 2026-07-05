@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9019</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9020</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,8 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/coordinate-transformations.html">Coordinate Transformations in gggenes</a></li>
-    <li><a class="dropdown-item" href="../articles/introduction-to-gggenes.html">Introduction to 'gggenes'</a></li>
+<li><a class="dropdown-item" href="../articles/introduction-to-gggenes.html">Introduction to 'gggenes'</a></li>
+    <li><a class="dropdown-item" href="../articles/coordinate-transformations.html">Coordinate Transformations in gggenes</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -61,7 +61,7 @@
       <h1>Coordinate Transformations in gggenes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/wilkox/gggenes/blob/master/vignettes/coordinate-transformations.Rmd" class="external-link"><code>vignettes/coordinate-transformations.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/wilkox/gggenes/blob/master/vignettes/articles/coordinate-transformations.Rmd" class="external-link"><code>vignettes/articles/coordinate-transformations.Rmd</code></a></small>
       <div class="d-none name"><code>coordinate-transformations.Rmd</code></div>
     </div>
 
@@ -332,10 +332,11 @@ measurements as needed using the converter functions.</p>
 </h3>
 <p>Some glyphs need to be drawn “reversed”. A gene on the reverse strand
 points the other way, and a terminator or promoter on the reverse strand
-is, per the SBOL Visual specification (§5.2), flipped both horizontally
-and vertically. Rather than each geom reinventing this at a different
-pipeline stage, reversal is expressed as two orthogonal reflections in
-along/away space:</p>
+is, per the <a href="https://sbolstandard.org/docs/SBOL-Visual-3.0.pdf" class="external-link">SBOL Visual
+specification</a> (§5.2), flipped both horizontally and vertically.
+Rather than each geom reinventing this at a different pipeline stage,
+reversal is expressed as two orthogonal reflections in along/away
+space:</p>
 <ul>
 <li>
 <strong>along-flip</strong>: reflect the glyph about its
