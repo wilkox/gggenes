@@ -384,7 +384,7 @@ if (coord_system == "cartesian") {
 }
 ```
 
-For polar, this is the standard polar-to-Cartesian conversion, centered at
+For polar, this is the standard polar-to-Cartesian conversion, centred at
 (0.5, 0.5) in the viewport.
 
 ## Putting It Together

@@ -40,7 +40,7 @@ transcription terminator.
 \item x (required; position of the terminator)
 \item y (required; molecule)
 \item alpha
-\item color
+\item colour
 \item linetype
 \item linewidth (the former size aesthetic has been deprecated and will be
 removed in future versions)

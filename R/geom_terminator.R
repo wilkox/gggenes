@@ -8,7 +8,7 @@
 #' - x (required; position of the terminator)
 #' - y (required; molecule)
 #' - alpha
-#' - color
+#' - colour
 #' - linetype
 #' - linewidth (the former size aesthetic has been deprecated and will be
 #' removed in future versions)
