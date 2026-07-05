@@ -30,6 +30,17 @@ test_that("make_alignment_dummies() validates arguments", {
   ))
 })
 
+test_that("make_alignment_dummies() errors clearly when 'on' gene is absent", {
+  expect_error(
+    make_alignment_dummies(
+      example_genes,
+      aes(xmin = start, xmax = end, y = molecule, id = gene),
+      on = "not_a_gene"
+    ),
+    regexp = "not_a_gene"
+  )
+})
+
 test_that("make_alignment_dummies() renames columns to the mapped aesthetics", {
   dummies <- make_alignment_dummies(
     example_genes,

@@ -50,6 +50,14 @@ make_alignment_dummies <- function(data, mapping, on, side = "left") {
   data <- data[vapply(mapping, rlang::quo_name, character(1))]
   names(data) <- names(mapping)
 
+  # Check that the 'on' gene is present in the mapped id column
+  if (!on %in% data$id) {
+    cli::cli_abort(c(
+      "{.arg on} must name a gene present in the {.field id} column",
+      "x" = "{.val {on}} was not found."
+    ))
+  }
+
   # Get range of each molecule
   dummies <- split(data, data$y)
   dummies <- lapply(dummies, function(m) {

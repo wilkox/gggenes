@@ -51,6 +51,8 @@
 - Polar segmentation now keeps the endpoint of a very short edge, so a glyph
   edge shorter than one segment is drawn rather than collapsing to a single
   point (#114).
+- `make_alignment_dummies()` now gives a more informative error when `on` is
+  absent from the mapped `id` column (#119).
 
 # gggenes 0.6.0
 
