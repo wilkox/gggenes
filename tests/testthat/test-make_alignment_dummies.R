@@ -41,7 +41,11 @@ test_that("make_alignment_dummies() requires each mapping aesthetic", {
   )
   for (aesthetic in names(incomplete)) {
     expect_error(
-      make_alignment_dummies(example_genes, incomplete[[aesthetic]], on = "genE"),
+      make_alignment_dummies(
+        example_genes,
+        incomplete[[aesthetic]],
+        on = "genE"
+      ),
       regexp = aesthetic
     )
   }
@@ -80,19 +84,23 @@ test_that("make_alignment_dummies() aligns the chosen edge equidistantly across 
       side = side
     )
 
-    offsets <- vapply(dummies$molecule, function(m) {
-      g <- example_genes[
-        example_genes$molecule == m & example_genes$gene == on_gene,
-      ]
-      edge <- if (side == "left") {
-        min(g$start, g$end)
-      } else {
-        max(g$start, g$end)
-      }
-      # `start` in the dummies is the renamed start_dummy: the molecule's new
-      # panel-start after alignment.
-      edge - dummies$start[dummies$molecule == m]
-    }, numeric(1))
+    offsets <- vapply(
+      dummies$molecule,
+      function(m) {
+        g <- example_genes[
+          example_genes$molecule == m & example_genes$gene == on_gene,
+        ]
+        edge <- if (side == "left") {
+          min(g$start, g$end)
+        } else {
+          max(g$start, g$end)
+        }
+        # `start` in the dummies is the renamed start_dummy: the molecule's new
+        # panel-start after alignment.
+        edge - dummies$start[dummies$molecule == m]
+      },
+      numeric(1)
+    )
 
     expect_equal(length(unique(round(offsets, 6))), 1)
   }

@@ -27,7 +27,10 @@ one_gene <- function() {
 
 test_that("transform_to_along_away() detects the coordinate system per panel", {
   expect_equal(transform_of(one_gene())$coord_system, "cartesian")
-  expect_equal(transform_of(one_gene() + ggplot2::coord_flip())$coord_system, "flip")
+  expect_equal(
+    transform_of(one_gene() + ggplot2::coord_flip())$coord_system,
+    "flip"
+  )
   expect_equal(
     transform_of(base_polar() + geom_gene_arrow())$coord_system,
     "polar"
@@ -118,16 +121,19 @@ test_that("transform_to_along_away() batches without changing per-row results", 
       inputs$coord,
       inputs$panel_scales
     )
-    row_by_row <- do.call(rbind, lapply(
-      seq_len(nrow(inputs$data)),
-      function(i) {
-        transform_to_along_away(
-          inputs$data[i, ],
-          inputs$coord,
-          inputs$panel_scales
-        )$data
-      }
-    ))
+    row_by_row <- do.call(
+      rbind,
+      lapply(
+        seq_len(nrow(inputs$data)),
+        function(i) {
+          transform_to_along_away(
+            inputs$data[i, ],
+            inputs$coord,
+            inputs$panel_scales
+          )$data
+        }
+      )
+    )
 
     expect_equal(
       batch$data[c("along_min", "along_max", "away")],
@@ -167,9 +173,13 @@ test_that("a large gene set composes one correctly placed grob per glyph", {
   # Genes are laid out left to right, so glyph midpoints must strictly increase;
   # this catches a transform that collapses or misplaces glyphs while still
   # emitting the right count.
-  midpoints <- vapply(children, function(k) {
-    mean(range(as.numeric(grid::convertX(k$x, "npc"))))
-  }, numeric(1))
+  midpoints <- vapply(
+    children,
+    function(k) {
+      mean(range(as.numeric(grid::convertX(k$x, "npc"))))
+    },
+    numeric(1)
+  )
   expect_true(all(diff(midpoints) > 0))
 })
 

@@ -1,0 +1,30 @@
+# Formatting check. Verifies R sources are air-formatted and hand-written
+# Markdown is prettier-formatted, as a CI backstop to the local pre-commit
+# hook. See the R package house standard, section Formatting.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+name: format
+
+permissions: read-all
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: posit-dev/setup-air@v1
+
+      - name: Check R formatting with air
+        run: air format . --check
+
+      - uses: actions/setup-node@v4
+
+      - name: Check Markdown formatting with prettier
+        run: npx prettier@3 --check --prose-wrap always --print-width 80 NEWS.md

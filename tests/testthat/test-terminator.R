@@ -104,7 +104,11 @@ test_that("geom_terminator() and geom_terminator_label() build and draw with min
       ggplot() + geom_terminator(data = pts, aes(x = position, y = molecule))
     ))
     draws_without_error(add_coord(
-      ggplot() + geom_terminator_label(data = pts, aes(x = position, y = molecule, label = name))
+      ggplot() +
+        geom_terminator_label(
+          data = pts,
+          aes(x = position, y = molecule, label = name)
+        )
     ))
   }
 })

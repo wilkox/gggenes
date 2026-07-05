@@ -187,18 +187,35 @@ test_that("geom_subgene_arrow() legend key applies alpha to the outline colour",
 
 test_that("geom_subgene_arrow() and geom_subgene_label() build and draw with minimal aesthetics", {
   sub <- data.frame(
-    molecule = "M", start = 10, end = 90, from = 30, to = 70, lab = "S"
+    molecule = "M",
+    start = 10,
+    end = 90,
+    from = 30,
+    to = 70,
+    lab = "S"
   )
   coords <- smoke_coords()
   for (add_coord in coords) {
     draws_without_error(add_coord(
-      ggplot(sub, aes(xmin = start, xmax = end, xsubmin = from, xsubmax = to, y = molecule)) +
+      ggplot(
+        sub,
+        aes(
+          xmin = start,
+          xmax = end,
+          xsubmin = from,
+          xsubmax = to,
+          y = molecule
+        )
+      ) +
         geom_subgene_arrow()
     ))
   }
   for (add_coord in coords) {
     draws_without_error(add_coord(
-      ggplot(sub, aes(xsubmin = from, xsubmax = to, y = molecule, label = lab)) +
+      ggplot(
+        sub,
+        aes(xsubmin = from, xsubmax = to, y = molecule, label = lab)
+      ) +
         geom_subgene_label()
     ))
   }
@@ -216,14 +233,27 @@ test_that("geom_subgene_label() draws in polar with only required aesthetics (#1
 
 test_that("geom_subgene_arrow() warns on and renames the deprecated size aesthetic", {
   rlang::local_options(lifecycle_verbosity = "warning")
-  subgenes <- data.frame(molecule = "M", start = 10, end = 90, from = 30, to = 70)
+  subgenes <- data.frame(
+    molecule = "M",
+    start = 10,
+    end = 90,
+    from = 30,
+    to = 70
+  )
   built <- NULL
   expect_warning(
     built <- ggplot_build(
-      ggplot(subgenes, aes(
-        xmin = start, xmax = end, xsubmin = from, xsubmax = to,
-        y = molecule, size = 2
-      )) +
+      ggplot(
+        subgenes,
+        aes(
+          xmin = start,
+          xmax = end,
+          xsubmin = from,
+          xsubmax = to,
+          y = molecule,
+          size = 2
+        )
+      ) +
         geom_subgene_arrow() +
         scale_size_identity()
     ),
@@ -234,7 +264,9 @@ test_that("geom_subgene_arrow() warns on and renames the deprecated size aesthet
 
 test_that("geom_subgene_label() align is registered and reaches the layer data", {
   base <- ggplot(
-    example_subgenes[example_subgenes$molecule == example_subgenes$molecule[1], ],
+    example_subgenes[
+      example_subgenes$molecule == example_subgenes$molecule[1],
+    ],
     aes(xsubmin = from, xsubmax = to, y = molecule, label = subgene)
   )
   for (a in c("left", "centre", "right")) {

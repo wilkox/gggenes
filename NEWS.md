@@ -23,14 +23,14 @@
   `linewidth` aesthetic, `rlang (>= 1.0.0)` for `rlang::caller_arg()`, and
   `ggfittext (>= 0.9.0)` for polar-coordinate text fitting (#107).
 - `geom_feature()` and `geom_terminator()` now document that their `linewidth`
-  is expressed in points rather than millimetres, unlike `geom_gene_arrow()`
-  and the ggplot2 convention; this inconsistency will be reconciled when these
-  geoms are superseded in gggenes 1.0.0 (#121).
+  is expressed in points rather than millimetres, unlike `geom_gene_arrow()` and
+  the ggplot2 convention; this inconsistency will be reconciled when these geoms
+  are superseded in gggenes 1.0.0 (#121).
 - `geom_feature_label()` now draws when the `forward` aesthetic is not mapped
   (#98).
 - `geom_feature_label()` now sizes the label box of a `forward = TRUE` feature
-  to the full panel in polar coordinates, spanning to the theta edge at
-  `2 * pi` rather than to 1 radian (#112).
+  to the full panel in polar coordinates, spanning to the theta edge at `2 * pi`
+  rather than to 1 radian (#112).
 - `geom_feature_label()` and `geom_terminator_label()` now draw on the opposite
   side of the molecule with a negative `feature_height` or `terminator_height`,
   and their height-parameter documentation is clarified (#90, #99).
@@ -66,8 +66,8 @@
 
 ## Minor changes
 
-- Fix the 'ggfittext-package' documentation after a [breaking change to
-  roxygen2](https://github.com/r-lib/roxygen2/issues/1491)
+- Fix the 'ggfittext-package' documentation after a
+  [breaking change to roxygen2](https://github.com/r-lib/roxygen2/issues/1491)
 
 # gggenes 0.5.0
 
@@ -83,8 +83,8 @@
   introductory vignette (-1 does not coerce to FALSE...)
 - Improve handling of NA `id` values in `make_alignment_dummies()` (#51, thanks
   @NanamiKubota)
-- Update `element_line` to use `linewidth` rather than `size` (`size`
-  deprecated as of ggplot2 3.4.0)
+- Update `element_line` to use `linewidth` rather than `size` (`size` deprecated
+  as of ggplot2 3.4.0)
 
 ## Bug fixes
 

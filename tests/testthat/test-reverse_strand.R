@@ -57,12 +57,20 @@ test_that("geom_subgene_arrow() reverse strand keeps the subgene in place and re
   subgene <- function(fwd) {
     ggplot(
       data.frame(
-        molecule = "M", xmin = 0, xmax = 100,
-        xsubmin = 90, xsubmax = 100, forward = fwd
+        molecule = "M",
+        xmin = 0,
+        xmax = 100,
+        xsubmin = 90,
+        xsubmax = 100,
+        forward = fwd
       ),
       aes(
-        xmin = xmin, xmax = xmax, xsubmin = xsubmin, xsubmax = xsubmax,
-        y = molecule, forward = forward
+        xmin = xmin,
+        xmax = xmax,
+        xsubmin = xsubmin,
+        xsubmax = xsubmax,
+        y = molecule,
+        forward = forward
       )
     ) +
       geom_subgene_arrow()
@@ -190,12 +198,20 @@ polar_radius <- function(coords) {
 polar_gene_panel <- function(layer, fwd) {
   ggplot(
     data.frame(
-      molecule = "M", xmin = 10, xmax = 30,
-      xsubmin = 25, xsubmax = 30, forward = fwd
+      molecule = "M",
+      xmin = 10,
+      xmax = 30,
+      xsubmin = 25,
+      xsubmax = 30,
+      forward = fwd
     ),
     aes(
-      xmin = xmin, xmax = xmax, xsubmin = xsubmin, xsubmax = xsubmax,
-      y = molecule, forward = forward
+      xmin = xmin,
+      xmax = xmax,
+      xsubmin = xsubmin,
+      xsubmax = xsubmax,
+      y = molecule,
+      forward = forward
     )
   ) +
     layer +
