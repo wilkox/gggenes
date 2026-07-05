@@ -46,13 +46,11 @@ transcription terminator.
 removed in future versions)
 }
 
-Prior to version 0.7.0, linewidth was expressed in points, not millimetres,
-with a default value of 1. This was inconsistent with both
-\code{geom_gene_arrow()} and ggplot2 convention. From version 0.7.0, linewidth
-is expressed in millimetres, and the default value is 0.3. This results in visually
-near-identical linewidths if using the default, but may result in a
-significant change in linewidths if this value is set. To correct for this
-change, divide previous linewidth values by \code{ggplot2::.pt}.
+Note that, unlike \code{geom_gene_arrow()} and ggplot2 convention, \code{linewidth} in
+\code{geom_terminator()} is expressed in points rather than millimetres, with a
+default value of 1. This inconsistency is retained for backwards
+compatibility, and will be reconciled when these point-feature geoms are
+superseded in gggenes 1.0.0.
 }
 
 \examples{

@@ -26,13 +26,11 @@
 #' - linewidth (the former size aesthetic has been deprecated and will be
 #' removed in future versions)
 #'
-#' Prior to version 0.7.0, linewidth was expressed in points, not millimetres,
-#' with a default value of 1. This was inconsistent with both
-#' `geom_gene_arrow()` and ggplot2 convention. From version 0.7.0, linewidth
-#' is expressed in millimetres, and the default value is 0.3. This results in visually
-#' near-identical linewidths if using the default, but may result in a
-#' significant change in linewidths if this value is set. To correct for this
-#' change, divide previous linewidth values by `ggplot2::.pt`.
+#' Note that, unlike `geom_gene_arrow()` and ggplot2 convention, `linewidth` in
+#' `geom_feature()` is expressed in points rather than millimetres, with a
+#' default value of 1. This inconsistency is retained for backwards
+#' compatibility, and will be reconciled when these point-feature geoms are
+#' superseded in gggenes 1.0.0.
 #'
 #' @param mapping,data,stat,position,na.rm,show.legend,inherit.aes,... As
 #' standard for ggplot2. inherit.aes is set to FALSE by default, as features
@@ -105,7 +103,7 @@ GeomFeature <- ggplot2::ggproto(
     alpha = 1,
     colour = "black",
     linetype = 1,
-    linewidth = 0.3
+    linewidth = 1
   ),
 
   draw_key = ggplot2::draw_key_abline,
@@ -226,7 +224,9 @@ makeContent.featuretree <- function(x) {
       col = feature$colour,
       fill = feature$colour,
       lty = feature$linetype,
-      lwd = feature$linewidth * ggplot2::.pt
+      # linewidth is expressed in points here, which grid also expects, so no
+      # .pt conversion is applied (see the note in the geom_feature() docs)
+      lwd = feature$linewidth
     )
 
     # Determine whether this is a feature with orientation or not

@@ -1,15 +1,11 @@
 # gggenes (development version)
 
-## Breaking changes
-
-- `linewidth` in `geom_feature()` and `geom_terminator()` is now expressed in
-  millimetres, not points, for consistency with `geom_gene_arrow()` as well as
-  ggplot2 convention. This will have a negligible effect on plots that use the
-  default `linewidth` values for these geoms, but will cause a significant
-  visual change where `linewidth` is set manually (#89)
-
 ## Minor changes
 
+- Document that `linewidth` in `geom_feature()` and `geom_terminator()` is
+  expressed in points rather than millimetres, unlike `geom_gene_arrow()` and
+  ggplot2 convention; this inconsistency will be reconciled when these geoms are
+  superseded in gggenes 1.0.0 (#121).
 - Clarify `feature_height` and `terminator_height` parameter documentation in
   label geoms (#90)
 - Add polar coordinate support for `geom_subgene_arrow()` and
