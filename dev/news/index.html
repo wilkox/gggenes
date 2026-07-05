@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9021</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,13 +40,9 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gggenes-development-version">gggenes (development version)<a class="anchor" aria-label="anchor" href="#gggenes-development-version"></a></h2>
 <div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
-<ul><li>
-<code>linewidth</code> in <code><a href="../reference/geom_feature.html">geom_feature()</a></code> and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> is now expressed in millimetres, not points, for consistency with <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> as well as ggplot2 convention. This will have a negligible effect on plots that use the default <code>linewidth</code> values for these geoms, but will cause a significant visual change where <code>linewidth</code> is set manually (<a href="https://github.com/wilkox/gggenes/issues/89" class="external-link">#89</a>)</li>
-</ul></div>
-<div class="section level3">
 <h3 id="minor-changes-development-version">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-development-version"></a></h3>
-<ul><li>Clarify <code>feature_height</code> and <code>terminator_height</code> parameter documentation in label geoms (<a href="https://github.com/wilkox/gggenes/issues/90" class="external-link">#90</a>)</li>
+<ul><li>Document that <code>linewidth</code> in <code><a href="../reference/geom_feature.html">geom_feature()</a></code> and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> is expressed in points rather than millimetres, unlike <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention; this inconsistency will be reconciled when these geoms are superseded in gggenes 1.0.0 (<a href="https://github.com/wilkox/gggenes/issues/121" class="external-link">#121</a>).</li>
+<li>Clarify <code>feature_height</code> and <code>terminator_height</code> parameter documentation in label geoms (<a href="https://github.com/wilkox/gggenes/issues/90" class="external-link">#90</a>)</li>
 <li>Add polar coordinate support for <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> and <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code>
 </li>
 <li>Documentation updates (<a href="https://github.com/wilkox/gggenes/issues/116" class="external-link">#116</a>, <a href="https://github.com/wilkox/gggenes/issues/117" class="external-link">#117</a>, <a href="https://github.com/wilkox/gggenes/issues/122" class="external-link">#122</a>)</li>

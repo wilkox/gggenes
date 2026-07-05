@@ -9,7 +9,7 @@ transcription terminator."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9021</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,13 +94,11 @@ horizontal 'beam' of the terminator glyph. Defaults to 3 mm.</p></dd>
 <li><p>linetype</p></li>
 <li><p>linewidth (the former size aesthetic has been deprecated and will be
 removed in future versions)</p></li>
-</ul><p>Prior to version 0.7.0, linewidth was expressed in points, not millimetres,
-with a default value of 1. This was inconsistent with both
-<code><a href="geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention. From version 0.7.0, linewidth
-is expressed in millimetres, and the default value is 0.3. This results in visually
-near-identical linewidths if using the default, but may result in a
-significant change in linewidths if this value is set. To correct for this
-change, divide previous linewidth values by <code><a href="https://ggplot2.tidyverse.org/reference/graphical-units.html" class="external-link">ggplot2::.pt</a></code>.</p>
+</ul><p>Note that, unlike <code><a href="geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention, <code>linewidth</code> in
+<code>geom_terminator()</code> is expressed in points rather than millimetres, with a
+default value of 1. This inconsistency is retained for backwards
+compatibility, and will be reconciled when these point-feature geoms are
+superseded in gggenes 1.0.0.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
