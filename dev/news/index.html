@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9022</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.7.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,36 +39,38 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gggenes-development-version">gggenes (development version)<a class="anchor" aria-label="anchor" href="#gggenes-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.0" id="gggenes-070">gggenes 0.7.0<a class="anchor" aria-label="anchor" href="#gggenes-070"></a></h2>
 <div class="section level3">
-<h3 id="minor-changes-development-version">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-development-version"></a></h3>
-<ul><li>Document that <code>linewidth</code> in <code><a href="../reference/geom_feature.html">geom_feature()</a></code> and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> is expressed in points rather than millimetres, unlike <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and ggplot2 convention; this inconsistency will be reconciled when these geoms are superseded in gggenes 1.0.0 (<a href="https://github.com/wilkox/gggenes/issues/121" class="external-link">#121</a>).</li>
-<li>Clarify <code>feature_height</code> and <code>terminator_height</code> parameter documentation in label geoms (<a href="https://github.com/wilkox/gggenes/issues/90" class="external-link">#90</a>)</li>
-<li>Add polar coordinate support for <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> and <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code>
-</li>
-<li>Documentation updates (<a href="https://github.com/wilkox/gggenes/issues/116" class="external-link">#116</a>, <a href="https://github.com/wilkox/gggenes/issues/117" class="external-link">#117</a>, <a href="https://github.com/wilkox/gggenes/issues/122" class="external-link">#122</a>)</li>
-<li>Add comprehensive input validation (<a href="https://github.com/wilkox/gggenes/issues/91" class="external-link">#91</a>)</li>
-<li>Improve error messages (<a href="https://github.com/wilkox/gggenes/issues/92" class="external-link">#92</a>)</li>
-<li>Internal refactoring (<a href="https://github.com/wilkox/gggenes/issues/93" class="external-link">#93</a>, <a href="https://github.com/wilkox/gggenes/issues/109" class="external-link">#109</a>)</li>
-<li>Transform data coordinates once per panel rather than once per glyph, speeding up the rendering of layers with many glyphs (<a href="https://github.com/wilkox/gggenes/issues/113" class="external-link">#113</a>)</li>
-<li>Standardise on use of NPC (not native) grid coordinates internally (<a href="https://github.com/wilkox/gggenes/issues/94" class="external-link">#94</a>)</li>
-<li>
-<code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> and <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> register the <code>align</code> parameter explicitly and drop unused arguments from their internal <code>draw_panel()</code> methods (<a href="https://github.com/wilkox/gggenes/issues/104" class="external-link">#104</a>)</li>
-<li>Declare honest dependency version floors: <code>ggplot2 (&gt;= 3.4.0)</code> for the <code>linewidth</code> aesthetic, <code>rlang (&gt;= 1.0.0)</code> for <code><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">rlang::caller_arg()</a></code>, and <code>ggfittext (&gt;= 0.9.0)</code> for polar-coordinate text fitting (<a href="https://github.com/wilkox/gggenes/issues/107" class="external-link">#107</a>)</li>
-<li>Present polar-coordinate drawing with <code><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar()</a></code> as a supported feature in the README, rather than as experimental (<a href="https://github.com/wilkox/gggenes/issues/115" class="external-link">#115</a>)</li>
+<h3 id="new-features-0-7-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
+<ul><li>
+<code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> and <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> now support polar coordinates.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>
+<h3 id="minor-improvements-and-fixes-0-7-0">Minor improvements and fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-fixes-0-7-0"></a></h3>
+<ul><li>gggenes now validates layer input and reports problems with clearer, more consistent error messages (<a href="https://github.com/wilkox/gggenes/issues/91" class="external-link">#91</a>, <a href="https://github.com/wilkox/gggenes/issues/92" class="external-link">#92</a>).</li>
+<li>gggenes now transforms data coordinates once per panel rather than once per glyph, speeding up the rendering of layers with many glyphs (<a href="https://github.com/wilkox/gggenes/issues/113" class="external-link">#113</a>).</li>
+<li>The rendering pipeline is refactored to share more logic across geoms (<a href="https://github.com/wilkox/gggenes/issues/93" class="external-link">#93</a>, <a href="https://github.com/wilkox/gggenes/issues/109" class="external-link">#109</a>).</li>
+<li>Grid drawing now uses NPC rather than native coordinates internally (<a href="https://github.com/wilkox/gggenes/issues/94" class="external-link">#94</a>).</li>
+<li>The package documentation is updated throughout, and the README now presents polar-coordinate drawing with <code><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar()</a></code> as a supported feature rather than as experimental (<a href="https://github.com/wilkox/gggenes/issues/115" class="external-link">#115</a>, <a href="https://github.com/wilkox/gggenes/issues/116" class="external-link">#116</a>, <a href="https://github.com/wilkox/gggenes/issues/117" class="external-link">#117</a>, <a href="https://github.com/wilkox/gggenes/issues/122" class="external-link">#122</a>).</li>
+<li>The declared dependency floors are now honest: <code>ggplot2 (&gt;= 3.4.0)</code> for the <code>linewidth</code> aesthetic, <code>rlang (&gt;= 1.0.0)</code> for <code><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">rlang::caller_arg()</a></code>, and <code>ggfittext (&gt;= 0.9.0)</code> for polar-coordinate text fitting (<a href="https://github.com/wilkox/gggenes/issues/107" class="external-link">#107</a>).</li>
+<li>
+<code><a href="../reference/geom_feature.html">geom_feature()</a></code> and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> now document that their <code>linewidth</code> is expressed in points rather than millimetres, unlike <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and the ggplot2 convention; this inconsistency will be reconciled when these geoms are superseded in gggenes 1.0.0 (<a href="https://github.com/wilkox/gggenes/issues/121" class="external-link">#121</a>).</li>
+<li>
 <code><a href="../reference/geom_feature_label.html">geom_feature_label()</a></code> now draws when the <code>forward</code> aesthetic is not mapped (<a href="https://github.com/wilkox/gggenes/issues/98" class="external-link">#98</a>).</li>
 <li>
-<code><a href="../reference/geom_feature_label.html">geom_feature_label()</a></code> and <code><a href="../reference/geom_terminator_label.html">geom_terminator_label()</a></code> now correctly draw on the opposite side of the molecule with a negative <code>feature_height</code> or <code>terminator_height</code> (<a href="https://github.com/wilkox/gggenes/issues/99" class="external-link">#99</a>).</li>
-<li>The legend key for <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> now applies <code>alpha</code> to the outline colour as well as the fill, matching the drawn geoms (<a href="https://github.com/wilkox/gggenes/issues/101" class="external-link">#101</a>).</li>
+<code><a href="../reference/geom_feature_label.html">geom_feature_label()</a></code> now sizes the label box of a <code>forward = TRUE</code> feature to the full panel in polar coordinates, spanning to the theta edge at <code>2 * pi</code> rather than to 1 radian (<a href="https://github.com/wilkox/gggenes/issues/112" class="external-link">#112</a>).</li>
 <li>
-<code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> now draws in polar coordinates with only its required aesthetics mapped, without also needing <code>xmin</code>/<code>xmax</code> (<a href="https://github.com/wilkox/gggenes/issues/106" class="external-link">#106</a>).</li>
+<code><a href="../reference/geom_feature_label.html">geom_feature_label()</a></code> and <code><a href="../reference/geom_terminator_label.html">geom_terminator_label()</a></code> now draw on the opposite side of the molecule with a negative <code>feature_height</code> or <code>terminator_height</code>, and their height-parameter documentation is clarified (<a href="https://github.com/wilkox/gggenes/issues/90" class="external-link">#90</a>, <a href="https://github.com/wilkox/gggenes/issues/99" class="external-link">#99</a>).</li>
 <li>
 <code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code>, <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code>, <code><a href="../reference/geom_feature.html">geom_feature()</a></code>, and <code><a href="../reference/geom_terminator.html">geom_terminator()</a></code> now handle the deprecated <code>size</code> aesthetic consistently, each emitting a single deprecation warning (<a href="https://github.com/wilkox/gggenes/issues/102" class="external-link">#102</a>).</li>
 <li>
-<code><a href="../reference/geom_feature_label.html">geom_feature_label()</a></code> now sizes the label box of a <code>forward = TRUE</code> feature to the full panel in polar coordinates, spanning to the theta edge at <code>2 * pi</code> rather than to 1 radian (<a href="https://github.com/wilkox/gggenes/issues/112" class="external-link">#112</a>).</li>
+<code><a href="../reference/geom_gene_arrow.html">geom_gene_arrow()</a></code> and <code><a href="../reference/geom_subgene_arrow.html">geom_subgene_arrow()</a></code> legend keys now apply <code>alpha</code> to the outline colour as well as the fill, matching the drawn geoms (<a href="https://github.com/wilkox/gggenes/issues/101" class="external-link">#101</a>).</li>
+<li>
+<code><a href="../reference/geom_gene_label.html">geom_gene_label()</a></code> and <code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> register the <code>align</code> parameter explicitly (<a href="https://github.com/wilkox/gggenes/issues/104" class="external-link">#104</a>).</li>
+<li>
+<code><a href="../reference/geom_subgene_label.html">geom_subgene_label()</a></code> now draws in polar coordinates with only its required aesthetics mapped, without also needing <code>xmin</code>/<code>xmax</code> (<a href="https://github.com/wilkox/gggenes/issues/106" class="external-link">#106</a>).</li>
 <li>Polar segmentation now keeps the endpoint of a very short edge, so a glyph edge shorter than one segment is drawn rather than collapsing to a single point (<a href="https://github.com/wilkox/gggenes/issues/114" class="external-link">#114</a>).</li>
 <li>
 <code><a href="../reference/make_alignment_dummies.html">make_alignment_dummies()</a></code> now gives a more informative error when <code>on</code> is absent from the mapped <code>id</code> column (<a href="https://github.com/wilkox/gggenes/issues/119" class="external-link">#119</a>).</li>
