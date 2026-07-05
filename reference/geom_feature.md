@@ -77,6 +77,14 @@ in `forward` will need to be inverted manually.
 - linewidth (the former size aesthetic has been deprecated and will be
   removed in future versions)
 
+Note that, unlike
+[`geom_gene_arrow()`](https://wilkox.org/gggenes/reference/geom_gene_arrow.md)
+and ggplot2 convention, `linewidth` in `geom_feature()` is expressed in
+points rather than millimetres, with a default value of 1. This
+inconsistency is retained for backwards compatibility, and will be
+reconciled when these point-feature geoms are superseded in gggenes
+1.0.0.
+
 ## See also
 
 [`geom_feature_label()`](https://wilkox.org/gggenes/reference/geom_feature_label.md),
@@ -85,10 +93,11 @@ in `forward` will need to be inverted manually.
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule, 
+  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule,
                                                      forward = forward)) +
   ggplot2::facet_wrap(~ molecule, scales = "free")
 

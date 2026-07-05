@@ -27,6 +27,7 @@ with `scales = "free"` to avoid drawing ridiculously large molecules
 with ridiculously tiny genes.
 
 ``` r
+
 library(ggplot2)
 library(gggenes)
 
@@ -44,6 +45,7 @@ Because the resulting plot can look cluttered, a ggplot2 theme
 `theme_genes` is provided with some sensible defaults.
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
@@ -64,6 +66,7 @@ will extend the range of each facet to visually align the selected gene
 across facets.
 
 ``` r
+
 dummies <- make_alignment_dummies(
   example_genes,
   aes(xmin = start, xmax = end, y = molecule, id = gene),
@@ -90,6 +93,7 @@ the label text inside the gene arrows; see the ggfittext documentation
 for more details on how it resizes and reflows text to make it fit.
 
 ``` r
+
 ggplot(
     example_genes,
     aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)
@@ -118,6 +122,7 @@ coerces to FALSE such as 0, the gene will be drawn in the reverse of
 this implied direction:
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, 
                           forward = orientation)) +
   geom_gene_arrow() +
@@ -149,6 +154,7 @@ The suggested usage is to use
 with no fill, and then add a subgene layer over this:
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   geom_gene_arrow(fill = "white") +
@@ -168,6 +174,7 @@ with the major difference that it requires `xsubmin` and `xsubmax`
 aesthetics (not `xmin` and `xmax`).
 
 ``` r
+
 ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
        aes(xmin = start, xmax = end, y = strand)
   ) +
@@ -199,6 +206,7 @@ meaning oriented towards the right and `FALSE` meaning towards the
 left).
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
   geom_feature(
     data = example_features,
@@ -224,6 +232,7 @@ and
 [`geom_terminator_label()`](https://wilkox.org/gggenes/reference/geom_terminator_label.md).
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
   geom_feature(
     data = example_features,
@@ -246,15 +255,14 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
 
 ![](reference/figures/README-unnamed-chunk-3-1.png)
 
-## Experimental: drawing in polar coordinates
+## Drawing in polar coordinates
 
-The current development version introduces drawing in polar coordinates,
-by adding
+gggenes can draw in polar coordinates by adding
 [`coord_polar()`](https://ggplot2.tidyverse.org/reference/coord_radial.html)
-to the plot. This works with all gene, subgene, feature, and terminator
-geoms.
+to the plot.
 
 ``` r
+
 ggplot(example_genes_polar, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
   geom_feature(
     data = example_features_polar,
@@ -265,9 +273,13 @@ ggplot(example_genes_polar, aes(xmin = start, xmax = end, y = molecule, fill = g
     aes(x = position, y = molecule, label = name, forward = forward)
   ) +
   geom_terminator(data = example_terminators_polar, aes(x = position, y = molecule)) +
-  geom_terminator_label(data = example_terminators_polar, 
+  geom_terminator_label(data = example_terminators_polar,
                         aes(x = position, y = molecule, label = name)) +
-  geom_gene_arrow() +
+  geom_gene_arrow(fill = "white") +
+  geom_subgene_arrow(
+    data = example_subgenes_polar,
+    aes(xmin = start, xmax = end, y = molecule, xsubmin = from, xsubmax = to)
+  ) +
   geom_gene_label() +
   scale_fill_brewer(palette = "Set3") +
   coord_polar() +
@@ -332,7 +344,9 @@ considered.
 
 # Articles
 
-### All vignettes
+### Articles
 
 - [Introduction to
   'gggenes'](https://wilkox.org/gggenes/articles/introduction-to-gggenes.md):
+- [Coordinate Transformations in
+  gggenes](https://wilkox.org/gggenes/articles/coordinate-transformations.md):

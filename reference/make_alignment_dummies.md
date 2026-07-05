@@ -41,6 +41,7 @@ make_alignment_dummies(data, mapping, on, side = "left")
 ## Examples
 
 ``` r
+
 dummies <- make_alignment_dummies(example_genes, ggplot2::aes(xmin = start,
   xmax = end, y = molecule, id = gene), on = "genE")
 

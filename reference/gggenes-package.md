@@ -14,6 +14,10 @@ Useful links:
 
 **Maintainer**: David Wilkins <david@wilkox.org>
 
+Authors:
+
+- David Wilkins <david@wilkox.org>
+
 Other contributors:
 
 - Zachary Kurtz <zdkurtz@gmail.com> \[contributor\]

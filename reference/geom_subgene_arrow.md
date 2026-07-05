@@ -91,6 +91,7 @@ gene has been changed with `arrowhead_width`, `arrowhead_height` or
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule)) +
 geom_gene_arrow() +

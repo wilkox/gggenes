@@ -55,6 +55,14 @@ geom_terminator(
 - linewidth (the former size aesthetic has been deprecated and will be
   removed in future versions)
 
+Note that, unlike
+[`geom_gene_arrow()`](https://wilkox.org/gggenes/reference/geom_gene_arrow.md)
+and ggplot2 convention, `linewidth` in `geom_terminator()` is expressed
+in points rather than millimetres, with a default value of 1. This
+inconsistency is retained for backwards compatibility, and will be
+reconciled when these point-feature geoms are superseded in gggenes
+1.0.0.
+
 ## See also
 
 [`geom_terminator_label()`](https://wilkox.org/gggenes/reference/geom_terminator_label.md),
@@ -63,6 +71,7 @@ geom_terminator(
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +

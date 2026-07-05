@@ -18,8 +18,8 @@ geom_gene_label(
   padding.y = grid::unit(0.1, "lines"),
   align = "centre",
   min.size = 4,
-  grow = F,
-  reflow = F,
+  grow = FALSE,
+  reflow = FALSE,
   height = grid::unit(3, "mm"),
   ...
 )
@@ -102,6 +102,7 @@ geom_gene_arrow
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
   y = molecule, fill = gene, label = gene)) +
   geom_gene_arrow() +

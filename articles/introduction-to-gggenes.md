@@ -16,6 +16,7 @@ with `scales = "free"` to avoid drawing ridiculously large molecules
 with ridiculously tiny genes.
 
 ``` r
+
 library(ggplot2)
 library(gggenes)
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
@@ -33,6 +34,7 @@ Because the resulting plot can look cluttered, a ‘ggplot2’ theme
 is provided with some sensible defaults.
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_gene_arrow() +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
@@ -53,6 +55,7 @@ will extend the range of each facet to visually align the selected gene
 across facets.
 
 ``` r
+
 dummies <- make_alignment_dummies(
   example_genes,
   aes(xmin = start, xmax = end, y = molecule, id = gene),
@@ -80,6 +83,7 @@ documentation for more details on how it resizes and reflows text to
 make it fit.
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y =
                                             molecule, fill = gene, label = gene)) +
   geom_gene_arrow(arrowhead_height = unit(3, "mm"), arrowhead_width = unit(1, "mm")) +
@@ -106,6 +110,7 @@ coerces to FALSE such as 0, the gene will be drawn in the reverse of
 this implied direction:
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, 
                           forward = orientation)) +
   geom_gene_arrow() +
@@ -137,6 +142,7 @@ The suggested usage is to use
 with no fill, and then add a subgene layer over this:
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule)) +
   facet_wrap(~ molecule, scales = "free", ncol = 1) +
   geom_gene_arrow(fill = "white") +
@@ -156,6 +162,7 @@ with the major difference that it requires `xsubmin` and `xsubmax`
 aesthetics (not `xmin` and `xmax`).
 
 ``` r
+
 ggplot(subset(example_genes, molecule == "Genome4" & gene == "genA"),
        aes(xmin = start, xmax = end, y = strand)
   ) +
@@ -187,6 +194,7 @@ meaning oriented towards the right and `FALSE` meaning towards the
 left).
 
 ``` r
+
 ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene)) +
   geom_feature(
     data = example_features,

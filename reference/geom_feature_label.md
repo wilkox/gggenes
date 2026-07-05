@@ -30,11 +30,13 @@ geom_feature_label(
 - feature_height:
 
   [`grid::unit()`](https://rdrr.io/r/grid/unit.html) object giving the
-  height of the feature being labelled, and hence the distance of the
-  label above or below the molecule line. Can be set as a negative value
-  for features drawn below the line. Defaults to 4 mm, to align labels
-  with the default height of
-  [`geom_feature()`](https://wilkox.org/gggenes/reference/geom_feature.md).
+  offset from the molecule line to the inner edge of the label's
+  bounding box. Can be set as a negative value to position labels on the
+  opposite side of the molecule line. Defaults to 4 mm, which provides a
+  1 mm gap between feature and label when used with the default
+  `feature_height` of
+  [`geom_feature()`](https://wilkox.org/gggenes/reference/geom_feature.md)
+  (3 mm).
 
 - label_height:
 
@@ -75,14 +77,15 @@ Standard 'ggplot2' aesthetics for text are supported (see Aesthetics).
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(example_genes, ggplot2::aes(xmin = start, xmax = end,
                                             y = molecule, fill = gene)) +
   geom_gene_arrow() +
-  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule, 
+  geom_feature(data = example_features, ggplot2::aes(x = position, y = molecule,
                                                      forward = forward)) +
   geom_feature_label(data = example_features,
-                     ggplot2::aes(x = position, y = molecule, label = name, 
-                                  forward = forward)) + 
+                     ggplot2::aes(x = position, y = molecule, label = name,
+                                  forward = forward)) +
   ggplot2::facet_wrap(~ molecule, scales = "free")
 
 ```
