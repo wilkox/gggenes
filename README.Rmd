@@ -239,11 +239,9 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
   theme_genes()
 ```
 
-## Experimental: drawing in polar coordinates
+## Drawing in polar coordinates
 
-The current development version introduces drawing in polar coordinates, by
-adding `coord_polar()` to the plot. This works with all gene, subgene, feature,
-and terminator geoms.
+gggenes can draw in polar coordinates by adding `coord_polar()` to the plot.
 
 ```{r}
 ggplot(example_genes_polar, aes(xmin = start, xmax = end, y = molecule, fill = gene, label = gene)) +
