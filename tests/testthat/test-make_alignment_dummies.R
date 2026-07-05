@@ -30,6 +30,23 @@ test_that("make_alignment_dummies() validates arguments", {
   ))
 })
 
+test_that("make_alignment_dummies() requires each mapping aesthetic", {
+  # Each required aesthetic omitted in turn; the error names the one that is
+  # missing.
+  incomplete <- list(
+    xmin = aes(xmax = end, y = molecule, id = gene),
+    xmax = aes(xmin = start, y = molecule, id = gene),
+    y = aes(xmin = start, xmax = end, id = gene),
+    id = aes(xmin = start, xmax = end, y = molecule)
+  )
+  for (aesthetic in names(incomplete)) {
+    expect_error(
+      make_alignment_dummies(example_genes, incomplete[[aesthetic]], on = "genE"),
+      regexp = aesthetic
+    )
+  }
+})
+
 test_that("make_alignment_dummies() errors clearly when 'on' gene is absent", {
   expect_error(
     make_alignment_dummies(
@@ -48,6 +65,37 @@ test_that("make_alignment_dummies() renames columns to the mapped aesthetics", {
     on = "genE"
   )
   expect_setequal(names(dummies), c("molecule", "start", "end", "gene"))
+})
+
+test_that("make_alignment_dummies() aligns the chosen edge equidistantly across molecules", {
+  # The dummies extend each molecule's x range so that one edge of the `on` gene
+  # sits the same distance from the panel start in every facet: for side =
+  # "left" the gene's start, for side = "right" its end.
+  on_gene <- "genE"
+  for (side in c("left", "right")) {
+    dummies <- make_alignment_dummies(
+      example_genes,
+      aes(xmin = start, xmax = end, y = molecule, id = gene),
+      on = on_gene,
+      side = side
+    )
+
+    offsets <- vapply(dummies$molecule, function(m) {
+      g <- example_genes[
+        example_genes$molecule == m & example_genes$gene == on_gene,
+      ]
+      edge <- if (side == "left") {
+        min(g$start, g$end)
+      } else {
+        max(g$start, g$end)
+      }
+      # `start` in the dummies is the renamed start_dummy: the molecule's new
+      # panel-start after alignment.
+      edge - dummies$start[dummies$molecule == m]
+    }, numeric(1))
+
+    expect_equal(length(unique(round(offsets, 6))), 1)
+  }
 })
 
 test_that("plot aligned on genE with make_alignment_dummies()", {
