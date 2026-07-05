@@ -84,6 +84,10 @@
   panel in polar coordinates, spanning to the theta edge at `2 * pi`
   rather than to 1 radian
   ([\#112](https://github.com/wilkox/gggenes/issues/112)).
+- Polar segmentation now keeps the endpoint of a very short edge, so a
+  glyph edge shorter than one segment is drawn rather than collapsing to
+  a single point
+  ([\#114](https://github.com/wilkox/gggenes/issues/114)).
 
 ## gggenes 0.6.0
 
