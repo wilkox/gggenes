@@ -95,6 +95,9 @@
   glyph edge shorter than one segment is drawn rather than collapsing to
   a single point
   ([\#114](https://github.com/wilkox/gggenes/issues/114)).
+- [`make_alignment_dummies()`](https://wilkox.org/gggenes/dev/reference/make_alignment_dummies.md)
+  now gives a more informative error when `on` is absent from the mapped
+  `id` column ([\#119](https://github.com/wilkox/gggenes/issues/119)).
 
 ## gggenes 0.6.0
 
