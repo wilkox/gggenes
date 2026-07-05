@@ -1,14 +1,13 @@
 # Main CI workflow. Runs R CMD CHECK on every push and every pull request to
-# main, master, and CRAN. Derived from
+# main and master. Derived from
 # https://github.com/r-lib/actions/blob/v2-branch/examples/check-standard.yaml
 
-# Define when the workflow runs: on pushes and pull requests to main, master,
-# and CRAN
+# Define when the workflow runs: on pushes and pull requests to main and master
 on:
   push:
-    branches: [main, master, CRAN]
+    branches: [main, master]
   pull_request:
-    branches: [main, master, CRAN]
+    branches: [main, master]
 
 name: R-CMD-check
 
