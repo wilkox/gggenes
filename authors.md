@@ -9,7 +9,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/wilkox/gggenes/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/wilkox/gggenes/blob/v0.7.0/DESCRIPTION)
 
 Wilkins D (2026). *gggenes: Draw Gene Arrow Maps in 'ggplot2'*. R
 package version 0.7.0, <https://wilkox.org/gggenes/>.
