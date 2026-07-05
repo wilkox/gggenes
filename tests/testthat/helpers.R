@@ -78,6 +78,21 @@ label_away_box <- function(p) {
   c(ymin = unname(child$data$ymin), ymax = unname(child$data$ymax))
 }
 
+#' Along-axis bounding box of a feature/terminator label in Cartesian or polar
+#' coordinates. Forces the layer's deferred makeContent() within an open device
+#' and returns the requested text grob's along-axis extent (`xmin`/`xmax`, theta
+#' in radians for polar) as a named numeric vector. Used to assert how far an
+#' oriented label box spans without resorting to a visual snapshot.
+label_along_box <- function(p, child = 1) {
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  grid::grid.newpage()
+  grid::pushViewport(grid::viewport())
+  outer <- ggplot2::layer_grob(p, 1)[[1]]
+  kid <- grid::makeContent(outer)$children[[child]]
+  c(min = unname(kid$data$xmin), max = unname(kid$data$xmax))
+}
+
 #' Grid coordinates of a glyph child grob.
 #' Forces the layer's deferred makeContent() within an open device and returns
 #' the npc x/y vertices of the requested polygon/polyline child grob as a list

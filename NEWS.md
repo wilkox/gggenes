@@ -41,6 +41,9 @@
 - `geom_gene_arrow()`, `geom_subgene_arrow()`, `geom_feature()`, and
   `geom_terminator()` now handle the deprecated `size` aesthetic consistently,
   each emitting a single deprecation warning (#102).
+- `geom_feature_label()` now sizes the label box of a `forward = TRUE` feature
+  to the full panel in polar coordinates, spanning to the theta edge at `2 * pi`
+  rather than to 1 radian (#112).
 
 # gggenes 0.6.0
 

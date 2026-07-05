@@ -165,7 +165,7 @@ makeContent.featurelabeltree <- function(x) {
     } else if (data_row$forward) {
       # Forward: from feature to end of viewport
       along_min <- data_row$along
-      along_max <- 1
+      along_max <- if ("CoordPolar" %in% class(gt$coord)) 2 * pi else 1
     } else {
       # Backward: from start of viewport to feature
       along_min <- 0
