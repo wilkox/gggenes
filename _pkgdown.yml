@@ -3,4 +3,10 @@ template:
   bootstrap: 5
 development:
   mode: auto
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - introduction-to-gggenes
+  - articles/coordinate-transformations
 
