@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gggenes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9018</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -229,9 +229,9 @@
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png"><!-- --></p>
 </div>
 <div class="section level2">
-<h2 id="experimental-drawing-in-polar-coordinates">Experimental: drawing in polar coordinates<a class="anchor" aria-label="anchor" href="#experimental-drawing-in-polar-coordinates"></a>
+<h2 id="drawing-in-polar-coordinates">Drawing in polar coordinates<a class="anchor" aria-label="anchor" href="#drawing-in-polar-coordinates"></a>
 </h2>
-<p>The current development version introduces drawing in polar coordinates, by adding <code><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar()</a></code> to the plot. This works with all gene, subgene, feature, and terminator geoms.</p>
+<p>gggenes can draw in polar coordinates by adding <code><a href="https://ggplot2.tidyverse.org/reference/coord_radial.html" class="external-link">coord_polar()</a></code> to the plot.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">example_genes_polar</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">start</span>, xmax <span class="op">=</span> <span class="va">end</span>, y <span class="op">=</span> <span class="va">molecule</span>, fill <span class="op">=</span> <span class="va">gene</span>, label <span class="op">=</span> <span class="va">gene</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="reference/geom_feature.html">geom_feature</a></span><span class="op">(</span></span>

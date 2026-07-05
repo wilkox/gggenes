@@ -48,6 +48,10 @@
   [`rlang::caller_arg()`](https://rlang.r-lib.org/reference/caller_arg.html),
   and `ggfittext (>= 0.9.0)` for polar-coordinate text fitting
   ([\#107](https://github.com/wilkox/gggenes/issues/107))
+- Present polar-coordinate drawing with
+  [`coord_polar()`](https://ggplot2.tidyverse.org/reference/coord_radial.html)
+  as a supported feature in the README, rather than as experimental
+  ([\#115](https://github.com/wilkox/gggenes/issues/115))
 
 ### Bug fixes
 

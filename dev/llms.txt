@@ -271,13 +271,11 @@ ggplot(example_genes, aes(xmin = start, xmax = end, y = molecule, fill = gene, l
 
 ![](reference/figures/README-unnamed-chunk-3-1.png)
 
-## Experimental: drawing in polar coordinates
+## Drawing in polar coordinates
 
-The current development version introduces drawing in polar coordinates,
-by adding
+gggenes can draw in polar coordinates by adding
 [`coord_polar()`](https://ggplot2.tidyverse.org/reference/coord_radial.html)
-to the plot. This works with all gene, subgene, feature, and terminator
-geoms.
+to the plot.
 
 ``` r
 
